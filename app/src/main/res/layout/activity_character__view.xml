@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".Character_view">
 
+    <ImageView
+        android:id="@+id/character_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/character_select_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="0dp"

@@ -1,5 +1,6 @@
 package com.example.imperialassault
 
+import android.content.Context
 import android.graphics.Bitmap
 
 open class Character {
@@ -30,13 +31,19 @@ open class Character {
     var xpHealths: IntArray = intArrayOf(0,0,0,0,0,0,0,0,0)
     var xpSpeeds: IntArray = intArrayOf(0,0,0,0,0,0,0,0,0)
 
-    var tierImages = ArrayList<Bitmap>()
-    var rewardImages = ArrayList<Bitmap>()
-    var cardImages  = ArrayList<Bitmap>()
-    var weaponImages  = ArrayList<Bitmap>()
+    var tierImages = ArrayList<Bitmap?>()
+    var rewardImages = ArrayList<Bitmap?>()
+    var cardImages  = ArrayList<Bitmap?>()
+    var weaponImages  = ArrayList<Bitmap?>()
 
     //get current image, get extras from stats
     //get current card images
 
-
+    fun getImages(context: Context){
+        tierImages = Assets.instance.getTierImages(context, name_short)
+        print(tierImages)/*
+        rewardImages  = Assets.instance.getRewardImages(context, name_short)
+        cardImages  =Assets.instance.getCardImages(context, name_short)
+        weaponImages  = Assets.instance.getXPCardImages(context, name_short)*/
+    }
 }

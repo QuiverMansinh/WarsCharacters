@@ -1,10 +1,13 @@
 package com.example.imperialassault
 
+import android.content.Context
+
 class Character_mak : Character {
-    constructor(){
+
+    constructor(context: Context){
         //default values
         name = "Mak Eshka'rey"
-        name_short = "mak"
+        name_short = "Mak"
         type = "Hero"
         defence_dice = "white"
         strength = "BG"
@@ -34,5 +37,9 @@ class Character_mak : Character {
         //Update images
 
         //update strain, update damage, xp, cards, weapons
+
+        getImages(context)
     }
+
+
 }
