@@ -1,6 +1,8 @@
 package com.example.imperialassault
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
@@ -11,5 +13,12 @@ class Characters_list : AppCompatActivity() {
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    fun onSelectMak(view: View) {
+        val intent = Intent(this,Character_view::class.java)
+        intent.putExtra("CharacterName","Mak")
+        intent.putExtra("Load","false")
+        startActivity(intent);
     }
 }

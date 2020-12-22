@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fa9bba05-1b09-4dc6-ba2e-526563e470f5" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1krPmfzEudSurWY14dq31inssTu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Homework/Dragon/Dragon/dragon" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fa9bba05-1b09-4dc6-ba2e-526563e470f5" name="Default Changelist" comment="" />
+      <created>1606455897641</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606455897641</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-915" y="286" key="FileChooserDialogImpl" timestamp="1607291425334">
+      <screen x="-1280" y="0" width="1280" height="984" />
+    </state>
+    <state x="-732" y="361" key="FileChooserDialogImpl/0.0.1536.824/-1024.0.1024.1240@-1024.0.1024.1240" timestamp="1606456746730" />
+    <state x="-915" y="286" key="FileChooserDialogImpl/0.0.1536.824/-1280.0.1280.984@-1280.0.1280.984" timestamp="1607291425334" />
+    <state x="-1011" y="265" key="SettingsEditor" timestamp="1606456194401">
+      <screen x="-1024" y="0" width="1024" height="1240" />
+    </state>
+    <state x="-1011" y="265" key="SettingsEditor/0.0.1536.824/-1024.0.1024.1240@-1024.0.1024.1240" timestamp="1606456194401" />
+  </component>
+</project>

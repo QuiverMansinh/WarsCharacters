@@ -21,10 +21,11 @@
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/CharacterCard1"
+                android:id="@+id/CharacterCard"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="15dp"
+                android:onClick="onSelectMak"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
