@@ -2,6 +2,8 @@ package com.example.imperialassault
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import java.io.InputStream
 
 open class Character {
     var name = ""
@@ -26,24 +28,55 @@ open class Character {
     var token = 0
     var wounded = 0
 
-    var xpScores: IntArray = intArrayOf(0,0,0,0,0,0,0,0,0)
-    var xpEndurances: IntArray = intArrayOf(0,0,0,0,0,0,0,0,0)
-    var xpHealths: IntArray = intArrayOf(0,0,0,0,0,0,0,0,0)
-    var xpSpeeds: IntArray = intArrayOf(0,0,0,0,0,0,0,0,0)
+    var xpScores: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+    var xpEndurances: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+    var xpHealths: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+    var xpSpeeds: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    var tierImages = ArrayList<Bitmap?>()
-    var rewardImages = ArrayList<Bitmap?>()
-    var cardImages  = ArrayList<Bitmap?>()
-    var weaponImages  = ArrayList<Bitmap?>()
+    var tierImages = ArrayList<Bitmap>()
+    var rewardImages = ArrayList<Bitmap>()
+    var cardImages  = ArrayList<Bitmap>()
+    var weaponImages  = ArrayList<Bitmap>()
 
     //get current image, get extras from stats
     //get current card images
 
+
     fun getImages(context: Context){
-        tierImages = Assets.instance.getTierImages(context, name_short)
+        tierImages = getTierImages(context)
         print(tierImages)/*
-        rewardImages  = Assets.instance.getRewardImages(context, name_short)
-        cardImages  =Assets.instance.getCardImages(context, name_short)
-        weaponImages  = Assets.instance.getXPCardImages(context, name_short)*/
+        rewardImages  = getRewardImages(context, name_short)
+        cardImages  =getCardImages(context, name_short)
+        weaponImages  = getXPCardImages(context, name_short)*/
+    }
+
+    open fun getTierImages(context: Context): java.util.ArrayList<Bitmap> {
+        val images = java.util.ArrayList<Bitmap>()
+        for (i in 0..4) {
+            val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i + "image.png")
+            if (image != null) {
+                images.add(image)
+            }
+        }
+        return images
+    }
+
+
+    open fun getBitmap(context: Context, path: String): Bitmap? {
+        val assetManager = context.assets
+        var inputStream: InputStream? = null
+        try {
+            inputStream = assetManager.open(path)
+            return BitmapFactory.decodeStream(inputStream)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                inputStream?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return null
     }
 }

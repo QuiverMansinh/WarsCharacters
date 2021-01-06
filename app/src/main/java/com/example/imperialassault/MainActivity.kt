@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        val assets = Assets();
     }
 
 //    override fun onWindowFocusChanged(hasFocus: Boolean) {

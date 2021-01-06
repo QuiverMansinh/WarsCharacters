@@ -7,7 +7,7 @@ class Character_mak : Character {
     constructor(context: Context){
         //default values
         name = "Mak Eshka'rey"
-        name_short = "Mak"
+        name_short = "mak"
         type = "Hero"
         defence_dice = "white"
         strength = "BG"
