@@ -17,8 +17,8 @@ class Characters_list : AppCompatActivity() {
 
     fun onSelectMak(view: View) {
         val intent = Intent(this,Character_view::class.java)
-        intent.putExtra("CharacterName","Mak")
-        intent.putExtra("Load","false")
+        intent.putExtra("CharacterName","mak")
+        //intent.putExtra("Load",false)
         startActivity(intent);
     }
 }

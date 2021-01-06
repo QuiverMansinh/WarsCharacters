@@ -13,7 +13,7 @@ open class Character {
     var strength = ""
     var insight = ""
     var tech = ""
-    var background = ""
+    var background = "interior"
     var health_default = 10
     var endurance_default = 5
     var speed_default = 5
@@ -42,15 +42,15 @@ open class Character {
     //get current card images
 
 
-    fun getImages(context: Context){
-        tierImages = getTierImages(context)
+    fun loadImages(context: Context){
+        tierImages = loadTierImages(context)
         print(tierImages)/*
         rewardImages  = getRewardImages(context, name_short)
         cardImages  =getCardImages(context, name_short)
         weaponImages  = getXPCardImages(context, name_short)*/
     }
 
-    open fun getTierImages(context: Context): java.util.ArrayList<Bitmap> {
+    open fun loadTierImages(context: Context): java.util.ArrayList<Bitmap> {
         val images = java.util.ArrayList<Bitmap>()
         for (i in 0..4) {
             val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i + "image.png")
@@ -59,6 +59,11 @@ open class Character {
             }
         }
         return images
+    }
+
+    open fun getBackgroundImage(context: Context): Bitmap? {
+        val image = getBitmap(context, "backgrounds/background_"+ background + ".png")
+       return image;
     }
 
 
@@ -78,5 +83,9 @@ open class Character {
             }
         }
         return null
+    }
+
+    open fun getCharacterImage(): Bitmap?{
+        return tierImages[0];
     }
 }

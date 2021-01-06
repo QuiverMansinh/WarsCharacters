@@ -6,21 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Character_view">
 
-    <ImageView
-        android:id="@+id/character_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/character_select_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,24 +19,65 @@
     <androidx.cardview.widget.CardView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:visibility="visible"
         app:cardCornerRadius="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/border"
+        android:id="@+id/background_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:foreground="@drawable/border"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/character_select_background"
-        app:layout_constraintBottom_toBottomOf="@+id/character_image"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/character_image" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/main_background" />
+
+    <ImageView
+        android:id="@+id/character_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/character_select_background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_villian" />
+
+    <FrameLayout
+        android:id="@+id/wounded"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wounded_texture"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/border"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="128dp"
         android:background="@drawable/bottom_panel"
@@ -137,8 +168,9 @@
                 app:srcCompat="@drawable/insight" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/insight_icon"
                 app:layout_constraintStart_toStartOf="@+id/insight_icon"
@@ -146,24 +178,24 @@
 
                 <ImageView
                     android:id="@+id/insight1"
-                    android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/insight2"
-                    android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/insight3"
-                    android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/dice" />
@@ -184,8 +216,9 @@
                 app:layout_constraintVertical_bias="0.26" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/strength_icon"
                 app:layout_constraintStart_toStartOf="@+id/strength_icon"
@@ -193,8 +226,8 @@
 
                 <ImageView
                     android:id="@+id/strength1"
-                    android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:visibility="visible"
@@ -202,16 +235,17 @@
 
                 <ImageView
                     android:id="@+id/strength2"
-                    android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/dice" />
+                    app:srcCompat="@drawable/dice"
+                    tools:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/strength3"
-                    android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/dice" />
@@ -229,8 +263,9 @@
                 app:srcCompat="@drawable/tech" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/tech_icon"
                 app:layout_constraintStart_toStartOf="@+id/tech_icon"
@@ -238,24 +273,24 @@
 
                 <ImageView
                     android:id="@+id/tech1"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/tech2"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/tech3"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/dice" />
@@ -312,16 +347,76 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:layout_weight="1"
-                android:background="@drawable/dice"
                 app:layout_constraintBottom_toBottomOf="@+id/speed_defence_image"
                 app:layout_constraintEnd_toEndOf="@+id/speed_defence_image"
                 app:layout_constraintHorizontal_bias="0.75"
                 app:layout_constraintStart_toStartOf="@+id/speed_defence_image"
                 app:layout_constraintTop_toTopOf="@+id/speed_defence_image"
-                app:layout_constraintVertical_bias="0.57" />
+                app:layout_constraintVertical_bias="0.57"
+                app:srcCompat="@drawable/dice" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/add_strain"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/strain"
+        android:fontFamily="@font/agency_fb"
+        android:gravity="center"
+        android:onClick="onAddStrain"
+        android:shadowColor="@color/white"
+        android:shadowRadius="8"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/add_damage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/damage"
+        android:fontFamily="@font/agency_fb"
+        android:gravity="center"
+        android:onClick="onAddDamage"
+        android:shadowColor="@color/white"
+        android:shadowRadius="8"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/add_strain"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/minus_damage"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="10dp"
+        android:onClick="onMinusDamage"
+        app:layout_constraintBottom_toBottomOf="@+id/add_damage"
+        app:layout_constraintStart_toEndOf="@+id/add_damage"
+        app:layout_constraintTop_toTopOf="@+id/add_damage"
+        app:srcCompat="@drawable/minus_button" />
+
+    <ImageView
+        android:id="@+id/minus_strain"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="10dp"
+        android:onClick="onMinusStrain"
+        app:layout_constraintBottom_toBottomOf="@+id/add_strain"
+        app:layout_constraintStart_toEndOf="@+id/add_strain"
+        app:layout_constraintTop_toTopOf="@+id/add_strain"
+        app:srcCompat="@drawable/minus_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

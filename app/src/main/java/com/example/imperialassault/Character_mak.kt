@@ -1,6 +1,7 @@
 package com.example.imperialassault
 
 import android.content.Context
+import android.graphics.Bitmap
 
 class Character_mak : Character {
 
@@ -10,8 +11,8 @@ class Character_mak : Character {
         name_short = "mak"
         type = "Hero"
         defence_dice = "white"
-        strength = "BG"
-        insight = "BG"
+        strength = "BG "
+        insight = "BG "
         tech = "BGY"
         background = "interior"
         health_default = 10
@@ -38,8 +39,11 @@ class Character_mak : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        getImages(context)
+        loadImages(context)
     }
 
-
+    //TODO alter for reward, duplicates, tier
+    override fun getCharacterImage(): Bitmap?{
+        return tierImages[0];
+    }
 }
