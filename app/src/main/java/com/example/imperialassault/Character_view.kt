@@ -287,6 +287,12 @@ class Character_view : AppCompatActivity() {
         view.visibility = View.INVISIBLE
     }
 
+    fun onWeakened(view: View) {}
+    fun onBleeding(view: View) {}
+    fun onStunned(view: View) {}
+    fun onHidden(view: View) {}
+    fun onFocused(view: View) {}
+
 
 }
 
