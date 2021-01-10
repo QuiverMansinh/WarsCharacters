@@ -1,6 +1,7 @@
 package com.example.imperialassault
 
 import android.animation.ObjectAnimator
+import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -8,14 +9,18 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.Window
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
+import kotlinx.android.synthetic.main.action_menu.*
 import kotlinx.android.synthetic.main.activity_character__view.*
 import java.io.InputStream
 
@@ -37,6 +42,9 @@ class Character_view : AppCompatActivity() {
     var conditionViews = ArrayList<ImageView>()
     var conditionsActive = booleanArrayOf(false,false,false,false,false)
     var conditionDrawable = intArrayOf(R.drawable.condition_hidden, R.drawable.condition_focused, R.drawable.condition_weakened, R.drawable.condition_bleeding, R.drawable.condition_stunned)
+
+    var actionsLeft = 0;
+    var actionDialog:Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +115,9 @@ class Character_view : AppCompatActivity() {
             true
         }
         add_strain.setOnLongClickListener {
-            rest.visibility = View.VISIBLE;
+            if(actionsLeft>0) {
+                rest.visibility = View.VISIBLE;
+            }
             true
         }
 
@@ -152,6 +162,13 @@ class Character_view : AppCompatActivity() {
             removeCondition(stunned)
             true
         }
+
+
+
+
+
+
+
     }
 
 
@@ -315,21 +332,7 @@ class Character_view : AppCompatActivity() {
             wounded.visibility = ImageView.INVISIBLE
             unwound.visibility = View.INVISIBLE
     }
-    fun onRest(view: View) {
 
-        character.strain-=character.endurance
-
-        if(character.strain<0) {
-            for(i in 1..-character.strain) {
-                onMinusDamage(view)
-            }
-            character.strain = 0;
-        }
-        add_strain.setText("" + character.strain)
-        playRestAnim()
-
-        rest.visibility = View.INVISIBLE
-    }
 
     fun onAddCondition(view: View) {
         condition_select.visibility = View.VISIBLE
@@ -462,9 +465,95 @@ class Character_view : AppCompatActivity() {
     fun onActivate(view: View) {
         if(unactive.visibility == View.VISIBLE){
             unactive.visibility = View.INVISIBLE
+
+            action1.visibility = View.VISIBLE
+            action_button1.visibility = View.VISIBLE
+            action2.visibility = View.VISIBLE
+            action_button2.visibility = View.VISIBLE
+            actionsLeft = 2;
         }
         else{
             unactive.visibility = View.VISIBLE
+            action_button1.visibility = View.INVISIBLE
+            action_button2.visibility = View.INVISIBLE
+
+        }
+    }
+
+    fun onAction(view: View) {
+        actionDialog = Dialog(this)
+        actionDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        actionDialog!!.setCancelable(false)
+        actionDialog!!.setContentView(R.layout.action_menu)
+        actionDialog!!.setCanceledOnTouchOutside(true)
+
+        actionDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        //todo add focus symbol to attack
+        if(conditionsActive[focused]){
+            actionDialog!!.attack_focused.visibility = View.VISIBLE
+        }
+        else{
+            actionDialog!!.attack_focused.visibility = View.GONE
+        }
+
+        //todo add stun symbol and deactivate to move, special and attack
+
+
+        actionDialog!!.show()
+    }
+    fun actionCompleted(){
+        actionsLeft--;
+        if(actionsLeft == 1){
+            action1.visibility = View.INVISIBLE
+        }
+        else if(actionsLeft == 0){
+            action2.visibility = View.INVISIBLE
+        }
+        if(conditionsActive[bleeding]){
+            onAddStrain(add_strain)
+        }
+    }
+
+    fun onAttack(view: View) {
+        if(actionsLeft>0 && !conditionsActive[stunned]) {
+            actionCompleted()
+            removeCondition(focused)
+            actionDialog!!.attack_focused.visibility = View.GONE
+        }
+        onAction(action1)
+    }
+    fun onMove(view: View) {
+        if(actionsLeft>0 && !conditionsActive[stunned]) {
+            actionCompleted()
+        }
+    }
+    fun onSpecial(view: View) {
+        if(actionsLeft>0) {
+            actionCompleted()
+        }
+    }
+    fun onInteract(view: View) {
+        if(actionsLeft>0) {
+            actionCompleted()
+        }
+    }
+    fun onRest(view: View) {
+        if(actionsLeft>0) {
+            character.strain -= character.endurance
+
+            if (character.strain < 0) {
+                for (i in 1..-character.strain) {
+                    onMinusDamage(view)
+                }
+                character.strain = 0;
+            }
+            add_strain.setText("" + character.strain)
+            playRestAnim()
+
+            rest.visibility = View.INVISIBLE
+
+            actionCompleted()
         }
     }
 }
