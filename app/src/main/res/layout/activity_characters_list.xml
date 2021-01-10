@@ -39,6 +39,10 @@
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
                         android:scaleType="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/main_background" />
 
                     <TextView

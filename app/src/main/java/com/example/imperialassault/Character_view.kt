@@ -75,8 +75,8 @@ class Character_view : AppCompatActivity() {
 
         blastAnim = createAnimation("blast")
         impactAnim = createAnimation("impact")
-        restAnim = createAnimation("rest")
         sliceAnim = createAnimation("slice")
+        restAnim = createAnimation("rest")
 
         blast_animation.setBackgroundDrawable(blastAnim)
         blast_animation.visibility = FrameLayout.INVISIBLE
@@ -86,6 +86,20 @@ class Character_view : AppCompatActivity() {
         impact_animation.visibility = FrameLayout.INVISIBLE
         rest_animation.setBackgroundDrawable(restAnim)
         rest_animation.visibility = FrameLayout.INVISIBLE
+
+
+
+        add_damage.setOnLongClickListener {
+            if(character.damage >= character.health) {
+                unwound.visibility = View.VISIBLE
+            }
+            true
+        }
+
+        add_strain.setOnLongClickListener {
+            rest.visibility = View.VISIBLE;
+            true
+        }
     }
 
 
@@ -116,6 +130,11 @@ class Character_view : AppCompatActivity() {
             impactAnim.start()
         }
     }
+    fun playRestAnim(){
+        rest_animation.visibility = FrameLayout.VISIBLE
+        restAnim.setVisible(true, true)
+        restAnim.start()
+    }
 
 
     fun createAnimation(type: String): AnimationDrawable{
@@ -138,7 +157,7 @@ class Character_view : AppCompatActivity() {
                 println(bitmapWidth)
                 bitmap = Bitmap.createBitmap(bitmap, bitmapOffset, 0, bitmapWidth.toInt(), bitmap.height)
                 val frame = BitmapDrawable(resources, bitmap);
-                animation.addFrame(frame, 100)
+                animation.addFrame(frame, 60)
             }
         }
         animation.setOneShot(true);
@@ -171,65 +190,102 @@ class Character_view : AppCompatActivity() {
             add_strain.setText("" + character.strain)
         }
         else{
+            addDamage()
 
         }
+        playRestAnim()
+
     }
     fun onMinusStrain(view: View) {
         if(character.strain >0) {
             character.strain--
             add_strain.setText("" + character.strain)
         }
-        else{
 
-        }
     }
     fun onAddDamage(view: View) {
+        if(addDamage()) {
+            playDamageAnim()
+        }
+    }
+
+    fun addDamage():Boolean{
         if(character.damage < character.health*2) {
             character.damage++
-        }
+            if(character.damage < character.health) {
 
-        if(character.damage < character.health) {
+                add_damage.setText("" + character.damage)
+            }
+            else if(character.damage < character.health*2){
 
-            add_damage.setText("" + character.damage)
+                character.wounded = character.damage-character.health
+                add_damage.setText("" + character.wounded)
+                wounded.visibility = ImageView.VISIBLE
+            }
+            else{
+                add_damage.setText("" + character.health)
+                val slide = ObjectAnimator.ofFloat(character_image, "translationY",0f,0f,character_image.height.toFloat())
+                slide.setDuration(1500)
+                slide.start()
+            }
+            return true
         }
-        else if(character.damage < character.health*2){
-
-            character.wounded = character.damage-character.health
-            add_damage.setText("" + character.wounded)
-            wounded.visibility = ImageView.VISIBLE
-        }
-        else{
-            add_damage.setText("" + character.health)
-            val slide = ObjectAnimator.ofFloat(character_image, "translationY",0f,0f,character_image.height.toFloat())
-            slide.setDuration(1500)
-            slide.start()
-        }
-
-        playDamageAnim()
+        return false
     }
+
     fun onMinusDamage(view: View) {
         if(character.damage >0) {
             character.damage--
+            if(character.damage < character.health) {
+                add_damage.setText("" + character.damage)
+                wounded.visibility = ImageView.INVISIBLE
+                character.wounded = 0;
+            }
+            else if(character.damage < character.health*2){
+                character.wounded = character.damage-character.health
+                add_damage.setText("" + character.wounded)
+                val slide = ObjectAnimator.ofFloat(character_image, "translationY", 0f)
+                slide.setDuration(500)
+                slide.start()
+            }
+
         }
 
-        if(character.damage < character.health) {
-            add_damage.setText("" + character.damage)
-            wounded.visibility = ImageView.INVISIBLE
-            character.wounded = 0;
-        }
-        else if(character.damage < character.health*2){
-            character.wounded = character.damage-character.health
-            add_damage.setText("" + character.wounded)
-            val slide = ObjectAnimator.ofFloat(character_image, "translationY", 0f)
-            slide.setDuration(500)
-            slide.start()
-        }
+
 
     }
 
+    fun onUnwound(view: View) {
+            playRestAnim()
+            character.damage = 0
+            character.wounded = 0
+            add_damage.setText("" + character.damage)
+            wounded.visibility = ImageView.INVISIBLE
+            unwound.visibility = View.INVISIBLE
+    }
+    fun onRest(view: View) {
 
+        character.strain-=character.endurance
 
+        if(character.strain<0) {
+            for(i in 1..-character.strain) {
+                onMinusDamage(view)
+            }
+            character.strain = 0;
+        }
+        add_strain.setText("" + character.strain)
+        playRestAnim()
 
+        rest.visibility = View.INVISIBLE
+    }
+
+    fun onAddCondition(view: View) {
+        condition_select.visibility = View.VISIBLE
+    }
+
+    fun onHide(view: View) {
+        view.visibility = View.INVISIBLE
+    }
 
 
 }
