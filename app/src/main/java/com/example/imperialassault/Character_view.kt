@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
@@ -26,14 +27,25 @@ class Character_view : AppCompatActivity() {
     var restAnim:AnimationDrawable= AnimationDrawable()
     var sliceAnim:AnimationDrawable= AnimationDrawable()
 
+    var hidden = 0
+    var focused = 1
+    var weakened = 2
+    var bleeding = 3
+    var stunned = 4
+
+
+    var conditionViews = ArrayList<ImageView>()
+    var conditionsActive = booleanArrayOf(false,false,false,false,false)
+    var conditionDrawable = intArrayOf(R.drawable.condition_hidden, R.drawable.condition_focused, R.drawable.condition_weakened, R.drawable.condition_bleeding, R.drawable.condition_stunned)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character__view)
 
         var load = false //intent.getBooleanExtra("Load",false)
-        var characterName : String = intent.getStringExtra("CharacterName").toString()
+        var characterName: String = intent.getStringExtra("CharacterName").toString()
 
-        if(!load) {
+        if (!load) {
             when (characterName) {
                 "mak" -> {
                     character = Character_mak(this)
@@ -42,8 +54,7 @@ class Character_view : AppCompatActivity() {
             }
 
 
-        }
-        else{
+        } else {
 
         }
         name.setText("" + character.name);
@@ -51,7 +62,7 @@ class Character_view : AppCompatActivity() {
         endurance.setText("" + character.endurance);
         speed.setText("" + character.speed);
 
-        when(character.defence_dice){
+        when (character.defence_dice) {
             "white" -> ImageViewCompat.setImageTintList(defence, ColorStateList.valueOf(Color.WHITE))
             "black" -> ImageViewCompat.setImageTintList(defence, ColorStateList.valueOf(Color.BLACK))
         }
@@ -90,14 +101,55 @@ class Character_view : AppCompatActivity() {
 
 
         add_damage.setOnLongClickListener {
-            if(character.damage >= character.health) {
+            if (character.damage >= character.health) {
                 unwound.visibility = View.VISIBLE
             }
             true
         }
-
         add_strain.setOnLongClickListener {
             rest.visibility = View.VISIBLE;
+            true
+        }
+
+
+
+
+        conditionViews.add(condition1)
+        conditionViews.add(condition2)
+        conditionViews.add(condition3)
+        conditionViews.add(condition4)
+        conditionViews.add(condition5)
+
+        for (i in 0..conditionViews.size - 1) {
+            conditionViews[i].setOnLongClickListener(object : View.OnLongClickListener {
+                override fun onLongClick(v: View): Boolean {
+                    v.visibility = View.INVISIBLE
+
+                    removeCondition(v.getTag() as Int)
+                    return true
+                }
+            }
+            )
+        }
+
+        hidden_all.setOnLongClickListener {
+            removeCondition(hidden)
+            true
+        }
+        focused_all.setOnLongClickListener {
+            removeCondition(focused)
+            true
+        }
+        weakened_all.setOnLongClickListener {
+            removeCondition(weakened)
+            true
+        }
+        bleeding_all.setOnLongClickListener {
+            removeCondition(bleeding)
+            true
+        }
+        stunned_all.setOnLongClickListener {
+            removeCondition(stunned)
             true
         }
     }
@@ -287,12 +339,133 @@ class Character_view : AppCompatActivity() {
         view.visibility = View.INVISIBLE
     }
 
-    fun onWeakened(view: View) {}
-    fun onBleeding(view: View) {}
-    fun onStunned(view: View) {}
-    fun onHidden(view: View) {}
-    fun onFocused(view: View) {}
 
 
+    fun onWeakened(view: View) {
+        if(!conditionsActive[weakened]) {
+            //condition_select.visibility = View.INVISIBLE
+            view.alpha = 0.5f
+            conditionsActive[weakened] = true
+            addCondition()
+        }
+        else{
+            removeCondition(weakened)
+        }
+
+    }
+    fun onBleeding(view: View) {
+        if(!conditionsActive[bleeding]) {
+            //condition_select.visibility = View.INVISIBLE
+            view.alpha = 0.5f
+            conditionsActive[bleeding] = true
+            addCondition()
+        }
+        else{
+            removeCondition(bleeding)
+        }
+    }
+    fun onStunned(view: View) {
+        if (!conditionsActive[stunned]) {
+            //condition_select.visibility = View.INVISIBLE
+            view.alpha = 0.5f
+            conditionsActive[stunned] = true
+            addCondition()
+        }
+        else{
+            removeCondition(stunned)
+        }
+    }
+    fun onHidden(view: View) {
+        if(!conditionsActive[hidden]) {
+            //condition_select.visibility = View.INVISIBLE
+            view.alpha = 0.5f
+            conditionsActive[hidden] = true
+            addCondition()
+        }
+        else{
+            removeCondition(hidden)
+        }
+    }
+    fun onFocused(view: View) {
+        if(!conditionsActive[focused]) {
+            //condition_select.visibility = View.INVISIBLE
+            view.alpha = 0.5f
+            conditionsActive[focused] = true
+            addCondition()
+        }
+        else{
+            removeCondition(focused)
+        }
+    }
+
+
+
+    fun addCondition(){
+            setConditionIcons()
+    }
+
+    fun removeCondition(conditionType : Int){
+        conditionsActive[conditionType] = false
+        when(conditionType){
+            hidden->hidden_select.alpha=1f
+            focused->focused_select.alpha=1f
+            stunned->stunned_select.alpha=1f
+            bleeding->bleeding_select.alpha=1f
+            weakened->weakened_select.alpha=1f
+        }
+        setConditionIcons()
+    }
+
+    fun setConditionIcons(){
+        for(i in 0..conditionViews.size-1){
+            conditionViews[i].visibility = View.GONE
+        }
+
+        var active = 0;
+        for(i in 0..conditionsActive.size-1){
+            if(conditionsActive[i]){
+                active++;
+            }
+        }
+
+        if(active<5) {
+            show_conditions.visibility = View.VISIBLE
+            show_all_conditions.visibility = View.INVISIBLE
+
+            var conditionType = 0;
+            for (i in 0..active - 1) {
+                conditionViews[i].visibility = View.VISIBLE
+                for (j in conditionType..conditionDrawable.size - 1) {
+                    if (conditionsActive[j]) {
+                        conditionViews[i].setImageDrawable(resources.getDrawable(conditionDrawable[conditionType]))
+                        conditionViews[i].setTag(conditionType)
+                        conditionType = j + 1;
+                        break
+                    }
+                    conditionType = j + 1;
+                }
+            }
+        }
+        else{
+            show_conditions.visibility = View.INVISIBLE
+            show_all_conditions.visibility = View.VISIBLE
+        }
+
+        if(active>2){
+            conditions_row2.visibility = View.VISIBLE
+        }
+        else{
+            conditions_row2.visibility = View.GONE
+        }
+    }
+
+    fun onActivate(view: View) {
+        if(unactive.visibility == View.VISIBLE){
+            unactive.visibility = View.INVISIBLE
+        }
+        else{
+            unactive.visibility = View.VISIBLE
+        }
+    }
 }
 
