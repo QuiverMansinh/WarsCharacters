@@ -10,18 +10,20 @@ import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
-import kotlinx.android.synthetic.main.action_menu.*
 import kotlinx.android.synthetic.main.activity_character__view.*
+import kotlinx.android.synthetic.main.dialog_action_menu.*
+import kotlinx.android.synthetic.main.dialog_conditions.*
+import kotlinx.android.synthetic.main.dialog_show_card.*
 import java.io.InputStream
 
 
@@ -43,8 +45,15 @@ class Character_view : AppCompatActivity() {
     var conditionsActive = booleanArrayOf(false,false,false,false,false)
     var conditionDrawable = intArrayOf(R.drawable.condition_hidden, R.drawable.condition_focused, R.drawable.condition_weakened, R.drawable.condition_bleeding, R.drawable.condition_stunned)
 
-    var actionsLeft = 0;
+    var restDialog:Dialog? = null
+    var unwoundDialog:Dialog? = null
+    var conditionsDialog:Dialog? = null
+    var settingsDialog:Dialog? = null
     var actionDialog:Dialog? = null
+    var showCardDialog:Dialog? = null
+
+    var actionsLeft = 0;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,13 +119,16 @@ class Character_view : AppCompatActivity() {
 
         add_damage.setOnLongClickListener {
             if (character.damage >= character.health) {
-                unwound.visibility = View.VISIBLE
+                unwoundDialog!!.show()
             }
             true
         }
         add_strain.setOnLongClickListener {
             if(actionsLeft>0) {
-                rest.visibility = View.VISIBLE;
+                restDialog!!.show()
+            }
+            else{
+                showNoActionsLeftToast()
             }
             true
         }
@@ -133,9 +145,8 @@ class Character_view : AppCompatActivity() {
         for (i in 0..conditionViews.size - 1) {
             conditionViews[i].setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View): Boolean {
-                    v.visibility = View.INVISIBLE
-
                     removeCondition(v.getTag() as Int)
+                    actionCompleted()
                     return true
                 }
             }
@@ -144,27 +155,92 @@ class Character_view : AppCompatActivity() {
 
         hidden_all.setOnLongClickListener {
             removeCondition(hidden)
+            actionCompleted()
             true
         }
         focused_all.setOnLongClickListener {
             removeCondition(focused)
+            actionCompleted()
             true
         }
         weakened_all.setOnLongClickListener {
             removeCondition(weakened)
+            actionCompleted()
             true
         }
         bleeding_all.setOnLongClickListener {
             removeCondition(bleeding)
+            actionCompleted()
             true
         }
         stunned_all.setOnLongClickListener {
             removeCondition(stunned)
+            actionCompleted()
             true
         }
 
 
+        restDialog = Dialog(this)
+        restDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        restDialog!!.setCancelable(false)
+        restDialog!!.setContentView(R.layout.dialog_rest)
+        restDialog!!.setCanceledOnTouchOutside(true)
+        restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        unwoundDialog = Dialog(this)
+        unwoundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        unwoundDialog!!.setCancelable(false)
+        unwoundDialog!!.setContentView(R.layout.dialog_unwound)
+        unwoundDialog!!.setCanceledOnTouchOutside(true)
+        unwoundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        conditionsDialog = Dialog(this)
+        conditionsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        conditionsDialog!!.setCancelable(false)
+        conditionsDialog!!.setContentView(R.layout.dialog_conditions)
+        conditionsDialog!!.setCanceledOnTouchOutside(true)
+        conditionsDialog!!.stunned_select.setOnLongClickListener {
+            onShowStunnedCard(conditionsDialog!!.stunned_select)
+            true
+        }
+        conditionsDialog!!.bleeding_select.setOnLongClickListener {
+            onShowBleedingCard(conditionsDialog!!.bleeding_select)
+            true
+        }
+        conditionsDialog!!.weakened_select.setOnLongClickListener {
+            onShowWeakenedCard(conditionsDialog!!.weakened_select)
+            true
+        }
+        conditionsDialog!!.focused_select.setOnLongClickListener {
+            onShowFocusedCard(conditionsDialog!!.focused_select)
+            true
+        }
+        conditionsDialog!!.hidden_select.setOnLongClickListener {
+            onShowHiddenCard(conditionsDialog!!.hidden_select)
+            true
+        }
+        conditionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        settingsDialog = Dialog(this)
+        settingsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        settingsDialog!!.setCancelable(false)
+        settingsDialog!!.setContentView(R.layout.dialog_settings_menu)
+        settingsDialog!!.setCanceledOnTouchOutside(true)
+        settingsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        actionDialog = Dialog(this)
+        actionDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        actionDialog!!.setCancelable(false)
+        actionDialog!!.setContentView(R.layout.dialog_action_menu)
+        actionDialog!!.setCanceledOnTouchOutside(true)
+        actionDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        showCardDialog = Dialog(this)
+        showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        showCardDialog!!.setCancelable(false)
+        showCardDialog!!.setContentView(R.layout.dialog_show_card)
+        showCardDialog!!.setCanceledOnTouchOutside(true)
+        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
 
@@ -330,12 +406,13 @@ class Character_view : AppCompatActivity() {
             character.wounded = 0
             add_damage.setText("" + character.damage)
             wounded.visibility = ImageView.INVISIBLE
-            unwound.visibility = View.INVISIBLE
+            unwoundDialog!!.cancel()
     }
 
 
     fun onAddCondition(view: View) {
-        condition_select.visibility = View.VISIBLE
+        conditionsDialog!!.show()
+
     }
 
     fun onHide(view: View) {
@@ -345,81 +422,38 @@ class Character_view : AppCompatActivity() {
 
 
     fun onWeakened(view: View) {
-        if(!conditionsActive[weakened]) {
-            //condition_select.visibility = View.INVISIBLE
-            view.alpha = 0.5f
-            conditionsActive[weakened] = true
-            addCondition()
-        }
-        else{
-            removeCondition(weakened)
-        }
-
+        conditionsActive[weakened] =!conditionsActive[weakened]
+        updateConditionIcons()
     }
     fun onBleeding(view: View) {
-        if(!conditionsActive[bleeding]) {
-            //condition_select.visibility = View.INVISIBLE
-            view.alpha = 0.5f
-            conditionsActive[bleeding] = true
-            addCondition()
-        }
-        else{
-            removeCondition(bleeding)
-        }
+        conditionsActive[bleeding] =!conditionsActive[bleeding]
+        updateConditionIcons()
     }
     fun onStunned(view: View) {
-        if (!conditionsActive[stunned]) {
-            //condition_select.visibility = View.INVISIBLE
-            view.alpha = 0.5f
-            conditionsActive[stunned] = true
-            addCondition()
-        }
-        else{
-            removeCondition(stunned)
-        }
+        conditionsActive[stunned] =!conditionsActive[stunned]
+        updateConditionIcons()
     }
     fun onHidden(view: View) {
-        if(!conditionsActive[hidden]) {
-            //condition_select.visibility = View.INVISIBLE
-            view.alpha = 0.5f
-            conditionsActive[hidden] = true
-            addCondition()
-        }
-        else{
-            removeCondition(hidden)
-        }
+        conditionsActive[hidden] =!conditionsActive[hidden]
+        updateConditionIcons()
     }
     fun onFocused(view: View) {
-        if(!conditionsActive[focused]) {
-            //condition_select.visibility = View.INVISIBLE
-            view.alpha = 0.5f
-            conditionsActive[focused] = true
-            addCondition()
-        }
-        else{
-            removeCondition(focused)
-        }
+        conditionsActive[focused] =!conditionsActive[focused]
+        updateConditionIcons()
     }
 
-
-
-    fun addCondition(){
-            setConditionIcons()
-    }
 
     fun removeCondition(conditionType : Int){
-        conditionsActive[conditionType] = false
-        when(conditionType){
-            hidden->hidden_select.alpha=1f
-            focused->focused_select.alpha=1f
-            stunned->stunned_select.alpha=1f
-            bleeding->bleeding_select.alpha=1f
-            weakened->weakened_select.alpha=1f
+        if(actionsLeft>0) {
+            conditionsActive[conditionType] = false
+            updateConditionIcons()
         }
-        setConditionIcons()
+        else{
+            showNoActionsLeftToast()
+        }
     }
 
-    fun setConditionIcons(){
+    fun updateConditionIcons(){
         for(i in 0..conditionViews.size-1){
             conditionViews[i].visibility = View.GONE
         }
@@ -460,6 +494,49 @@ class Character_view : AppCompatActivity() {
         else{
             conditions_row2.visibility = View.GONE
         }
+
+
+        if(!conditionsActive[hidden]) {
+            conditionsDialog!!.hidden_select.alpha = 1f
+        }
+        else{
+            conditionsDialog!!.hidden_select.alpha = 0.5f
+        }
+
+        if(!conditionsActive[hidden]) {
+            conditionsDialog!!.hidden_select.alpha = 1f
+        }
+        else{
+            conditionsDialog!!.hidden_select.alpha = 0.5f
+        }
+
+        if(!conditionsActive[focused]) {
+            conditionsDialog!!.focused_select.alpha=1f
+        }
+        else{
+            conditionsDialog!!.focused_select.alpha = 0.5f
+        }
+
+        if(!conditionsActive[stunned]) {
+            conditionsDialog!!.stunned_select.alpha = 1f
+        }
+        else{
+            conditionsDialog!!.stunned_select.alpha = 0.5f
+        }
+
+        if(!conditionsActive[bleeding]) {
+            conditionsDialog!!.bleeding_select.alpha = 1f
+        }
+        else{
+            conditionsDialog!!.bleeding_select.alpha = 0.5f
+        }
+
+        if(!conditionsActive[weakened]) {
+            conditionsDialog!!.weakened_select.alpha = 1f
+        }
+        else{
+            conditionsDialog!!.weakened_select.alpha = 0.5f
+        }
     }
 
     fun onActivate(view: View) {
@@ -481,13 +558,7 @@ class Character_view : AppCompatActivity() {
     }
 
     fun onAction(view: View) {
-        actionDialog = Dialog(this)
-        actionDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        actionDialog!!.setCancelable(false)
-        actionDialog!!.setContentView(R.layout.action_menu)
-        actionDialog!!.setCanceledOnTouchOutside(true)
-
-        actionDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        actionDialog!!.cancel()
 
         //todo add focus symbol to attack
         if(conditionsActive[focused]){
@@ -497,45 +568,100 @@ class Character_view : AppCompatActivity() {
             actionDialog!!.attack_focused.visibility = View.GONE
         }
 
-        //todo add stun symbol and deactivate to move, special and attack
+        if(conditionsActive[hidden]){
+            actionDialog!!.attack_hidden.visibility = View.VISIBLE
+        }
+        else{
+            actionDialog!!.attack_hidden.visibility = View.GONE
+        }
 
+        //todo add stun symbol and deactivate to move, special and attack
+        if(conditionsActive[stunned]){
+            actionDialog!!.action_stunned_attack.visibility = View.VISIBLE
+            actionDialog!!.action_stunned_move.visibility = View.VISIBLE
+            actionDialog!!.action_stunned_special.visibility = View.VISIBLE
+            actionDialog!!.action_remove_stun.visibility = View.VISIBLE
+        }
+        else{
+            actionDialog!!.action_stunned_attack.visibility = View.INVISIBLE
+            actionDialog!!.action_stunned_move.visibility = View.INVISIBLE
+            actionDialog!!.action_stunned_special.visibility = View.INVISIBLE
+            actionDialog!!.action_remove_stun.visibility = View.GONE
+        }
+
+        if(conditionsActive[bleeding]){
+            actionDialog!!.action_remove_bleeding.visibility = View.VISIBLE
+        }
+        else{
+            actionDialog!!.action_remove_bleeding.visibility = View.GONE
+        }
+
+        if(conditionsActive[weakened]){
+            actionDialog!!.action_remove_weakened.visibility = View.VISIBLE
+        }
+        else{
+            actionDialog!!.action_remove_weakened.visibility = View.GONE
+        }
 
         actionDialog!!.show()
     }
+
     fun actionCompleted(){
-        actionsLeft--;
-        if(actionsLeft == 1){
-            action1.visibility = View.INVISIBLE
-        }
-        else if(actionsLeft == 0){
-            action2.visibility = View.INVISIBLE
-        }
-        if(conditionsActive[bleeding]){
-            onAddStrain(add_strain)
+        if(actionsLeft >0) {
+            actionsLeft--;
+            if (actionsLeft == 1) {
+                action1.visibility = View.INVISIBLE
+            } else if (actionsLeft == 0) {
+                action2.visibility = View.INVISIBLE
+            }
+            if (conditionsActive[bleeding]) {
+                onAddStrain(add_strain)
+            }
         }
     }
 
     fun onAttack(view: View) {
-        if(actionsLeft>0 && !conditionsActive[stunned]) {
-            actionCompleted()
-            removeCondition(focused)
-            actionDialog!!.attack_focused.visibility = View.GONE
+        if(actionsLeft>0 ) {
+            if(!conditionsActive[stunned]) {
+                removeCondition(focused)
+                removeCondition(hidden)
+                actionCompleted()
+                onAction(action1)
+            }
         }
-        onAction(action1)
+        else{
+            showNoActionsLeftToast()
+        }
     }
     fun onMove(view: View) {
-        if(actionsLeft>0 && !conditionsActive[stunned]) {
-            actionCompleted()
+        if(actionsLeft>0 ) {
+            if(!conditionsActive[stunned]) {
+                onAction(action1)
+                actionCompleted()
+            }
+        }
+        else{
+            showNoActionsLeftToast()
         }
     }
     fun onSpecial(view: View) {
         if(actionsLeft>0) {
-            actionCompleted()
+            if(!conditionsActive[stunned]) {
+                onAction(action1)
+                actionCompleted()
+            }
+        }
+        else{
+            showNoActionsLeftToast()
         }
     }
     fun onInteract(view: View) {
         if(actionsLeft>0) {
+            onAction(action1)
             actionCompleted()
+        }
+        else{
+            showNoActionsLeftToast()
         }
     }
     fun onRest(view: View) {
@@ -551,10 +677,85 @@ class Character_view : AppCompatActivity() {
             add_strain.setText("" + character.strain)
             playRestAnim()
 
-            rest.visibility = View.INVISIBLE
+            restDialog!!.cancel()
 
             actionCompleted()
         }
+        else{
+            showNoActionsLeftToast()
+        }
+    }
+
+    fun onRemoveStun(view: View) {
+        if(actionsLeft>0) {
+            removeCondition(stunned)
+            onAction(action1)
+            actionCompleted()
+        }
+        else{
+            showNoActionsLeftToast()
+        }
+    }
+
+    fun onRemoveBleeding(view: View) {
+        if(actionsLeft>0) {
+            removeCondition(bleeding)
+            onAction(action1)
+            actionCompleted()
+        }
+        else{
+            showNoActionsLeftToast()
+        }
+    }
+
+    fun onRemoveWeakened(view: View) {
+        if(actionsLeft>0) {
+            removeCondition(weakened)
+            onAction(action1)
+            actionCompleted()
+        }
+        else{
+            showNoActionsLeftToast()
+        }
+    }
+
+    fun onShowFocusedCard(view:View){
+        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_focused))
+        showCardDialog!!.show()
+    }
+    fun onShowStunnedCard(view:View){
+        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_stunned))
+        showCardDialog!!.show()
+    }
+    fun onShowWeakenedCard(view:View){
+        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_weakened))
+        showCardDialog!!.show()
+    }
+    fun onShowBleedingCard(view:View){
+        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_bleeding))
+        showCardDialog!!.show()
+    }
+    fun onShowHiddenCard(view:View){
+        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_hidden))
+        showCardDialog!!.show()
+    }
+
+    fun onShowCard(view:View){
+        when(view.getTag()){
+            hidden->onShowHiddenCard(view)
+            focused->onShowFocusedCard(view)
+            stunned->onShowStunnedCard(view)
+            bleeding->onShowHiddenCard(view)
+            weakened->onShowWeakenedCard(view)
+        }
+    }
+
+    fun showNoActionsLeftToast(){
+        val noActionsLeftToast=Toast(this)
+        noActionsLeftToast!!.duration = Toast.LENGTH_SHORT
+        noActionsLeftToast!!.view = layoutInflater.inflate(R.layout.toast_no_actions_left,character_view_group, false)
+        noActionsLeftToast!!.setGravity(Gravity.CENTER,0,0)
+        noActionsLeftToast!!. show()
     }
 }
 
