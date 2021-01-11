@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/top_panel"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:visibility="visible"
         app:cardElevation="10dp"
         app:cardMaxElevation="10dp"
@@ -86,9 +86,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/activation"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:onClick="onActivate"
         android:visibility="visible"
         app:cardCornerRadius="100dp"
@@ -133,14 +132,13 @@
 
     <ImageView
         android:id="@+id/character_image"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:src="@drawable/character_select_background"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/background_image"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_panel"
         app:srcCompat="@color/black" />
@@ -423,6 +421,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:layout_margin="5dp"
+            android:onClick="onRewards"
             android:padding="5dp"
             app:srcCompat="@drawable/reward_button" />
 

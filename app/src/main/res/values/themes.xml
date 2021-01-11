@@ -4,4 +4,13 @@
         <item name="android:ambientShadowAlpha">0.5</item>
         <item name="android:spotShadowAlpha">0.5</item>
     </style>
+
+    <style name="Theme.ImperialAssault.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ImperialAssault.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ImperialAssault.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

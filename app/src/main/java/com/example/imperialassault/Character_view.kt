@@ -20,10 +20,12 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
+
 import kotlinx.android.synthetic.main.activity_character__view.*
 import kotlinx.android.synthetic.main.dialog_action_menu.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
+import kotlinx.android.synthetic.main.screen_item_select.*
 import java.io.InputStream
 
 
@@ -52,6 +54,7 @@ class Character_view : AppCompatActivity() {
     var actionDialog:Dialog? = null
     var showCardDialog:Dialog? = null
     var endActivationDialog:Dialog? = null
+    var itemSelectScreen:Dialog?=null
 
     var actionsLeft = 0;
 
@@ -250,6 +253,12 @@ class Character_view : AppCompatActivity() {
         endActivationDialog!!.setCanceledOnTouchOutside(true)
         endActivationDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+
+        itemSelectScreen = Dialog(this)
+        itemSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        itemSelectScreen!!.setCancelable(false)
+        itemSelectScreen!!.setContentView(R.layout.screen_item_select)
+        itemSelectScreen!!.setCanceledOnTouchOutside(true)
 
 
     }
@@ -780,7 +789,6 @@ class Character_view : AppCompatActivity() {
                 extend_up_button.animate().alpha(1f)}
             1->{extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)}
-
         }
 
 
@@ -799,8 +807,11 @@ class Character_view : AppCompatActivity() {
                 extend_up_button.animate().alpha(1f)}
             1->{extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)}
-
         }
+    }
+
+    fun onRewards(view: View) {
+        itemSelectScreen!!.show()
     }
 }
 
