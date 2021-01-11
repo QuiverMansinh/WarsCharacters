@@ -51,6 +51,7 @@ class Character_view : AppCompatActivity() {
     var settingsDialog:Dialog? = null
     var actionDialog:Dialog? = null
     var showCardDialog:Dialog? = null
+    var endActivationDialog:Dialog? = null
 
     var actionsLeft = 0;
 
@@ -242,6 +243,12 @@ class Character_view : AppCompatActivity() {
         showCardDialog!!.setCanceledOnTouchOutside(true)
         showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        endActivationDialog = Dialog(this)
+        endActivationDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        endActivationDialog!!.setCancelable(false)
+        endActivationDialog!!.setContentView(R.layout.dialog_end_activation)
+        endActivationDialog!!.setCanceledOnTouchOutside(true)
+        endActivationDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
 
@@ -444,7 +451,8 @@ class Character_view : AppCompatActivity() {
 
 
     fun removeCondition(conditionType : Int){
-        if(actionsLeft>0) {
+
+        if(actionsLeft>0 || conditionType==hidden||conditionType==focused||conditionType==weakened) {
             conditionsActive[conditionType] = false
             updateConditionIcons()
         }
@@ -550,60 +558,50 @@ class Character_view : AppCompatActivity() {
             actionsLeft = 2;
         }
         else{
-            unactive.visibility = View.VISIBLE
-            action_button1.visibility = View.INVISIBLE
-            action_button2.visibility = View.INVISIBLE
-
+            endActivationDialog!!.show()
         }
     }
 
     fun onAction(view: View) {
+
         actionDialog!!.cancel()
 
-        //todo add focus symbol to attack
-        if(conditionsActive[focused]){
-            actionDialog!!.attack_focused.visibility = View.VISIBLE
-        }
-        else{
-            actionDialog!!.attack_focused.visibility = View.GONE
+        if(actionsLeft>0) {
+            //todo add focus symbol to attack
+            if (conditionsActive[focused]) {
+                actionDialog!!.attack_focused.visibility = View.VISIBLE
+            } else {
+                actionDialog!!.attack_focused.visibility = View.GONE
+            }
+
+            if (conditionsActive[hidden]) {
+                actionDialog!!.attack_hidden.visibility = View.VISIBLE
+            } else {
+                actionDialog!!.attack_hidden.visibility = View.GONE
+            }
+
+            //todo add stun symbol and deactivate to move, special and attack
+            if (conditionsActive[stunned]) {
+                actionDialog!!.action_stunned_attack.visibility = View.VISIBLE
+                actionDialog!!.action_stunned_move.visibility = View.VISIBLE
+                actionDialog!!.action_stunned_special.visibility = View.VISIBLE
+                actionDialog!!.action_remove_stun.visibility = View.VISIBLE
+            } else {
+                actionDialog!!.action_stunned_attack.visibility = View.INVISIBLE
+                actionDialog!!.action_stunned_move.visibility = View.INVISIBLE
+                actionDialog!!.action_stunned_special.visibility = View.INVISIBLE
+                actionDialog!!.action_remove_stun.visibility = View.GONE
+            }
+
+            if (conditionsActive[bleeding]) {
+                actionDialog!!.action_remove_bleeding.visibility = View.VISIBLE
+            } else {
+                actionDialog!!.action_remove_bleeding.visibility = View.GONE
+            }
+
+            actionDialog!!.show()
         }
 
-        if(conditionsActive[hidden]){
-            actionDialog!!.attack_hidden.visibility = View.VISIBLE
-        }
-        else{
-            actionDialog!!.attack_hidden.visibility = View.GONE
-        }
-
-        //todo add stun symbol and deactivate to move, special and attack
-        if(conditionsActive[stunned]){
-            actionDialog!!.action_stunned_attack.visibility = View.VISIBLE
-            actionDialog!!.action_stunned_move.visibility = View.VISIBLE
-            actionDialog!!.action_stunned_special.visibility = View.VISIBLE
-            actionDialog!!.action_remove_stun.visibility = View.VISIBLE
-        }
-        else{
-            actionDialog!!.action_stunned_attack.visibility = View.INVISIBLE
-            actionDialog!!.action_stunned_move.visibility = View.INVISIBLE
-            actionDialog!!.action_stunned_special.visibility = View.INVISIBLE
-            actionDialog!!.action_remove_stun.visibility = View.GONE
-        }
-
-        if(conditionsActive[bleeding]){
-            actionDialog!!.action_remove_bleeding.visibility = View.VISIBLE
-        }
-        else{
-            actionDialog!!.action_remove_bleeding.visibility = View.GONE
-        }
-
-        if(conditionsActive[weakened]){
-            actionDialog!!.action_remove_weakened.visibility = View.VISIBLE
-        }
-        else{
-            actionDialog!!.action_remove_weakened.visibility = View.GONE
-        }
-
-        actionDialog!!.show()
     }
 
     fun actionCompleted(){
@@ -617,6 +615,11 @@ class Character_view : AppCompatActivity() {
             if (conditionsActive[bleeding]) {
                 onAddStrain(add_strain)
             }
+        }
+        if(actionsLeft <=0) {
+
+            actionDialog!!.cancel()
+            endActivationDialog!!.show()
         }
     }
 
@@ -636,8 +639,9 @@ class Character_view : AppCompatActivity() {
     fun onMove(view: View) {
         if(actionsLeft>0 ) {
             if(!conditionsActive[stunned]) {
-                onAction(action1)
                 actionCompleted()
+                onAction(action1)
+
             }
         }
         else{
@@ -647,8 +651,9 @@ class Character_view : AppCompatActivity() {
     fun onSpecial(view: View) {
         if(actionsLeft>0) {
             if(!conditionsActive[stunned]) {
-                onAction(action1)
                 actionCompleted()
+                onAction(action1)
+
             }
         }
         else{
@@ -657,8 +662,8 @@ class Character_view : AppCompatActivity() {
     }
     fun onInteract(view: View) {
         if(actionsLeft>0) {
-            onAction(action1)
             actionCompleted()
+            onAction(action1)
         }
         else{
             showNoActionsLeftToast()
@@ -708,15 +713,17 @@ class Character_view : AppCompatActivity() {
         }
     }
 
-    fun onRemoveWeakened(view: View) {
-        if(actionsLeft>0) {
-            removeCondition(weakened)
-            onAction(action1)
-            actionCompleted()
-        }
-        else{
-            showNoActionsLeftToast()
-        }
+
+    fun onEndActivation(view:View){
+        endActivationDialog!!.cancel()
+        removeCondition(weakened)
+        unactive.visibility = View.VISIBLE
+        action_button1.visibility = View.INVISIBLE
+        action_button2.visibility = View.INVISIBLE
+    }
+
+    fun onEndActivationNo(view:View){
+        endActivationDialog!!.cancel()
     }
 
     fun onShowFocusedCard(view:View){
@@ -756,6 +763,44 @@ class Character_view : AppCompatActivity() {
         noActionsLeftToast!!.view = layoutInflater.inflate(R.layout.toast_no_actions_left,character_view_group, false)
         noActionsLeftToast!!.setGravity(Gravity.CENTER,0,0)
         noActionsLeftToast!!. show()
+    }
+
+    var sideMenuState = 0
+    fun onExtendDown(view: View) {
+
+        if(sideMenuState>-1){
+            sideMenuState--
+            kill_tracker_bar.animate().translationYBy(menu_bar.height.toFloat())
+            menu_bar.animate().translationYBy(menu_bar.height.toFloat())
+        }
+        when(sideMenuState){
+            -1->{extend_down_button.animate().alpha(0f);
+                extend_up_button.animate().alpha(1f)}
+            0->{extend_down_button.animate().alpha(1f)
+                extend_up_button.animate().alpha(1f)}
+            1->{extend_down_button.animate().alpha(1f)
+                extend_up_button.animate().alpha(0f)}
+
+        }
+
+
+    }
+    fun onExtendUp(view: View) {
+
+        if(sideMenuState<1){
+            sideMenuState++
+            kill_tracker_bar.animate().translationYBy(-menu_bar.height.toFloat())
+            menu_bar.animate().translationYBy(-menu_bar.height.toFloat())
+        }
+        when(sideMenuState){
+            -1->{extend_down_button.animate().alpha(0f);
+                extend_up_button.animate().alpha(1f)}
+            0->{extend_down_button.animate().alpha(1f)
+                extend_up_button.animate().alpha(1f)}
+            1->{extend_down_button.animate().alpha(1f)
+                extend_up_button.animate().alpha(0f)}
+
+        }
     }
 }
 

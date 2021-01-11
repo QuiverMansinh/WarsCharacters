@@ -97,7 +97,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onMove"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -141,7 +141,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onRest"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -175,7 +175,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onInteract"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -209,7 +209,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onSpecial"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -260,7 +260,7 @@
             android:layout_margin="5dp"
             android:onClick="onRemoveStun"
             android:visibility="visible"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -320,7 +320,7 @@
             android:layout_margin="5dp"
             android:onClick="onRemoveBleeding"
             android:visibility="visible"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -368,65 +368,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/condition_bleeding" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/action_remove_weakened"
-            android:layout_width="180dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:onClick="onRemoveWeakened"
-            android:visibility="visible"
-            app:cardCornerRadius="50dp"
-            app:cardElevation="5dp"
-            app:cardMaxElevation="5dp">
-
-            <ImageView
-                android:id="@+id/imageView18"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_weight="3"
-                    android:fontFamily="@font/agency_fb"
-                    android:gravity="center"
-                    android:shadowColor="@color/black"
-                    android:shadowRadius="10"
-                    android:text="REMOVE"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/remove_weakened_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/remove_weakened_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="1"
-                    android:onClick="onShowWeakenedCard"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/condition_weakened" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

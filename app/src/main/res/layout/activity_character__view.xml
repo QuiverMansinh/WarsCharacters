@@ -143,7 +143,329 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_panel"
-        app:srcCompat="@drawable/icon_villian" />
+        app:srcCompat="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/kill_tracker_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="55dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/menu_bar"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/villian_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/villain_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/icon_villian" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/leader_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/leader_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                app:srcCompat="@drawable/icon_leader" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/vehicle_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/vehicle_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/icon_vehicle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/creature_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/creature_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/icon_creature" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guard_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/guard_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/icon_gaurd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/droid_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/droid_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/icon_droid" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/scum_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/scum_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/icon_scum" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="88dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/trooper_count"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/trooper_button"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/icon_trooper" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/background_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_panel">
+
+        <ImageView
+            android:id="@+id/rewards_button"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/reward_button" />
+
+        <ImageView
+            android:id="@+id/xp_button"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/xpbutton" />
+
+        <ImageView
+            android:id="@+id/item_accessory_button"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_accessory" />
+
+        <ImageView
+            android:id="@+id/item_armour_button"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_armour" />
+
+        <ImageView
+            android:id="@+id/item_melee_button"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_melee" />
+
+        <ImageView
+            android:id="@+id/item_ranged_button"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_ranged" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/wounded"
@@ -163,7 +485,7 @@
         android:id="@+id/rest_animation"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -216,7 +538,7 @@
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
         android:layout_height="128dp"
         android:background="@drawable/bottom_panel"
@@ -514,7 +836,7 @@
         android:textColor="@color/black"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_panel"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -575,6 +897,28 @@
         app:layout_constraintStart_toEndOf="@+id/add_strain"
         app:layout_constraintTop_toTopOf="@+id/add_strain"
         app:srcCompat="@drawable/minus_button" />
+
+    <ImageView
+        android:id="@+id/extend_up_button"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:onClick="onExtendUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/menu_bar"
+        app:srcCompat="@drawable/extension_up" />
+
+    <ImageView
+        android:id="@+id/extend_down_button"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="onExtendDown"
+        app:layout_constraintBottom_toBottomOf="@+id/background_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/extension_down" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_all_conditions"
