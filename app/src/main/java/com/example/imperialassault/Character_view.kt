@@ -18,6 +18,7 @@ import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.alpha
 import androidx.core.widget.ImageViewCompat
 
 import kotlinx.android.synthetic.main.activity_character__view.*
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.screen_item_select.*
 import java.io.InputStream
+import kotlin.random.Random
 
 
 class Character_view : AppCompatActivity() {
@@ -67,6 +69,7 @@ class Character_view : AppCompatActivity() {
     val scum =6
     val trooper =7
 
+    var activated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +96,14 @@ class Character_view : AppCompatActivity() {
         speed.setText("" + character.speed);
 
         when (character.defence_dice) {
-            "white" -> ImageViewCompat.setImageTintList(defence, ColorStateList.valueOf(Color.WHITE))
-            "black" -> ImageViewCompat.setImageTintList(defence, ColorStateList.valueOf(Color.BLACK))
+            "white" -> ImageViewCompat.setImageTintList(
+                defence,
+                ColorStateList.valueOf(Color.WHITE)
+            )
+            "black" -> ImageViewCompat.setImageTintList(
+                defence,
+                ColorStateList.valueOf(Color.BLACK)
+            )
         }
 
 
@@ -137,10 +146,9 @@ class Character_view : AppCompatActivity() {
             true
         }
         add_strain.setOnLongClickListener {
-            if(actionsLeft>0) {
+            if (actionsLeft > 0) {
                 restDialog!!.show()
-            }
-            else{
+            } else {
                 showNoActionsLeftToast()
             }
             true
@@ -253,6 +261,10 @@ class Character_view : AppCompatActivity() {
         showCardDialog!!.setCancelable(false)
         showCardDialog!!.setContentView(R.layout.dialog_show_card)
         showCardDialog!!.setCanceledOnTouchOutside(true)
+        showCardDialog!!.card_image.setOnClickListener {
+            showCardDialog!!.cancel()
+            true
+        }
         showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         endActivationDialog = Dialog(this)
@@ -313,6 +325,8 @@ class Character_view : AppCompatActivity() {
             impactAnim.setVisible(true, true)
             impactAnim.start()
         }
+
+
     }
     fun playRestAnim(){
         rest_animation.visibility = FrameLayout.VISIBLE
@@ -341,7 +355,13 @@ class Character_view : AppCompatActivity() {
                 println(bitmapWidth)
                 bitmap = Bitmap.createBitmap(bitmap, bitmapOffset, 0, bitmapWidth.toInt(), bitmap.height)
                 val frame = BitmapDrawable(resources, bitmap);
-                animation.addFrame(frame, 60)
+                if(type .equals("rest")) {
+                    animation.addFrame(frame, 100)
+                }
+
+            else {
+                animation.addFrame(frame, 70)
+            }
             }
         }
         animation.setOneShot(true);
@@ -371,6 +391,10 @@ class Character_view : AppCompatActivity() {
     fun onAddStrain(view: View) {
         if(character.strain < character.endurance) {
             character.strain++
+            if(minus_strain.alpha==0f){
+                minus_strain.animate().alpha(1f)
+            }
+
             add_strain.setText("" + character.strain)
         }
         else{
@@ -385,6 +409,11 @@ class Character_view : AppCompatActivity() {
             character.strain--
             add_strain.setText("" + character.strain)
         }
+        if(character.strain==0){
+            if(minus_strain.alpha>0f){
+                minus_strain.animate().alpha(0f)
+            }
+        }
 
     }
     fun onAddDamage(view: View) {
@@ -394,8 +423,15 @@ class Character_view : AppCompatActivity() {
     }
 
     fun addDamage():Boolean{
+
+
         if(character.damage < character.health*2) {
             character.damage++
+
+            if(minus_damage.alpha==0f){
+                minus_damage.animate().alpha(1f)
+            }
+
             if(character.damage < character.health) {
 
                 add_damage.setText("" + character.damage)
@@ -404,7 +440,9 @@ class Character_view : AppCompatActivity() {
 
                 character.wounded = character.damage-character.health
                 add_damage.setText("" + character.wounded)
-                wounded.visibility = ImageView.VISIBLE
+                if(wounded.alpha<1) {
+                    wounded.animate().alpha(1f)
+                }
             }
             else{
                 add_damage.setText("" + character.health)
@@ -412,6 +450,18 @@ class Character_view : AppCompatActivity() {
                 slide.setDuration(1500)
                 slide.start()
             }
+            var hitY = ObjectAnimator.ofFloat(character_image,"translationY",0f,20f*Random
+                .nextFloat(),
+                0f,20f*Random.nextFloat(),0f,20f*Random.nextFloat(),0f)
+            hitY .setDuration(300)
+            hitY .start()
+
+            var hitX = ObjectAnimator.ofFloat(character_image,"translationX",0f,-10f*Random
+                .nextFloat(),
+                0f,-10f*Random.nextFloat(),0f,-10f*Random.nextFloat(),0f)
+            hitX .setDuration(300)
+            hitX .start()
+
             return true
         }
         return false
@@ -422,7 +472,7 @@ class Character_view : AppCompatActivity() {
             character.damage--
             if(character.damage < character.health) {
                 add_damage.setText("" + character.damage)
-                wounded.visibility = ImageView.INVISIBLE
+                wounded.animate().alpha(0f)
                 character.wounded = 0;
             }
             else if(character.damage < character.health*2){
@@ -434,15 +484,20 @@ class Character_view : AppCompatActivity() {
             }
 
         }
+        if(character.damage==0){
+             if(minus_damage.alpha>0f){
+                minus_damage.animate().alpha(0f)
+            }
+        }
     }
 
     fun onUnwound(view: View) {
-            playRestAnim()
-            character.damage = 0
-            character.wounded = 0
-            add_damage.setText("" + character.damage)
-            wounded.visibility = ImageView.INVISIBLE
-            unwoundDialog!!.cancel()
+        playRestAnim()
+        character.damage = 0
+        character.wounded = 0
+        add_damage.setText("" + character.damage)
+        wounded.animate().alpha(0f)
+        unwoundDialog!!.cancel()
     }
 
 
@@ -521,7 +576,7 @@ class Character_view : AppCompatActivity() {
             }
         }
         else{
-            show_conditions.visibility = View.INVISIBLE
+            show_conditions.visibility = View.GONE
             show_all_conditions.visibility = View.VISIBLE
         }
 
@@ -577,19 +632,56 @@ class Character_view : AppCompatActivity() {
     }
 
     fun onActivate(view: View) {
-        if(unactive.visibility == View.VISIBLE){
-            unactive.visibility = View.INVISIBLE
+
+        if(!activated){
+            val flipUnactive = ObjectAnimator.ofFloat(unactive,"scaleX",1f,0f,0f,0f)
+            flipUnactive.setDuration(300)
+            flipUnactive.start()
+
+            val flipActive = ObjectAnimator.ofFloat(active,"scaleX",0f,0f,0f,1f)
+            flipActive.setDuration(300)
+            flipActive.start()
+
 
             action1.visibility = View.VISIBLE
             action_button1.visibility = View.VISIBLE
+            action_button1.animate().alpha(1f)
             action2.visibility = View.VISIBLE
             action_button2.visibility = View.VISIBLE
+            action_button2.animate().alpha(1f)
             actionsLeft = 2;
+            activated = true
         }
         else{
-            endActivationDialog!!.show()
+           onEndActivation(view)
         }
     }
+
+    fun onEndActivation(view:View){
+
+        endActivationDialog!!.cancel()
+        removeCondition(weakened)
+        val flipUnactive = ObjectAnimator.ofFloat(unactive,"scaleX",0f,0f,0f,1f)
+        flipUnactive.setDuration(300)
+        flipUnactive.start()
+
+        val flipActive = ObjectAnimator.ofFloat(active,"scaleX",1f,0f,0f,0f)
+        flipActive.setDuration(300)
+        flipActive.start()
+
+        action_button1.animate().alpha(0f)
+        action_button1.visibility = View.GONE
+
+        action_button2.animate().alpha(0f)
+        action_button2.visibility = View.GONE
+        activated = false
+
+    }
+
+    fun onEndActivationNo(view:View){
+        endActivationDialog!!.cancel()
+    }
+
 
     fun onAction(view: View) {
 
@@ -648,7 +740,9 @@ class Character_view : AppCompatActivity() {
         if(actionsLeft <=0) {
 
             actionDialog!!.cancel()
-            endActivationDialog!!.show()
+            if(activated) {
+                endActivationDialog!!.show()
+            }
         }
     }
 
@@ -658,7 +752,7 @@ class Character_view : AppCompatActivity() {
                 removeCondition(focused)
                 removeCondition(hidden)
                 actionCompleted()
-                onAction(action1)
+                onAction(action_complete)
             }
         }
         else{
@@ -669,7 +763,7 @@ class Character_view : AppCompatActivity() {
         if(actionsLeft>0 ) {
             if(!conditionsActive[stunned]) {
                 actionCompleted()
-                onAction(action1)
+                onAction(action_complete)
 
             }
         }
@@ -681,7 +775,7 @@ class Character_view : AppCompatActivity() {
         if(actionsLeft>0) {
             if(!conditionsActive[stunned]) {
                 actionCompleted()
-                onAction(action1)
+                onAction(action_complete)
 
             }
         }
@@ -692,7 +786,7 @@ class Character_view : AppCompatActivity() {
     fun onInteract(view: View) {
         if(actionsLeft>0) {
             actionCompleted()
-            onAction(action1)
+            onAction(action_complete)
         }
         else{
             showNoActionsLeftToast()
@@ -723,7 +817,7 @@ class Character_view : AppCompatActivity() {
     fun onRemoveStun(view: View) {
         if(actionsLeft>0) {
             removeCondition(stunned)
-            onAction(action1)
+            onAction(action_complete)
             actionCompleted()
         }
         else{
@@ -734,7 +828,7 @@ class Character_view : AppCompatActivity() {
     fun onRemoveBleeding(view: View) {
         if(actionsLeft>0) {
             removeCondition(bleeding)
-            onAction(action1)
+            onAction(action_complete)
             actionCompleted()
         }
         else{
@@ -743,17 +837,7 @@ class Character_view : AppCompatActivity() {
     }
 
 
-    fun onEndActivation(view:View){
-        endActivationDialog!!.cancel()
-        removeCondition(weakened)
-        unactive.visibility = View.VISIBLE
-        action_button1.visibility = View.INVISIBLE
-        action_button2.visibility = View.INVISIBLE
-    }
 
-    fun onEndActivationNo(view:View){
-        endActivationDialog!!.cancel()
-    }
 
     fun onShowFocusedCard(view:View){
         showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_focused))
@@ -781,7 +865,7 @@ class Character_view : AppCompatActivity() {
             hidden->onShowHiddenCard(view)
             focused->onShowFocusedCard(view)
             stunned->onShowStunnedCard(view)
-            bleeding->onShowHiddenCard(view)
+            bleeding->onShowBleedingCard(view)
             weakened->onShowWeakenedCard(view)
         }
     }

@@ -11,16 +11,15 @@
         android:id="@+id/background_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="90dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/character_select_background"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/border"
+        app:layout_constraintBottom_toBottomOf="@+id/animations"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rest_animation"
+        app:layout_constraintTop_toTopOf="@+id/animations"
         app:srcCompat="@color/black" />
 
     <ImageView
@@ -33,8 +32,59 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/background_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/background_image"
+        app:layout_constraintTop_toTopOf="@+id/animations"
         app:srcCompat="@android:color/white" />
+
+    <FrameLayout
+        android:id="@+id/animations"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="95dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top_panel">
+
+        <FrameLayout
+            android:id="@+id/impact_animation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/blast_animation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/slice_animation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/rest_animation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/wounded"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="@drawable/wounded_texture"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+        </FrameLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/kill_tracker_bar"
@@ -396,168 +446,122 @@
             app:srcCompat="@drawable/item_ranged" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/wounded"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/wounded_texture"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/background_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/rest_animation"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="90dp"
-        app:layout_constraintBottom_toBottomOf="@+id/border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/slice_animation"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rest_animation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/impact_animation"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rest_animation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/blast_animation"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rest_animation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/border"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/border"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_panel"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="120dp"
         android:background="@drawable/top_panel_segment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activation"
         app:layout_constraintTop_toBottomOf="@+id/border_top">
 
         <ImageButton
             android:id="@+id/settings"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="15dp"
             android:background="@drawable/setting_button"
+            android:src="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@+id/action_button1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/character_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/agency_fb"
-            android:text="Hero"
-            android:textColor="@color/black"
-            android:textSize="32sp"
-            android:textStyle="bold"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="110dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/settings">
 
-        <FrameLayout
-            android:id="@+id/action_button2"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/action_complete_icon"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/character_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:text="Hero"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/action2"
+            <FrameLayout
+                android:id="@+id/action_button1"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
-                android:background="@drawable/action_icon"
-                android:onClick="onAction"
-                android:scaleType="fitCenter"
-                android:visibility="visible" />
-        </FrameLayout>
+                android:layout_marginRight="10dp"
+                android:alpha="0"
+                android:visibility="gone">
 
-        <FrameLayout
-            android:id="@+id/action_button1"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/action_complete_icon"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toStartOf="parent">
+                <ImageView
+                    android:id="@+id/action_complete"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_complete_icon"
+                    android:scaleType="fitCenter" />
 
-            <ImageView
-                android:id="@+id/action1"
+                <ImageView
+                    android:id="@+id/action1"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_icon"
+                    android:onClick="onAction"
+                    android:scaleType="fitCenter" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/action_button2"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
-                android:background="@drawable/action_icon"
-                android:onClick="onAction"
-                android:scaleType="fitCenter" />
-        </FrameLayout>
+                android:layout_weight="1"
+                android:alpha="0"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/action_complete_2"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_complete_icon"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/action2"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_icon"
+                    android:onClick="onAction"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible" />
+
+            </FrameLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activation"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="120dp"
+        android:onClick="onActivate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/border_top">
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="110dp"
+            android:layout_height="0dp"
+            android:background="@drawable/top_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/top_menu" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/active"
@@ -571,9 +575,8 @@
 
         <ImageView
             android:id="@+id/unactive"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:onClick="onActivate"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -608,9 +611,11 @@
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:shadowColor="@color/white"
+            android:shadowRadius="10"
             android:text="4"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
@@ -621,13 +626,15 @@
             android:id="@+id/health"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:shadowColor="@color/white"
+            android:shadowRadius="10"
             android:text="12"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/endurance"
@@ -641,9 +648,11 @@
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:shadowColor="@color/white"
+            android:shadowRadius="10"
             android:text="5"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
@@ -651,8 +660,30 @@
             app:layout_constraintVertical_bias="0.75" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/defence_wrapper"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/stat_box"
+            app:layout_constraintBottom_toBottomOf="@+id/speed"
+            app:layout_constraintStart_toEndOf="@+id/speed"
+            app:layout_constraintTop_toTopOf="@+id/speed">
+
+            <ImageView
+                android:id="@+id/defence"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/dice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="220dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -674,7 +705,7 @@
                 android:id="@+id/insight_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="@+id/name_panel_image"
                 app:layout_constraintStart_toStartOf="@+id/name_panel_image"
                 app:layout_constraintTop_toBottomOf="@+id/name"
@@ -717,13 +748,13 @@
                 android:fontFamily="@font/agency_fb"
                 android:text="Mak Eshka'rey"
                 android:textColor="@color/black"
-                android:textSize="32sp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/name_panel_image"
                 app:layout_constraintStart_toStartOf="@+id/name_panel_image"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.31" />
+                app:layout_constraintVertical_bias="0.26" />
 
 
             <LinearLayout
@@ -809,27 +840,56 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout3"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/stat_box"
-            app:layout_constraintBottom_toBottomOf="@+id/speed"
-            app:layout_constraintStart_toEndOf="@+id/speed"
-            app:layout_constraintTop_toTopOf="@+id/speed">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/agency_fb"
+            android:text="Health"
+            android:textColor="@color/shadow"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/health"
+            app:layout_constraintEnd_toEndOf="@+id/health"
+            app:layout_constraintStart_toStartOf="@+id/health" />
 
-            <ImageView
-                android:id="@+id/defence"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/dice" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/agency_fb"
+            android:text="Endurance"
+            android:textColor="@color/shadow"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/health"
+            app:layout_constraintEnd_toEndOf="@+id/endurance"
+            app:layout_constraintStart_toStartOf="@+id/endurance" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/agency_fb"
+            android:text="Speed"
+            android:textColor="@color/shadow"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/health"
+            app:layout_constraintEnd_toEndOf="@+id/speed"
+            app:layout_constraintStart_toStartOf="@+id/speed" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/agency_fb"
+            android:text="Defence"
+            android:textColor="@color/shadow"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/health"
+            app:layout_constraintEnd_toEndOf="@+id/defence_wrapper"
+            app:layout_constraintStart_toStartOf="@+id/defence_wrapper" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -848,7 +908,7 @@
         android:id="@+id/add_damage"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/damage"
         android:fontFamily="@font/agency_fb"
@@ -867,7 +927,7 @@
         android:id="@+id/add_strain"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/strain"
         android:fontFamily="@font/agency_fb"
@@ -886,7 +946,7 @@
         android:id="@+id/add_condition"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/condition"
         android:fontFamily="@font/agency_fb"
@@ -904,7 +964,7 @@
         android:id="@+id/minus_damage"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginStart="10dp"
+        android:alpha="0"
         android:onClick="onMinusDamage"
         app:layout_constraintBottom_toBottomOf="@+id/add_damage"
         app:layout_constraintStart_toEndOf="@+id/add_damage"
@@ -915,7 +975,7 @@
         android:id="@+id/minus_strain"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginStart="10dp"
+        android:alpha="0"
         android:onClick="onMinusStrain"
         app:layout_constraintBottom_toBottomOf="@+id/add_strain"
         app:layout_constraintStart_toEndOf="@+id/add_strain"
@@ -939,25 +999,25 @@
         android:layout_marginEnd="15dp"
         android:onClick="onExtendDown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rest_animation"
+        app:layout_constraintTop_toTopOf="@+id/bottom_panel"
         app:srcCompat="@drawable/extension_down" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_all_conditions"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/minus_damage"
+        app:layout_constraintBottom_toTopOf="@+id/minus_strain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/hidden_all"
-            android:layout_width="82dp"
-            android:layout_height="82dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowHiddenCard"
             android:tag="0"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
@@ -966,11 +1026,11 @@
 
         <ImageView
             android:id="@+id/focused_all"
-            android:layout_width="82dp"
-            android:layout_height="82dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowFocusedCard"
             android:tag="1"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -979,11 +1039,11 @@
 
         <ImageView
             android:id="@+id/weakened_all"
-            android:layout_width="82dp"
-            android:layout_height="82dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowWeakenedCard"
             android:tag="2"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -992,11 +1052,11 @@
 
         <ImageView
             android:id="@+id/bleeding_all"
-            android:layout_width="82dp"
-            android:layout_height="82dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowBleedingCard"
             android:tag="3"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1007,11 +1067,11 @@
 
         <ImageView
             android:id="@+id/stunned_all"
-            android:layout_width="82dp"
-            android:layout_height="82dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowStunnedCard"
             android:tag="4"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1022,12 +1082,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_conditions"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/minus_damage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="@+id/show_all_conditions"
+        app:layout_constraintEnd_toEndOf="@+id/show_all_conditions"
+        app:layout_constraintStart_toStartOf="@+id/show_all_conditions"
+        app:layout_constraintTop_toTopOf="@+id/show_all_conditions">
 
         <LinearLayout
             android:layout_width="0dp"
