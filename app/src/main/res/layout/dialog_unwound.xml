@@ -13,7 +13,7 @@
         android:onClick="onUnwound"
         android:visibility="visible"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="2dp"
         app:cardElevation="10dp"
         app:cardMaxElevation="10dp"
         app:cardUseCompatPadding="false"

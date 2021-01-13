@@ -9,10 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
-        <activity
-            android:name=".MainActivity2"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.ImperialAssault.NoActionBar"></activity>
+
         <activity android:name=".Character_view" />
         <activity android:name=".Characters_list" />
         <activity android:name=".MainActivity">

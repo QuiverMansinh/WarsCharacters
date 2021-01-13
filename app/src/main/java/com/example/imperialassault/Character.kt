@@ -41,6 +41,9 @@ open class Character {
     //get current image, get extras from stats
     //get current card images
 
+    var killCount = arrayOf(0,0,0,0,0,0,0,0)
+    // villian, leader, vehicleKillCount,creature,  guard, droid, scum, trooper
+
 
     fun loadImages(context: Context){
         tierImages = loadTierImages(context)

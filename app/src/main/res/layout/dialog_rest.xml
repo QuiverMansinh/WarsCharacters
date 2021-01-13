@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:onClick="onRest"
         android:visibility="visible"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -15,10 +15,9 @@ import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 
 import kotlinx.android.synthetic.main.activity_character__view.*
@@ -55,8 +54,18 @@ class Character_view : AppCompatActivity() {
     var showCardDialog:Dialog? = null
     var endActivationDialog:Dialog? = null
     var itemSelectScreen:Dialog?=null
+    var xpSelectScreen:Dialog?=null
 
     var actionsLeft = 0;
+    var killCounts = ArrayList<TextView>()
+    val villain =0
+    val leader =1
+    val vehicle =2
+    val creature =3
+    val guard =4
+    val droid =5
+    val scum =6
+    val trooper =7
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -159,17 +168,17 @@ class Character_view : AppCompatActivity() {
 
         hidden_all.setOnLongClickListener {
             removeCondition(hidden)
-            actionCompleted()
+
             true
         }
         focused_all.setOnLongClickListener {
             removeCondition(focused)
-            actionCompleted()
+
             true
         }
         weakened_all.setOnLongClickListener {
             removeCondition(weakened)
-            actionCompleted()
+
             true
         }
         bleeding_all.setOnLongClickListener {
@@ -254,21 +263,35 @@ class Character_view : AppCompatActivity() {
         endActivationDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
-        itemSelectScreen = Dialog(this)
+        itemSelectScreen = Dialog(this,android.R.style.Theme_Material_NoActionBar )
         itemSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         itemSelectScreen!!.setCancelable(false)
         itemSelectScreen!!.setContentView(R.layout.screen_item_select)
         itemSelectScreen!!.setCanceledOnTouchOutside(true)
 
+        xpSelectScreen = Dialog(this,android.R.style.Theme_Material_NoActionBar)
+        xpSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        xpSelectScreen!!.setCancelable(false)
+        xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
+        xpSelectScreen!!.setCanceledOnTouchOutside(true)
 
+
+        killCounts.add(villain_count)
+        killCounts.add(leader_count)
+        killCounts.add(vehicle_count)
+        killCounts.add(creature_count)
+        killCounts.add(guard_count)
+        killCounts.add(droid_count)
+        killCounts.add(scum_count)
+        killCounts.add(trooper_count)
     }
 
 
     fun setDiceColor(dice: ImageView, color: Char) {
         when(color){
-            'B' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(getResources().getColor(R.color.dice_blue, null)))
-            'G' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(getResources().getColor(R.color.dice_green, null)))
-            'Y' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(getResources().getColor(R.color.dice_yellow, null)))
+            'B' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_blue)))
+            'G' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_green)))
+            'Y' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_yellow)))
             ' ' -> dice.visibility = ImageView.GONE
         }
     }
@@ -810,8 +833,67 @@ class Character_view : AppCompatActivity() {
         }
     }
 
-    fun onRewards(view: View) {
+    fun onReward(view: View) {
         itemSelectScreen!!.show()
+        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(0)
+        currentTab!!.select()
     }
+    fun onAccessory(view: View) {
+        itemSelectScreen!!.show()
+        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(1)
+        currentTab!!.select()
+    }
+    fun onArmour(view: View) {
+        itemSelectScreen!!.show()
+        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(2)
+        currentTab!!.select()
+    }
+    fun onMelee(view: View) {
+        itemSelectScreen!!.show()
+        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(3)
+        currentTab!!.select()
+    }
+    fun onRange(view: View) {
+        itemSelectScreen!!.show()
+        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(4)
+        currentTab!!.select()
+    }
+    fun onXPScreen(view: View) {
+        xpSelectScreen!!.show()
+
+    }
+
+    fun killCountUp(type:Int){
+        var killCount = Integer.parseInt(killCounts[type].text.toString())
+        killCount++
+        killCounts[type].setText(""+killCount)
+    }
+    fun killCountDown(type:Int){
+        var killCount = Integer.parseInt(killCounts[type].text.toString())
+        if(killCount>0) {
+            killCount--
+            killCounts[type].setText("" + killCount)
+        }
+    }
+
+    fun villainKillDown(view: View) {killCountDown(villain)}
+    fun villainKillUp(view: View) {killCountUp(villain)}
+    fun leaderKillDown(view: View) {killCountDown(leader)}
+    fun leaderKillUp(view: View) {killCountUp(leader)}
+    fun vehicleKillDown(view: View) {killCountDown(vehicle)}
+    fun vehicleKillUp(view: View) {killCountUp(vehicle)}
+    fun creatureKillDown(view: View) {killCountDown(creature)}
+    fun creatureKillUp(view: View) {killCountUp(creature)}
+    fun guardKillDown(view: View) {killCountDown(guard)}
+    fun guardKillUp(view: View) {killCountUp(guard)}
+    fun droidKillDown(view: View) {killCountDown(droid)}
+    fun droidKillUp(view: View) {killCountUp(droid)}
+    fun scumKillDown(view: View) {killCountDown(scum)}
+    fun scumKillUp(view: View) {killCountUp(scum)}
+    fun trooperKillDown(view: View) {killCountDown(trooper)}
+    fun trooperKillUp(view: View) {killCountUp(trooper)}
+
+
+
 }
 
