@@ -26,7 +26,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onAttack"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -97,8 +97,8 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onMove"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="5dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -141,7 +141,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onRest"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -175,7 +175,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onInteract"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -209,7 +209,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onSpecial"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -260,7 +260,7 @@
             android:layout_margin="5dp"
             android:onClick="onRemoveStun"
             android:visibility="visible"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
@@ -320,7 +320,7 @@
             android:layout_margin="5dp"
             android:onClick="onRemoveBleeding"
             android:visibility="visible"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 

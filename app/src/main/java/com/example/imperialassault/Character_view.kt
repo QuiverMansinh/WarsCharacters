@@ -290,8 +290,8 @@ class Character_view : AppCompatActivity() {
     fun setDiceColor(dice: ImageView, color: Char) {
         when(color){
             'B' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_blue)))
-            'G' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_blue)))
-            'Y' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_blue)))
+            'G' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_green)))
+            'Y' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_yellow)))
             ' ' -> dice.visibility = ImageView.GONE
         }
     }
