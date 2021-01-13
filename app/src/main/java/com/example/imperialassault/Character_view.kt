@@ -434,9 +434,6 @@ class Character_view : AppCompatActivity() {
             }
 
         }
-
-
-
     }
 
     fun onUnwound(view: View) {
