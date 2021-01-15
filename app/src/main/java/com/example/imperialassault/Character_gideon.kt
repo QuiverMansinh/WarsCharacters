@@ -3,22 +3,22 @@ package com.example.imperialassault
 import android.content.Context
 import android.graphics.Bitmap
 
-class Character_mak : Character {
+class Character_gideon : Character {
 
     constructor(context: Context){
         //default values
-        name = "Mak Eshka'rey"
-        name_short = "mak"
+        name = "Gideon Argus"
+        name_short = "gideon"
         type = "Hero"
-        defence_dice = "white"
+        defence_dice = "black"
 
         strength = "BG "
-        insight = "BG "
-        tech = "BGY"
+        insight = "BGY"
+        tech = "BG "
 
         strengthWounded = "BR "
-        insightWounded  = "BR "
-        techWounded  = "BGR"
+        insightWounded  = "BGR"
+        techWounded  = "BR "
 
         background = "interior"
         health_default = 10

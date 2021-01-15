@@ -94,12 +94,26 @@ class Character_view : AppCompatActivity() {
 
         if (!load) {
             when (characterName) {
-                "mak" -> {
-                    character = Character_mak(this)
-                }
-
+                "biv" -> { character = Character_biv(this) }
+                "davith" -> { character = Character_davith(this) }
+                "diala" -> { character = Character_diala(this) }
+                "drokdatta" -> { character = Character_drokkatta(this) }
+                "fenn" -> { character = Character_fenn(this) }
+                "gaarkhan" -> { character = Character_gaarkhan(this) }
+                "gideon" -> { character = Character_gideon(this) }
+                "jarrod" -> { character = Character_jarrod(this) }
+                "jyn" -> { character = Character_jyn(this) }
+                "loku" -> { character = Character_loku(this) }
+                "kotun" -> { character = Character_kotun(this) }
+                "mak" -> { character = Character_mak(this) }
+                "mhd19" -> { character = Character_mhd19(this) }
+                "murne" -> { character = Character_murne(this) }
+                "onar" -> { character = Character_onar(this) }
+                "saska" -> { character = Character_saska(this) }
+                "shyla" -> { character = Character_shyla(this) }
+                "verena" -> { character = Character_verena(this) }
+                "vinto" -> { character = Character_vinto(this) }
             }
-
 
         } else {
 
@@ -118,6 +132,8 @@ class Character_view : AppCompatActivity() {
                 defence,
                 ColorStateList.valueOf(Color.BLACK)
             )
+            "" -> defence.visibility=View.INVISIBLE
+
         }
 
 
@@ -134,6 +150,7 @@ class Character_view : AppCompatActivity() {
         setDiceColor(tech2, character.tech[1]);
         setDiceColor(tech3, character.tech[2]);
 
+        character_type.setText(character.type)
         character_image.setImageBitmap(character.getCharacterImage())
         background_image.setImageBitmap(character.getBackgroundImage(this))
 
@@ -421,6 +438,7 @@ class Character_view : AppCompatActivity() {
             'B' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_blue)))
             'G' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_green)))
             'Y' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_yellow)))
+            'R' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_red)))
             ' ' -> dice.visibility = ImageView.GONE
         }
     }
@@ -564,6 +582,20 @@ class Character_view : AppCompatActivity() {
                 add_damage.setText("" + character.wounded)
                 if(!isWounded) {
                     wounded.animate().alpha(1f)
+
+                    setDiceColor(strength1, character.strengthWounded[0]);
+                    setDiceColor(strength2, character.strengthWounded[1]);
+                    setDiceColor(strength3, character.strengthWounded[2]);
+
+                    setDiceColor(insight1, character.insightWounded[0]);
+                    setDiceColor(insight2, character.insightWounded[1]);
+                    setDiceColor(insight3, character.insightWounded[2]);
+
+                    setDiceColor(tech1, character.techWounded[0]);
+                    setDiceColor(tech2, character.techWounded[1]);
+                    setDiceColor(tech3, character.techWounded[2]);
+
+
                     character.timesWounded++
                     isWounded = true
                 }
@@ -597,8 +629,24 @@ class Character_view : AppCompatActivity() {
             character.damage--
             if(character.damage < character.health) {
                 add_damage.setText("" + character.damage)
-                wounded.animate().alpha(0f)
-                character.wounded = 0;
+                if(isWounded) {
+                    character.wounded = 0
+                    wounded.animate().alpha(0f)
+
+                    setDiceColor(strength1, character.strength[0]);
+                    setDiceColor(strength2, character.strength[1]);
+                    setDiceColor(strength3, character.strength[2]);
+
+                    setDiceColor(insight1, character.insight[0]);
+                    setDiceColor(insight2, character.insight[1]);
+                    setDiceColor(insight3, character.insight[2]);
+
+                    setDiceColor(tech1, character.tech[0]);
+                    setDiceColor(tech2, character.tech[1]);
+                    setDiceColor(tech3, character.tech[2]);
+
+                    isWounded = false
+                }
             }
             else if(character.damage < character.health*2){
                 character.wounded = character.damage-character.health
@@ -622,6 +670,21 @@ class Character_view : AppCompatActivity() {
         character.wounded = 0
         add_damage.setText("" + character.damage)
         wounded.animate().alpha(0f)
+
+        setDiceColor(strength1, character.strength[0]);
+        setDiceColor(strength2, character.strength[1]);
+        setDiceColor(strength3, character.strength[2]);
+
+        setDiceColor(insight1, character.insight[0]);
+        setDiceColor(insight2, character.insight[1]);
+        setDiceColor(insight3, character.insight[2]);
+
+        setDiceColor(tech1, character.tech[0]);
+        setDiceColor(tech2, character.tech[1]);
+        setDiceColor(tech3, character.tech[2]);
+
+        isWounded = false
+
         unwoundDialog!!.cancel()
     }
 

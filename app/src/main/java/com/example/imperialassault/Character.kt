@@ -10,9 +10,15 @@ open class Character {
     var name_short = ""
     var type = ""
     var defence_dice = ""
+
     var strength = ""
     var insight = ""
     var tech = ""
+
+    var strengthWounded = ""
+    var insightWounded = ""
+    var techWounded = ""
+
     var background = "interior"
     var health_default = 10
     var endurance_default = 5

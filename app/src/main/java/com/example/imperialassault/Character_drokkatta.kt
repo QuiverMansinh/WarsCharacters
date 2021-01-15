@@ -3,30 +3,30 @@ package com.example.imperialassault
 import android.content.Context
 import android.graphics.Bitmap
 
-class Character_mak : Character {
+class Character_drokkatta : Character {
 
     constructor(context: Context){
         //default values
-        name = "Mak Eshka'rey"
-        name_short = "mak"
+        name = "Drokkatta"
+        name_short = "drokkatta"
         type = "Hero"
-        defence_dice = "white"
+        defence_dice = "black"
 
-        strength = "BG "
-        insight = "BG "
-        tech = "BGY"
+        strength = "BGG"
+        insight = "BB "
+        tech = "GG "
 
-        strengthWounded = "BR "
+        strengthWounded = "BRG"
         insightWounded  = "BR "
-        techWounded  = "BGR"
+        techWounded  = "RG "
 
         background = "interior"
-        health_default = 10
-        endurance_default = 5
+        health_default = 13
+        endurance_default = 4
         speed_default = 4
 
-        health = 10
-        endurance = 5
+        health = 13
+        endurance = 4
         speed = 4
 
         xp = 0

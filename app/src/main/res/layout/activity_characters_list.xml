@@ -25,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="biv"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -54,7 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="gaarkhan"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -83,7 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="mak"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -98,6 +101,7 @@
                         android:adjustViewBounds="true"
                         android:background="@drawable/list_background"
                         android:scaleType="fitCenter"
+                        android:tag="mak"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +116,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="saska"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -127,6 +132,7 @@
                         android:adjustViewBounds="true"
                         android:background="@drawable/list_background"
                         android:scaleType="fitCenter"
+                        android:tag="saska"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -141,7 +147,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="davith"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -156,6 +163,7 @@
                         android:adjustViewBounds="true"
                         android:background="@drawable/list_background"
                         android:scaleType="fitCenter"
+                        android:tag="davith"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +178,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="gideon"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -199,7 +208,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="mhd19"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -228,7 +238,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="shyla"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -257,7 +268,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="diala"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -286,7 +298,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="jyn"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -315,7 +328,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="murne"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -344,7 +358,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="verena"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -373,7 +388,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="fenn"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -402,7 +418,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="loku"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -431,7 +448,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="onar"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -460,7 +478,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="vinto"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -489,7 +508,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="kotun"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -518,7 +538,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="jarrod"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -547,7 +568,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="orok"
+                android:visibility="invisible"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -576,7 +599,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="ct"
+                android:visibility="invisible"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -605,7 +630,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:onClick="onSelectMak"
+                android:onClick="onSelect"
+                android:tag="tress"
+                android:visibility="invisible"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 

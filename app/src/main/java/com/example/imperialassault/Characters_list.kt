@@ -60,10 +60,11 @@ class Characters_list : AppCompatActivity() {
         }
     }
 
-    fun onSelectMak(view: View) {
+    fun onSelect(view: View) {
         val intent = Intent(this,Character_view::class.java)
-        intent.putExtra("CharacterName","mak")
+        intent.putExtra("CharacterName",view.tag.toString())
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
+
 }

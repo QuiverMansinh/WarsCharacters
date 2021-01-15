@@ -3,31 +3,31 @@ package com.example.imperialassault
 import android.content.Context
 import android.graphics.Bitmap
 
-class Character_mak : Character {
+class Character_shyla : Character {
 
     constructor(context: Context){
         //default values
-        name = "Mak Eshka'rey"
-        name_short = "mak"
+        name = "Shyla Varad"
+        name_short = "shyla"
         type = "Hero"
-        defence_dice = "white"
+        defence_dice = "black"
 
-        strength = "BG "
-        insight = "BG "
-        tech = "BGY"
+        strength = "BBG"
+        insight = "GG "
+        tech = "BY "
 
-        strengthWounded = "BR "
-        insightWounded  = "BR "
-        techWounded  = "BGR"
+        strengthWounded = "BBR"
+        insightWounded  = "GR "
+        techWounded  = "RR "
 
         background = "interior"
-        health_default = 10
-        endurance_default = 5
-        speed_default = 4
+        health_default = 12
+        endurance_default = 4
+        speed_default = 5
 
-        health = 10
-        endurance = 5
-        speed = 4
+        health = 12
+        endurance = 4
+        speed = 5
 
         xp = 0
         damage = 0
