@@ -18,11 +18,12 @@ import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.alpha
 import androidx.core.widget.ImageViewCompat
 
 import kotlinx.android.synthetic.main.activity_character__view.*
 import kotlinx.android.synthetic.main.dialog_action_menu.*
+import kotlinx.android.synthetic.main.dialog_assist.*
+import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.screen_item_select.*
@@ -51,10 +52,17 @@ class Character_view : AppCompatActivity() {
     var restDialog:Dialog? = null
     var unwoundDialog:Dialog? = null
     var conditionsDialog:Dialog? = null
-    var settingsDialog:Dialog? = null
     var actionDialog:Dialog? = null
     var showCardDialog:Dialog? = null
     var endActivationDialog:Dialog? = null
+    var assistDialog:Dialog? = null
+    var optionsDialog:Dialog? = null
+    var bioDialog:Dialog? = null
+    var saveDialog:Dialog? = null
+    var backgroundDialog:Dialog? = null
+    var creditsScreen:Dialog? = null
+    var settingsScreen:Dialog? = null
+    var statsScreen:Dialog? = null
     var itemSelectScreen:Dialog?=null
     var xpSelectScreen:Dialog?=null
 
@@ -70,6 +78,7 @@ class Character_view : AppCompatActivity() {
     val trooper =7
 
     var activated = false
+    var isWounded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -242,12 +251,12 @@ class Character_view : AppCompatActivity() {
         }
         conditionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        settingsDialog = Dialog(this)
-        settingsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        settingsDialog!!.setCancelable(false)
-        settingsDialog!!.setContentView(R.layout.dialog_settings_menu)
-        settingsDialog!!.setCanceledOnTouchOutside(true)
-        settingsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        optionsDialog = Dialog(this)
+        optionsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        optionsDialog!!.setCancelable(false)
+        optionsDialog!!.setContentView(R.layout.dialog_options)
+        optionsDialog!!.setCanceledOnTouchOutside(true)
+        optionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         actionDialog = Dialog(this)
         actionDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -258,14 +267,15 @@ class Character_view : AppCompatActivity() {
 
         showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        showCardDialog!!.setCancelable(false)
+
         showCardDialog!!.setContentView(R.layout.dialog_show_card)
+        showCardDialog!!.setCancelable(false)
         showCardDialog!!.setCanceledOnTouchOutside(true)
+        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         showCardDialog!!.card_image.setOnClickListener {
             showCardDialog!!.cancel()
             true
         }
-        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         endActivationDialog = Dialog(this)
         endActivationDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -274,6 +284,56 @@ class Character_view : AppCompatActivity() {
         endActivationDialog!!.setCanceledOnTouchOutside(true)
         endActivationDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        assistDialog = Dialog(this)
+        assistDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        assistDialog!!.setCancelable(false)
+        assistDialog!!.setContentView(R.layout.dialog_assist)
+        assistDialog!!.setCanceledOnTouchOutside(true)
+        assistDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        bioDialog = Dialog(this)
+        bioDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        bioDialog!!.setCancelable(false)
+        bioDialog!!.setContentView(R.layout.dialog_bio)
+        bioDialog!!.setCanceledOnTouchOutside(true)
+        bioDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        saveDialog = Dialog(this)
+        saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        saveDialog!!.setCancelable(false)
+        saveDialog!!.setContentView(R.layout.dialog_save)
+        saveDialog!!.setCanceledOnTouchOutside(true)
+        saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+
+        backgroundDialog = Dialog(this)
+        backgroundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        backgroundDialog!!.setCancelable(false)
+        backgroundDialog!!.setContentView(R.layout.dialog_background)
+        backgroundDialog!!.setCanceledOnTouchOutside(true)
+        backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        settingsScreen= Dialog(this,android.R.style.Theme_Material_NoActionBar )
+        settingsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        settingsScreen!!.setCancelable(false)
+        settingsScreen!!.setContentView(R.layout.screen_settings)
+        settingsScreen!!.setCanceledOnTouchOutside(true)
+        settingsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        statsScreen = Dialog(this,android.R.style.Theme_Material_NoActionBar )
+        statsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        statsScreen!!.setCancelable(false)
+        statsScreen!!.setContentView(R.layout.screen_stats)
+        statsScreen!!.setCanceledOnTouchOutside(true)
+        statsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        creditsScreen = Dialog(this,android.R.style.Theme_Material_NoActionBar )
+        creditsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        creditsScreen!!.setCancelable(false)
+        creditsScreen!!.setContentView(R.layout.screen_stats)
+        creditsScreen!!.setCanceledOnTouchOutside(true)
+        creditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         itemSelectScreen = Dialog(this,android.R.style.Theme_Material_NoActionBar )
         itemSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -289,13 +349,65 @@ class Character_view : AppCompatActivity() {
 
 
         killCounts.add(villain_count)
+       villain_button.setOnLongClickListener {
+           assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_villian))
+           assistDialog!!.assist_button.setTag(villain)
+            assistDialog!!.show()
+            true
+        }
         killCounts.add(leader_count)
+        leader_button.setOnLongClickListener {
+            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_leader))
+            assistDialog!!.assist_button.setTag(leader)
+            assistDialog!!.show()
+            true
+        }
         killCounts.add(vehicle_count)
+        vehicle_button.setOnLongClickListener {
+            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable
+                .icon_vehicle))
+            assistDialog!!.assist_button.setTag(vehicle)
+            assistDialog!!.show()
+            true
+        }
         killCounts.add(creature_count)
+        creature_button.setOnLongClickListener {
+            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_creature))
+            assistDialog!!.assist_button.setTag(creature)
+            assistDialog!!.show()
+            true
+        }
         killCounts.add(guard_count)
+        guard_button.setOnLongClickListener {
+            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_gaurd))
+            assistDialog!!.assist_button.setTag(guard)
+            assistDialog!!.show()
+            true
+        }
         killCounts.add(droid_count)
+       droid_button.setOnLongClickListener {
+            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_droid))
+           assistDialog!!.assist_button.setTag(droid)
+            assistDialog!!.show()
+            true
+        }
         killCounts.add(scum_count)
+        scum_button.setOnLongClickListener {
+            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_scum))
+            assistDialog!!.assist_button.setTag(scum)
+            assistDialog!!.show()
+            true
+        }
         killCounts.add(trooper_count)
+        trooper_button.setOnLongClickListener {
+            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable
+                .icon_trooper))
+            assistDialog!!.assist_button.setTag(trooper)
+            assistDialog!!.show()
+            true
+        }
+
+
     }
 
 
@@ -391,11 +503,14 @@ class Character_view : AppCompatActivity() {
     fun onAddStrain(view: View) {
         if(character.strain < character.endurance) {
             character.strain++
+            character.strainTaken++
+
             if(minus_strain.alpha==0f){
                 minus_strain.animate().alpha(1f)
             }
 
             add_strain.setText("" + character.strain)
+
         }
         else{
             addDamage()
@@ -419,6 +534,7 @@ class Character_view : AppCompatActivity() {
     fun onAddDamage(view: View) {
         if(addDamage()) {
             playDamageAnim()
+
         }
     }
 
@@ -427,6 +543,7 @@ class Character_view : AppCompatActivity() {
 
         if(character.damage < character.health*2) {
             character.damage++
+            character.damageTaken++
 
             if(minus_damage.alpha==0f){
                 minus_damage.animate().alpha(1f)
@@ -440,9 +557,12 @@ class Character_view : AppCompatActivity() {
 
                 character.wounded = character.damage-character.health
                 add_damage.setText("" + character.wounded)
-                if(wounded.alpha<1) {
+                if(!isWounded) {
                     wounded.animate().alpha(1f)
+                    character.timesWounded++
+                    isWounded = true
                 }
+
             }
             else{
                 add_damage.setText("" + character.health)
@@ -514,22 +634,51 @@ class Character_view : AppCompatActivity() {
 
     fun onWeakened(view: View) {
         conditionsActive[weakened] =!conditionsActive[weakened]
+        if(conditionsActive[weakened]) {
+            character.timesWeakend++
+        }
+        else{
+            character.timesWeakend--
+        }
         updateConditionIcons()
     }
     fun onBleeding(view: View) {
         conditionsActive[bleeding] =!conditionsActive[bleeding]
+        if(conditionsActive[bleeding]) {
+            character.timesBleeding++
+        }else{
+            character.timesBleeding--
+        }
         updateConditionIcons()
     }
     fun onStunned(view: View) {
         conditionsActive[stunned] =!conditionsActive[stunned]
+        if(conditionsActive[stunned]) {
+            character.timesStunned++
+        }
+        else{
+            character.timesStunned--
+        }
         updateConditionIcons()
     }
     fun onHidden(view: View) {
         conditionsActive[hidden] =!conditionsActive[hidden]
+        if(conditionsActive[hidden]) {
+            character.timesHidden++
+        }
+        else{
+            character.timesHidden--
+        }
         updateConditionIcons()
     }
     fun onFocused(view: View) {
         conditionsActive[focused] =!conditionsActive[focused]
+        if(conditionsActive[focused]) {
+            character.timesFocused++
+        }
+        else{
+            character.timesFocused--
+        }
         updateConditionIcons()
     }
 
@@ -651,6 +800,8 @@ class Character_view : AppCompatActivity() {
             action_button2.animate().alpha(1f)
             actionsLeft = 2;
             activated = true
+
+            character.activated++
         }
         else{
            onEndActivation(view)
@@ -753,6 +904,7 @@ class Character_view : AppCompatActivity() {
                 removeCondition(hidden)
                 actionCompleted()
                 onAction(action_complete)
+                character.attacksMade++
             }
         }
         else{
@@ -764,7 +916,7 @@ class Character_view : AppCompatActivity() {
             if(!conditionsActive[stunned]) {
                 actionCompleted()
                 onAction(action_complete)
-
+                character.movesTaken++
             }
         }
         else{
@@ -776,7 +928,7 @@ class Character_view : AppCompatActivity() {
             if(!conditionsActive[stunned]) {
                 actionCompleted()
                 onAction(action_complete)
-
+                character.specialActions++
             }
         }
         else{
@@ -787,6 +939,7 @@ class Character_view : AppCompatActivity() {
         if(actionsLeft>0) {
             actionCompleted()
             onAction(action_complete)
+            character.interactsUsed++
         }
         else{
             showNoActionsLeftToast()
@@ -804,7 +957,7 @@ class Character_view : AppCompatActivity() {
             }
             add_strain.setText("" + character.strain)
             playRestAnim()
-
+            character.timesRested++
             restDialog!!.cancel()
 
             actionCompleted()
@@ -888,11 +1041,17 @@ class Character_view : AppCompatActivity() {
         }
         when(sideMenuState){
             -1->{extend_down_button.animate().alpha(0f);
-                extend_up_button.animate().alpha(1f)}
+                extend_up_button.animate().alpha(1f)
+                kill_tracker_bar.animate().translationY(menu_bar.height.toFloat())
+                menu_bar.animate().translationY(menu_bar.height.toFloat())}
             0->{extend_down_button.animate().alpha(1f)
-                extend_up_button.animate().alpha(1f)}
+                extend_up_button.animate().alpha(1f)
+                kill_tracker_bar.animate().translationY(0f)
+                menu_bar.animate().translationY(0f)}
             1->{extend_down_button.animate().alpha(1f)
-                extend_up_button.animate().alpha(0f)}
+                extend_up_button.animate().alpha(0f)
+                kill_tracker_bar.animate().translationY(-menu_bar.height.toFloat())
+                menu_bar.animate().translationY(-menu_bar.height.toFloat())}
         }
 
 
@@ -906,12 +1065,19 @@ class Character_view : AppCompatActivity() {
         }
         when(sideMenuState){
             -1->{extend_down_button.animate().alpha(0f);
-                extend_up_button.animate().alpha(1f)}
+                extend_up_button.animate().alpha(1f)
+                kill_tracker_bar.animate().translationY(menu_bar.height.toFloat())
+                menu_bar.animate().translationY(menu_bar.height.toFloat())}
             0->{extend_down_button.animate().alpha(1f)
-                extend_up_button.animate().alpha(1f)}
+                extend_up_button.animate().alpha(1f)
+                kill_tracker_bar.animate().translationY(0f)
+                menu_bar.animate().translationY(0f)}
             1->{extend_down_button.animate().alpha(1f)
-                extend_up_button.animate().alpha(0f)}
+                extend_up_button.animate().alpha(0f)
+                kill_tracker_bar.animate().translationY(-menu_bar.height.toFloat())
+                menu_bar.animate().translationY(-menu_bar.height.toFloat())}
         }
+
     }
 
     fun onReward(view: View) {
@@ -957,6 +1123,7 @@ class Character_view : AppCompatActivity() {
         }
     }
 
+    //TODO add to stats
     fun villainKillDown(view: View) {killCountDown(villain)}
     fun villainKillUp(view: View) {killCountUp(villain)}
     fun leaderKillDown(view: View) {killCountDown(leader)}
@@ -974,7 +1141,86 @@ class Character_view : AppCompatActivity() {
     fun trooperKillDown(view: View) {killCountDown(trooper)}
     fun trooperKillUp(view: View) {killCountUp(trooper)}
 
+    //TODO add to stats
+    fun onAssist(view: View) {
+        when(view.tag){
+            villain->{character.assistCount[villain]++}
+            leader->{character.assistCount[leader]++}
+            vehicle->{character.assistCount[vehicle]++}
+            creature->{character.assistCount[creature]++}
+            guard->{character.assistCount[guard]++}
+            droid->{character.assistCount[droid]++}
+            scum->{character.assistCount[scum]++}
+            trooper->{character.assistCount[trooper]++}
+        }
+        assistDialog!!.cancel()
+    }
 
+    fun onShowOptions(view: View) {
+        optionsDialog!!.show()
+    }
 
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        println("save")
+    }
+
+    fun onBiography(view: View) {
+        optionsDialog!!.cancel()
+        bioDialog!!.bio_title.setText(character.bio_title)
+        bioDialog!!.bio_quote.setText(character.bio_quote)
+        bioDialog!!.bio_text.setText(character.bio_text)
+        bioDialog!!.show()
+    }
+    fun onPower(view: View) {
+        optionsDialog!!.cancel()
+        if(!isWounded) {
+            showCardDialog!!.card_image.setImageBitmap(character.power)
+        }
+        else{
+            showCardDialog!!.card_image.setImageBitmap(character.power_wounded)
+        }
+
+        showCardDialog!!.show()
+    }
+    fun onSave(view: View) {
+        optionsDialog!!.cancel()
+        saveDialog!!.show()
+    }
+    fun onBackground(view: View) {
+        optionsDialog!!.cancel()
+        backgroundDialog!!.show()
+    }
+    fun onSettings(view: View) {
+        optionsDialog!!.cancel()
+        settingsScreen!!.show()
+    }
+    fun onStatistics(view: View) {
+        optionsDialog!!.cancel()
+        statsScreen!!.show()
+    }
+
+    fun onCredits(view: View) {
+        optionsDialog!!.cancel()
+        creditsScreen!!.show()
+    }
+
+    fun onBackgroundSnow(view: View) {
+        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_snow.png"))
+
+    }
+    fun onBackgroundJungle(view: View) {
+        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_jungle.png"))
+    }
+    fun onBackgroundDesert(view: View) {
+        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_desert.png"))
+    }
+    fun onBackgroundInterior(view: View) {
+        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_interior.png"))
+    }
+
+    fun onSaveCharacter(view: View) {
+        saveDialog!!.cancel()
+    }
 }
 

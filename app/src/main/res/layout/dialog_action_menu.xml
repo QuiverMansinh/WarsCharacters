@@ -27,7 +27,7 @@
             android:background="@android:color/transparent"
             android:onClick="onAttack"
             app:cardCornerRadius="2dp"
-            app:cardElevation="5dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -98,7 +98,7 @@
             android:background="@android:color/transparent"
             android:onClick="onMove"
             app:cardCornerRadius="2dp"
-            app:cardElevation="0dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -142,7 +142,7 @@
             android:background="@android:color/transparent"
             android:onClick="onRest"
             app:cardCornerRadius="2dp"
-            app:cardElevation="5dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -176,7 +176,7 @@
             android:background="@android:color/transparent"
             android:onClick="onInteract"
             app:cardCornerRadius="2dp"
-            app:cardElevation="5dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -210,7 +210,7 @@
             android:background="@android:color/transparent"
             android:onClick="onSpecial"
             app:cardCornerRadius="2dp"
-            app:cardElevation="5dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -249,7 +249,7 @@
             android:layout_width="180dp"
             android:layout_height="44dp"
             app:cardBackgroundColor="@android:color/transparent"
-            app:cardElevation="0dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="0dp" />
 
         <androidx.cardview.widget.CardView
@@ -261,7 +261,7 @@
             android:onClick="onRemoveStun"
             android:visibility="visible"
             app:cardCornerRadius="2dp"
-            app:cardElevation="5dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -321,7 +321,7 @@
             android:onClick="onRemoveBleeding"
             android:visibility="visible"
             app:cardCornerRadius="2dp"
-            app:cardElevation="5dp"
+            app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
