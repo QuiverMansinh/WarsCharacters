@@ -16,30 +16,31 @@ class Characters_list : AppCompatActivity() {
         setContentView(R.layout.activity_characters_list)
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         var CharactersImage= arrayListOf<ImageView>(
-            findViewById(R.id.imageViewMak),
             findViewById(R.id.imageViewBiv),
-            findViewById(R.id.imageViewCT),
-            findViewById(R.id.imageViewDavith),
-            findViewById(R.id.imageViewDiala),
-            findViewById(R.id.imageViewFenn),
-            findViewById(R.id.imageViewVinto),
             findViewById(R.id.imageViewGaar),
-            findViewById(R.id.imageViewGideon),
-            findViewById(R.id.imageViewJarrod),
-            findViewById(R.id.imageViewJyn),
-            findViewById(R.id.imageViewKo),
-            findViewById(R.id.imageViewLoku),
-            findViewById(R.id.imageViewMHD),
-            findViewById(R.id.imageViewMurne),
-            findViewById(R.id.imageViewOnar),
-            findViewById(R.id.imageViewOrok),
+            findViewById(R.id.imageViewMak),
             findViewById(R.id.imageViewSaska),
+            findViewById(R.id.imageViewDavith),
+            findViewById(R.id.imageViewGideon),
+            findViewById(R.id.imageViewMHD),
             findViewById(R.id.imageViewShyla),
-            findViewById(R.id.imageViewTress),
+            findViewById(R.id.imageViewDiala),
+            findViewById(R.id.imageViewJyn),
+            findViewById(R.id.imageViewMurne),
             findViewById(R.id.imageViewVerena),
+            findViewById(R.id.imageViewFenn),
+            findViewById(R.id.imageViewLoku),
+            findViewById(R.id.imageViewOnar),
+            findViewById(R.id.imageViewVinto),
+            findViewById(R.id.imageViewKo),
+            findViewById(R.id.imageViewJarrod),
+            findViewById(R.id.imageViewOrok),
+            findViewById(R.id.imageViewCT),
+            findViewById(R.id.imageViewTress),
         )
         var allChSel = BitmapFactory.decodeResource(resources,R.drawable.allcharacterselect_21)
         allChSel = Bitmap.createScaledBitmap(allChSel,2547,850,false)
