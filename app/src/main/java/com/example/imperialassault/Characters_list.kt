@@ -16,7 +16,8 @@ class Characters_list : AppCompatActivity() {
         setContentView(R.layout.activity_characters_list)
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         var CharactersImage= arrayListOf<ImageView>(
             findViewById(R.id.imageViewBiv),
