@@ -1117,6 +1117,7 @@
                                 android:layout_margin="1dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="right"
                                 android:text="0"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -1212,6 +1213,7 @@
                                 android:layout_margin="1dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="right"
                                 android:text="0"
                                 android:textSize="18sp" />
                         </LinearLayout>
