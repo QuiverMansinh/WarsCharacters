@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
@@ -20,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 
-import kotlinx.android.synthetic.main.activity_character__view.*
+import kotlinx.android.synthetic.main.activity_character_view.*
 import kotlinx.android.synthetic.main.dialog_action_menu.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_bio.*
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.screen_item_select.*
 import kotlinx.android.synthetic.main.screen_stats.*
+import kotlinx.android.synthetic.main.screen_xp_select.*
 import java.io.InputStream
 import kotlin.random.Random
 
@@ -35,7 +37,7 @@ class Character_view : AppCompatActivity() {
     var character:Character = Character();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_character__view)
+        setContentView(R.layout.activity_character_view)
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -77,6 +79,9 @@ class Character_view : AppCompatActivity() {
                 "shyla" -> { character = Character_shyla(this) }
                 "verena" -> { character = Character_verena(this) }
                 "vinto" -> { character = Character_vinto(this) }
+                "drokkatta" -> { character = Character_drokkatta(this) }
+                "ct1701" -> { character = Character_ct1701(this) }
+                "tress" -> { character = Character_tress(this) }
             }
 
         } else {
@@ -112,7 +117,9 @@ class Character_view : AppCompatActivity() {
         setDiceColor(tech3, character.tech[2]);
 
         character_type.setText(character.type)
-        character_image.setImageBitmap(character.getCharacterImage())
+
+        updateImages()
+
         background_image.setImageBitmap(character.getBackgroundImage(this))
 
         add_damage.setOnLongClickListener {
@@ -647,8 +654,6 @@ class Character_view : AppCompatActivity() {
     //region Side Navigation
     //************************************************************************************************************
 
-
-
     fun onExtendDown(view: View) {
 
         if(sideMenuState>-1){
@@ -723,6 +728,7 @@ class Character_view : AppCompatActivity() {
         currentTab!!.select()
     }
     fun onXPScreen(view: View) {
+        initXPScreen()
         xpSelectScreen!!.show()
 
     }
@@ -1164,14 +1170,14 @@ class Character_view : AppCompatActivity() {
         restDialog!!.setCancelable(false)
         restDialog!!.setContentView(R.layout.dialog_rest)
         restDialog!!.setCanceledOnTouchOutside(true)
-        restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         unwoundDialog = Dialog(this)
         unwoundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         unwoundDialog!!.setCancelable(false)
         unwoundDialog!!.setContentView(R.layout.dialog_unwound)
         unwoundDialog!!.setCanceledOnTouchOutside(true)
-        unwoundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        unwoundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         conditionsDialog = Dialog(this)
         conditionsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1198,30 +1204,30 @@ class Character_view : AppCompatActivity() {
             onShowHiddenCard(conditionsDialog!!.hidden_select)
             true
         }
-        conditionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        conditionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         optionsDialog = Dialog(this)
         optionsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         optionsDialog!!.setCancelable(false)
         optionsDialog!!.setContentView(R.layout.dialog_options)
         optionsDialog!!.setCanceledOnTouchOutside(true)
-        optionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        optionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         actionDialog = Dialog(this)
         actionDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         actionDialog!!.setCancelable(false)
         actionDialog!!.setContentView(R.layout.dialog_action_menu)
         actionDialog!!.setCanceledOnTouchOutside(true)
-        actionDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        actionDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
-        showCardDialog = Dialog(this)
+        showCardDialog = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
-        showCardDialog!!.setContentView(R.layout.dialog_show_card)
+        showCardDialog!!.setContentView(R.layout.dialog_show_card, )
         showCardDialog!!.setCancelable(false)
         showCardDialog!!.setCanceledOnTouchOutside(true)
-        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        showCardDialog!!.card_image.setOnClickListener {
+        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        showCardDialog!!.show_card_dialog.setOnClickListener {
             showCardDialog!!.cancel()
             true
         }
@@ -1231,56 +1237,56 @@ class Character_view : AppCompatActivity() {
         endActivationDialog!!.setCancelable(false)
         endActivationDialog!!.setContentView(R.layout.dialog_end_activation)
         endActivationDialog!!.setCanceledOnTouchOutside(true)
-        endActivationDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        endActivationDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         assistDialog = Dialog(this)
         assistDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         assistDialog!!.setCancelable(false)
         assistDialog!!.setContentView(R.layout.dialog_assist)
         assistDialog!!.setCanceledOnTouchOutside(true)
-        assistDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        assistDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         bioDialog = Dialog(this)
         bioDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         bioDialog!!.setCancelable(false)
         bioDialog!!.setContentView(R.layout.dialog_bio)
         bioDialog!!.setCanceledOnTouchOutside(true)
-        bioDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        bioDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         saveDialog = Dialog(this)
         saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         saveDialog!!.setCancelable(false)
         saveDialog!!.setContentView(R.layout.dialog_save)
         saveDialog!!.setCanceledOnTouchOutside(true)
-        saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         backgroundDialog = Dialog(this)
         backgroundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         backgroundDialog!!.setCancelable(false)
         backgroundDialog!!.setContentView(R.layout.dialog_background)
         backgroundDialog!!.setCanceledOnTouchOutside(true)
-        backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         settingsScreen= Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         settingsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         settingsScreen!!.setCancelable(false)
         settingsScreen!!.setContentView(R.layout.screen_settings)
         settingsScreen!!.setCanceledOnTouchOutside(true)
-        settingsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        settingsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         statsScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen )
         statsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         statsScreen!!.setCancelable(false)
         statsScreen!!.setContentView(R.layout.screen_stats)
         statsScreen!!.setCanceledOnTouchOutside(true)
-        statsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        statsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         creditsScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         creditsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         creditsScreen!!.setCancelable(false)
         creditsScreen!!.setContentView(R.layout.screen_stats)
         creditsScreen!!.setCanceledOnTouchOutside(true)
-        creditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        creditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         itemSelectScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen )
         itemSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1312,6 +1318,27 @@ class Character_view : AppCompatActivity() {
             }
         }
         return null
+    }
+
+    open fun updateImages(){
+        character.updateCharacterImages()
+        character_image.setImageBitmap(character.currentImage)
+
+        if(character.overlay1 != null){
+            overlay1.visibility = View.VISIBLE
+            overlay1.foreground = BitmapDrawable(resources, character.overlay1);
+        }
+        else{
+            overlay1.visibility = View.INVISIBLE
+        }
+
+        if(character.overlay2 != null){
+            overlay2.visibility = View.VISIBLE
+            overlay2.foreground = BitmapDrawable(resources, character.overlay2);
+        }
+        else{
+            overlay2.visibility = View.INVISIBLE
+        }
     }
     //************************************************************************************************************
     //region Stats Screen
@@ -1392,6 +1419,82 @@ class Character_view : AppCompatActivity() {
         }
     }
 
+    //endregion
+    //************************************************************************************************************
+    //region XP Screen
+    //************************************************************************************************************
+    var xpCardImages = arrayListOf<ImageView>()
+
+    fun initXPScreen() {
+        xpCardImages.add(xpSelectScreen!!.XPCard1)
+        xpCardImages.add(xpSelectScreen!!.XPCard2)
+        xpCardImages.add(xpSelectScreen!!.XPCard3)
+        xpCardImages.add(xpSelectScreen!!.XPCard4)
+        xpCardImages.add(xpSelectScreen!!.XPCard5)
+        xpCardImages.add(xpSelectScreen!!.XPCard6)
+        xpCardImages.add(xpSelectScreen!!.XPCard7)
+        xpCardImages.add(xpSelectScreen!!.XPCard8)
+        xpCardImages.add(xpSelectScreen!!.XPCard9)
+
+        for(i in 0..8){
+            xpCardImages[i].setImageBitmap(character.xpCardImages[i])
+            xpCardImages[i].setOnLongClickListener {
+                onShowXPCard(xpCardImages[i])
+                true
+            }
+            if(character.xpCardsEquipped[i]){
+                xpCardImages[i].alpha = 0.5f
+            }
+            else{
+                xpCardImages[i].alpha = 1f
+            }
+            xpCardImages[i].setTag(i)
+        }
+        var xpLeft = character.totalXP-character.xpSpent
+        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+    }
+
+    fun onShowXPCard(view:ImageView){
+       var image = ((view).drawable as BitmapDrawable).bitmap
+        showCardDialog!!.card_image.setImageBitmap(image)
+        showCardDialog!!.show()
+    }
+    fun onXPCard(view:View) {
+        var xpLeft = character.totalXP-character.xpSpent;
+        var cardNo = view.tag as Int
+        if(character.xpCardsEquipped[cardNo]){
+            character.xpCardsEquipped[cardNo] = false
+            xpCardImages[cardNo].alpha = 1f
+            character.xpSpent -= character.xpScores[cardNo]
+        }
+        else if( character.xpScores[cardNo] <= xpLeft) {
+                character.xpCardsEquipped[cardNo] = true
+                xpCardImages[cardNo].alpha = 0.5f
+                character.xpSpent+=character.xpScores[cardNo]
+        }
+        xpLeft = character.totalXP-character.xpSpent
+        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+        character.rewardObtained = character.xpCardsEquipped[8]
+
+
+      updateImages()
+
+        //TODO update stats
+    }
+
+    fun addXP(view:View){
+        character.totalXP++
+        var xpLeft = character.totalXP-character.xpSpent;
+        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+    }
+    fun minusXP(view:View){
+        var xpLeft = character.totalXP-character.xpSpent;
+        if(xpLeft>0){
+            character.totalXP--
+        }
+        xpLeft = character.totalXP-character.xpSpent;
+        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+    }
     //endregion
 }
 

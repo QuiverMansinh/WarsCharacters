@@ -3,30 +3,31 @@ package com.example.imperialassault
 import android.content.Context
 import android.graphics.Bitmap
 
-class Character_loku : Character {
+class Character_tress : Character {
 
     constructor(context: Context){
         //default values
-        name = "Loku Kanoloa"
-        name_short = "loku"
+        name = "Tress Hacnua"
+        name_short = "tress"
         type = "Hero"
         defence_dice = "white"
-        strength = "B  "
-        insight = "BGY"
-        tech = "B  "
+
+        strength = "GY "
+        insight = "GG "
+        tech = "BB "
+
+        strengthWounded = "GR "
+        insightWounded  = "GR "
+        techWounded  = "RB "
+
         background = "interior"
+        health_default = 11
+        endurance_default = 4
+        speed_default = 4
 
-        health_default = 10
-        endurance_default = 5
-        speed_default = 5
-
-        strengthWounded = "R  "
-        insightWounded  = "BGR"
-        techWounded  = "R  "
-
-        health = 10
-        endurance = 5
-        speed = 5
+        health = 11
+        endurance = 4
+        speed = 4
 
         totalXP = 0
         damage = 0
@@ -39,8 +40,8 @@ class Character_loku : Character {
         xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
-        portraitRow = 3
-        portraitCol = 1
+        portraitRow = 2
+        portraitCol = 3
         //Get Images
         //Update images
 

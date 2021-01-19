@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_drokkatta : Character {
-
+    var card5Images = ArrayList<Bitmap?>()
     constructor(context: Context){
         //default values
         name = "Drokkatta"
@@ -29,7 +29,7 @@ class Character_drokkatta : Character {
         endurance = 4
         speed = 4
 
-        xp = 0
+        totalXP = 0
         damage = 0
         strain = 0
         token = 0
@@ -37,9 +37,11 @@ class Character_drokkatta : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(2,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
+        portraitRow = 4
+        portraitCol = 3
         //Get Images
         //Update images
 
@@ -47,16 +49,31 @@ class Character_drokkatta : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Euphoric Demolitionist"
+        bio_quote = "\"Bathe in Fire!\""
+        bio_text ="Drokkatta was trained on Kashyyyk as a demolitions expert during the Clone Wars, talented in all things that go “boom”; the sound of an explosion being a favorite noise in the world. " +
+                "\n\nThe Imperials took Drokkatta's home, took their freedom, and family, but " +
+                "they would never take away the spark of rebellion garnered in Drokkatta's heart. " +
+                "One day they would see the Empire go “boom” for what they had done. Drokkatta prefers to wield a MGL-9 Thermo-Grenade Launcher, titled “Boomer”, a devastating, concussive weapon provided by the rebels for use in taking down lightly armored vehicles, gun emplacements, and structures. " +
+                "\n\nDrokkatta works hard for the alliance to restore the Republic, and with " +
+                "their backing, The Wookie will one day return to rescue fellow friends trapped in the labor camps on Geonosis."   }
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card5Images = loadCardTierImages(context,"card5")
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+
+        //card6 tier images
+        if(xpCardsEquipped[4]){
+            if(card5Images[tier] != null){
+                currentImage = card5Images[tier]
+            }
+        }
     }
 }

@@ -46,7 +46,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:capitalize="none"
                         android:fontFamily="@font/agency_fb"
                         android:gravity="center"
                         android:paddingTop="2dp"
@@ -243,13 +242,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="K/A"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -257,13 +255,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_total"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -271,17 +270,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_total"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -299,13 +304,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Villain:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -313,13 +317,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_villain"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -327,17 +332,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_villain"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -355,13 +366,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Leader:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -369,13 +379,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_leader"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -383,16 +394,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_leader"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -410,13 +428,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Vehicle:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -424,13 +441,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_vehicle"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -438,16 +456,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_vehicle"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -465,13 +490,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Creature:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -479,13 +503,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_creature"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -493,16 +518,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_creature"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -520,13 +552,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Guardian:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -534,13 +565,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_guardian"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -548,16 +580,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_guardian"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -575,13 +614,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Droid:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -589,13 +627,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_droid"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -603,16 +642,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_droid"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -630,13 +676,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Scum:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -644,13 +689,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_scum"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -658,16 +704,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_scum"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -685,13 +738,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Trooper:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
@@ -699,13 +751,14 @@
 
                             <TextView
                                 android:id="@+id/stats_kill_trooper"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
-                                android:textAlignment="textEnd"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -713,16 +766,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="/"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/stats_assist_trooper"
-                                android:layout_width="wrap_content"
+                                android:layout_width="24dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
+                                android:layout_weight="0"
                                 android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
                                 android:text="0"
+                                android:textAlignment="center"
                                 android:textColor="@color/white" />
 
                         </LinearLayout>
@@ -792,21 +852,20 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Activated:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_activated"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="right"
+                                android:layout_gravity="end"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -823,26 +882,24 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Attacks Made:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_attacks"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -857,23 +914,21 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Moves Taken:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_moves"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -888,25 +943,23 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Rested:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_rested"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -921,26 +974,24 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Special Actions:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_specials"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -956,25 +1007,23 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Interacts Used:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_interacts"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -990,22 +1039,20 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Damage Taken:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_damaged"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1021,25 +1068,23 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Strain Taken:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_strain"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1054,25 +1099,23 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:layout_margin="1dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Crates Picked Up:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_crates"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1101,20 +1144,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Withdrawn:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_withdrawn"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1136,20 +1178,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Times Wounded:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_wounded"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1171,20 +1212,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Times Focused:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_focused"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1205,20 +1245,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Times Hidden:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_hidden"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1239,20 +1278,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Times Stunned:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_stunned"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1273,20 +1311,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Times Bleeding:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_bleeding"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1307,20 +1344,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Times Weakened:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_weakened"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
@@ -1341,20 +1377,19 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="2dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="center"
                                 android:text="Obtained Reward:"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/stats_reward_obtained"
-                                android:layout_width="wrap_content"
+                                android:layout_width="44dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/agency_fb"
-                                android:gravity="right"
+                                android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="18sp" />

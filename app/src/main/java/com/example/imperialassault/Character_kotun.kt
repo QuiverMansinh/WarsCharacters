@@ -29,7 +29,7 @@ class Character_kotun : Character {
         endurance = 4
         speed = 4
 
-        xp = 0
+        totalXP = 0
         damage = 0
         strain = 0
         token = 0
@@ -40,6 +40,8 @@ class Character_kotun : Character {
         xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
+        portraitRow = 4
+        portraitCol = 0
         //Get Images
         //Update images
 
@@ -56,7 +58,5 @@ class Character_kotun : Character {
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
-    }
+
 }

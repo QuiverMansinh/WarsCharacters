@@ -564,13 +564,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/CharacterCardOrok"
+                android:id="@+id/CharacterCardDrok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
-                android:tag="orok"
-                android:visibility="invisible"
+                android:tag="drokkatta"
+                android:visibility="visible"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
@@ -579,7 +579,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageViewOrok"
+                        android:id="@+id/imageViewDrok"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -600,14 +600,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
-                android:tag="ct"
-                android:visibility="invisible"
+                android:tag="ct1701"
+                android:visibility="visible"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:tag="ct1701">
 
                     <ImageView
                         android:id="@+id/imageViewCT"
@@ -632,7 +633,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="tress"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:cardCornerRadius="200dp"
                 app:cardElevation="10dp">
 

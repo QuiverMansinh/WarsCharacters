@@ -5,6 +5,15 @@ import android.graphics.Bitmap
 
 class Character_davith : Character {
 
+    var card9Images = ArrayList<Bitmap?>()
+    var card6Images = ArrayList<Bitmap?>()
+    var card69Images = ArrayList<Bitmap?>()
+
+    //ALS ancient light saber
+    var ALSImages = ArrayList<Bitmap?>()
+    var card6ALSImages = ArrayList<Bitmap?>()
+    var card9ALSImages = ArrayList<Bitmap?>()
+
     constructor(context: Context){
         //default values
         name = "Davith Elso"
@@ -29,17 +38,19 @@ class Character_davith : Character {
         endurance = 4
         speed = 4
 
-        xp = 0
+
         damage = 0
         strain = 0
         token = 0
         wounded = 0
 
-        xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
+        totalXP = 0
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
+        portraitRow = 1
+        portraitCol = 0
         //Get Images
         //Update images
 
@@ -47,16 +58,56 @@ class Character_davith : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Exiled Jedi"
+        bio_quote = "\"Once discovered, the best defense is an unrelenting assault.\""
+        bio_text ="Due to the roving Jedi-Hunters still searching for him and his ilk; " +
+                "Davith decided to set aside his Lightsaber for now, keeping it hidden somewhere secret and safe until necessary. " +
+                "He instead brandishes a deadly Heirloom Dagger when facing his foes in combat; the blade being the only memento he has left of his parents before he joined the Jedi order. " +
+                "\n\nHe is quite skilled in the ways of the force; able to alter the movement of " +
+                "his enemies, and increase his own inherent talents to an advanced level. When enhanced by the force, Elso’s Speed allows him to dart amongst his foes without them even comprehending his movements. " +
+                "Davith has also been trained to use the force to Mask His Presence from his enemies Eyesight and Cloud The Minds of the unwitting. " +
+                "\n\nHaving successfully taken down a huge number of the Imperial leadership, " +
+                "Davith is a true threat to the Empire at large. \"Hawkbat\" will find vengeance for his friends, and one day the Emperor will fall- for all of his crimes. "
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card6Images = loadCardTierImages(context,"card6")
+        card9Images = loadCardTierImages(context,"card9")
+        card69Images = loadCardTierImages(context,"card6_card9")
+
+        ALSImages =loadCardTierImages(context,"ancient_light_saber")
+        card6ALSImages = loadCardTierImages(context,"card6_ancient_light_saber")
+        card9ALSImages = loadCardTierImages(context,"card9_ancient_light_saber")
+    }
+
+    //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card6 and card9 combined tier images
+        if(xpCardsEquipped[5] && xpCardsEquipped[8]) {
+            if (card69Images[tier] != null) {
+                currentImage = card69Images[tier]
+            }
+        }
+        //card6 tier images
+        else if (xpCardsEquipped[5]) {
+            //TODO check ancient light saber
+
+            if (card6Images[tier] != null) {
+                    currentImage = card6Images[tier]
+                }
+            }
+        //card9 tier images
+        else if(xpCardsEquipped[8]){
+            //TODO check ancient light saber
+
+            if(card9Images[tier]!=null) {
+                currentImage = card9Images[tier]
+            }
+        }
+
     }
 }

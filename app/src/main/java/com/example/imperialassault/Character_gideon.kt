@@ -29,7 +29,7 @@ class Character_gideon : Character {
         endurance = 5
         speed = 4
 
-        xp = 0
+        totalXP = 0
         damage = 0
         strain = 0
         token = 0
@@ -37,9 +37,11 @@ class Character_gideon : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,2,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
+        portraitRow = 1
+        portraitCol = 1
         //Get Images
         //Update images
 
@@ -47,16 +49,19 @@ class Character_gideon : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
-    }
+        bio_title = "Commanding Officer"
+        bio_quote = "\"Expect nothing. Anticipate everything.\""
+        bio_text ="Gideon’s weapon of choice is a concealable Holdout Blaster, a memento from his wife to keep him safe until he can return to her. " +
+                "\n\nDue to having spent his entire life as a soldier, Gideon has gained an " +
+                "almost second sense for avoiding traps and ambushes. " +
+                "Gideon himself is a formidable soldier in his own right, and his older age does not prevent him from fighting beside his men on the front lines. " +
+                "\n\nYet war does take it's toll; the many losses of friends and allies over the " +
+                "years have served to strengthen Gideon's resolve, but has also left him world-weary and fatalistic in mentality. " +
+                "Despite his jaded mentality, Gideon always presents himself to his men as dignified, resolute, brave, and unwavering. " +
+                "\n\nGideon's greatest strength is his ability to command and inspire others, " +
+                "using his tactical knowledge to focus their efforts and embolden them to victory. " +
+                "Soldiers are easily drawn to his charisma and know that with Gideon leading the way, they would always win the day."   }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
-    }
+
 }

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -38,7 +37,7 @@ class Characters_list : AppCompatActivity() {
             findViewById(R.id.imageViewVinto),
             findViewById(R.id.imageViewKo),
             findViewById(R.id.imageViewJarrod),
-            findViewById(R.id.imageViewOrok),
+            findViewById(R.id.imageViewDrok),
             findViewById(R.id.imageViewCT),
             findViewById(R.id.imageViewTress),
         )

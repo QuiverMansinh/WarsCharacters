@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_jyn : Character {
+    var card6Images = ArrayList<Bitmap?>()
+    var card9Images = ArrayList<Bitmap?>()
 
     constructor(context: Context){
         //default values
@@ -29,7 +31,7 @@ class Character_jyn : Character {
         endurance = 4
         speed = 5
 
-        xp = 0
+        totalXP = 0
         damage = 0
         strain = 0
         token = 0
@@ -37,9 +39,11 @@ class Character_jyn : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
+        portraitRow = 2
+        portraitCol = 1
         //Get Images
         //Update images
 
@@ -47,16 +51,42 @@ class Character_jyn : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Alluring Smuggler"
+        bio_quote = "\"I don't mean to brag; I just happen to be amazing.\""
+        bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. " +
+                "Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price." +
+                "\n\nJyn prefers Blaster_Pistols to rifles, and is most comfortable with an older" +
+                " Vintage model given to her by her father when she first left her homeworld to travel the stars. " +
+                "Jyn is both lithe and agile, making her way across the battlefield with ease and elegance, and finds that most problems can be solved by getting to an objective first and firing a few blaster shots along the way. " +
+                "Jyn is just itching to return to her trade as a smuggler; she spends much of her free time trying to track down that deceitful snake Szark, or further details on which Imperial detaining facility contains her abducted spacecraft. " +
+                "\n\nThe Valkyrie Corona is Jyn's pride and joy and she will never rest until she" +
+                "regains custody of her \"baby.\" Helping the galaxy is all well and good, but " +
+                "Jyn doesn't like being tied down for long."
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card6Images = loadCardTierImages(context,"card6")
+        card9Images = loadCardTierImages(context,"card9")
+    }
+
+    //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card6 tier images
+        if(xpCardsEquipped[5]){
+            if(card6Images[tier] != null){
+                currentImage = card6Images[tier]
+            }
+        }
+
+        //card9 tier images
+        if(xpCardsEquipped[8]){
+            if(card9Images[tier] != null){
+                currentImage = card9Images[tier]
+            }
+        }
     }
 }

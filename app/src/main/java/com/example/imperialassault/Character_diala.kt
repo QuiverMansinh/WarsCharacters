@@ -4,7 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_diala : Character {
-
+    var card9Images = ArrayList<Bitmap?>()
+    var greenLightSaber:Bitmap? = null
     constructor(context: Context){
         //default values
         name = "Diala Passil"
@@ -29,7 +30,7 @@ class Character_diala : Character {
         endurance = 5
         speed = 4
 
-        xp = 0
+        totalXP = 0
         damage = 0
         strain = 0
         token = 0
@@ -37,9 +38,11 @@ class Character_diala : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpSpeeds = intArrayOf(0,0,0,0,1,0,0,0,0)
 
+        portraitRow = 2
+        portraitCol = 0
         //Get Images
         //Update images
 
@@ -47,16 +50,41 @@ class Character_diala : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Haunted Padawan"
+        bio_quote = "\"A master of the Resilience Form is invincible. One who aspires to it, such as myself, is simply very hard to kill.\""
+        bio_text ="Even before her training on Jedha, Diala was a capable fighter. She now only grows stronger as she learns new ways to weave the force into her actions on the battlefield. " +
+                "\n\nDiala laments that she was not able to finish her Jedi training, create a " +
+                "lightsaber before her master fell, or find all of the the pieces necessary to craft one herself. " +
+                "Thus, she wields a durable, yet unremarkable, Plasteel Staff- with a skill and ease only a force sensitive could conjure. " +
+                "\n\nDiala is able to remain calm and focused under fire in combat, using the " +
+                "defensive saber forms taught to her by Shu Yen, Form I (Shii-Cho) and Form_III (Soresu), to protect herself- and turn her enemy’s attacks against them. " +
+                "In battle Diala weathers the storm; then rains down counter blows upon her foolish attackers."
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card9Images = loadCardTierImages(context,"card9")
+        greenLightSaber = getBitmap(context,"characters/diala/images/tier3image_green_light_saber.png")
+    }
+
+    var holdingGreenLightSaber = true
+
+    //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card9 tier images
+        if(xpCardsEquipped[8]){
+            if(card9Images[tier]!=null){
+                currentImage = card9Images[tier]
+            }
+            if(tier == 3) {
+                if (!holdingGreenLightSaber) {
+                    currentImage = greenLightSaber
+                }
+                holdingGreenLightSaber = !holdingGreenLightSaber
+            }
+        }
     }
 }

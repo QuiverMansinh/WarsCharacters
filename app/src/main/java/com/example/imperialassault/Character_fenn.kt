@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_fenn : Character {
-
-    constructor(context: Context){
+    var tier1duplicate:Bitmap? = null
+    constructor(context: Context) {
         //default values
         name = "Fenn Signis"
         name_short = "fenn"
@@ -17,8 +17,8 @@ class Character_fenn : Character {
         tech = "BG "
 
         strengthWounded = "BR "
-        insightWounded  = "BR "
-        techWounded  = "BR "
+        insightWounded = "BR "
+        techWounded = "BR "
 
         background = "interior"
         health_default = 12
@@ -29,17 +29,19 @@ class Character_fenn : Character {
         endurance = 4
         speed = 4
 
-        xp = 0
+        totalXP = 0
         damage = 0
         strain = 0
         token = 0
         wounded = 0
 
-        xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpScores = intArrayOf(1, 1, 2, 2, 3, 3, 4, 4, 0)
+        xpEndurances = intArrayOf(0, 0, 0, 0, 0, 0, 1, 0, 0)
+        xpHealths = intArrayOf(0, 0, 0, 0, 0, 0, 3, 0, 0)
+        xpSpeeds = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
+        portraitRow = 3
+        portraitCol = 0
         //Get Images
         //Update images
 
@@ -47,16 +49,33 @@ class Character_fenn : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Grizzled Veteran"
+        bio_quote = "\"Stick together and don't get in my way.\""
+        bio_text =
+            "Like every professional soldier, Fenn Signis relies on his comrades, yet, he also has a powerful independent streak. " +
+                    "Fenn is a military lifer and plans to fight until he can no longer carry on for his ideals. " +
+                    "\n\nDue to the losses of so many close friends, Fenn suffers from attachment" +
+                    " issues and a mild case of un-diagnosed PTSD (usually in the form of gore-filled nightmares) from the many battles he has been through. " +
+                    "He intentionally remains distant and professional with his squad-mates; despite this, others still respect him for his efficiency and reliability. " +
+                    "A lone wolf in every meaning of the word; Fenn is tactically aware, cunning, and practically feral towards his enemies. " +
+                    "\n\nFenn’s favored weapon, his Infantry Rifle was the standard equipment for his" +
+                    " squad while fighting on ArdaI; Reliable, consistent, and comfortable in his hands, Fenn has carried the weapon through some of the toughest of fire-fights in the galaxy."
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        tier1duplicate = getBitmap(context,"characters/fenn/images/tier1image_duplicate" +
+                ".png")
+    }
+
+    //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+        if(tier == 1) {
+            if (Math.random()<0.5) {
+                currentImage = tier1duplicate
+            }
+        }
     }
 }

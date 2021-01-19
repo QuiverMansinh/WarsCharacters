@@ -29,17 +29,19 @@ class Character_gaarkhan : Character {
         endurance = 4
         speed = 4
 
-        xp = 0
+        totalXP = 0
         damage = 0
         strain = 0
         token = 0
         wounded = 0
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpEndurances = intArrayOf(0,0,0,0,0,0,0,1,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,1,0)
 
+        portraitRow = 0
+        portraitCol = 1
         //Get Images
         //Update images
 
@@ -47,16 +49,15 @@ class Character_gaarkhan : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
-    }
+        bio_title = "Resolute Warmaster"
+        bio_quote = "\"Underneath that fur is a few hundred pounds of solid muscle and anger.\""
+        bio_text ="In combat, Gaarkhan is the epitome of Wookiee ferocity: he charges forward to engage the enemy with his favorite weapon, a deadly Vibro-Ax." +
+                " Any foes who are lucky enough to survive his savage attack will quickly find that he is most dangerous when injured. " +
+                "\n\nGruff, moody, ferocious, and intimidating, Gaarkhan surveys his surroundings" +
+                " with a critical eye; those foolish enough to threaten his allies will know the true definition of fear." +
+                " \n\nGaarkhan has shamed himself once for revenge; he now hopes to make things " +
+                "right by freeing his people from servitude. The Empire will know the wrath of a true Wookiee warrior. "  }
 
     //TODO alter for reward, duplicates, tier
-    override fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
-    }
+
 }

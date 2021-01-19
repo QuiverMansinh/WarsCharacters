@@ -34,17 +34,24 @@ open class Character {
     var token = 0
     var wounded = 0
 
-    var xp = 0
+    var totalXP = 0
     var xpSpent = 0
-    var xpScores: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+    var xpCardsEquipped: BooleanArray= booleanArrayOf(false,false,false,false,false,false,false,false,false)
+    var xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
     var xpEndurances: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpHealths: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpSpeeds: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    var tierImages = ArrayList<Bitmap>()
-    var rewardImages = ArrayList<Bitmap>()
-    var cardImages  = ArrayList<Bitmap>()
-    var weaponImages  = ArrayList<Bitmap>()
+
+    var currentImage:Bitmap? = null
+    var overlay1:Bitmap? = null
+    var overlay2:Bitmap? = null
+
+    var tier = 0
+    var tierImages = ArrayList<Bitmap?>()
+
+    var xpCardImages  = ArrayList<Bitmap>()
+
     var portraitImage:Bitmap? = null
     var portraitRow = 0
     var portraitCol = 0
@@ -83,14 +90,11 @@ open class Character {
     var power:Bitmap?=null
     var power_wounded:Bitmap?=null
 
-    fun loadImages(context: Context){
-        tierImages = loadTierImages(context)
-        print(tierImages)/*
-        rewardImages  = getRewardImages(context, name_short)
-        cardImages  =getCardImages(context, name_short)
-        weaponImages  = getXPCardImages(context, name_short)*/
+    open fun loadImages(context: Context){
+        loadTierImages(context)
+        loadXPCardImages(context)
         loadPowerImages(context)
-        portraitImage = loadPortraitImage(context)
+        loadPortraitImage(context)
     }
 
     open fun loadPowerImages(context: Context) {
@@ -98,15 +102,24 @@ open class Character {
         power_wounded = getBitmap(context,"characters/" + name_short + "/power_wounded.png")
     }
 
-    open fun loadTierImages(context: Context): java.util.ArrayList<Bitmap> {
-        val images = java.util.ArrayList<Bitmap>()
+    open fun loadTierImages(context: Context){
+        val images = java.util.ArrayList<Bitmap?>()
         for (i in 0..4) {
             val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i + "image.png")
+            images.add(image)
+        }
+        tierImages = images
+    }
+
+    open fun loadXPCardImages(context: Context){
+        val images = java.util.ArrayList<Bitmap>()
+        for (i in 1..9) {
+            val image = getBitmap(context, "characters/" + name_short + "/xpcards/card" + i + ".jpg")
             if (image != null) {
                 images.add(image)
             }
         }
-        return images
+        xpCardImages = images
     }
 
     open fun getBackgroundImage(context: Context): Bitmap? {
@@ -114,7 +127,7 @@ open class Character {
        return image;
     }
 
-    open fun loadPortraitImage(context:Context):Bitmap?{
+    open fun loadPortraitImage(context:Context){
         var allChSel = BitmapFactory.decodeResource(context.resources,R.drawable
             .allcharacterselect_21)
         allChSel = Bitmap.createScaledBitmap(allChSel,2547,850,false)
@@ -124,7 +137,7 @@ open class Character {
         var width = 2547/col
         var height = 850/row
 
-        return Bitmap.createBitmap(allChSel,0+(width*portraitCol),0+(height*portraitRow),height, height)
+        portraitImage = Bitmap.createBitmap(allChSel,0+(width*portraitCol),0+(height*portraitRow), height, height)
     }
 
 
@@ -146,7 +159,35 @@ open class Character {
         return null
     }
 
-    open fun getCharacterImage(): Bitmap?{
-        return tierImages[0];
+    open fun loadCardTierImages(context: Context, cards:String): ArrayList<Bitmap?>{
+        val images = java.util.ArrayList<Bitmap?>()
+        for (i in 0..4) {
+            val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i +
+                    "image_"+cards+".png")
+
+            images.add(image)
+
+        }
+        return images
+    }
+
+    open fun updateCharacterImages(){
+
+        tier = 0
+        //TODO item conditions
+        //tier3 [9xp && (1 tier2 || tier3 item)] || 11xp)
+        if(xpSpent>=11){
+            tier = 3
+        }
+        //tier2 [6xp && (1 tier2 item)] || 8xp)
+        else if(xpSpent >= 8){
+            tier = 2
+        }
+        //tier1 [3xp && (1 tier1 item)] || 5xp)
+        else if(xpSpent >= 5) {
+            tier = 1
+        }
+
+        currentImage = tierImages[tier]
     }
 }
