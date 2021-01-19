@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.screen_item_select.*
+import kotlinx.android.synthetic.main.screen_stats.*
 import java.io.InputStream
 import kotlin.random.Random
 
@@ -614,6 +615,7 @@ class Character_view : AppCompatActivity() {
     }
     fun onStatistics(view: View) {
         optionsDialog!!.cancel()
+        initStatsScreen()
         statsScreen!!.show()
     }
 
@@ -725,6 +727,7 @@ class Character_view : AppCompatActivity() {
 
     }
 
+
     //endregion
     //************************************************************************************************************
     //region Kill Tracker
@@ -761,12 +764,14 @@ class Character_view : AppCompatActivity() {
     fun killCountUp(type:Int){
         var killCount = Integer.parseInt(killCounts[type].text.toString())
         killCount++
+        character.killCount[type]=killCount
         killCounts[type].setText(""+killCount)
     }
     fun killCountDown(type:Int){
         var killCount = Integer.parseInt(killCounts[type].text.toString())
         if(killCount>0) {
             killCount--
+            character.killCount[type]=killCount
             killCounts[type].setText("" + killCount)
         }
     }
@@ -1291,7 +1296,6 @@ class Character_view : AppCompatActivity() {
     }
     //endregion
     //************************************************************************************************************
-
     open fun getBitmap(context: Context, path: String): Bitmap? {
         val assetManager = context.assets
         var inputStream: InputStream? = null
@@ -1309,6 +1313,86 @@ class Character_view : AppCompatActivity() {
         }
         return null
     }
+    //************************************************************************************************************
+    //region Stats Screen
+    //************************************************************************************************************
+    fun initStatsScreen(){
+        statsScreen!!.stats_name.setText(""+character.name)
+        statsScreen!!.stats_portrait_image.setImageBitmap(character.portraitImage)
+        var level = 5
+        if(character.xpSpent <= 1){
+            level = 1
+        }
+        else if(character.xpSpent <= 4){
+            level = 2
+        }
+        else if(character.xpSpent <= 7){
+            level = 3
+        }
+        else if(character.xpSpent <= 10){
+            level = 4
+        }
+
+        statsScreen!!.stats_level.setText(""+level)
+        statsScreen!!.stats_moves.setText(""+character.movesTaken)
+        statsScreen!!.stats_attacks.setText(""+character.attacksMade)
+        statsScreen!!.stats_interacts.setText(""+character.interactsUsed)
+        statsScreen!!.stats_wounded.setText(""+character.timesWounded)
+        statsScreen!!.stats_rested.setText(""+character.timesRested)
+        statsScreen!!.stats_withdrawn.setText(""+character.timesWithdrawn)
+        statsScreen!!.stats_activated.setText(""+character.activated)
+        statsScreen!!.stats_damaged.setText(""+character.damageTaken)
+        statsScreen!!.stats_strain.setText(""+character.strainTaken)
+        statsScreen!!.stats_specials.setText(""+character.specialActions)
+        statsScreen!!.stats_focused.setText(""+character.timesFocused)
+        statsScreen!!.stats_hidden.setText(""+character.timesHidden)
+        statsScreen!!.stats_stunned.setText(""+character.timesStunned)
+        statsScreen!!.stats_bleeding.setText(""+character.timesBleeding)
+        statsScreen!!.stats_weakened.setText(""+character.timesWeakend)
+        statsScreen!!.stats_crates.setText(""+character.cratesPickedUp)
+
+        if(character.rewardObtained) {
+            statsScreen!!.stats_reward_obtained.setText("Yes")
+        }
+        else{
+            statsScreen!!.stats_reward_obtained.setText("No")
+        }
+
+        var totalKills = 0
+        var totalAssists = 0
+        for(i in 0..character.killCount.size-1){
+            totalKills += character.killCount[i]
+            totalAssists += character.assistCount[i]
+        }
+        statsScreen!!.stats_kill_total.setText(""+totalKills)
+        statsScreen!!.stats_kill_villain.setText(""+character.killCount[villain])
+        statsScreen!!.stats_kill_vehicle.setText(""+character.killCount[vehicle])
+        statsScreen!!.stats_kill_creature.setText(""+character.killCount[creature])
+        statsScreen!!.stats_kill_leader.setText(""+character.killCount[leader])
+        statsScreen!!.stats_kill_guardian.setText(""+character.killCount[guard])
+        statsScreen!!.stats_kill_droid.setText(""+character.killCount[droid])
+        statsScreen!!.stats_kill_scum.setText(""+character.killCount[scum])
+        statsScreen!!.stats_kill_trooper.setText(""+character.killCount[trooper])
+
+        statsScreen!!.stats_assist_total.setText(""+totalAssists)
+        statsScreen!!.stats_assist_villain.setText(""+character.assistCount[villain])
+        statsScreen!!.stats_assist_vehicle.setText(""+character.assistCount[vehicle])
+        statsScreen!!.stats_assist_creature.setText(""+character.assistCount[creature])
+        statsScreen!!.stats_assist_leader.setText(""+character.assistCount[leader])
+        statsScreen!!.stats_assist_guardian.setText(""+character.assistCount[guard])
+        statsScreen!!.stats_assist_droid.setText(""+character.assistCount[droid])
+        statsScreen!!.stats_assist_scum.setText(""+character.assistCount[scum])
+        statsScreen!!.stats_assist_trooper.setText(""+character.assistCount[trooper])
+
+        if(character.timesWounded>0) {
+            statsScreen!!.stats_kill_death_ratio.setText("" + totalKills.toFloat() / character.timesWounded)
+        }
+        else{
+            statsScreen!!.stats_kill_death_ratio.setText("-")
+        }
+    }
+
+    //endregion
 }
 
 

@@ -28,12 +28,14 @@ open class Character {
     var endurance = 5
     var speed = 4
 
-    var xp = 0
+
     var damage = 0
     var strain = 0
     var token = 0
     var wounded = 0
 
+    var xp = 0
+    var xpSpent = 0
     var xpScores: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpEndurances: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpHealths: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -43,13 +45,16 @@ open class Character {
     var rewardImages = ArrayList<Bitmap>()
     var cardImages  = ArrayList<Bitmap>()
     var weaponImages  = ArrayList<Bitmap>()
+    var portraitImage:Bitmap? = null
+    var portraitRow = 0
+    var portraitCol = 0
 
     //get current image, get extras from stats
     //get current card images
 
     //stats
 
-    // villian, leader, vehicleKillCount,creature,  guard, droid, scum, trooper
+    // villain, leader, vehicle,creature,  guard, droid, scum, trooper
     var killCount = arrayOf(0,0,0,0,0,0,0,0)
     var assistCount = arrayOf(0,0,0,0,0,0,0,0)
 
@@ -85,6 +90,7 @@ open class Character {
         cardImages  =getCardImages(context, name_short)
         weaponImages  = getXPCardImages(context, name_short)*/
         loadPowerImages(context)
+        portraitImage = loadPortraitImage(context)
     }
 
     open fun loadPowerImages(context: Context) {
@@ -106,6 +112,19 @@ open class Character {
     open fun getBackgroundImage(context: Context): Bitmap? {
         val image = getBitmap(context, "backgrounds/background_"+ background + ".png")
        return image;
+    }
+
+    open fun loadPortraitImage(context:Context):Bitmap?{
+        var allChSel = BitmapFactory.decodeResource(context.resources,R.drawable
+            .allcharacterselect_21)
+        allChSel = Bitmap.createScaledBitmap(allChSel,2547,850,false)
+
+        var row = 6
+        var col = 4
+        var width = 2547/col
+        var height = 850/row
+
+        return Bitmap.createBitmap(allChSel,0+(width*portraitCol),0+(height*portraitRow),height, height)
     }
 
 
