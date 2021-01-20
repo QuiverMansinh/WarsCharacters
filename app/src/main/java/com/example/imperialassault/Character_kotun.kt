@@ -37,8 +37,8 @@ class Character_kotun : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,2,0,0,0)
+        xpSpeeds = intArrayOf(0,0,0,0,0,1,0,0,0)
 
         portraitRow = 4
         portraitCol = 0
@@ -49,13 +49,17 @@ class Character_kotun : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
-    }
+        bio_title = "Tenacious Quartermaster"
+        bio_quote = "\"Any chance to gain advantage must be seized.\""
+        bio_text ="Tactical, savvy, and prepared to face the unexpected (having learned the hard way) Ko-Tun Feralo is a steadfast ally in the thick of combat. " +
+                "Now dubbed-“the Merchant of Death” by her comrades, Ko-Tun has worked her way to the top of her field by sheer effort and hard work. " +
+                "\n\nIn the early days as a scout sniper Ko-Tun racked up 31 confirmed Imperial " +
+                "Officer kills across the galaxy without the use of a spotter, with her trusty Service Rifle- a standard issue marksman rifle that she has effectively mastered. " +
+                "Dutiful, honor-bound, brave, and keen-eyed she helps bring some added perspective and firepower to her new unit. " +
+                "\n\nHaving worked as a merchant for so long, Ko-Tun has learned the value of " +
+                "being adaptable; commonly bringing large reserves of ammo, and weapon modifications for her squad on each outing. " +
+                "In her spare time Ko-Tun focuses on new business deals for Gideon's Cell and the Rebellion at large, or more intel on her MIA father. " +
+                "Sahm-Ken will not remain a ghost for long as Ko-Tun plans to﻿ remain ever-vigilant."    }
 
     //TODO alter for reward, duplicates, tier
 

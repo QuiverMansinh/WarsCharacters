@@ -4,6 +4,11 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_verena : Character {
+    var tier1duplicate:Bitmap? = null
+    var tier1duplicate2:Bitmap? = null
+    var tier2duplicate:Bitmap? = null
+    var tier3duplicate:Bitmap? = null
+    var tier3duplicate2:Bitmap? = null
 
     constructor(context: Context){
         //default values
@@ -36,8 +41,8 @@ class Character_verena : Character {
         wounded = 0
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpEndurances = intArrayOf(0,0,0,0,0,0,0,1,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
         portraitRow = 2
@@ -49,14 +54,56 @@ class Character_verena : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Master Combatant"
+        bio_quote = "\"The friend of my enemy is my shield.\""
+        bio_text ="Stubborn, determined, noble, and stern, Verena has earned her place by skill and effort- a fact she is very proud of. " +
+                "Preferring to face her foes in CQC, Verena delights in re-purposing her enemies weaponry against them; regularly disarming her opponent with quick strikes and dispatching the foe with their own weapon. " +
+                "\n\nEver the pragmatist, her minimalistic kit includes her CorSec issued- " +
+                "Military Blaster, two spare ammo clips, a Datapad, and the Fighting Knife her brother used in the attempt on her life; a constant reminder of his treachery. " +
+                "She hopes to return the blade to him in kind some day."    }
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+
+        tier1duplicate = getBitmap(context, "characters/verena/images/tier1image_duplicate.png")
+        tier1duplicate2 = getBitmap(context, "characters/verena/images/tier1image_duplicate2.png")
+
+        tier2duplicate = getBitmap(context, "characters/verena/images/tier2image_duplicate.png")
+
+        tier3duplicate = getBitmap(context, "characters/verena/images/tier3image_duplicate.png")
+        tier3duplicate2 = getBitmap(context, "characters/verena/images/tier3image_duplicate2.png")
+
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
 
+        var ran = Math.random()
+
+        if(tier == 1){
+            if(ran<1f/3){
+                currentImage = tier1duplicate
+            }
+            else if(ran<2f/3){
+                currentImage = tier1duplicate2
+            }
+        }
+        else if(tier == 2){
+            if(ran<0.5){
+                currentImage = tier2duplicate
+            }
+        }
+        else if(tier == 3){
+            if(ran<1f/3){
+                currentImage = tier3duplicate
+            }
+            else if(ran<2f/3){
+                currentImage = tier3duplicate2
+            }
+        }
+
+        //todo helmet
+    }
 }

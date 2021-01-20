@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_vinto : Character {
-
+    var card6Images = ArrayList<Bitmap?>()
     constructor(context: Context){
         //default values
         name = "Vinto Hreeda"
@@ -37,9 +37,9 @@ class Character_vinto : Character {
         wounded = 0
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpEndurances = intArrayOf(0,0,1,0,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpSpeeds = intArrayOf(0,1,0,0,0,0,0,0,0)
 
         portraitRow = 3
         portraitCol = 3
@@ -50,14 +50,34 @@ class Character_vinto : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Unstoppable Avenger"
+        bio_quote = "\"I show the same mercy that has been shown to me.\""
+        bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. " +
+                "Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price. " +
+                "\n\nDetermined, grim, and solemn, Vinto has led a long and tired life of near constant combat. " +
+                "He is a natural with a blaster, his favorite weapon being a modified Hair-Trigger Pistol, which has been greatly upgraded to increase its firing rate;" +
+                " he often dual wields a Secondary Blaster as well to lay covering fire, and assist in keeping his enemies at bay. " +
+                "\n\nMany claim to have killed this elusive Rodian over the years; yet Vinto always seems to get back up ready for more. " +
+                "His many \"deaths\" have earned him the nickname: \"Revenant\"- leading many to believe the Rodian warrior is a cursed spirit who travels the galaxy seeking revenge. " +
+                "Vinto has completed hundred of contracts across the galaxy on many varied planets; his resolve and tenacity push him ever further towards his next mission. " +
+                "He plans to fight until there is nothing left of himself to offer the galaxy; luckily Vinto is just getting started."  }
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card6Images = loadCardTierImages(context,"card6")
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card6 tier images
+        if(xpCardsEquipped[5]){
+            if(card6Images[tier] != null){
+                currentImage = card6Images[tier]
+            }
+        }
+    }
 
 }

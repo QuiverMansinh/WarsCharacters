@@ -37,7 +37,7 @@ class Character_tress : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,2,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
         portraitRow = 2
@@ -49,13 +49,19 @@ class Character_tress : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
-    }
+        bio_title = "Cybernetic Brawler"
+        bio_quote = "\"Safety in numbers is a bedtime story your commander told you so you can sleep at night.\""
+        bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price. " +
+                "\n\nAfter years of practice, Tress has now well adapted to her mechanized appendages. " +
+                "She has mastered the art of dexterous movement, and is freely able to operate much of her body without severely impacting her own stamina reserves. " +
+                "Tress found that she could Strike Harder, and move much faster than the average opponent, receiving a distinct advantage in combat. " +
+                "\n\nOver time Tress has developed into a determined, witty, and cocky woman with" +
+                " a passion for her martial arts craft; empowered by the flow of combat and the achievement she gains from conquering a worthy challenge. " +
+                "Her studies have honed her mind, body, and spirit to endure. Never forgetting her many losses in life, either physically or of her loved ones, " +
+                "Tress vowed to never be helpless again. \n\nShe is a warrior, reforged in " +
+                "hardship," +
+                " and has a monster of her own to slay before she's done. " +
+                "She hasn't forgotten the beast that ruined her life; one day Tress plans to return to her homeworld and face the creature that cost her so dearly..."    }
 
     //TODO alter for reward, duplicates, tier
 

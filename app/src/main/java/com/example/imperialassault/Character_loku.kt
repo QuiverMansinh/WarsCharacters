@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_loku : Character {
-
+    var card4Images = ArrayList<Bitmap?>()
     constructor(context: Context){
         //default values
         name = "Loku Kanoloa"
@@ -36,7 +36,7 @@ class Character_loku : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,2,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
         portraitRow = 3
@@ -48,14 +48,33 @@ class Character_loku : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Vigilant Marksman"
+        bio_quote = "\"His armor is weak at the neck. Aim higher.\""
+        bio_text ="Through the rigorous training undergone by all Mon Cal Special Forces, and an innate talent for observation, Loku is able to gather every piece of relevant information about the battlefield. " +
+                "\n\nThis Information about the terrain and his enemies provides a decisive " +
+                "advantage to his team, and he quickly becomes a focal point of clarity in the chaos of battle. " +
+                "This information, combined with his remarkable aim, enables him to spot and eliminate enemies before they even become a threat to him or his allies. " +
+                "\n\nLoku prefers to wield a durable and reliable All-Weather Rifle (resistant to" +
+                " the harsh climates found across the galaxy and able to fire while submerged), and prefers to find locations on the field where he can attack from range, to provide direction, or distraction, for his allies. " +
+                "\n\nThough the empire has never witnessed him in direct combat, Loku has made a " +
+                "name for himself throughout Imperial channels as an elite marksman and a highly dangerous threat. " +
+                "Loku takes pride in the fact his enemies fear him, and that they will never see him coming."}
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card4Images = loadCardTierImages(context,"card4")
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
 
+        //card6 tier images
+        if(xpCardsEquipped[3]){
+            if(card4Images[tier] != null){
+                currentImage = card4Images[tier]
+            }
+        }
+    }
 }

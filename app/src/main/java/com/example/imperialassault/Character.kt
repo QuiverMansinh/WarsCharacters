@@ -44,14 +44,15 @@ open class Character {
 
 
     var currentImage:Bitmap? = null
-    var overlay1:Bitmap? = null
-    var overlay2:Bitmap? = null
+    var layer2:Bitmap? = null
+    var layer1:Bitmap? = null
+    var layer1OnTop = false
 
     var tier = 0
     var tierImages = ArrayList<Bitmap?>()
 
     var xpCardImages  = ArrayList<Bitmap>()
-
+    var companionCard:Bitmap? = null
     var portraitImage:Bitmap? = null
     var portraitRow = 0
     var portraitCol = 0

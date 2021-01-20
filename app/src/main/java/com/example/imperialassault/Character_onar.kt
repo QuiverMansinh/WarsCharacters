@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_onar : Character {
-
-    constructor(context: Context){
+    var card7Images = ArrayList<Bitmap?>()
+    constructor(context: Context) {
         //default values
         name = "Onar Koma"
         name_short = "onar"
@@ -17,8 +17,8 @@ class Character_onar : Character {
         tech = "BR "
 
         strengthWounded = "BRY"
-        insightWounded  = "GR "
-        techWounded  = "RR "
+        insightWounded = "GR "
+        techWounded = "RR "
 
         background = "interior"
         health_default = 20
@@ -35,10 +35,10 @@ class Character_onar : Character {
         token = 0
         wounded = 0
 
-        xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpScores = intArrayOf(1, 1, 2, 2, 3, 3, 4, 4, 0)
+        xpEndurances = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        xpHealths = intArrayOf(0, 0, 0, 2, 0, 0, 3, 0, 0)
+        xpSpeeds = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
         portraitRow = 3
         portraitCol = 2
@@ -49,14 +49,38 @@ class Character_onar : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Marauding Mutant"
+        bio_quote = "\"I do my best work when I stay in harm's way.\""
+        bio_text = "The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. " +
+                "Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price." +
+                "\n\nOnar Koma is not good creature, in fact he is a very bad one; like most of the Aqualish race -he is gruff, brash, cruel, and impatient. " +
+                "Onar has a bad reputation for being quick to act and quicker to anger; one must choose their words carefully around this aggressive titan or face his wrath." +
+                "\n\nOnar revels in combat, being amongst the strongest Brawlers in the galaxy, " +
+                "easily weathering the many blows his enemies land on his Durasteel-hard hide. " +
+                "His favorite weapons are his fists, though he is also partial to the " +
+                "Bodyguard " +
+                "Rifle issued to him in the early days of \"Service\" to the Black Sun. The " +
+                "\n\nRebels don’t trust him, yet, need any help they can get; regrettably beggars" +
+                " can’t be choosers when it comes to galactic freedom. " +
+                "High Command has determined it is better to keep tabs on Onar and attempt to " +
+                "minimize the chaos. The enemy of my enemy is my friend; at least for now…"
+    }
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card7Images = loadCardTierImages(context,"card7")
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card6 tier images
+        if(xpCardsEquipped[6]){
+            if(card7Images[tier] != null){
+                currentImage = card7Images[tier]
+            }
+        }
+    }
 
 }

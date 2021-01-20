@@ -31,6 +31,13 @@
         app:layout_constraintStart_toStartOf="@+id/background_image"
         app:layout_constraintTop_toTopOf="@+id/background_image">
 
+        <FrameLayout
+            android:id="@+id/character_layer1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/droid"
+            android:visibility="visible" />
+
         <ImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
@@ -39,19 +46,13 @@
             android:scaleType="fitCenter"
             android:src="@drawable/character_select_background"
             android:visibility="visible"
-            app:srcCompat="@android:color/white" />
+            app:srcCompat="@drawable/tier0image" />
 
         <FrameLayout
-            android:id="@+id/overlay1"
+            android:id="@+id/character_layer2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/overlay2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
         </FrameLayout>
 
@@ -69,21 +70,7 @@
         app:layout_constraintTop_toTopOf="@+id/top_panel">
 
         <FrameLayout
-            android:id="@+id/impact_animation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/blast_animation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/slice_animation"
+            android:id="@+id/damage_animation"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -620,7 +607,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="135dp"
         android:background="@drawable/panel_segment"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -643,7 +630,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintVertical_bias="0.83" />
 
         <TextView
             android:id="@+id/health"
@@ -659,10 +646,9 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/endurance"
             app:layout_constraintEnd_toStartOf="@+id/endurance"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintTop_toTopOf="@+id/endurance" />
 
         <TextView
             android:id="@+id/endurance"
@@ -680,7 +666,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintVertical_bias="0.83" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/defence_wrapper"
@@ -897,7 +883,7 @@
             android:textColor="@color/shadow"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/health"
+            app:layout_constraintBottom_toTopOf="@+id/speed"
             app:layout_constraintEnd_toEndOf="@+id/speed"
             app:layout_constraintStart_toStartOf="@+id/speed" />
 
@@ -910,7 +896,7 @@
             android:textColor="@color/shadow"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/health"
+            app:layout_constraintBottom_toTopOf="@+id/defence_wrapper"
             app:layout_constraintEnd_toEndOf="@+id/defence_wrapper"
             app:layout_constraintStart_toStartOf="@+id/defence_wrapper" />
 
@@ -1192,5 +1178,19 @@
             app:srcCompat="@drawable/condition_focused" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/companion"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:background="#00FFFFFF"
+        android:onClick="onShowCompanionCard"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/character_images"
+        app:layout_constraintEnd_toEndOf="@+id/character_images"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="@+id/character_images"
+        app:layout_constraintTop_toTopOf="@+id/character_images"
+        app:layout_constraintVertical_bias="0.81" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

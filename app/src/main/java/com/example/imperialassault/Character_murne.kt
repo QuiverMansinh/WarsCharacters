@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_murne : Character {
-
+    var card9Image:Bitmap? = null
     constructor(context: Context){
         //default values
         name = "Murne Rin"
@@ -37,7 +37,7 @@ class Character_murne : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,2,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
         portraitRow = 2
@@ -49,14 +49,34 @@ class Character_murne : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Undercover Senator"
+        bio_quote = "\"They don't need to be loyal all of the time. Only at the right time.\""
+        bio_text ="Murne is not apt in combat, she prefers anonymity in the field and rarely enters a fight unless she must. " +
+                "Though she actively avoids martial combat, Murne does carry a Diplomat Blaster Pistol, she purchased the day she became a senator. " +
+                "She carries it within her robes at all times due to the clandestine nature of " +
+                "her operations. \n\nHer true talents are in supporting her allies and bodyguards" +
+                " in the field. " +
+                "Whether offering data regarding troop movement, intel from her spies and allies, or by releasing false orders to Imperial officers; which are fed directly into Imperial comms. " +
+                "\n\nMurne is working hard to see the Galactic Republic Emerge Anew and is " +
+                "willing to die for her efforts; they just have to catch her first."   }
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card9Image = getBitmap(context, "characters/murne/images/card9.png")
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card6 tier images
+        if(xpCardsEquipped[8]){
+            layer1 = card9Image
+        }
+        else{
+            layer1 = null
+        }
+    }
 
 }

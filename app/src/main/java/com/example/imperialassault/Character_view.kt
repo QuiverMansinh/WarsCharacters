@@ -119,6 +119,12 @@ class Character_view : AppCompatActivity() {
         character_type.setText(character.type)
 
         updateImages()
+        if(character.companionCard != null){
+            companion.visibility = View.VISIBLE
+        }
+        else{
+            companion.visibility = View.GONE
+        }
 
         background_image.setImageBitmap(character.getBackgroundImage(this))
 
@@ -230,17 +236,18 @@ class Character_view : AppCompatActivity() {
             }
             else{
                 add_damage.setText("" + character.health)
-                val slide = ObjectAnimator.ofFloat(character_image, "translationY",0f,0f,character_image.height.toFloat())
+                val slide = ObjectAnimator.ofFloat(character_images, "translationY",0f,0f,
+                    character_image.height.toFloat())
                 slide.setDuration(1500)
                 slide.start()
             }
-            var hitY = ObjectAnimator.ofFloat(character_image,"translationY",0f,20f*Random
+            var hitY = ObjectAnimator.ofFloat(character_images,"translationY",0f,20f*Random
                 .nextFloat(),
                 0f,20f*Random.nextFloat(),0f,20f*Random.nextFloat(),0f)
             hitY .setDuration(300)
             hitY .start()
 
-            var hitX = ObjectAnimator.ofFloat(character_image,"translationX",0f,-10f*Random
+            var hitX = ObjectAnimator.ofFloat(character_images,"translationX",0f,-10f*Random
                 .nextFloat(),
                 0f,-10f*Random.nextFloat(),0f,-10f*Random.nextFloat(),0f)
             hitX .setDuration(300)
@@ -278,7 +285,7 @@ class Character_view : AppCompatActivity() {
             else if(character.damage < character.health*2){
                 character.wounded = character.damage-character.health
                 add_damage.setText("" + character.wounded)
-                val slide = ObjectAnimator.ofFloat(character_image, "translationY", 0f)
+                val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
                 slide.setDuration(500)
                 slide.start()
             }
@@ -1071,31 +1078,27 @@ class Character_view : AppCompatActivity() {
         sliceAnim = createAnimation("slice")
         restAnim = createAnimation("rest")
 
-        blast_animation.setBackgroundDrawable(blastAnim)
-        blast_animation.visibility = FrameLayout.INVISIBLE
-        slice_animation.setBackgroundDrawable(sliceAnim)
-        slice_animation.visibility = FrameLayout.INVISIBLE
-        impact_animation.setBackgroundDrawable(impactAnim)
-        impact_animation.visibility = FrameLayout.INVISIBLE
         rest_animation.setBackgroundDrawable(restAnim)
         rest_animation.visibility = FrameLayout.INVISIBLE
-
     }
 
     fun playDamageAnim(){
         val animType = Math.random();
         if(animType<0.3){
-            blast_animation.visibility = FrameLayout.VISIBLE
+            damage_animation.setBackgroundDrawable(blastAnim)
+            damage_animation.visibility = FrameLayout.VISIBLE
             blastAnim.setVisible(true, true)
             blastAnim.start()
         }
         else if(animType<0.6){
-            slice_animation.visibility = FrameLayout.VISIBLE
+            damage_animation.setBackgroundDrawable(sliceAnim)
+            damage_animation.visibility = FrameLayout.VISIBLE
             sliceAnim.setVisible(true, true)
             sliceAnim.start()
         }
         else{
-            impact_animation.visibility = FrameLayout.VISIBLE
+            damage_animation.setBackgroundDrawable(impactAnim)
+            damage_animation.visibility = FrameLayout.VISIBLE
             impactAnim.setVisible(true, true)
             impactAnim.start()
         }
@@ -1323,23 +1326,32 @@ class Character_view : AppCompatActivity() {
     open fun updateImages(){
         character.updateCharacterImages()
         character_image.setImageBitmap(character.currentImage)
-
-        if(character.overlay1 != null){
-            overlay1.visibility = View.VISIBLE
-            overlay1.foreground = BitmapDrawable(resources, character.overlay1);
-        }
-        else{
-            overlay1.visibility = View.INVISIBLE
+        if(character.layer1OnTop){
+            character_layer1.elevation=1f
         }
 
-        if(character.overlay2 != null){
-            overlay2.visibility = View.VISIBLE
-            overlay2.foreground = BitmapDrawable(resources, character.overlay2);
+        if(character.layer2 != null){
+            character_layer2.visibility = View.VISIBLE
+            character_layer2.foreground = BitmapDrawable(resources, character.layer2 );
         }
         else{
-            overlay2.visibility = View.INVISIBLE
+            character_layer2.visibility = View.GONE
+        }
+
+        if(character.layer1 != null){
+            character_layer1.visibility = View.VISIBLE
+            character_layer1.foreground = BitmapDrawable(resources, character.layer1);
+        }
+        else{
+            character_layer1.visibility = View.GONE
         }
     }
+
+    fun onShowCompanionCard(view: View) {
+        showCardDialog!!.card_image.setImageBitmap(character.companionCard)
+        showCardDialog!!.show()
+    }
+
     //************************************************************************************************************
     //region Stats Screen
     //************************************************************************************************************
@@ -1426,6 +1438,8 @@ class Character_view : AppCompatActivity() {
     var xpCardImages = arrayListOf<ImageView>()
 
     fun initXPScreen() {
+        println("ghdhndjdjdfh"+character.xpCardImages.size)
+
         xpCardImages.add(xpSelectScreen!!.XPCard1)
         xpCardImages.add(xpSelectScreen!!.XPCard2)
         xpCardImages.add(xpSelectScreen!!.XPCard3)
@@ -1436,7 +1450,9 @@ class Character_view : AppCompatActivity() {
         xpCardImages.add(xpSelectScreen!!.XPCard8)
         xpCardImages.add(xpSelectScreen!!.XPCard9)
 
-        for(i in 0..8){
+
+
+        for(i in 0.. character.xpCardImages.size-1){
             xpCardImages[i].setImageBitmap(character.xpCardImages[i])
             xpCardImages[i].setOnLongClickListener {
                 onShowXPCard(xpCardImages[i])
@@ -1495,6 +1511,8 @@ class Character_view : AppCompatActivity() {
         xpLeft = character.totalXP-character.xpSpent;
         xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
     }
+
+
     //endregion
 }
 

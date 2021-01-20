@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_shyla : Character {
-
+    var card4Image:Bitmap? = null
+    var card5Image:Bitmap? = null
+    var helmetImages = ArrayList<Bitmap?>()
     constructor(context: Context){
         //default values
         name = "Shyla Varad"
@@ -36,8 +38,8 @@ class Character_shyla : Character {
         wounded = 0
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpEndurances = intArrayOf(0,0,0,0,0,0,0,1,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
         portraitRow = 1
@@ -46,17 +48,49 @@ class Character_shyla : Character {
         //Update images
 
         //update strain, update damage, xp, cards, weapons
+        layer1OnTop = true
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Professional Mercenary"
+        bio_quote = "\"I come from and ancient warrior tradition. That tradition will dismantle you.\""
+        bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. " +
+                "Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price." +
+                "\n\nThe Mandalorians pride themselves in the art-of-combat, training their youths to be skilled with all manner of Martial Arts, Melee Weaponry, and Marksmanship. " +
+                "The soldiers of Mandalore utilize many advanced gadgets to combat the more unique enemies in the galaxy: Remote Detonators, Smoke Bombs, and Whipcord launchers- just to name a few. " +
+                "Shyla above it all, prefers her specially crafted Duelists Blade, meant for precise and deadly strikes. " +
+                "The Ancient Mandalorians once fought Jedi with these unique blades- called Vibroswords, Crafted specifically to contend with the Lightsabers of their enemies. " +
+                "\n\nIntroverted, conservative, professional, and skilled, Shyla is a real force " +
+                "to be reckoned with. In her free time, Shyla researches into Deathwatch in an attempt to feel closer to her heroes; and to gleam as much knowledge as she can from the long dead organization. " +
+                "Something at the back of her mind seems to entice her about the organization and she plans to get to the bottom of it."}
+
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card4Image = getBitmap(context, "characters/shyla/images/card4.png")
+        card5Image = getBitmap(context, "characters/shyla/images/card5.png")
+        helmetImages = loadCardTierImages(context,"helmet")
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        if(xpCardsEquipped[3]){
+            layer1 = card4Image
+        }
+        else{
+            layer1 = null
+        }
+        if(xpCardsEquipped[4]){
+            layer2 = card5Image
+        }
+        else{
+            layer2 = null
+        }
+
+        //todo helmet
+    }
 
 }

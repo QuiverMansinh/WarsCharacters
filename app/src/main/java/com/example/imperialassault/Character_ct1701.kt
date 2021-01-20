@@ -4,6 +4,13 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_ct1701 : Character {
+    var tier1duplicate:Bitmap? = null
+    var tier2duplicate:Bitmap? = null
+    var tier3duplicate:Bitmap? = null
+
+    var tier1helmet:Bitmap? = null
+    var tier2helmet:Bitmap? = null
+    var tier3helmet:Bitmap? = null
 
     constructor(context: Context){
         //default values
@@ -37,7 +44,7 @@ class Character_ct1701 : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
         portraitRow = 2
@@ -49,14 +56,65 @@ class Character_ct1701 : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Wildfire"
+        bio_quote = "\"Lock and load.\""
+        bio_text ="Having seen service since the earliest days of the Clone Wars, \"Wildfire\" " +
+                "has never truly adapted to the current methods of warfare; he still prefers to " +
+                "use a gun as old as he is: the DC-15S Blaster- \"Why fix what isn't broken.\"" +
+                "\n\n \"Wildfire's\" many failures and regrets over the course of his life have ever" +
+                "haunted his thoughts, catalyzing the valiant soldier into a very embittered and " +
+                "troubled man; his role to play in a fellow soldiers death ever haunting his dreams. " +
+                "Forever after, \"Wildfire\" would come to feel closed-off, ashamed, and dejected" +
+                " upon meeting a Survivor of the Jedi Order amongst the Rebellion. " +
+                "\n\nHis first stop post desertion, took him to the planet Rodia to pay respects " +
+                "at his departed Commander's mausoleum; tears fell from his eyes during the event for the first time in many long years. " +
+                "After inevitably hitting his breaking point with the Empire, \"Wildfire\" would " +
+        "come to develop intolerance for subordination to a cause he couldn't believe in. " +
+                "He would forge his own destiny, without the malicious direction of enslaving " +
+                "\"masters\", who viewed the remaining Clone troopers as expendable, outdated, " +
+                "relics- to be discarded at a whim. " +
+                "\n\nDour, Steadfast, and pugnacious as always, \"Wildfire\" has really only ever" +
+                " felt at home on a battlefield; a wolf ever searching for the next hunt. " +
+                "\"Wildfire\" has decided his waning years wouldn't be spent in leisure; this old" +
+                " soldier is determined to die in combat, for glory, for his friends, and for a noble purpose of his own choosing." }
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+
+        tier1duplicate = getBitmap(context, "characters/ct1701/images/tier1image_duplicate.png")
+        tier2duplicate = getBitmap(context, "characters/ct1701/images/tier2image_duplicate.png")
+        tier3duplicate = getBitmap(context, "characters/ct1701/images/tier3image_duplicate.png")
+
+        tier1helmet = getBitmap(context, "characters/ct1701/images/tier1_helmet.png")
+        tier2helmet = getBitmap(context, "characters/ct1701/images/tier2_helmet.png")
+        tier3helmet = getBitmap(context, "characters/ct1701/images/tier3_helmet.png")
+
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        var ran = Math.random()
+
+        if(tier == 1){
+            if(ran<0.5){
+                currentImage = tier1duplicate
+            }
+        }
+        else if(tier == 2){
+            if(ran<0.5){
+                currentImage = tier2duplicate
+            }
+        }
+        else if(tier == 3){
+            if(ran<0.5){
+                currentImage = tier3duplicate
+            }
+        }
+
+        //todo helmet
+    }
 
 }

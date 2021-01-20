@@ -4,6 +4,13 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_jarrod : Character {
+    var droid:Bitmap? = null
+    var droid_card9:Bitmap? = null
+
+    var jaxCard:Bitmap? = null
+    var jaxCard_card6:Bitmap? = null
+    var jaxCard_card9:Bitmap? = null
+    var jaxCard_card69:Bitmap? = null
 
     constructor(context: Context){
         //default values
@@ -36,9 +43,9 @@ class Character_jarrod : Character {
         wounded = 0
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpEndurances = intArrayOf(0,1,0,0,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,2,0)
+        xpSpeeds = intArrayOf(0,0,0,0,0,1,0,0,0)
 
         portraitRow = 4
         portraitCol = 1
@@ -46,17 +53,59 @@ class Character_jarrod : Character {
         //Update images
 
         //update strain, update damage, xp, cards, weapons
-
+        layer1OnTop = true
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Robotic Overlord"
+        bio_quote = "\"Jax, plug in. See what you can find for us.\""
+        bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price." +
+                "\n\nGrowing up on a planet where the first ones at the scene obtain the best " +
+                "salvage- has conditioned Jarrod to move fast and strike when his enemies are not prepared. " +
+                "Ever admiring and fearing the deadly creatures of his homeworld, Jarrod has become accustomed to using a pair of deadly Vibro-Claws he developed- " +
+                "to instill fear in his foes and bring out his own savage nature. " +
+                "\n\nJarrod is an expert in the field of Robotics and knows how to repair just " +
+                "about anything mechanical to working condition." +
+                " Alongside “Jax” he plans to seek justice for his murdered mentor Dr. Graves, and works reclaim the stolen blueprints of his loyal droid. " +
+                "In thanks for his service, the Rebellion has offered to provide shelter to Jarrod’s clan if he works alongside them to defeat the Empire;" +
+                " he gladly accepted the offer."
+    }
+
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        droid = getBitmap(context, "characters/jarrod/images/droid.png")
+        droid_card9 = getBitmap(context, "characters/jarrod/images/droid_card9.png")
+
+        jaxCard = getBitmap(context, "characters/jarrod/images/jax.png")
+        jaxCard_card6 = getBitmap(context, "characters/jarrod/images/jax_card6.png")
+        jaxCard_card9 = getBitmap(context, "characters/jarrod/images/jax_card9.png")
+        jaxCard_card69 = getBitmap(context, "characters/jarrod/images/jax_card6_card9.png")
+        companionCard  = jaxCard
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //droid images
+        companionCard  = jaxCard
+
+        if(xpCardsEquipped[8]){
+            layer1 = droid_card9
+            if(xpCardsEquipped[5]) {
+                companionCard = jaxCard_card69
+            }
+            else{
+                companionCard  = jaxCard_card9
+            }
+        }
+        else{
+            if(xpCardsEquipped[5]) {
+                companionCard  = jaxCard_card6
+            }
+            layer1 = droid
+        }
+    }
 
 }

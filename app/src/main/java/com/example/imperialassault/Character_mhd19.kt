@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_mhd19 : Character {
-
+    var card9Images = ArrayList<Bitmap?>()
     constructor(context: Context){
         //default values
         name = "MHD-19"
@@ -37,8 +37,8 @@ class Character_mhd19 : Character {
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,3)
+        xpSpeeds = intArrayOf(0,0,0,1,0,0,0,0,0)
 
         portraitRow = 1
         portraitCol = 2
@@ -49,14 +49,44 @@ class Character_mhd19 : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Mechanical Medic"
+        bio_quote = "Maker: REDACTED\n\nModel: 2-1B_Surgical_Droid\n\nProgramming: Masculine  " +
+                    "\n\n\"I will do what I must to protect my fellow soldiers.\""
+        bio_text ="\"Doc's\" past is checkered at best, having been responsible for cracking the " +
+                "psyche and skulls of many fools who attempted to resist the Black Suns aims; " +
+                "these Files are rarely utilized, but MHD-19 has been known to \"Turn The Safety " +
+                "Switch- Off\" when necessary. \n\nMHD-19 prefers to use a hidden Sidearm Blaster" +
+                " when encountered in combat; " +
+                "the weapon easily merges with MHD's chassis to help remain incognito and prevent the weapons discovery. " +
+                "\n\n\"Doc\" also benefits from the increased Strength, Durability, and " +
+                "unfettered " +
+                "Agility that only a droid may posses- compared to a normal organic being, with a " +
+                "\"Mind\" so brilliant, \"Doc\" is directly responsible for discovering cures for" +
+                " many of the most dangerous diseases found across the galaxy. \n\nThough " +
+                "primarily a" +
+                " medical unit, \"Doc\" commonly Upgrades itself to remain adaptable in any situation, " +
+                "regularly uploading vast amounts of information to its Reference Database to expand its abilities; " +
+                "only being restrained by the \"Shell\" it wears and the parts that make up its \"innards.\" " +
+                "\n\nLoyal, intelligent, cocky, and robust, \"Doc\" is the stitching that holds " +
+                "its team together."
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card9Images = loadCardTierImages(context,"card9")
+    }
+
+    //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card6 tier images
+        if(xpCardsEquipped[8]){
+            if(card9Images[tier] != null){
+                currentImage = card9Images[tier]
+            }
+        }
+    }
 
 }

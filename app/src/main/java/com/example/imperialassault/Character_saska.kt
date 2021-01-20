@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_saska : Character {
-
+    var card9Images = ArrayList<Bitmap?>()
     constructor(context: Context){
         //default values
         name = "Saska Teft"
@@ -36,8 +36,8 @@ class Character_saska : Character {
         wounded = 0
 
         xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
+        xpEndurances = intArrayOf(0,0,0,0,0,0,0,1,0)
+        xpHealths = intArrayOf(0,0,0,0,0,0,0,2,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
 
         portraitRow = 0
@@ -49,14 +49,34 @@ class Character_saska : Character {
 
         loadImages(context)
 
-        bio_title = "Covert Agent"
-        bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""
-        bio_text ="Mak wields a modified Longblaster- a civilian hunting weapon he has " +
-                "re-purposed in an attempt to disguise his assassinations- by averting the use of" +
-                " military grade weapons. He prefers to take out high-priority targets from long " +
-                "range, but isn't opposed to a more intimate fight if he must. Mak also commonly utilizes an array of tech from his connections in the Bothan Spynet or his past allegiance with the ISB. Mak has a talent of “melting” in and out of combat; waylaying his foes and causing distractions to catch them unprepared. Thanks to his agility and stealth, enemies have a hard time pining this elusive Bothan down. In his spare time, Mak attempts to gather volunteers to aid him in removing the threat of the Imperial \"Shadow Suits\" and end any advantage the Empire could have gained from their creation."
+        bio_title = "Enigmatic Engineer"
+        bio_quote = "\"As much as I like putting things together, I also like blowing them apart.\""
+        bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. " +
+                "Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price." +
+                "\n\nSaska prefers to use a heavily Modified Blaster of her own creation while in" +
+                " combat, as well as, a Comprehensive Tool Kit, and the many varied and useful gadgets she has built over the years. " +
+                "These items range from Personal Energy Shield Devices, to Adrenal injectors, and even Explosives. " +
+                "Saska’s inventions, while many times unconventional, can mean the difference between success and failure in the hands of the resourceful; " +
+                "though none is more resourceful in a fight than Saska herself, who uses her own devices and illegal weapon modifications to wreak havoc on the Imperial forces. " +
+                "\n\nThe Imperials brought her wrath upon themselves; they will soon realize how " +
+                "poorly equipped they are by comparison. Few minds can stand up to hers in the galaxy and the Tech Fields are Saska's domain."}
+
+    //TODO alter for reward, duplicates, tier
+    override fun loadImages(context: Context){
+        super.loadImages(context)
+        card9Images = loadCardTierImages(context,"card9")
     }
 
     //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(){
+        super.updateCharacterImages()
+
+        //card9 tier images
+        if(xpCardsEquipped[8]){
+            if(card9Images[tier] != null){
+                currentImage = card9Images[tier]
+            }
+        }
+    }
 
 }

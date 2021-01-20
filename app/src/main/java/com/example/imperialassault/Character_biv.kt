@@ -48,6 +48,8 @@ class Character_biv : Character {
 
         //update strain, update damage, xp, cards, weapons
 
+        layer1OnTop = true
+
         loadImages(context)
 
         bio_title = "Vicious Vanguard"
@@ -75,13 +77,13 @@ class Character_biv : Character {
         super.updateCharacterImages()
 
         //card5 overlay
-        overlay1 = null
+        layer1 = null
         if(xpCardsEquipped[4]){
             if(card5Images[tier] != null){
-                overlay1 = card5Images[tier]
+                layer1 = card5Images[tier]
             }
         }
-        println( " "+ xpCardsEquipped[4] + " " + overlay1 + "BIV")
+        println( " "+ xpCardsEquipped[4] + " " + layer1 + "BIV")
 
         //card6 tier images
         if(xpCardsEquipped[5]){
