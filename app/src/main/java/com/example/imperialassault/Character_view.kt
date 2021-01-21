@@ -2,6 +2,7 @@ package com.example.imperialassault
 import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -50,7 +51,7 @@ class Character_view : AppCompatActivity() {
         initKillTracker()
     }
     //************************************************************************************************************
-    //region Basic Functions and UI
+    //region Main Screen
     //************************************************************************************************************
     var isWounded = false
 
@@ -87,10 +88,9 @@ class Character_view : AppCompatActivity() {
         } else {
 
         }
+
         name.setText("" + character.name);
-        health.setText("" + character.health);
-        endurance.setText("" + character.endurance);
-        speed.setText("" + character.speed);
+
 
         when (character.defence_dice) {
             "white" -> ImageViewCompat.setImageTintList(
@@ -119,6 +119,8 @@ class Character_view : AppCompatActivity() {
         character_type.setText(character.type)
 
         updateImages()
+        updateStats()
+
         if(character.companionCard != null){
             companion.visibility = View.VISIBLE
         }
@@ -127,26 +129,11 @@ class Character_view : AppCompatActivity() {
         }
 
         background_image.setImageBitmap(character.getBackgroundImage(this))
-
-        add_damage.setOnLongClickListener {
-            if (character.damage >= character.health) {
-                unwoundDialog!!.show()
-            }
-            true
-        }
-        add_strain.setOnLongClickListener {
-            if (actionsLeft > 0) {
-                restDialog!!.show()
-            } else {
-                showNoActionsLeftToast()
-            }
-            true
-        }
-
-
+        initDamageAndStrain()
     }
 
     fun setDiceColor(dice: ImageView, color: Char) {
+        dice.visibility = ImageView.VISIBLE
         when(color){
             'B' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_blue)))
             'G' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_green)))
@@ -155,6 +142,87 @@ class Character_view : AppCompatActivity() {
             ' ' -> dice.visibility = ImageView.GONE
         }
     }
+
+    open fun getBitmap(context: Context, path: String): Bitmap? {
+        val assetManager = context.assets
+        var inputStream: InputStream? = null
+        try {
+            inputStream = assetManager.open(path)
+            return BitmapFactory.decodeStream(inputStream)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                inputStream?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return null
+    }
+
+    open fun updateImages(){
+        character.updateCharacterImages()
+        character_image.setImageBitmap(character.currentImage)
+        if(character.layer1OnTop){
+            character_layer1.elevation=1f
+        }
+
+        if(character.layer2 != null){
+            character_layer2.visibility = View.VISIBLE
+            character_layer2.foreground = BitmapDrawable(resources, character.layer2 );
+        }
+        else{
+            character_layer2.visibility = View.GONE
+        }
+
+        if(character.layer1 != null){
+            character_layer1.visibility = View.VISIBLE
+            character_layer1.foreground = BitmapDrawable(resources, character.layer1);
+        }
+        else{
+            character_layer1.visibility = View.GONE
+        }
+    }
+
+    fun onShowCompanionCard(view: View) {
+        showCardDialog!!.card_image.setImageBitmap(character.companionCard)
+        showCardDialog!!.show()
+    }
+
+    open fun updateStats(){
+        var currentHealth = character.health
+        var currentEndurance = character.endurance
+        var currentSpeed = character.speed
+        health.setTextColor(Color.BLACK)
+        endurance.setTextColor(Color.BLACK)
+        speed.setTextColor(Color.BLACK)
+
+        for(i in 0..character.xpCardsEquipped.size-1){
+            if(character.xpCardsEquipped[i]){
+                if(character.xpHealths[i]!=0) {
+                    currentHealth += character.xpHealths[i]
+                    health.setTextColor(Color.GREEN)
+                }
+                if(character.xpEndurances[i]!=0) {
+                    currentEndurance += character.xpEndurances[i]
+                    endurance.setTextColor(Color.GREEN)
+                }
+                if(character.xpSpeeds[i]!=0) {
+                    currentSpeed += character.xpSpeeds[i]
+                    speed.setTextColor(Color.GREEN)
+                }
+            }
+        }
+
+        health.setText("" + currentHealth);
+        endurance.setText("" + currentEndurance);
+        speed.setText("" + currentSpeed);
+    }
+
+    //************************************************************************************************************
+    //region Damage and Strain
+    //************************************************************************************************************
 
     fun onAddStrain(view: View) {
         if(character.strain < character.endurance) {
@@ -320,6 +388,23 @@ class Character_view : AppCompatActivity() {
         isWounded = false
 
         unwoundDialog!!.cancel()
+    }
+
+    fun initDamageAndStrain() {
+        add_damage.setOnLongClickListener {
+            if (character.damage >= character.health) {
+                unwoundDialog!!.show()
+            }
+            true
+        }
+        add_strain.setOnLongClickListener {
+            if (actionsLeft > 0) {
+                restDialog!!.show()
+            } else {
+                showNoActionsLeftToast()
+            }
+            true
+        }
     }
 
     //endregion
@@ -710,29 +795,34 @@ class Character_view : AppCompatActivity() {
     }
 
     fun onReward(view: View) {
-        itemSelectScreen!!.show()
-        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(0)
-        currentTab!!.select()
+        val intent = Intent(this, Item_Select_Screen::class.java)
+        intent.putExtra("tab","reward")
+        //intent.putExtra("Load",false)
+        startActivity(intent);
     }
     fun onAccessory(view: View) {
-        itemSelectScreen!!.show()
-        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(1)
-        currentTab!!.select()
+        val intent = Intent(this, Item_Select_Screen::class.java)
+        intent.putExtra("tab","accessory")
+        //intent.putExtra("Load",false)
+        startActivity(intent);
     }
     fun onArmour(view: View) {
-        itemSelectScreen!!.show()
-        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(2)
-        currentTab!!.select()
+        val intent = Intent(this, Item_Select_Screen::class.java)
+        intent.putExtra("tab","armour")
+        //intent.putExtra("Load",false)
+        startActivity(intent);
     }
     fun onMelee(view: View) {
-        itemSelectScreen!!.show()
-        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(3)
-        currentTab!!.select()
+        val intent = Intent(this, Item_Select_Screen::class.java)
+        intent.putExtra("tab","melee")
+        //intent.putExtra("Load",false)
+        startActivity(intent);
     }
     fun onRange(view: View) {
-        itemSelectScreen!!.show()
-        val currentTab= itemSelectScreen!!.item_selection_tabs.getTabAt(4)
-        currentTab!!.select()
+        val intent = Intent(this, Item_Select_Screen::class.java)
+        intent.putExtra("tab","range")
+        //intent.putExtra("Load",false)
+        startActivity(intent);
     }
     fun onXPScreen(view: View) {
         initXPScreen()
@@ -1164,7 +1254,6 @@ class Character_view : AppCompatActivity() {
     var creditsScreen:Dialog? = null
     var settingsScreen:Dialog? = null
     var statsScreen:Dialog? = null
-    var itemSelectScreen:Dialog?=null
     var xpSelectScreen:Dialog?=null
 
     fun initDialogs(){
@@ -1291,12 +1380,6 @@ class Character_view : AppCompatActivity() {
         creditsScreen!!.setCanceledOnTouchOutside(true)
         creditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
-        itemSelectScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen )
-        itemSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        itemSelectScreen!!.setCancelable(false)
-        itemSelectScreen!!.setContentView(R.layout.screen_item_select)
-        itemSelectScreen!!.setCanceledOnTouchOutside(true)
-
         xpSelectScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         xpSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         xpSelectScreen!!.setCancelable(false)
@@ -1304,55 +1387,7 @@ class Character_view : AppCompatActivity() {
         xpSelectScreen!!.setCanceledOnTouchOutside(true)
     }
     //endregion
-    //************************************************************************************************************
-    open fun getBitmap(context: Context, path: String): Bitmap? {
-        val assetManager = context.assets
-        var inputStream: InputStream? = null
-        try {
-            inputStream = assetManager.open(path)
-            return BitmapFactory.decodeStream(inputStream)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            try {
-                inputStream?.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        return null
-    }
-
-    open fun updateImages(){
-        character.updateCharacterImages()
-        character_image.setImageBitmap(character.currentImage)
-        if(character.layer1OnTop){
-            character_layer1.elevation=1f
-        }
-
-        if(character.layer2 != null){
-            character_layer2.visibility = View.VISIBLE
-            character_layer2.foreground = BitmapDrawable(resources, character.layer2 );
-        }
-        else{
-            character_layer2.visibility = View.GONE
-        }
-
-        if(character.layer1 != null){
-            character_layer1.visibility = View.VISIBLE
-            character_layer1.foreground = BitmapDrawable(resources, character.layer1);
-        }
-        else{
-            character_layer1.visibility = View.GONE
-        }
-    }
-
-    fun onShowCompanionCard(view: View) {
-        showCardDialog!!.card_image.setImageBitmap(character.companionCard)
-        showCardDialog!!.show()
-    }
-
-    //************************************************************************************************************
+     //************************************************************************************************************
     //region Stats Screen
     //************************************************************************************************************
     fun initStatsScreen(){
@@ -1494,8 +1529,8 @@ class Character_view : AppCompatActivity() {
 
 
       updateImages()
+      updateStats()
 
-        //TODO update stats
     }
 
     fun addXP(view:View){

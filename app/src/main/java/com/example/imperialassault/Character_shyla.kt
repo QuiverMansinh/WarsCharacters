@@ -20,7 +20,7 @@ class Character_shyla : Character {
 
         strengthWounded = "BBR"
         insightWounded  = "GR "
-        techWounded  = "RR "
+        techWounded  = "BR "
 
         background = "interior"
         health_default = 12

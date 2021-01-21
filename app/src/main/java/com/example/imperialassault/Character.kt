@@ -91,6 +91,14 @@ open class Character {
     var power:Bitmap?=null
     var power_wounded:Bitmap?=null
 
+    var weapon1 = ""
+    var weapon2 = ""
+    var accessory1 = ""
+    var accessory2 = ""
+    var accessory3 = ""
+    var helmet = ""
+    var armour = ""
+
     open fun loadImages(context: Context){
         loadTierImages(context)
         loadXPCardImages(context)
@@ -191,4 +199,6 @@ open class Character {
 
         currentImage = tierImages[tier]
     }
+
+
 }
