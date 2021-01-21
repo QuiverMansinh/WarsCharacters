@@ -19,7 +19,7 @@ class Character_jyn : Character {
         tech = "BGY"
 
         strengthWounded = "R  "
-        insightWounded  = "BR"
+        insightWounded  = "BR "
         techWounded  = "BGR"
 
         background = "interior"

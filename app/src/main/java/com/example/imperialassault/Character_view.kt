@@ -191,9 +191,9 @@ class Character_view : AppCompatActivity() {
     }
 
     open fun updateStats(){
-        var currentHealth = character.health
-        var currentEndurance = character.endurance
-        var currentSpeed = character.speed
+        character.health= character.health_default
+        character.endurance = character.endurance_default
+        character.speed = character.speed_default
         health.setTextColor(Color.BLACK)
         endurance.setTextColor(Color.BLACK)
         speed.setTextColor(Color.BLACK)
@@ -201,23 +201,29 @@ class Character_view : AppCompatActivity() {
         for(i in 0..character.xpCardsEquipped.size-1){
             if(character.xpCardsEquipped[i]){
                 if(character.xpHealths[i]!=0) {
-                    currentHealth += character.xpHealths[i]
+                    character.health += character.xpHealths[i]
                     health.setTextColor(Color.GREEN)
                 }
                 if(character.xpEndurances[i]!=0) {
-                    currentEndurance += character.xpEndurances[i]
+                    character.endurance += character.xpEndurances[i]
                     endurance.setTextColor(Color.GREEN)
                 }
                 if(character.xpSpeeds[i]!=0) {
-                    currentSpeed += character.xpSpeeds[i]
+                    character.speed += character.xpSpeeds[i]
                     speed.setTextColor(Color.GREEN)
                 }
             }
         }
+        if(isWounded){
+            character.endurance--
+            endurance.setTextColor(Color.RED)
+            character.speed--
+            speed.setTextColor(Color.RED)
+        }
 
-        health.setText("" + currentHealth);
-        endurance.setText("" + currentEndurance);
-        speed.setText("" + currentSpeed);
+        health.setText("" + character.health);
+        endurance.setText("" + character.endurance);
+        speed.setText("" + character.speed);
     }
 
     //************************************************************************************************************
@@ -299,6 +305,7 @@ class Character_view : AppCompatActivity() {
 
                     character.timesWounded++
                     isWounded = true
+                    updateStats()
                 }
 
             }
@@ -348,6 +355,7 @@ class Character_view : AppCompatActivity() {
                     setDiceColor(tech3, character.tech[2]);
 
                     isWounded = false
+                    updateStats()
                 }
             }
             else if(character.damage < character.health*2){
@@ -386,7 +394,7 @@ class Character_view : AppCompatActivity() {
         setDiceColor(tech3, character.tech[2]);
 
         isWounded = false
-
+        updateStats()
         unwoundDialog!!.cancel()
     }
 
