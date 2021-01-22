@@ -34,6 +34,7 @@
                 android:fontFamily="@font/agency_fb"
                 android:hint="New Save File"
                 android:inputType="textPersonName"
+                android:maxLength="16"
                 android:padding="5dp"
                 android:shadowColor="@color/white"
                 android:shadowRadius="10"

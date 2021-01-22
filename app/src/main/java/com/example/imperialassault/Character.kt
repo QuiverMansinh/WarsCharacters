@@ -33,7 +33,7 @@ open class Character {
     var xpHealths: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpSpeeds: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-    var rewardObtained = false
+
     var bio_title = ""
     var bio_quote = ""
     var bio_text = ""
@@ -63,6 +63,8 @@ open class Character {
     var strain = 0
     var token = 0
     var wounded = 0
+
+    var conditionsActive = booleanArrayOf(false,false,false,false,false)
 
     var totalXP = 0
     var xpSpent = 0
@@ -100,6 +102,9 @@ open class Character {
     var timesWeakened = 0
     var cratesPickedUp = 0
 
+    var withdrawn = false
+    var rewardObtained = false
+
     //endregion
     //****************************************************************************************************
 
@@ -117,7 +122,7 @@ open class Character {
 
     open fun loadTierImages(context: Context){
         val images = java.util.ArrayList<Bitmap?>()
-        for (i in 0..4) {
+        for (i in 0..3) {
             val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i + "image.png")
             images.add(image)
         }
@@ -161,12 +166,12 @@ open class Character {
             inputStream = assetManager.open(path)
             return BitmapFactory.decodeStream(inputStream)
         } catch (e: Exception) {
-            e.printStackTrace()
+            //e.printStackTrace()
         } finally {
             try {
                 inputStream?.close()
             } catch (e: Exception) {
-                e.printStackTrace()
+                //e.printStackTrace()
             }
         }
         return null
@@ -174,7 +179,7 @@ open class Character {
 
     open fun loadCardTierImages(context: Context, cards:String): ArrayList<Bitmap?>{
         val images = java.util.ArrayList<Bitmap?>()
-        for (i in 0..4) {
+        for (i in 0..3) {
             val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i +
                     "image_"+cards+".png")
 

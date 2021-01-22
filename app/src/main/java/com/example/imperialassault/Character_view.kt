@@ -23,8 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 
 import kotlinx.android.synthetic.main.activity_character_view.*
-import kotlinx.android.synthetic.main.activity_load_screen.*
-import kotlinx.android.synthetic.main.button_save_file.view.*
+
 import kotlinx.android.synthetic.main.dialog_action_menu.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_bio.*
@@ -49,10 +48,9 @@ class Character_view : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
+        initDialogs()
         initScreen()
         initAnimations()
-        initConditions()
-        initDialogs()
         initKillTracker()
     }
     //************************************************************************************************************
@@ -61,7 +59,7 @@ class Character_view : AppCompatActivity() {
     var isWounded = false
 
     fun initScreen(){
-        var load = false //intent.getBooleanExtra("Load",false)
+        var load = intent.getBooleanExtra("Load",false)
         var characterName: String = intent.getStringExtra("CharacterName").toString()
 
         if (!load) {
@@ -91,7 +89,7 @@ class Character_view : AppCompatActivity() {
             }
 
         } else {
-
+            character = LoadScreen.selectedCharacter!!
         }
 
         name.setText("" + character.name);
@@ -125,6 +123,11 @@ class Character_view : AppCompatActivity() {
 
         updateImages()
         updateStats()
+        initDamageAndStrain()
+        updateStats()
+
+        initConditions()
+        updateConditionIcons()
 
         if(character.companionCard != null){
             companion.visibility = View.VISIBLE
@@ -134,7 +137,7 @@ class Character_view : AppCompatActivity() {
         }
 
         background_image.setImageBitmap(character.getBackgroundImage(this))
-        initDamageAndStrain()
+
     }
 
     fun setDiceColor(dice: ImageView, color: Char) {
@@ -155,12 +158,12 @@ class Character_view : AppCompatActivity() {
             inputStream = assetManager.open(path)
             return BitmapFactory.decodeStream(inputStream)
         } catch (e: Exception) {
-            e.printStackTrace()
+            //e.printStackTrace()
         } finally {
             try {
                 inputStream?.close()
             } catch (e: Exception) {
-                e.printStackTrace()
+                //e.printStackTrace()
             }
         }
         return null
@@ -315,12 +318,15 @@ class Character_view : AppCompatActivity() {
 
             }
             else{
+                character.withdrawn = true
+                character.timesWithdrawn++
                 add_damage.setText("" + character.health)
                 val slide = ObjectAnimator.ofFloat(character_images, "translationY",0f,0f,
                     character_image.height.toFloat())
                 slide.setDuration(1500)
                 slide.start()
             }
+
             var hitY = ObjectAnimator.ofFloat(character_images,"translationY",0f,20f*Random
                 .nextFloat(),
                 0f,20f*Random.nextFloat(),0f,20f*Random.nextFloat(),0f)
@@ -337,9 +343,14 @@ class Character_view : AppCompatActivity() {
         }
         return false
     }
+
+
+
     fun onMinusDamage(view: View) {
         if(character.damage >0) {
+
             character.damage--
+            character.withdrawn = false
             if(character.damage < character.health) {
                 add_damage.setText("" + character.damage)
                 if(isWounded) {
@@ -401,6 +412,52 @@ class Character_view : AppCompatActivity() {
         unwoundDialog!!.cancel()
     }
     fun initDamageAndStrain() {
+        if(character.damage>0) {
+            if (minus_damage.alpha == 0f) {
+                minus_damage.animate().alpha(1f)
+            }
+
+            if (character.damage < character.health) {
+                add_damage.setText("" + character.damage)
+
+            } else {
+                character.wounded = character.damage - character.health
+                add_damage.setText("" + character.wounded)
+                wounded.animate().alpha(1f)
+
+                setDiceColor(strength1, character.strengthWounded[0]);
+                setDiceColor(strength2, character.strengthWounded[1]);
+                setDiceColor(strength3, character.strengthWounded[2]);
+
+                setDiceColor(insight1, character.insightWounded[0]);
+                setDiceColor(insight2, character.insightWounded[1]);
+                setDiceColor(insight3, character.insightWounded[2]);
+
+                setDiceColor(tech1, character.techWounded[0]);
+                setDiceColor(tech2, character.techWounded[1]);
+                setDiceColor(tech3, character.techWounded[2]);
+
+                isWounded = true
+                println()
+                println("withdrawn" + character.withdrawn)
+                println()
+                if (character.withdrawn){
+                    println("SLIDE DOWN")
+
+                    wounded.animate().translationY(character_image.height.toFloat())
+                }
+
+            }
+        }
+
+        if(character.strain>0) {
+            if (minus_strain.alpha == 0f) {
+                minus_strain.animate().alpha(1f)
+            }
+
+            add_strain.setText("" + character.strain)
+        }
+
         add_damage.setOnLongClickListener {
             if (character.damage >= character.health) {
                 unwoundDialog!!.show()
@@ -736,15 +793,19 @@ class Character_view : AppCompatActivity() {
 
     //Backgrounds
     fun onBackgroundSnow(view: View) {
+        character.background = "snow"
         background_image.setImageBitmap(getBitmap(this,"backgrounds/background_snow.png"))
     }
     fun onBackgroundJungle(view: View) {
+        character.background = "jungle"
         background_image.setImageBitmap(getBitmap(this,"backgrounds/background_jungle.png"))
     }
     fun onBackgroundDesert(view: View) {
+        character.background = "desert"
         background_image.setImageBitmap(getBitmap(this,"backgrounds/background_desert.png"))
     }
     fun onBackgroundInterior(view: View) {
+        character.background = "interior"
         background_image.setImageBitmap(getBitmap(this,"backgrounds/background_interior.png"))
     }
 
@@ -907,6 +968,7 @@ class Character_view : AppCompatActivity() {
         assistDialog!!.cancel()
     }
     fun initKillTracker(){
+
         killCounts.add(villain_count)
         villain_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_villian))
@@ -965,6 +1027,10 @@ class Character_view : AppCompatActivity() {
             assistDialog!!.show()
             true
         }
+
+        for(i in 0..killCounts.size-1){
+            killCounts[i].text = ""+character.killCount[i]
+        }
     }
 
     //endregion
@@ -981,6 +1047,7 @@ class Character_view : AppCompatActivity() {
     var conditionDrawable = intArrayOf(R.drawable.condition_hidden, R.drawable.condition_focused, R.drawable.condition_weakened, R.drawable.condition_bleeding, R.drawable.condition_stunned)
 
     fun initConditions(){
+        conditionsActive = character.conditionsActive
         conditionViews.add(condition1)
         conditionViews.add(condition2)
         conditionViews.add(condition3)
@@ -1097,6 +1164,7 @@ class Character_view : AppCompatActivity() {
                 active++;
             }
         }
+        character.conditionsActive = conditionsActive
 
         if(active<5) {
             show_conditions.visibility = View.VISIBLE
@@ -1233,7 +1301,7 @@ class Character_view : AppCompatActivity() {
             if (bitmap != null) {
                 val bitmapWidth = width/(height-128)*bitmap.width
                 val bitmapOffset =((bitmap.width-bitmapWidth)/2).toInt()
-                println(bitmapWidth)
+
                 bitmap = Bitmap.createBitmap(bitmap, bitmapOffset, 0, bitmapWidth.toInt(), bitmap.height)
                 val frame = BitmapDrawable(resources, bitmap);
                 if(type .equals("rest")) {
@@ -1487,7 +1555,7 @@ class Character_view : AppCompatActivity() {
     var xpCardImages = arrayListOf<ImageView>()
 
     fun initXPScreen() {
-        println("ghdhndjdjdfh"+character.xpCardImages.size)
+
 
         xpCardImages.add(xpSelectScreen!!.XPCard1)
         xpCardImages.add(xpSelectScreen!!.XPCard2)
@@ -1568,12 +1636,19 @@ class Character_view : AppCompatActivity() {
     //************************************************************************************************************
 
     fun saveCharacter(){
-        println(saveDialog!!.save_name.text.toString())
+
         var saveFile= CharacterData(""+saveDialog!!.save_name.text.toString(),
+            System.currentTimeMillis(),
+            character.name_short,
             character.damage,
             character.strain,
             character.token,
             character.wounded,
+            character.conditionsActive[0],
+            character.conditionsActive[1],
+            character.conditionsActive[2],
+            character.conditionsActive[3],
+            character.conditionsActive[4],
             character.totalXP,
             character.xpSpent,
             character.xpCardsEquipped[0],
@@ -1629,7 +1704,9 @@ class Character_view : AppCompatActivity() {
             character.timesStunned,
             character.timesBleeding,
             character.timesWeakened,
-            character.cratesPickedUp
+            character.cratesPickedUp,
+            character.rewardObtained,
+            character.withdrawn
         )
 
         val database = AppDatabase.getInstance(this)
@@ -1637,6 +1714,8 @@ class Character_view : AppCompatActivity() {
             database!!.getCharacterDAO().insertAll(saveFile)
         }
     }
+
+
     //endregion
 }
 

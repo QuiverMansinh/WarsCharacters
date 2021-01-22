@@ -62,7 +62,7 @@ class Characters_list : AppCompatActivity() {
     fun onSelect(view: View) {
         val intent = Intent(this,Character_view::class.java)
         intent.putExtra("CharacterName",view.tag.toString())
-        //intent.putExtra("Load",false)
+        intent.putExtra("Load",false)
         startActivity(intent);
     }
 

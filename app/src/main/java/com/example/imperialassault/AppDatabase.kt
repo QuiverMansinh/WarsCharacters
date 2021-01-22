@@ -17,7 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "save_files"
-                ).build()
+                ).allowMainThreadQueries().build()
             }
             return instance
         }

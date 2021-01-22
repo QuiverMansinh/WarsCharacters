@@ -5,11 +5,19 @@ import androidx.room.*
 @Entity
 data class CharacterData (
     @ColumnInfo(name = "fileName") val fileName: String?,
+    @ColumnInfo(name = "date") val date: Long,
+    @ColumnInfo(name = "characterName") val characterName: String?,
 
     @ColumnInfo(name = "damage") val damage: Int,
     @ColumnInfo(name = "strain") val strain: Int,
     @ColumnInfo(name = "token") val token: Int,
     @ColumnInfo(name = "wounded") val wounded: Int,
+
+    @ColumnInfo(name = "conditionsActive1") val conditionsActive1: Boolean,
+    @ColumnInfo(name = "conditionsActive2") val conditionsActive2: Boolean,
+    @ColumnInfo(name = "conditionsActive3") val conditionsActive3: Boolean,
+    @ColumnInfo(name = "conditionsActive4") val conditionsActive4: Boolean,
+    @ColumnInfo(name = "conditionsActive5") val conditionsActive5: Boolean,
 
     @ColumnInfo(name = "totalXP") val totalXP: Int,
     @ColumnInfo(name = "xpSpent") val xpSpent: Int,
@@ -65,9 +73,9 @@ data class CharacterData (
     @ColumnInfo(name = "interact") val interact: Int,
     @ColumnInfo(name = "timesWounded") val timesWounded: Int,
     @ColumnInfo(name = "rested") val rested: Int,
-    @ColumnInfo(name = "withdrawn") val withdrawn: Int,
+    @ColumnInfo(name = "timesWithdrawn") val timesWithdrawn: Int,
     @ColumnInfo(name = "activated") val activated: Int,
-    @ColumnInfo(name = "damageTaken") val timesDamaged: Int,
+    @ColumnInfo(name = "damageTaken") val damageTaken: Int,
     @ColumnInfo(name = "strainTaken") val strainTaken: Int,
     @ColumnInfo(name = "special") val special: Int,
 
@@ -77,6 +85,8 @@ data class CharacterData (
     @ColumnInfo(name = "timesBleeding") val timesBleeding: Int,
     @ColumnInfo(name = "timesWeakened") val timesWeakened: Int,
     @ColumnInfo(name = "cratesPickedUp") val cratesPickedUp: Int,
+    @ColumnInfo(name = "rewardObtained") val rewardObtained: Boolean,
+    @ColumnInfo(name = "withdrawn") val withdrawn: Boolean
 )
 {
     @PrimaryKey(autoGenerate = true)
