@@ -50,7 +50,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward1" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -67,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward2" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -84,7 +84,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward3" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -109,7 +109,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward4" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -126,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward5" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -143,7 +143,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward6" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -167,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward7" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -184,7 +184,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward8" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -202,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward9" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -226,7 +226,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward10" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -243,7 +243,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward11" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -260,7 +260,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward12" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -284,7 +284,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward13" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -301,7 +301,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward14" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -319,7 +319,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward15" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -343,7 +343,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward16" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -360,7 +360,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward17" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -377,7 +377,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward18" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -401,7 +401,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward19" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -418,7 +418,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward20" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -435,7 +435,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward21" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -460,7 +460,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward22" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -477,7 +477,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/reward23" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -487,7 +487,58 @@
                         android:layout_weight="1"
                         android:background="@drawable/border"
                         app:cardCornerRadius="10dp"
-                        app:cardElevation="3dp" />
+                        app:cardElevation="3dp" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/reward24" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="3dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/reward25" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="3dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="3dp"/>
                 </LinearLayout>
 
             </LinearLayout>
