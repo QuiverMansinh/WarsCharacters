@@ -23,14 +23,19 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 
 import kotlinx.android.synthetic.main.activity_character_view.*
+import kotlinx.android.synthetic.main.activity_load_screen.*
+import kotlinx.android.synthetic.main.button_save_file.view.*
 import kotlinx.android.synthetic.main.dialog_action_menu.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
+import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.InputStream
 import kotlin.random.Random
 
@@ -226,6 +231,7 @@ class Character_view : AppCompatActivity() {
         speed.setText("" + character.speed);
     }
 
+    //endregion
     //************************************************************************************************************
     //region Damage and Strain
     //************************************************************************************************************
@@ -267,7 +273,6 @@ class Character_view : AppCompatActivity() {
 
         }
     }
-
     fun addDamage():Boolean{
 
 
@@ -332,7 +337,6 @@ class Character_view : AppCompatActivity() {
         }
         return false
     }
-
     fun onMinusDamage(view: View) {
         if(character.damage >0) {
             character.damage--
@@ -373,7 +377,6 @@ class Character_view : AppCompatActivity() {
             }
         }
     }
-
     fun onUnwound(view: View) {
         playRestAnim()
         character.damage = 0
@@ -397,7 +400,6 @@ class Character_view : AppCompatActivity() {
         updateStats()
         unwoundDialog!!.cancel()
     }
-
     fun initDamageAndStrain() {
         add_damage.setOnLongClickListener {
             if (character.damage >= character.health) {
@@ -709,6 +711,7 @@ class Character_view : AppCompatActivity() {
         showCardDialog!!.show()
     }
     fun onSave(view: View) {
+
         optionsDialog!!.cancel()
         saveDialog!!.show()
     }
@@ -746,8 +749,11 @@ class Character_view : AppCompatActivity() {
     }
 
     fun onSaveCharacter(view: View) {
+        saveCharacter()
         saveDialog!!.cancel()
     }
+
+
 
     //endregion
     //************************************************************************************************************
@@ -1021,10 +1027,10 @@ class Character_view : AppCompatActivity() {
     fun onWeakened(view: View) {
         conditionsActive[weakened] =!conditionsActive[weakened]
         if(conditionsActive[weakened]) {
-            character.timesWeakend++
+            character.timesWeakened++
         }
         else{
-            character.timesWeakend--
+            character.timesWeakened--
         }
         updateConditionIcons()
     }
@@ -1395,7 +1401,7 @@ class Character_view : AppCompatActivity() {
         xpSelectScreen!!.setCanceledOnTouchOutside(true)
     }
     //endregion
-     //************************************************************************************************************
+    //************************************************************************************************************
     //region Stats Screen
     //************************************************************************************************************
     fun initStatsScreen(){
@@ -1430,7 +1436,7 @@ class Character_view : AppCompatActivity() {
         statsScreen!!.stats_hidden.setText(""+character.timesHidden)
         statsScreen!!.stats_stunned.setText(""+character.timesStunned)
         statsScreen!!.stats_bleeding.setText(""+character.timesBleeding)
-        statsScreen!!.stats_weakened.setText(""+character.timesWeakend)
+        statsScreen!!.stats_weakened.setText(""+character.timesWeakened)
         statsScreen!!.stats_crates.setText(""+character.cratesPickedUp)
 
         if(character.rewardObtained) {
@@ -1514,7 +1520,7 @@ class Character_view : AppCompatActivity() {
     }
 
     fun onShowXPCard(view:ImageView){
-       var image = ((view).drawable as BitmapDrawable).bitmap
+        var image = ((view).drawable as BitmapDrawable).bitmap
         showCardDialog!!.card_image.setImageBitmap(image)
         showCardDialog!!.show()
     }
@@ -1527,17 +1533,17 @@ class Character_view : AppCompatActivity() {
             character.xpSpent -= character.xpScores[cardNo]
         }
         else if( character.xpScores[cardNo] <= xpLeft) {
-                character.xpCardsEquipped[cardNo] = true
-                xpCardImages[cardNo].alpha = 0.5f
-                character.xpSpent+=character.xpScores[cardNo]
+            character.xpCardsEquipped[cardNo] = true
+            xpCardImages[cardNo].alpha = 0.5f
+            character.xpSpent+=character.xpScores[cardNo]
         }
         xpLeft = character.totalXP-character.xpSpent
         xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
         character.rewardObtained = character.xpCardsEquipped[8]
 
 
-      updateImages()
-      updateStats()
+        updateImages()
+        updateStats()
 
     }
 
@@ -1556,6 +1562,81 @@ class Character_view : AppCompatActivity() {
     }
 
 
+    //endregion
+    //************************************************************************************************************
+    //region Saving and Loading
+    //************************************************************************************************************
+
+    fun saveCharacter(){
+        println(saveDialog!!.save_name.text.toString())
+        var saveFile= CharacterData(""+saveDialog!!.save_name.text.toString(),
+            character.damage,
+            character.strain,
+            character.token,
+            character.wounded,
+            character.totalXP,
+            character.xpSpent,
+            character.xpCardsEquipped[0],
+            character.xpCardsEquipped[1],
+            character.xpCardsEquipped[2],
+            character.xpCardsEquipped[3],
+            character.xpCardsEquipped[4],
+            character.xpCardsEquipped[5],
+            character.xpCardsEquipped[6],
+            character.xpCardsEquipped[7],
+            character.xpCardsEquipped[8],
+            character.weapon1,
+            character.weapon2,
+            character.accessory1,
+            character.accessory2,
+            character.accessory3,
+            character.helmet,
+            character.armour,
+            character.background,
+            conditionsActive[0],
+            conditionsActive[1],
+            conditionsActive[2],
+            conditionsActive[3],
+            conditionsActive[4],
+            character.killCount[0],
+            character.killCount[1],
+            character.killCount[2],
+            character.killCount[3],
+            character.killCount[4],
+            character.killCount[5],
+            character.killCount[6],
+            character.killCount[7],
+            character.assistCount[0],
+            character.assistCount[1],
+            character.assistCount[2],
+            character.assistCount[3],
+            character.assistCount[4],
+            character.assistCount[5],
+            character.assistCount[6],
+            character.assistCount[7],
+            character.movesTaken,
+            character.attacksMade,
+            character.interactsUsed,
+            character.timesWounded,
+            character.timesRested,
+            character.timesWithdrawn,
+            character.activated,
+            character.damageTaken,
+            character.strainTaken,
+            character.specialActions,
+            character.timesFocused,
+            character.timesHidden,
+            character.timesStunned,
+            character.timesBleeding,
+            character.timesWeakened,
+            character.cratesPickedUp
+        )
+
+        val database = AppDatabase.getInstance(this)
+        GlobalScope.launch {
+            database!!.getCharacterDAO().insertAll(saveFile)
+        }
+    }
     //endregion
 }
 

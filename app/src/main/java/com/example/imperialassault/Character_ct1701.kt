@@ -2,6 +2,7 @@ package com.example.imperialassault
 
 import android.content.Context
 import android.graphics.Bitmap
+import com.example.imperialassault.Character
 
 class Character_ct1701 : Character {
     var tier1duplicate:Bitmap? = null

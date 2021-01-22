@@ -55,7 +55,7 @@
         app:layout_constraintVertical_bias="0.6">
 
         <ImageButton
-            android:id="@+id/loadingButton"
+            android:id="@+id/loadButton"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="center"

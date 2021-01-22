@@ -19,7 +19,7 @@ open class Character {
     var insightWounded = ""
     var techWounded = ""
 
-    var background = "interior"
+
     var health_default = 10
     var endurance_default = 5
     var speed_default = 5
@@ -28,21 +28,20 @@ open class Character {
     var endurance = 5
     var speed = 4
 
-
-    var damage = 0
-    var strain = 0
-    var token = 0
-    var wounded = 0
-
-    var totalXP = 0
-    var xpSpent = 0
-    var xpCardsEquipped: BooleanArray= booleanArrayOf(false,false,false,false,false,false,false,false,false)
     var xpScores = intArrayOf(1,1,2,2,3,3,4,4,0)
     var xpEndurances: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpHealths: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpSpeeds: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
+    var rewardObtained = false
+    var bio_title = ""
+    var bio_quote = ""
+    var bio_text = ""
 
+    var power:Bitmap?=null
+    var power_wounded:Bitmap?=null
+
+    //Images
     var currentImage:Bitmap? = null
     var layer2:Bitmap? = null
     var layer1:Bitmap? = null
@@ -57,11 +56,29 @@ open class Character {
     var portraitRow = 0
     var portraitCol = 0
 
-    //get current image, get extras from stats
-    //get current card images
+    //****************************************************************************************************
+    //region To Save
+    //****************************************************************************************************
+    var damage = 0
+    var strain = 0
+    var token = 0
+    var wounded = 0
+
+    var totalXP = 0
+    var xpSpent = 0
+    var xpCardsEquipped: BooleanArray= booleanArrayOf(false,false,false,false,false,false,false,false,false)
+
+    var weapon1 = ""
+    var weapon2 = ""
+    var accessory1 = ""
+    var accessory2 = ""
+    var accessory3 = ""
+    var helmet = ""
+    var armour = ""
+
+    var background = "interior"
 
     //stats
-
     // villain, leader, vehicle,creature,  guard, droid, scum, trooper
     var killCount = arrayOf(0,0,0,0,0,0,0,0)
     var assistCount = arrayOf(0,0,0,0,0,0,0,0)
@@ -80,24 +97,11 @@ open class Character {
     var timesHidden = 0
     var timesStunned = 0
     var timesBleeding = 0
-    var timesWeakend = 0
+    var timesWeakened = 0
     var cratesPickedUp = 0
 
-    var rewardObtained = false
-    var bio_title = ""
-    var bio_quote = ""
-    var bio_text = ""
-
-    var power:Bitmap?=null
-    var power_wounded:Bitmap?=null
-
-    var weapon1 = ""
-    var weapon2 = ""
-    var accessory1 = ""
-    var accessory2 = ""
-    var accessory3 = ""
-    var helmet = ""
-    var armour = ""
+    //endregion
+    //****************************************************************************************************
 
     open fun loadImages(context: Context){
         loadTierImages(context)
@@ -199,6 +203,4 @@ open class Character {
 
         currentImage = tierImages[tier]
     }
-
-
 }

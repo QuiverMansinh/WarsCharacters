@@ -2,6 +2,7 @@ package com.example.imperialassault
 
 import android.content.Context
 import android.graphics.Bitmap
+import com.example.imperialassault.Character
 
 class Character_drokkatta : Character {
     var card5Images = ArrayList<Bitmap?>()

@@ -32,7 +32,7 @@
                 android:backgroundTint="@color/white"
                 android:ems="10"
                 android:fontFamily="@font/agency_fb"
-                android:hint="FILE NAME"
+                android:hint="New Save File"
                 android:inputType="textPersonName"
                 android:padding="5dp"
                 android:shadowColor="@color/white"

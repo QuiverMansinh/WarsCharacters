@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +15,9 @@ class MainActivity : AppCompatActivity() {
         newButton.setOnClickListener({
             startActivity(Intent(this,Characters_list::class.java))
         })
-
+        loadButton.setOnClickListener({
+            startActivity(Intent(this,LoadScreen::class.java))
+        })
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
