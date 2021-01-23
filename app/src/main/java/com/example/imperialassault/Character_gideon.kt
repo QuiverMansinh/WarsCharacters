@@ -63,5 +63,7 @@ class Character_gideon : Character {
                 "Soldiers are easily drawn to his charisma and know that with Gideon leading the way, they would always win the day."   }
 
     //TODO alter for reward, duplicates, tier
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_gideon)
+    }
 }

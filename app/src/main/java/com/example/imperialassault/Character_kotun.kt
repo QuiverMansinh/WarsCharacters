@@ -62,5 +62,7 @@ class Character_kotun : Character {
                 "Sahm-Ken will not remain a ghost for long as Ko-Tun plans to﻿ remain ever-vigilant."    }
 
     //TODO alter for reward, duplicates, tier
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_kotun)
+    }
 }

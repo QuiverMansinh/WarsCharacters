@@ -6,9 +6,6 @@ import com.example.imperialassault.Character
 
 class Character_biv : Character {
 
-    var card6Images = ArrayList<Bitmap?>()
-    var card5Images = ArrayList<Bitmap?>()
-
     constructor(context: Context){
         //default values
         name = "Biv Bodhrik"
@@ -69,28 +66,32 @@ class Character_biv : Character {
 
     override fun loadImages(context: Context){
         super.loadImages(context)
-        card6Images = loadCardTierImages(context,"card6")
-        card5Images = loadCardTierImages(context,"card5")
+        updateCharacterImages(context)
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context:Context){
+        super.updateCharacterImages(context)
 
         //card5 overlay
         layer1 = null
         if(xpCardsEquipped[4]){
-            if(card5Images[tier] != null){
-                layer1 = card5Images[tier]
+            var card5Image = loadCardTierImage(context,tier,"card5")
+            if(card5Image!=null){
+                layer1 = card5Image
             }
         }
         println( " "+ xpCardsEquipped[4] + " " + layer1 + "BIV")
 
         //card6 tier images
         if(xpCardsEquipped[5]){
-            if(card6Images[tier] != null){
-                currentImage = card6Images[tier]
+            var card6Image = loadCardTierImage(context,tier,"card6")
+            if(card6Image!=null){
+                currentImage = card6Image
             }
         }
+    }
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_biv)
     }
 }

@@ -5,8 +5,7 @@ import android.graphics.Bitmap
 import com.example.imperialassault.Character
 
 class Character_jyn : Character {
-    var card6Images = ArrayList<Bitmap?>()
-    var card9Images = ArrayList<Bitmap?>()
+
 
     constructor(context: Context){
         //default values
@@ -68,26 +67,29 @@ class Character_jyn : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        card6Images = loadCardTierImages(context,"card6")
-        card9Images = loadCardTierImages(context,"card9")
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         //card6 tier images
         if(xpCardsEquipped[5]){
-            if(card6Images[tier] != null){
-                currentImage = card6Images[tier]
+            var card6Image = loadCardTierImage(context, tier, "card6")
+            if (card6Image != null) {
+                currentImage = card6Image
             }
         }
 
         //card9 tier images
         if(xpCardsEquipped[8]){
-            if(card9Images[tier] != null){
-                currentImage = card9Images[tier]
+            var card9Image = loadCardTierImage(context, tier, "card9")
+            if (card9Image != null) {
+                currentImage = card9Image
             }
         }
+    }
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_jyn)
     }
 }

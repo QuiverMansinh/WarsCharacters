@@ -64,5 +64,7 @@ class Character_tress : Character {
                 "She hasn't forgotten the beast that ruined her life; one day Tress plans to return to her homeworld and face the creature that cost her so dearly..."    }
 
     //TODO alter for reward, duplicates, tier
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_tress)
+    }
 }

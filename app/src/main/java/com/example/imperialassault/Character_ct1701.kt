@@ -94,8 +94,8 @@ class Character_ct1701 : Character {
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         var ran = Math.random()
 
@@ -117,5 +117,7 @@ class Character_ct1701 : Character {
 
         //todo helmet
     }
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_ct)
+    }
 }

@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import com.example.imperialassault.Character
 
 class Character_onar : Character {
-    var card7Images = ArrayList<Bitmap?>()
+
     constructor(context: Context) {
         //default values
         name = "Onar Koma"
@@ -69,19 +69,22 @@ class Character_onar : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        card7Images = loadCardTierImages(context,"card7")
+
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         //card6 tier images
         if(xpCardsEquipped[6]){
-            if(card7Images[tier] != null){
-                currentImage = card7Images[tier]
+            var card7Image = loadCardTierImage(context, tier, "card7")
+            if (card7Image != null) {
+                currentImage = card7Image
             }
         }
     }
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_onar)
+    }
 }

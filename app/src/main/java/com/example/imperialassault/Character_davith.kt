@@ -5,17 +5,13 @@ import android.graphics.Bitmap
 import com.example.imperialassault.Character
 
 class Character_davith : Character {
-
-    var card9Images = ArrayList<Bitmap?>()
-    var card6Images = ArrayList<Bitmap?>()
-    var card69Images = ArrayList<Bitmap?>()
-
+    
     //ALS ancient light saber
     var ALSImages = ArrayList<Bitmap?>()
     var card6ALSImages = ArrayList<Bitmap?>()
     var card9ALSImages = ArrayList<Bitmap?>()
 
-    constructor(context: Context){
+    constructor(context: Context) {
         //default values
         name = "Davith Elso"
         name_short = "davith"
@@ -27,8 +23,8 @@ class Character_davith : Character {
         tech = "B  "
 
         strengthWounded = "BR "
-        insightWounded  = "BGR"
-        techWounded  = "R  "
+        insightWounded = "BGR"
+        techWounded = "R  "
 
         background = "interior"
         health_default = 11
@@ -46,9 +42,9 @@ class Character_davith : Character {
         wounded = 0
 
         totalXP = 0
-        xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
-        xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpEndurances = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        xpHealths = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        xpSpeeds = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
         portraitRow = 1
         portraitCol = 0
@@ -61,7 +57,7 @@ class Character_davith : Character {
 
         bio_title = "Exiled Jedi"
         bio_quote = "\"Once discovered, the best defense is an unrelenting assault.\""
-        bio_text ="Due to the roving Jedi-Hunters still searching for him and his ilk; " +
+        bio_text = "Due to the roving Jedi-Hunters still searching for him and his ilk; " +
                 "Davith decided to set aside his Lightsaber for now, keeping it hidden somewhere secret and safe until necessary. " +
                 "He instead brandishes a deadly Heirloom Dagger when facing his foes in combat; the blade being the only memento he has left of his parents before he joined the Jedi order. " +
                 "\n\nHe is quite skilled in the ways of the force; able to alter the movement of " +
@@ -72,43 +68,44 @@ class Character_davith : Character {
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
+    override fun loadImages(context: Context) {
         super.loadImages(context)
-        card6Images = loadCardTierImages(context,"card6")
-        card9Images = loadCardTierImages(context,"card9")
-        card69Images = loadCardTierImages(context,"card6_card9")
-
-        ALSImages =loadCardTierImages(context,"ancient_light_saber")
-        card6ALSImages = loadCardTierImages(context,"card6_ancient_light_saber")
-        card9ALSImages = loadCardTierImages(context,"card9_ancient_light_saber")
+        //ALSImages = loadCardTierImages(context, "ancient_light_saber")
+       // card6ALSImages = loadCardTierImages(context, "card6_ancient_light_saber")
+        //card9ALSImages = loadCardTierImages(context, "card9_ancient_light_saber")
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context) {
+        super.updateCharacterImages(context)
 
         //card6 and card9 combined tier images
-        if(xpCardsEquipped[5] && xpCardsEquipped[8]) {
-            if (card69Images[tier] != null) {
-                currentImage = card69Images[tier]
+
+        if (xpCardsEquipped[5] && xpCardsEquipped[8]) {
+            var card69Image = loadCardTierImage(context, tier, "card6_card9")
+            if (card69Image != null) {
+                currentImage = card69Image
             }
         }
+
         //card6 tier images
         else if (xpCardsEquipped[5]) {
             //TODO check ancient light saber
-
-            if (card6Images[tier] != null) {
-                    currentImage = card6Images[tier]
+            var card6Image = loadCardTierImage(context, tier, "card6")
+            if (card6Image != null) {
+                currentImage = card6Image
+            }
+            //card9 tier images
+            else if (xpCardsEquipped[8]) {
+                //TODO check ancient light saber
+                var card9Image = loadCardTierImage(context, tier, "card9")
+                if (card9Image != null) {
+                    currentImage = card9Image
                 }
             }
-        //card9 tier images
-        else if(xpCardsEquipped[8]){
-            //TODO check ancient light saber
-
-            if(card9Images[tier]!=null) {
-                currentImage = card9Images[tier]
-            }
         }
-
+    }
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_davith)
     }
 }

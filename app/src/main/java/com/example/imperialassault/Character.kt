@@ -3,6 +3,7 @@ package com.example.imperialassault
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import java.io.InputStream
 
 open class Character {
@@ -48,11 +49,11 @@ open class Character {
     var layer1OnTop = false
 
     var tier = 0
-    var tierImages = ArrayList<Bitmap?>()
+    //var tierImages = ArrayList<Bitmap?>()
 
     var xpCardImages  = ArrayList<Bitmap>()
     var companionCard:Bitmap? = null
-    var portraitImage:Bitmap? = null
+    var portraitImage:Drawable? = null
     var portraitRow = 0
     var portraitCol = 0
 
@@ -109,17 +110,25 @@ open class Character {
     //****************************************************************************************************
 
     open fun loadImages(context: Context){
-        loadTierImages(context)
+        //loadTierImages(context)
+
         loadXPCardImages(context)
         loadPowerImages(context)
-        loadPortraitImage(context)
+
+
+
     }
 
     open fun loadPowerImages(context: Context) {
         power = getBitmap(context,"characters/" + name_short + "/power.png")
         power_wounded = getBitmap(context,"characters/" + name_short + "/power_wounded.png")
     }
+    open fun loadTierImage(context: Context, tier:Int){
+        val image = getBitmap(context, "characters/" + name_short + "/images/tier" + tier + "image.png")
+        currentImage = image
+    }
 
+    /*
     open fun loadTierImages(context: Context){
         val images = java.util.ArrayList<Bitmap?>()
         for (i in 0..3) {
@@ -128,6 +137,7 @@ open class Character {
         }
         tierImages = images
     }
+*/
 
     open fun loadXPCardImages(context: Context){
         val images = java.util.ArrayList<Bitmap>()
@@ -146,37 +156,44 @@ open class Character {
     }
 
     open fun loadPortraitImage(context:Context){
-        var allChSel = BitmapFactory.decodeResource(context.resources,R.drawable
-            .allcharacterselect_21)
-        allChSel = Bitmap.createScaledBitmap(allChSel,2547,850,false)
-
-        var row = 6
-        var col = 4
-        var width = 2547/col
-        var height = 850/row
-
-        portraitImage = Bitmap.createBitmap(allChSel,0+(width*portraitCol),0+(height*portraitRow), height, height)
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_fenn)
     }
 
 
     open fun getBitmap(context: Context, path: String): Bitmap? {
         val assetManager = context.assets
         var inputStream: InputStream? = null
-        try {
-            inputStream = assetManager.open(path)
-            return BitmapFactory.decodeStream(inputStream)
-        } catch (e: Exception) {
-            //e.printStackTrace()
-        } finally {
+        var bitmap:Bitmap? = null
+        val options = BitmapFactory.Options()
+        for(i in 1..32) {
             try {
-                inputStream?.close()
+                inputStream = assetManager.open(path)
+                options.inSampleSize = i
+                bitmap = BitmapFactory.decodeStream(inputStream,null,options)
+                break
+            } catch (outOfMemoryError:OutOfMemoryError) {
+
+                println("next size"+i)
             } catch (e: Exception) {
-                //e.printStackTrace()
+                e.printStackTrace()
             }
         }
-        return null
+
+        try {
+            inputStream?.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return bitmap
     }
 
+    open fun loadCardTierImage(context: Context, tier:Int, cards:String):Bitmap?{
+        val image = getBitmap(context, "characters/" + name_short + "/images/tier" + tier +
+                    "image_"+cards+".png")
+        return image
+    }
+
+    /*
     open fun loadCardTierImages(context: Context, cards:String): ArrayList<Bitmap?>{
         val images = java.util.ArrayList<Bitmap?>()
         for (i in 0..3) {
@@ -187,9 +204,9 @@ open class Character {
 
         }
         return images
-    }
+    }*/
 
-    open fun updateCharacterImages(){
+    open fun updateCharacterImages(context:Context){
 
         tier = 0
         //TODO item conditions
@@ -205,7 +222,6 @@ open class Character {
         else if(xpSpent >= 5) {
             tier = 1
         }
-
-        currentImage = tierImages[tier]
+        loadTierImage(context,tier)
     }
 }

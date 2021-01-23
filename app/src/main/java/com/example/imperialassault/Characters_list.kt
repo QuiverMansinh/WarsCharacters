@@ -41,13 +41,14 @@ class Characters_list : AppCompatActivity() {
             findViewById(R.id.imageViewCT),
             findViewById(R.id.imageViewTress),
         )
-        var allChSel = BitmapFactory.decodeResource(resources,R.drawable.allcharacterselect_21)
-        allChSel = Bitmap.createScaledBitmap(allChSel,2547,850,false)
+        var allChSel = BitmapFactory.decodeResource(resources,R.drawable
+            .allcharacterselect_21)
+        allChSel = Bitmap.createScaledBitmap(allChSel,2048,683,false)
 
         var row = 6
         var col = 4
-        var width = 2547/col
-        var height = 850/row
+        var width = 2048/col
+        var height = 683/row
         var buffer1 = 0
 
         for (r in 0..row-1){
@@ -57,12 +58,28 @@ class Characters_list : AppCompatActivity() {
                         (width*c),0+(height*r),width-1,height-1))
             }
         }
+
+        //TODO delete selected character on load
     }
 
     fun onSelect(view: View) {
-        val intent = Intent(this,Character_view::class.java)
-        intent.putExtra("CharacterName",view.tag.toString())
-        intent.putExtra("Load",false)
+        if (LoadScreen.selectedCharacter != null) {
+            LoadScreen.selectedCharacter!!.currentImage!!.recycle()
+            for (i in 0..8) {
+                if (LoadScreen.selectedCharacter!!.xpCardImages[i] != null) {
+                    LoadScreen.selectedCharacter!!.xpCardImages!![i].recycle()
+                }
+                if (LoadScreen.selectedCharacter!!.power != null) {
+                    LoadScreen.selectedCharacter!!.power!!.recycle()
+                    LoadScreen.selectedCharacter!!.power_wounded!!.recycle()
+                }
+            }
+            LoadScreen.selectedCharacter!!.portraitImage = null
+            LoadScreen.selectedCharacter = null
+        }
+        val intent = Intent(this, Character_view::class.java)
+        intent.putExtra("CharacterName", view.tag.toString())
+        intent.putExtra("Load", false)
         startActivity(intent);
     }
 

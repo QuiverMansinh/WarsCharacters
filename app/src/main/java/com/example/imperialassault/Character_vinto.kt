@@ -65,19 +65,22 @@ class Character_vinto : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        card6Images = loadCardTierImages(context,"card6")
+
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         //card6 tier images
         if(xpCardsEquipped[5]){
-            if(card6Images[tier] != null){
-                currentImage = card6Images[tier]
+            var card6Image = loadCardTierImage(context, tier, "card6")
+            if (card6Image != null) {
+                currentImage = card6Image
             }
         }
     }
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_vinto)
+    }
 }

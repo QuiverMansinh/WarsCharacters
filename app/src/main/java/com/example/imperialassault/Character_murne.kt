@@ -68,8 +68,8 @@ class Character_murne : Character {
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         //card6 tier images
         if(xpCardsEquipped[8]){
@@ -79,5 +79,7 @@ class Character_murne : Character {
             layer1 = null
         }
     }
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_murne)
+    }
 }

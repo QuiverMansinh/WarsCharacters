@@ -17,10 +17,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/bioOption"
             android:layout_width="180dp"
             android:layout_height="44dp"
             android:layout_margin="5dp"
-            android:onClick="onBiography">
+            app:cardCornerRadius="20dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -46,10 +47,11 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/powerOption"
             android:layout_width="180dp"
             android:layout_height="44dp"
             android:layout_margin="5dp"
-            android:onClick="onPower">
+            app:cardCornerRadius="20dp">
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -74,10 +76,11 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/saveOption"
             android:layout_width="180dp"
             android:layout_height="44dp"
             android:layout_margin="5dp"
-            android:onClick="onSave">
+            app:cardCornerRadius="20dp">
 
             <ImageView
                 android:id="@+id/imageView13"
@@ -102,10 +105,11 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/backgroundOption"
             android:layout_width="180dp"
             android:layout_height="44dp"
             android:layout_margin="5dp"
-            android:onClick="onBackground">
+            app:cardCornerRadius="20dp">
 
             <ImageView
                 android:id="@+id/imageView14"
@@ -131,10 +135,12 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/settingsOption"
             android:layout_width="180dp"
             android:layout_height="44dp"
             android:layout_margin="5dp"
-            android:onClick="onSettings">
+            android:onClick="onSettings"
+            app:cardCornerRadius="20dp">
 
             <ImageView
                 android:id="@+id/imageView18"
@@ -159,10 +165,11 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/statsOption"
             android:layout_width="180dp"
             android:layout_height="44dp"
             android:layout_margin="5dp"
-            android:onClick="onStatistics">
+            app:cardCornerRadius="20dp">
 
             <ImageView
                 android:id="@+id/imageView19"

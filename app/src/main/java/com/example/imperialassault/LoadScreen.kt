@@ -142,6 +142,7 @@ class LoadScreen : AppCompatActivity() {
                     loadedCharacters[position].rewardObtained = data[position].rewardObtained
                     loadedCharacters[position].withdrawn = data[position].withdrawn
 
+
                     selectedCharacter = loadedCharacters[position]
 
 
@@ -198,7 +199,7 @@ class SaveFileAdapter(val context: Activity, val fileNames : ArrayList<String?>,
             saveNameText.text = fileNames[position]
 
             val saveCharacterImage = button.findViewById(R.id.save_file_image) as ImageView
-            saveCharacterImage.setImageBitmap(characters[position].portraitImage)
+            saveCharacterImage.setImageDrawable(characters[position].portraitImage)
         }
         else{
             button.visibility = View.INVISIBLE

@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
-        android:layout_height="320dp"
+        android:layout_height="300dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="25dp"
@@ -250,7 +250,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="K/A"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -263,7 +263,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView107"
@@ -275,7 +276,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_total"
@@ -287,7 +289,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -312,7 +315,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Villain:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -325,7 +328,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView80"
@@ -337,7 +341,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_villain"
@@ -349,7 +354,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -374,7 +380,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Leader:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -387,7 +393,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView83"
@@ -399,7 +406,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_leader"
@@ -411,7 +419,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -436,7 +445,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Vehicle:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -449,7 +458,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView86"
@@ -461,7 +471,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_vehicle"
@@ -473,7 +484,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -498,7 +510,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Creature:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -511,7 +523,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView89"
@@ -523,7 +536,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_creature"
@@ -535,7 +549,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -560,7 +575,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Guardian:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -573,7 +588,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView92"
@@ -585,7 +601,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_guardian"
@@ -597,7 +614,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -622,7 +640,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Droid:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -635,7 +653,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView95"
@@ -647,7 +666,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_droid"
@@ -659,7 +679,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -684,7 +705,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Scum:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -697,7 +718,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView98"
@@ -709,7 +731,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_scum"
@@ -721,7 +744,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -746,7 +770,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Trooper:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:autoSizeTextType="uniform" />
 
                             <TextView
@@ -759,7 +783,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/textView101"
@@ -771,7 +796,8 @@
                                 android:gravity="center"
                                 android:text="/"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_assist_trooper"
@@ -783,7 +809,8 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -856,7 +883,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Activated:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_activated"
@@ -868,7 +895,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -890,7 +917,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Attacks Made:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_attacks"
@@ -902,7 +929,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -920,7 +947,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Moves Taken:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_moves"
@@ -931,7 +958,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -951,7 +978,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Rested:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_rested"
@@ -962,7 +989,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -982,7 +1009,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Special Actions:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_specials"
@@ -994,7 +1021,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -1015,7 +1042,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Interacts Used:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_interacts"
@@ -1026,7 +1053,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -1044,7 +1071,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Damage Taken:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_damaged"
@@ -1055,7 +1082,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -1076,7 +1103,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Strain Taken:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_strain"
@@ -1087,7 +1114,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1107,7 +1134,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Crates Picked Up:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_crates"
@@ -1118,7 +1145,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -1148,7 +1175,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Withdrawn:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_withdrawn"
@@ -1159,7 +1186,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -1182,7 +1209,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Times Wounded:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_wounded"
@@ -1193,7 +1220,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -1216,7 +1243,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Times Focused:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_focused"
@@ -1227,7 +1254,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1249,7 +1276,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Times Hidden:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_hidden"
@@ -1260,7 +1287,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1282,7 +1309,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Times Stunned:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_stunned"
@@ -1293,7 +1320,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1315,7 +1342,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Times Bleeding:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_bleeding"
@@ -1326,7 +1353,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1348,7 +1375,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Times Weakened:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_weakened"
@@ -1359,7 +1386,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1381,7 +1408,7 @@
                                 android:fontFamily="@font/agency_fb"
                                 android:text="Obtained Reward:"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/stats_reward_obtained"
@@ -1392,7 +1419,7 @@
                                 android:gravity="center"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                     </LinearLayout>

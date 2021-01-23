@@ -7,7 +7,7 @@ import com.example.imperialassault.Character
 class Character_shyla : Character {
     var card4Image:Bitmap? = null
     var card5Image:Bitmap? = null
-    var helmetImages = ArrayList<Bitmap?>()
+    //var helmetImages = ArrayList<Bitmap?>()
     constructor(context: Context){
         //default values
         name = "Shyla Varad"
@@ -71,12 +71,12 @@ class Character_shyla : Character {
         super.loadImages(context)
         card4Image = getBitmap(context, "characters/shyla/images/card4.png")
         card5Image = getBitmap(context, "characters/shyla/images/card5.png")
-        helmetImages = loadCardTierImages(context,"helmet")
+        //helmetImages = loadCardTierImages(context,"helmet")
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         if(xpCardsEquipped[3]){
             layer1 = card4Image
@@ -93,5 +93,7 @@ class Character_shyla : Character {
 
         //todo helmet
     }
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_shyla)
+    }
 }

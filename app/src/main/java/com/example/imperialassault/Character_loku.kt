@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import com.example.imperialassault.Character
 
 class Character_loku : Character {
-    var card4Images = ArrayList<Bitmap?>()
+
     constructor(context: Context){
         //default values
         name = "Loku Kanoloa"
@@ -64,18 +64,22 @@ class Character_loku : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        card4Images = loadCardTierImages(context,"card4")
+
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         //card6 tier images
         if(xpCardsEquipped[3]){
-            if(card4Images[tier] != null){
-                currentImage = card4Images[tier]
+            var card4Image = loadCardTierImage(context, tier, "card4")
+            if (card4Image != null) {
+                currentImage = card4Image
             }
         }
+    }
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_loku)
     }
 }

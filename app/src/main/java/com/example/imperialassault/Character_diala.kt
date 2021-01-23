@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import com.example.imperialassault.Character
 
 class Character_diala : Character {
-    var card9Images = ArrayList<Bitmap?>()
     var greenLightSaber:Bitmap? = null
     constructor(context: Context){
         //default values
@@ -65,20 +64,20 @@ class Character_diala : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        card9Images = loadCardTierImages(context,"card9")
         greenLightSaber = getBitmap(context,"characters/diala/images/tier3image_green_light_saber.png")
     }
 
     var holdingGreenLightSaber = true
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
         //card9 tier images
         if(xpCardsEquipped[8]){
-            if(card9Images[tier]!=null){
-                currentImage = card9Images[tier]
+            var card9Image = loadCardTierImage(context, tier, "card9")
+            if (card9Image != null) {
+                currentImage = card9Image
             }
             if(tier == 3) {
                 if (!holdingGreenLightSaber) {
@@ -87,5 +86,8 @@ class Character_diala : Character {
                 holdingGreenLightSaber = !holdingGreenLightSaber
             }
         }
+    }
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_diala)
     }
 }

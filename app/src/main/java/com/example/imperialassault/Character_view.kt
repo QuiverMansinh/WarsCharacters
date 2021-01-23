@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.dialog_action_menu.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
+import kotlinx.android.synthetic.main.dialog_options.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 
@@ -59,34 +60,79 @@ class Character_view : AppCompatActivity() {
     var isWounded = false
 
     fun initScreen(){
-        var load = intent.getBooleanExtra("Load",false)
+        var load = intent.getBooleanExtra("Load", false)
         var characterName: String = intent.getStringExtra("CharacterName").toString()
 
         if (!load) {
             when (characterName) {
-                "biv" -> { character = Character_biv(this) }
-                "davith" -> { character = Character_davith(this) }
-                "diala" -> { character = Character_diala(this) }
-                "drokdatta" -> { character = Character_drokkatta(this) }
-                "fenn" -> { character = Character_fenn(this) }
-                "gaarkhan" -> { character = Character_gaarkhan(this) }
-                "gideon" -> { character = Character_gideon(this) }
-                "jarrod" -> { character = Character_jarrod(this) }
-                "jyn" -> { character = Character_jyn(this) }
-                "loku" -> { character = Character_loku(this) }
-                "kotun" -> { character = Character_kotun(this) }
-                "mak" -> { character = Character_mak(this) }
-                "mhd19" -> { character = Character_mhd19(this) }
-                "murne" -> { character = Character_murne(this) }
-                "onar" -> { character = Character_onar(this) }
-                "saska" -> { character = Character_saska(this) }
-                "shyla" -> { character = Character_shyla(this) }
-                "verena" -> { character = Character_verena(this) }
-                "vinto" -> { character = Character_vinto(this) }
-                "drokkatta" -> { character = Character_drokkatta(this) }
-                "ct1701" -> { character = Character_ct1701(this) }
-                "tress" -> { character = Character_tress(this) }
+                "biv" -> {
+                    character = Character_biv(this)
+                }
+                "davith" -> {
+                    character = Character_davith(this)
+                }
+                "diala" -> {
+                    character = Character_diala(this)
+                }
+                "drokdatta" -> {
+                    character = Character_drokkatta(this)
+                }
+                "fenn" -> {
+                    character = Character_fenn(this)
+                }
+                "gaarkhan" -> {
+                    character = Character_gaarkhan(this)
+                }
+                "gideon" -> {
+                    character = Character_gideon(this)
+                }
+                "jarrod" -> {
+                    character = Character_jarrod(this)
+                }
+                "jyn" -> {
+                    character = Character_jyn(this)
+                }
+                "loku" -> {
+                    character = Character_loku(this)
+                }
+                "kotun" -> {
+                    character = Character_kotun(this)
+                }
+                "mak" -> {
+                    character = Character_mak(this)
+                }
+                "mhd19" -> {
+                    character = Character_mhd19(this)
+                }
+                "murne" -> {
+                    character = Character_murne(this)
+                }
+                "onar" -> {
+                    character = Character_onar(this)
+                }
+                "saska" -> {
+                    character = Character_saska(this)
+                }
+                "shyla" -> {
+                    character = Character_shyla(this)
+                }
+                "verena" -> {
+                    character = Character_verena(this)
+                }
+                "vinto" -> {
+                    character = Character_vinto(this)
+                }
+                "drokkatta" -> {
+                    character = Character_drokkatta(this)
+                }
+                "ct1701" -> {
+                    character = Character_ct1701(this)
+                }
+                "tress" -> {
+                    character = Character_tress(this)
+                }
             }
+            LoadScreen.selectedCharacter = character
 
         } else {
             character = LoadScreen.selectedCharacter!!
@@ -104,7 +150,7 @@ class Character_view : AppCompatActivity() {
                 defence,
                 ColorStateList.valueOf(Color.BLACK)
             )
-            "" -> defence.visibility=View.INVISIBLE
+            "" -> defence.visibility = View.INVISIBLE
 
         }
         setDiceColor(strength1, character.strength[0]);
@@ -129,7 +175,7 @@ class Character_view : AppCompatActivity() {
         initConditions()
         updateConditionIcons()
 
-        if(character.companionCard != null){
+        if(character.name_short == "jarrod"){
             companion.visibility = View.VISIBLE
         }
         else{
@@ -143,10 +189,38 @@ class Character_view : AppCompatActivity() {
     fun setDiceColor(dice: ImageView, color: Char) {
         dice.visibility = ImageView.VISIBLE
         when(color){
-            'B' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_blue)))
-            'G' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_green)))
-            'Y' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_yellow)))
-            'R' -> ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(ContextCompat.getColor(applicationContext,R.color.dice_red)))
+            'B' -> ImageViewCompat.setImageTintList(
+                dice, ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.dice_blue
+                    )
+                )
+            )
+            'G' -> ImageViewCompat.setImageTintList(
+                dice, ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.dice_green
+                    )
+                )
+            )
+            'Y' -> ImageViewCompat.setImageTintList(
+                dice, ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.dice_yellow
+                    )
+                )
+            )
+            'R' -> ImageViewCompat.setImageTintList(
+                dice, ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.dice_red
+                    )
+                )
+            )
             ' ' -> dice.visibility = ImageView.GONE
         }
     }
@@ -154,23 +228,33 @@ class Character_view : AppCompatActivity() {
     open fun getBitmap(context: Context, path: String): Bitmap? {
         val assetManager = context.assets
         var inputStream: InputStream? = null
-        try {
-            inputStream = assetManager.open(path)
-            return BitmapFactory.decodeStream(inputStream)
-        } catch (e: Exception) {
-            //e.printStackTrace()
-        } finally {
+        var bitmap:Bitmap? = null
+        val options = BitmapFactory.Options()
+        for(i in 1..32) {
             try {
-                inputStream?.close()
+                inputStream = assetManager.open(path)
+                options.inSampleSize = i
+                println(i)
+                bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                break
+            } catch (outOfMemoryError: OutOfMemoryError) {
+
+                println("next size" + i)
             } catch (e: Exception) {
-                //e.printStackTrace()
+                e.printStackTrace()
             }
         }
-        return null
+
+        try {
+            inputStream?.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return bitmap
     }
 
     open fun updateImages(){
-        character.updateCharacterImages()
+        character.updateCharacterImages(this)
         character_image.setImageBitmap(character.currentImage)
         if(character.layer1OnTop){
             character_layer1.elevation=1f
@@ -178,7 +262,7 @@ class Character_view : AppCompatActivity() {
 
         if(character.layer2 != null){
             character_layer2.visibility = View.VISIBLE
-            character_layer2.foreground = BitmapDrawable(resources, character.layer2 );
+            character_layer2.foreground = BitmapDrawable(resources, character.layer2);
         }
         else{
             character_layer2.visibility = View.GONE
@@ -233,6 +317,12 @@ class Character_view : AppCompatActivity() {
         endurance.setText("" + character.endurance);
         speed.setText("" + character.speed);
     }
+
+    fun onHide(view: View){
+        view.visibility = View.INVISIBLE
+    }
+
+
 
     //endregion
     //************************************************************************************************************
@@ -321,21 +411,27 @@ class Character_view : AppCompatActivity() {
                 character.withdrawn = true
                 character.timesWithdrawn++
                 add_damage.setText("" + character.health)
-                val slide = ObjectAnimator.ofFloat(character_images, "translationY",0f,0f,
-                    character_image.height.toFloat())
+                val slide = ObjectAnimator.ofFloat(
+                    character_images, "translationY", 0f, 0f,
+                    character_image.height.toFloat()
+                )
                 slide.setDuration(1500)
                 slide.start()
             }
 
-            var hitY = ObjectAnimator.ofFloat(character_images,"translationY",0f,20f*Random
-                .nextFloat(),
-                0f,20f*Random.nextFloat(),0f,20f*Random.nextFloat(),0f)
+            var hitY = ObjectAnimator.ofFloat(
+                character_images, "translationY", 0f, 20f * Random
+                    .nextFloat(),
+                0f, 20f * Random.nextFloat(), 0f, 20f * Random.nextFloat(), 0f
+            )
             hitY .setDuration(300)
             hitY .start()
 
-            var hitX = ObjectAnimator.ofFloat(character_images,"translationX",0f,-10f*Random
-                .nextFloat(),
-                0f,-10f*Random.nextFloat(),0f,-10f*Random.nextFloat(),0f)
+            var hitX = ObjectAnimator.ofFloat(
+                character_images, "translationX", 0f, -10f * Random
+                    .nextFloat(),
+                0f, -10f * Random.nextFloat(), 0f, -10f * Random.nextFloat(), 0f
+            )
             hitX .setDuration(300)
             hitX .start()
 
@@ -482,11 +578,11 @@ class Character_view : AppCompatActivity() {
     var activated = false
     fun onActivate(view: View) {
         if(!activated){
-            val flipUnactive = ObjectAnimator.ofFloat(unactive,"scaleX",1f,0f,0f,0f)
+            val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 1f, 0f, 0f, 0f)
             flipUnactive.setDuration(300)
             flipUnactive.start()
 
-            val flipActive = ObjectAnimator.ofFloat(active,"scaleX",0f,0f,0f,1f)
+            val flipActive = ObjectAnimator.ofFloat(active, "scaleX", 0f, 0f, 0f, 1f)
             flipActive.setDuration(300)
             flipActive.start()
 
@@ -507,15 +603,15 @@ class Character_view : AppCompatActivity() {
         }
     }
 
-    fun onEndActivation(view:View){
+    fun onEndActivation(view: View){
 
         endActivationDialog!!.cancel()
         removeCondition(weakened)
-        val flipUnactive = ObjectAnimator.ofFloat(unactive,"scaleX",0f,0f,0f,1f)
+        val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 0f, 0f, 0f, 1f)
         flipUnactive.setDuration(300)
         flipUnactive.start()
 
-        val flipActive = ObjectAnimator.ofFloat(active,"scaleX",1f,0f,0f,0f)
+        val flipActive = ObjectAnimator.ofFloat(active, "scaleX", 1f, 0f, 0f, 0f)
         flipActive.setDuration(300)
         flipActive.start()
 
@@ -528,49 +624,51 @@ class Character_view : AppCompatActivity() {
 
     }
 
-    fun onEndActivationNo(view:View){
+    fun onEndActivationNo(view: View){
         endActivationDialog!!.cancel()
     }
 
 
     fun onAction(view: View) {
 
-        actionDialog!!.cancel()
+        action_menu.visibility = View.INVISIBLE
+        action_menu.alpha = 0f
 
         if(actionsLeft>0) {
             //todo add focus symbol to attack
             if (conditionsActive[focused]) {
-                actionDialog!!.attack_focused.visibility = View.VISIBLE
+                attack_focused.visibility = View.VISIBLE
             } else {
-                actionDialog!!.attack_focused.visibility = View.GONE
+               attack_focused.visibility = View.GONE
             }
 
             if (conditionsActive[hidden]) {
-                actionDialog!!.attack_hidden.visibility = View.VISIBLE
+                attack_hidden.visibility = View.VISIBLE
             } else {
-                actionDialog!!.attack_hidden.visibility = View.GONE
+                attack_hidden.visibility = View.GONE
             }
 
             //todo add stun symbol and deactivate to move, special and attack
             if (conditionsActive[stunned]) {
-                actionDialog!!.action_stunned_attack.visibility = View.VISIBLE
-                actionDialog!!.action_stunned_move.visibility = View.VISIBLE
-                actionDialog!!.action_stunned_special.visibility = View.VISIBLE
-                actionDialog!!.action_remove_stun.visibility = View.VISIBLE
+                action_stunned_attack.visibility = View.VISIBLE
+                action_stunned_move.visibility = View.VISIBLE
+                action_stunned_special.visibility = View.VISIBLE
+                action_remove_stun.visibility = View.VISIBLE
             } else {
-                actionDialog!!.action_stunned_attack.visibility = View.INVISIBLE
-                actionDialog!!.action_stunned_move.visibility = View.INVISIBLE
-                actionDialog!!.action_stunned_special.visibility = View.INVISIBLE
-                actionDialog!!.action_remove_stun.visibility = View.GONE
+                action_stunned_attack.visibility = View.INVISIBLE
+                action_stunned_move.visibility = View.INVISIBLE
+                action_stunned_special.visibility = View.INVISIBLE
+                action_remove_stun.visibility = View.GONE
             }
 
             if (conditionsActive[bleeding]) {
-                actionDialog!!.action_remove_bleeding.visibility = View.VISIBLE
+                action_remove_bleeding.visibility = View.VISIBLE
             } else {
-                actionDialog!!.action_remove_bleeding.visibility = View.GONE
+                action_remove_bleeding.visibility = View.GONE
             }
 
-            actionDialog!!.show()
+            action_menu.visibility = View.VISIBLE
+            action_menu.animate().alpha(1f)
         }
 
     }
@@ -589,7 +687,7 @@ class Character_view : AppCompatActivity() {
         }
         if(actionsLeft <=0) {
 
-            actionDialog!!.cancel()
+            action_menu.visibility = View.INVISIBLE
             if(activated) {
                 endActivationDialog!!.show()
             }
@@ -690,8 +788,12 @@ class Character_view : AppCompatActivity() {
     fun showNoActionsLeftToast(){
         val noActionsLeftToast=Toast(this)
         noActionsLeftToast!!.duration = Toast.LENGTH_SHORT
-        noActionsLeftToast!!.view = layoutInflater.inflate(R.layout.toast_no_actions_left,character_view_group, false)
-        noActionsLeftToast!!.setGravity(Gravity.CENTER,0,0)
+        noActionsLeftToast!!.view = layoutInflater.inflate(
+            R.layout.toast_no_actions_left,
+            character_view_group,
+            false
+        )
+        noActionsLeftToast!!.setGravity(Gravity.CENTER, 0, 0)
         noActionsLeftToast!!. show()
     }
 
@@ -700,34 +802,34 @@ class Character_view : AppCompatActivity() {
     //region Show Cards
     //************************************************************************************************************
 
-    fun onShowFocusedCard(view:View){
+    fun onShowFocusedCard(view: View){
         showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_focused))
         showCardDialog!!.show()
     }
-    fun onShowStunnedCard(view:View){
+    fun onShowStunnedCard(view: View){
         showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_stunned))
         showCardDialog!!.show()
     }
-    fun onShowWeakenedCard(view:View){
+    fun onShowWeakenedCard(view: View){
         showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_weakened))
         showCardDialog!!.show()
     }
-    fun onShowBleedingCard(view:View){
+    fun onShowBleedingCard(view: View){
         showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_bleeding))
         showCardDialog!!.show()
     }
-    fun onShowHiddenCard(view:View){
+    fun onShowHiddenCard(view: View){
         showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_hidden))
         showCardDialog!!.show()
     }
 
-    fun onShowCard(view:View){
+    fun onShowCard(view: View){
         when(view.getTag()){
-            hidden->onShowHiddenCard(view)
-            focused->onShowFocusedCard(view)
-            stunned->onShowStunnedCard(view)
-            bleeding->onShowBleedingCard(view)
-            weakened->onShowWeakenedCard(view)
+            hidden -> onShowHiddenCard(view)
+            focused -> onShowFocusedCard(view)
+            stunned -> onShowStunnedCard(view)
+            bleeding -> onShowBleedingCard(view)
+            weakened -> onShowWeakenedCard(view)
         }
     }
 
@@ -794,19 +896,19 @@ class Character_view : AppCompatActivity() {
     //Backgrounds
     fun onBackgroundSnow(view: View) {
         character.background = "snow"
-        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_snow.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_snow.png"))
     }
     fun onBackgroundJungle(view: View) {
         character.background = "jungle"
-        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_jungle.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_jungle.png"))
     }
     fun onBackgroundDesert(view: View) {
         character.background = "desert"
-        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_desert.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_desert.png"))
     }
     fun onBackgroundInterior(view: View) {
         character.background = "interior"
-        background_image.setImageBitmap(getBitmap(this,"backgrounds/background_interior.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_interior.png"))
     }
 
     fun onSaveCharacter(view: View) {
@@ -829,18 +931,24 @@ class Character_view : AppCompatActivity() {
             menu_bar.animate().translationYBy(menu_bar.height.toFloat())
         }
         when(sideMenuState){
-            -1->{extend_down_button.animate().alpha(0f);
+            -1 -> {
+                extend_down_button.animate().alpha(0f);
                 extend_up_button.animate().alpha(1f)
                 kill_tracker_bar.animate().translationY(menu_bar.height.toFloat())
-                menu_bar.animate().translationY(menu_bar.height.toFloat())}
-            0->{extend_down_button.animate().alpha(1f)
+                menu_bar.animate().translationY(menu_bar.height.toFloat())
+            }
+            0 -> {
+                extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(1f)
                 kill_tracker_bar.animate().translationY(0f)
-                menu_bar.animate().translationY(0f)}
-            1->{extend_down_button.animate().alpha(1f)
+                menu_bar.animate().translationY(0f)
+            }
+            1 -> {
+                extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)
                 kill_tracker_bar.animate().translationY(-menu_bar.height.toFloat())
-                menu_bar.animate().translationY(-menu_bar.height.toFloat())}
+                menu_bar.animate().translationY(-menu_bar.height.toFloat())
+            }
         }
 
 
@@ -853,49 +961,55 @@ class Character_view : AppCompatActivity() {
             menu_bar.animate().translationYBy(-menu_bar.height.toFloat())
         }
         when(sideMenuState){
-            -1->{extend_down_button.animate().alpha(0f);
+            -1 -> {
+                extend_down_button.animate().alpha(0f);
                 extend_up_button.animate().alpha(1f)
                 kill_tracker_bar.animate().translationY(menu_bar.height.toFloat())
-                menu_bar.animate().translationY(menu_bar.height.toFloat())}
-            0->{extend_down_button.animate().alpha(1f)
+                menu_bar.animate().translationY(menu_bar.height.toFloat())
+            }
+            0 -> {
+                extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(1f)
                 kill_tracker_bar.animate().translationY(0f)
-                menu_bar.animate().translationY(0f)}
-            1->{extend_down_button.animate().alpha(1f)
+                menu_bar.animate().translationY(0f)
+            }
+            1 -> {
+                extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)
                 kill_tracker_bar.animate().translationY(-menu_bar.height.toFloat())
-                menu_bar.animate().translationY(-menu_bar.height.toFloat())}
+                menu_bar.animate().translationY(-menu_bar.height.toFloat())
+            }
         }
 
     }
 
     fun onReward(view: View) {
         val intent = Intent(this, Item_Select_Screen::class.java)
-        intent.putExtra("tab","reward")
+        intent.putExtra("tab", "reward")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onAccessory(view: View) {
         val intent = Intent(this, Item_Select_Screen::class.java)
-        intent.putExtra("tab","accessory")
+        intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onArmour(view: View) {
         val intent = Intent(this, Item_Select_Screen::class.java)
-        intent.putExtra("tab","armour")
+        intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onMelee(view: View) {
         val intent = Intent(this, Item_Select_Screen::class.java)
-        intent.putExtra("tab","melee")
+        intent.putExtra("tab", "melee")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onRange(view: View) {
         val intent = Intent(this, Item_Select_Screen::class.java)
-        intent.putExtra("tab","range")
+        intent.putExtra("tab", "range")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
@@ -939,13 +1053,13 @@ class Character_view : AppCompatActivity() {
     fun trooperKillDown(view: View) {killCountDown(trooper)}
     fun trooperKillUp(view: View) {killCountUp(trooper)}
 
-    fun killCountUp(type:Int){
+    fun killCountUp(type: Int){
         var killCount = Integer.parseInt(killCounts[type].text.toString())
         killCount++
         character.killCount[type]=killCount
-        killCounts[type].setText(""+killCount)
+        killCounts[type].setText("" + killCount)
     }
-    fun killCountDown(type:Int){
+    fun killCountDown(type: Int){
         var killCount = Integer.parseInt(killCounts[type].text.toString())
         if(killCount>0) {
             killCount--
@@ -956,14 +1070,30 @@ class Character_view : AppCompatActivity() {
 
     fun onAssist(view: View) {
         when(view.tag){
-            villain->{character.assistCount[villain]++}
-            leader->{character.assistCount[leader]++}
-            vehicle->{character.assistCount[vehicle]++}
-            creature->{character.assistCount[creature]++}
-            guard->{character.assistCount[guard]++}
-            droid->{character.assistCount[droid]++}
-            scum->{character.assistCount[scum]++}
-            trooper->{character.assistCount[trooper]++}
+            villain -> {
+                character.assistCount[villain]++
+            }
+            leader -> {
+                character.assistCount[leader]++
+            }
+            vehicle -> {
+                character.assistCount[vehicle]++
+            }
+            creature -> {
+                character.assistCount[creature]++
+            }
+            guard -> {
+                character.assistCount[guard]++
+            }
+            droid -> {
+                character.assistCount[droid]++
+            }
+            scum -> {
+                character.assistCount[scum]++
+            }
+            trooper -> {
+                character.assistCount[trooper]++
+            }
         }
         assistDialog!!.cancel()
     }
@@ -985,8 +1115,12 @@ class Character_view : AppCompatActivity() {
         }
         killCounts.add(vehicle_count)
         vehicle_button.setOnLongClickListener {
-            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable
-                .icon_vehicle))
+            assistDialog!!.assist_icon.setImageDrawable(
+                resources.getDrawable(
+                    R.drawable
+                        .icon_vehicle
+                )
+            )
             assistDialog!!.assist_button.setTag(vehicle)
             assistDialog!!.show()
             true
@@ -1021,8 +1155,12 @@ class Character_view : AppCompatActivity() {
         }
         killCounts.add(trooper_count)
         trooper_button.setOnLongClickListener {
-            assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable
-                .icon_trooper))
+            assistDialog!!.assist_icon.setImageDrawable(
+                resources.getDrawable(
+                    R.drawable
+                        .icon_trooper
+                )
+            )
             assistDialog!!.assist_button.setTag(trooper)
             assistDialog!!.show()
             true
@@ -1043,8 +1181,14 @@ class Character_view : AppCompatActivity() {
     var bleeding = 3
     var stunned = 4
     var conditionViews = ArrayList<ImageView>()
-    var conditionsActive = booleanArrayOf(false,false,false,false,false)
-    var conditionDrawable = intArrayOf(R.drawable.condition_hidden, R.drawable.condition_focused, R.drawable.condition_weakened, R.drawable.condition_bleeding, R.drawable.condition_stunned)
+    var conditionsActive = booleanArrayOf(false, false, false, false, false)
+    var conditionDrawable = intArrayOf(
+        R.drawable.condition_hidden,
+        R.drawable.condition_focused,
+        R.drawable.condition_weakened,
+        R.drawable.condition_bleeding,
+        R.drawable.condition_stunned
+    )
 
     fun initConditions(){
         conditionsActive = character.conditionsActive
@@ -1142,7 +1286,7 @@ class Character_view : AppCompatActivity() {
     }
 
 
-    fun removeCondition(conditionType : Int){
+    fun removeCondition(conditionType: Int){
 
         if(actionsLeft>0 || conditionType==hidden||conditionType==focused||conditionType==weakened) {
             conditionsActive[conditionType] = false
@@ -1299,10 +1443,19 @@ class Character_view : AppCompatActivity() {
 
 
             if (bitmap != null) {
-                val bitmapWidth = width/(height-128)*bitmap.width
+
+                val bitmapWidth = width/(height-180)*bitmap.height
                 val bitmapOffset =((bitmap.width-bitmapWidth)/2).toInt()
 
-                bitmap = Bitmap.createBitmap(bitmap, bitmapOffset, 0, bitmapWidth.toInt(), bitmap.height)
+                bitmap = Bitmap.createBitmap(
+                    bitmap,
+                    bitmapOffset,
+                    0,
+                    bitmapWidth.toInt(),
+                    bitmap.height
+                )
+
+
                 val frame = BitmapDrawable(resources, bitmap);
                 if(type .equals("rest")) {
                     animation.addFrame(frame, 100)
@@ -1325,7 +1478,7 @@ class Character_view : AppCompatActivity() {
     var restDialog:Dialog? = null
     var unwoundDialog:Dialog? = null
     var conditionsDialog:Dialog? = null
-    var actionDialog:Dialog? = null
+    //var actionDialog:Dialog? = null
     var showCardDialog:Dialog? = null
     var endActivationDialog:Dialog? = null
     var assistDialog:Dialog? = null
@@ -1386,18 +1539,46 @@ class Character_view : AppCompatActivity() {
         optionsDialog!!.setContentView(R.layout.dialog_options)
         optionsDialog!!.setCanceledOnTouchOutside(true)
         optionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        optionsDialog!!.bioOption.setOnClickListener{
+            onBiography(optionsDialog!!.bioOption)
+            true
+        }
+        optionsDialog!!.powerOption.setOnClickListener{
+            onPower(optionsDialog!!.powerOption)
+            true
+        }
+        optionsDialog!!.settingsOption.setOnClickListener{
+            onSettings(optionsDialog!!.settingsOption)
+            true
+        }
+        optionsDialog!!.saveOption.setOnClickListener{
+            onSave(optionsDialog!!.saveOption)
+            true
+        }
+        optionsDialog!!.statsOption.setOnClickListener{
+            onStatistics(optionsDialog!!.statsOption)
+            true
+        }
+        optionsDialog!!.backgroundOption.setOnClickListener{
+            onBackground(optionsDialog!!.backgroundOption)
+            true
+        }
 
+        /*
         actionDialog = Dialog(this)
         actionDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         actionDialog!!.setCancelable(false)
         actionDialog!!.setContentView(R.layout.dialog_action_menu)
         actionDialog!!.setCanceledOnTouchOutside(true)
         actionDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+         */
+        //TODO replace dialog with overlay
 
-        showCardDialog = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+
+        showCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
-        showCardDialog!!.setContentView(R.layout.dialog_show_card, )
+        showCardDialog!!.setContentView(R.layout.dialog_show_card)
         showCardDialog!!.setCancelable(false)
         showCardDialog!!.setCanceledOnTouchOutside(true)
         showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
@@ -1433,6 +1614,7 @@ class Character_view : AppCompatActivity() {
         saveDialog!!.setContentView(R.layout.dialog_save)
         saveDialog!!.setCanceledOnTouchOutside(true)
         saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        //TODO setOnClickListenters save
 
         backgroundDialog = Dialog(this)
         backgroundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1440,29 +1622,30 @@ class Character_view : AppCompatActivity() {
         backgroundDialog!!.setContentView(R.layout.dialog_background)
         backgroundDialog!!.setCanceledOnTouchOutside(true)
         backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        //TODO setOnClickListenters backgrounds
 
-        settingsScreen= Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        settingsScreen= Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         settingsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         settingsScreen!!.setCancelable(false)
         settingsScreen!!.setContentView(R.layout.screen_settings)
         settingsScreen!!.setCanceledOnTouchOutside(true)
         settingsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
-        statsScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen )
+        statsScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         statsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         statsScreen!!.setCancelable(false)
         statsScreen!!.setContentView(R.layout.screen_stats)
         statsScreen!!.setCanceledOnTouchOutside(true)
         statsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
-        creditsScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        creditsScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         creditsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         creditsScreen!!.setCancelable(false)
         creditsScreen!!.setContentView(R.layout.screen_stats)
         creditsScreen!!.setCanceledOnTouchOutside(true)
         creditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
-        xpSelectScreen = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        xpSelectScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         xpSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         xpSelectScreen!!.setCancelable(false)
         xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
@@ -1473,8 +1656,11 @@ class Character_view : AppCompatActivity() {
     //region Stats Screen
     //************************************************************************************************************
     fun initStatsScreen(){
-        statsScreen!!.stats_name.setText(""+character.name)
-        statsScreen!!.stats_portrait_image.setImageBitmap(character.portraitImage)
+        statsScreen!!.stats_name.setText("" + character.name)
+        if(character.portraitImage==null) {
+            character.loadPortraitImage(this)
+        }
+        statsScreen!!.stats_portrait_image.setImageDrawable(character.portraitImage)
         var level = 5
         if(character.xpSpent <= 1){
             level = 1
@@ -1489,23 +1675,23 @@ class Character_view : AppCompatActivity() {
             level = 4
         }
 
-        statsScreen!!.stats_level.setText(""+level)
-        statsScreen!!.stats_moves.setText(""+character.movesTaken)
-        statsScreen!!.stats_attacks.setText(""+character.attacksMade)
-        statsScreen!!.stats_interacts.setText(""+character.interactsUsed)
-        statsScreen!!.stats_wounded.setText(""+character.timesWounded)
-        statsScreen!!.stats_rested.setText(""+character.timesRested)
-        statsScreen!!.stats_withdrawn.setText(""+character.timesWithdrawn)
-        statsScreen!!.stats_activated.setText(""+character.activated)
-        statsScreen!!.stats_damaged.setText(""+character.damageTaken)
-        statsScreen!!.stats_strain.setText(""+character.strainTaken)
-        statsScreen!!.stats_specials.setText(""+character.specialActions)
-        statsScreen!!.stats_focused.setText(""+character.timesFocused)
-        statsScreen!!.stats_hidden.setText(""+character.timesHidden)
-        statsScreen!!.stats_stunned.setText(""+character.timesStunned)
-        statsScreen!!.stats_bleeding.setText(""+character.timesBleeding)
-        statsScreen!!.stats_weakened.setText(""+character.timesWeakened)
-        statsScreen!!.stats_crates.setText(""+character.cratesPickedUp)
+        statsScreen!!.stats_level.setText("" + level)
+        statsScreen!!.stats_moves.setText("" + character.movesTaken)
+        statsScreen!!.stats_attacks.setText("" + character.attacksMade)
+        statsScreen!!.stats_interacts.setText("" + character.interactsUsed)
+        statsScreen!!.stats_wounded.setText("" + character.timesWounded)
+        statsScreen!!.stats_rested.setText("" + character.timesRested)
+        statsScreen!!.stats_withdrawn.setText("" + character.timesWithdrawn)
+        statsScreen!!.stats_activated.setText("" + character.activated)
+        statsScreen!!.stats_damaged.setText("" + character.damageTaken)
+        statsScreen!!.stats_strain.setText("" + character.strainTaken)
+        statsScreen!!.stats_specials.setText("" + character.specialActions)
+        statsScreen!!.stats_focused.setText("" + character.timesFocused)
+        statsScreen!!.stats_hidden.setText("" + character.timesHidden)
+        statsScreen!!.stats_stunned.setText("" + character.timesStunned)
+        statsScreen!!.stats_bleeding.setText("" + character.timesBleeding)
+        statsScreen!!.stats_weakened.setText("" + character.timesWeakened)
+        statsScreen!!.stats_crates.setText("" + character.cratesPickedUp)
 
         if(character.rewardObtained) {
             statsScreen!!.stats_reward_obtained.setText("Yes")
@@ -1520,25 +1706,25 @@ class Character_view : AppCompatActivity() {
             totalKills += character.killCount[i]
             totalAssists += character.assistCount[i]
         }
-        statsScreen!!.stats_kill_total.setText(""+totalKills)
-        statsScreen!!.stats_kill_villain.setText(""+character.killCount[villain])
-        statsScreen!!.stats_kill_vehicle.setText(""+character.killCount[vehicle])
-        statsScreen!!.stats_kill_creature.setText(""+character.killCount[creature])
-        statsScreen!!.stats_kill_leader.setText(""+character.killCount[leader])
-        statsScreen!!.stats_kill_guardian.setText(""+character.killCount[guard])
-        statsScreen!!.stats_kill_droid.setText(""+character.killCount[droid])
-        statsScreen!!.stats_kill_scum.setText(""+character.killCount[scum])
-        statsScreen!!.stats_kill_trooper.setText(""+character.killCount[trooper])
+        statsScreen!!.stats_kill_total.setText("" + totalKills)
+        statsScreen!!.stats_kill_villain.setText("" + character.killCount[villain])
+        statsScreen!!.stats_kill_vehicle.setText("" + character.killCount[vehicle])
+        statsScreen!!.stats_kill_creature.setText("" + character.killCount[creature])
+        statsScreen!!.stats_kill_leader.setText("" + character.killCount[leader])
+        statsScreen!!.stats_kill_guardian.setText("" + character.killCount[guard])
+        statsScreen!!.stats_kill_droid.setText("" + character.killCount[droid])
+        statsScreen!!.stats_kill_scum.setText("" + character.killCount[scum])
+        statsScreen!!.stats_kill_trooper.setText("" + character.killCount[trooper])
 
-        statsScreen!!.stats_assist_total.setText(""+totalAssists)
-        statsScreen!!.stats_assist_villain.setText(""+character.assistCount[villain])
-        statsScreen!!.stats_assist_vehicle.setText(""+character.assistCount[vehicle])
-        statsScreen!!.stats_assist_creature.setText(""+character.assistCount[creature])
-        statsScreen!!.stats_assist_leader.setText(""+character.assistCount[leader])
-        statsScreen!!.stats_assist_guardian.setText(""+character.assistCount[guard])
-        statsScreen!!.stats_assist_droid.setText(""+character.assistCount[droid])
-        statsScreen!!.stats_assist_scum.setText(""+character.assistCount[scum])
-        statsScreen!!.stats_assist_trooper.setText(""+character.assistCount[trooper])
+        statsScreen!!.stats_assist_total.setText("" + totalAssists)
+        statsScreen!!.stats_assist_villain.setText("" + character.assistCount[villain])
+        statsScreen!!.stats_assist_vehicle.setText("" + character.assistCount[vehicle])
+        statsScreen!!.stats_assist_creature.setText("" + character.assistCount[creature])
+        statsScreen!!.stats_assist_leader.setText("" + character.assistCount[leader])
+        statsScreen!!.stats_assist_guardian.setText("" + character.assistCount[guard])
+        statsScreen!!.stats_assist_droid.setText("" + character.assistCount[droid])
+        statsScreen!!.stats_assist_scum.setText("" + character.assistCount[scum])
+        statsScreen!!.stats_assist_trooper.setText("" + character.assistCount[trooper])
 
         if(character.timesWounded>0) {
             statsScreen!!.stats_kill_death_ratio.setText("" + totalKills.toFloat() / character.timesWounded)
@@ -1576,57 +1762,59 @@ class Character_view : AppCompatActivity() {
                 true
             }
             if(character.xpCardsEquipped[i]){
-                xpCardImages[i].alpha = 0.5f
+                xpCardImages[i].alpha = 1f
             }
             else{
-                xpCardImages[i].alpha = 1f
+                xpCardImages[i].alpha = 0.5f
             }
             xpCardImages[i].setTag(i)
         }
         var xpLeft = character.totalXP-character.xpSpent
-        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+        xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
     }
 
-    fun onShowXPCard(view:ImageView){
+    fun onShowXPCard(view: ImageView){
         var image = ((view).drawable as BitmapDrawable).bitmap
         showCardDialog!!.card_image.setImageBitmap(image)
         showCardDialog!!.show()
     }
-    fun onXPCard(view:View) {
+    fun onXPCard(view: View) {
         var xpLeft = character.totalXP-character.xpSpent;
         var cardNo = view.tag as Int
         if(character.xpCardsEquipped[cardNo]){
             character.xpCardsEquipped[cardNo] = false
-            xpCardImages[cardNo].alpha = 1f
+            xpCardImages[cardNo].animate().alpha(0.5f).duration = 50
             character.xpSpent -= character.xpScores[cardNo]
         }
         else if( character.xpScores[cardNo] <= xpLeft) {
             character.xpCardsEquipped[cardNo] = true
-            xpCardImages[cardNo].alpha = 0.5f
+            xpCardImages[cardNo].animate().alpha(1f).duration = 50
             character.xpSpent+=character.xpScores[cardNo]
         }
         xpLeft = character.totalXP-character.xpSpent
-        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+        xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
         character.rewardObtained = character.xpCardsEquipped[8]
 
-
+        if(character.currentImage!=null) {
+            character.currentImage!!.recycle()
+        }
         updateImages()
         updateStats()
 
     }
 
-    fun addXP(view:View){
+    fun addXP(view: View){
         character.totalXP++
         var xpLeft = character.totalXP-character.xpSpent;
-        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+        xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
     }
-    fun minusXP(view:View){
+    fun minusXP(view: View){
         var xpLeft = character.totalXP-character.xpSpent;
         if(xpLeft>0){
             character.totalXP--
         }
         xpLeft = character.totalXP-character.xpSpent;
-        xpSelectScreen!!.xp_text.setText("XP: "+xpLeft)
+        xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
     }
 
 
@@ -1637,7 +1825,8 @@ class Character_view : AppCompatActivity() {
 
     fun saveCharacter(){
 
-        var saveFile= CharacterData(""+saveDialog!!.save_name.text.toString(),
+        var saveFile= CharacterData(
+            "" + saveDialog!!.save_name.text.toString(),
             System.currentTimeMillis(),
             character.name_short,
             character.damage,

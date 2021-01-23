@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import com.example.imperialassault.Character
 
 class Character_drokkatta : Character {
-    var card5Images = ArrayList<Bitmap?>()
+
     constructor(context: Context){
         //default values
         name = "Drokkatta"
@@ -62,19 +62,22 @@ class Character_drokkatta : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        card5Images = loadCardTierImages(context,"card5")
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(){
-        super.updateCharacterImages()
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
 
 
         //card6 tier images
         if(xpCardsEquipped[4]){
-            if(card5Images[tier] != null){
-                currentImage = card5Images[tier]
+            var card5Image = loadCardTierImage(context, tier, "card5")
+            if (card5Image != null) {
+                currentImage = card5Image
             }
         }
+    }
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_drokkatta)
     }
 }

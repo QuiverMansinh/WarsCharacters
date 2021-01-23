@@ -59,5 +59,7 @@ class Character_gaarkhan : Character {
                 "right by freeing his people from servitude. The Empire will know the wrath of a true Wookiee warrior. "  }
 
     //TODO alter for reward, duplicates, tier
-
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_gaarkhan)
+    }
 }
