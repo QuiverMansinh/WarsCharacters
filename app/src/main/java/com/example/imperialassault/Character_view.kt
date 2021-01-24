@@ -13,12 +13,10 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 
@@ -39,6 +37,9 @@ import kotlinx.coroutines.launch
 import java.io.InputStream
 import kotlin.random.Random
 
+var height = 0f
+var width = 0f
+
 class Character_view : AppCompatActivity() {
     var character:Character = Character();
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,12 @@ class Character_view : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        height = displayMetrics.heightPixels.toFloat()
+        width = displayMetrics.widthPixels.toFloat()
+
+
 
         initDialogs()
         initScreen()
@@ -132,10 +139,10 @@ class Character_view : AppCompatActivity() {
                     character = Character_tress(this)
                 }
             }
-            LoadScreen.selectedCharacter = character
+            MainActivity.selectedCharacter = character
 
         } else {
-            character = LoadScreen.selectedCharacter!!
+            character = MainActivity.selectedCharacter!!
         }
 
         name.setText("" + character.name);
@@ -923,19 +930,23 @@ class Character_view : AppCompatActivity() {
     //region Side Navigation
     //************************************************************************************************************
 
-    fun onExtendDown(view: View) {
 
+    fun onExtendDown(view: View) {
+        val lp = kill_tracker_bar.layoutParams
+        lp.height = menu_bar.height+22
+        kill_tracker_bar.layoutParams = lp
+        var h = menu_bar.height.toFloat()+88+44
         if(sideMenuState>-1){
             sideMenuState--
-            kill_tracker_bar.animate().translationYBy(menu_bar.height.toFloat())
-            menu_bar.animate().translationYBy(menu_bar.height.toFloat())
+            kill_tracker_bar.animate().translationYBy(h)
+            menu_bar.animate().translationYBy(h)
         }
         when(sideMenuState){
             -1 -> {
                 extend_down_button.animate().alpha(0f);
                 extend_up_button.animate().alpha(1f)
-                kill_tracker_bar.animate().translationY(menu_bar.height.toFloat())
-                menu_bar.animate().translationY(menu_bar.height.toFloat())
+                kill_tracker_bar.animate().translationY(h)
+                menu_bar.animate().translationY(h)
             }
             0 -> {
                 extend_down_button.animate().alpha(1f)
@@ -946,26 +957,29 @@ class Character_view : AppCompatActivity() {
             1 -> {
                 extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)
-                kill_tracker_bar.animate().translationY(-menu_bar.height.toFloat())
-                menu_bar.animate().translationY(-menu_bar.height.toFloat())
+                kill_tracker_bar.animate().translationY(-h)
+                menu_bar.animate().translationY(-h)
             }
         }
 
 
     }
     fun onExtendUp(view: View) {
-
+        val lp = kill_tracker_bar.layoutParams
+        lp.height = menu_bar.height+22
+        kill_tracker_bar.layoutParams = lp
+        var h = menu_bar.height.toFloat()+88+44
         if(sideMenuState<1){
             sideMenuState++
-            kill_tracker_bar.animate().translationYBy(-menu_bar.height.toFloat())
-            menu_bar.animate().translationYBy(-menu_bar.height.toFloat())
+            kill_tracker_bar.animate().translationYBy(-h)
+            menu_bar.animate().translationYBy(-h)
         }
         when(sideMenuState){
             -1 -> {
                 extend_down_button.animate().alpha(0f);
                 extend_up_button.animate().alpha(1f)
-                kill_tracker_bar.animate().translationY(menu_bar.height.toFloat())
-                menu_bar.animate().translationY(menu_bar.height.toFloat())
+                kill_tracker_bar.animate().translationY(h)
+                menu_bar.animate().translationY(h)
             }
             0 -> {
                 extend_down_button.animate().alpha(1f)
@@ -976,8 +990,8 @@ class Character_view : AppCompatActivity() {
             1 -> {
                 extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)
-                kill_tracker_bar.animate().translationY(-menu_bar.height.toFloat())
-                menu_bar.animate().translationY(-menu_bar.height.toFloat())
+                kill_tracker_bar.animate().translationY(-h)
+                menu_bar.animate().translationY(-h)
             }
         }
 
@@ -1383,92 +1397,48 @@ class Character_view : AppCompatActivity() {
     //************************************************************************************************************
     //region Animations
     //************************************************************************************************************
+    /*
     var blastAnim:AnimationDrawable = AnimationDrawable()
     var impactAnim :AnimationDrawable= AnimationDrawable()
     var restAnim:AnimationDrawable= AnimationDrawable()
     var sliceAnim:AnimationDrawable= AnimationDrawable()
-
+*/
     fun initAnimations(){
-        blastAnim = createAnimation("blast")
-        impactAnim = createAnimation("impact")
-        sliceAnim = createAnimation("slice")
-        restAnim = createAnimation("rest")
-
-        rest_animation.setBackgroundDrawable(restAnim)
+        rest_animation.setBackgroundDrawable(MainActivity.restAnim)
         rest_animation.visibility = FrameLayout.INVISIBLE
     }
 
     fun playDamageAnim(){
         val animType = Math.random();
         if(animType<0.3){
-            damage_animation.setBackgroundDrawable(blastAnim)
+            damage_animation.setBackgroundDrawable( MainActivity.blastAnim)
             damage_animation.visibility = FrameLayout.VISIBLE
-            blastAnim.setVisible(true, true)
-            blastAnim.start()
+            MainActivity.blastAnim.setVisible(true, true)
+            MainActivity.blastAnim.start()
         }
         else if(animType<0.6){
-            damage_animation.setBackgroundDrawable(sliceAnim)
+            damage_animation.setBackgroundDrawable( MainActivity.sliceAnim)
             damage_animation.visibility = FrameLayout.VISIBLE
-            sliceAnim.setVisible(true, true)
-            sliceAnim.start()
+            MainActivity.sliceAnim.setVisible(true, true)
+            MainActivity.sliceAnim.start()
         }
         else{
-            damage_animation.setBackgroundDrawable(impactAnim)
+            damage_animation.setBackgroundDrawable( MainActivity.impactAnim)
             damage_animation.visibility = FrameLayout.VISIBLE
-            impactAnim.setVisible(true, true)
-            impactAnim.start()
+            MainActivity.impactAnim.setVisible(true, true)
+            MainActivity.impactAnim.start()
         }
 
 
     }
     fun playRestAnim(){
         rest_animation.visibility = FrameLayout.VISIBLE
-        restAnim.setVisible(true, true)
-        restAnim.start()
+        MainActivity.restAnim.setVisible(true, true)
+        MainActivity.restAnim.start()
     }
 
 
-    fun createAnimation(type: String): AnimationDrawable{
 
-        val displayMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val height = displayMetrics.heightPixels.toFloat()
-        val width = displayMetrics.widthPixels.toFloat()
-
-        val animation = AnimationDrawable()
-
-
-        for(i in 0..9){
-            var bitmap = getBitmap(this, "animations/" + type + "/" + type + "_" + +i + ".png")
-
-
-            if (bitmap != null) {
-
-                val bitmapWidth = width/(height-180)*bitmap.height
-                val bitmapOffset =((bitmap.width-bitmapWidth)/2).toInt()
-
-                bitmap = Bitmap.createBitmap(
-                    bitmap,
-                    bitmapOffset,
-                    0,
-                    bitmapWidth.toInt(),
-                    bitmap.height
-                )
-
-
-                val frame = BitmapDrawable(resources, bitmap);
-                if(type .equals("rest")) {
-                    animation.addFrame(frame, 100)
-                }
-
-                else {
-                    animation.addFrame(frame, 70)
-                }
-            }
-        }
-        animation.setOneShot(true);
-        return animation;
-    }
 
     //endregion
     //************************************************************************************************************

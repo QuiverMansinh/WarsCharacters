@@ -25,19 +25,14 @@ class LoadScreen : AppCompatActivity() {
         var data:List<CharacterData>? = null
 
             lifecycleScope.launch {
-
                 data = database!!.getCharacterDAO().getAll()
                 println(data)
                 listSaveFiles(data)
-
             }
 
     }
     private lateinit var listView:ListView
 
-    companion object{
-        var selectedCharacter:Character? = null
-    }
 
     var loadedCharacters = ArrayList<Character>()
     fun listSaveFiles(data : List<CharacterData>?){
@@ -143,7 +138,7 @@ class LoadScreen : AppCompatActivity() {
                     loadedCharacters[position].withdrawn = data[position].withdrawn
 
 
-                    selectedCharacter = loadedCharacters[position]
+                    MainActivity.selectedCharacter = loadedCharacters[position]
 
 
                     val intent = Intent(this, Character_view::class.java)

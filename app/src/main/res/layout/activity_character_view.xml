@@ -472,18 +472,18 @@
     <LinearLayout
         android:id="@+id/kill_tracker_bar"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/menu_bar"
+        app:layout_constraintBottom_toTopOf="@+id/extend_up_button"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -518,7 +518,8 @@
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -552,7 +553,8 @@
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -587,7 +589,8 @@
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -622,7 +625,8 @@
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -657,7 +661,8 @@
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -692,7 +697,8 @@
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -727,7 +733,8 @@
 
         <LinearLayout
             android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -770,15 +777,16 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/extend_down_button"
+        app:layout_constraintBottom_toTopOf="@+id/extend_down_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/extend_up_button">
+        app:layout_constraintTop_toBottomOf="@+id/extend_up_button">
 
         <ImageView
             android:id="@+id/rewards_button"
             android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="onReward"
             android:padding="5dp"
             app:srcCompat="@drawable/reward_button" />
@@ -786,8 +794,9 @@
         <ImageView
             android:id="@+id/xp_button"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="onXPScreen"
             android:padding="5dp"
             app:srcCompat="@drawable/xpbutton" />
@@ -795,8 +804,9 @@
         <ImageView
             android:id="@+id/item_accessory_button"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="onAccessory"
             android:padding="5dp"
             app:srcCompat="@drawable/item_accessory" />
@@ -804,8 +814,9 @@
         <ImageView
             android:id="@+id/item_armour_button"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="onArmour"
             android:padding="5dp"
             app:srcCompat="@drawable/item_armour" />
@@ -813,8 +824,9 @@
         <ImageView
             android:id="@+id/item_melee_button"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="onMelee"
             android:padding="5dp"
             app:srcCompat="@drawable/item_melee" />
@@ -822,8 +834,9 @@
         <ImageView
             android:id="@+id/item_ranged_button"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="onRange"
             android:padding="5dp"
             app:srcCompat="@drawable/item_ranged" />

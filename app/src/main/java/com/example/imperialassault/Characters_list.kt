@@ -3,6 +3,7 @@ package com.example.imperialassault
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -63,19 +64,25 @@ class Characters_list : AppCompatActivity() {
     }
 
     fun onSelect(view: View) {
-        if (LoadScreen.selectedCharacter != null) {
-            LoadScreen.selectedCharacter!!.currentImage!!.recycle()
+        //Clean up previous character
+        if (MainActivity.selectedCharacter != null) {
+            MainActivity.selectedCharacter!!.currentImage!!.recycle()
             for (i in 0..8) {
-                if (LoadScreen.selectedCharacter!!.xpCardImages[i] != null) {
-                    LoadScreen.selectedCharacter!!.xpCardImages!![i].recycle()
+                if (MainActivity.selectedCharacter!!.xpCardImages[i] != null) {
+                    MainActivity.selectedCharacter!!.xpCardImages!![i].recycle()
                 }
-                if (LoadScreen.selectedCharacter!!.power != null) {
-                    LoadScreen.selectedCharacter!!.power!!.recycle()
-                    LoadScreen.selectedCharacter!!.power_wounded!!.recycle()
-                }
+
             }
-            LoadScreen.selectedCharacter!!.portraitImage = null
-            LoadScreen.selectedCharacter = null
+            if (MainActivity.selectedCharacter!!.power != null) {
+                MainActivity.selectedCharacter!!.power!!.recycle()
+                MainActivity.selectedCharacter!!.power_wounded!!.recycle()
+            }
+            if (MainActivity.selectedCharacter!!.portraitImage != null) {
+                val portraitImage = (MainActivity.selectedCharacter!!.portraitImage) as BitmapDrawable
+                portraitImage.bitmap.recycle()
+                MainActivity.selectedCharacter!!.portraitImage = null
+            }
+            MainActivity.selectedCharacter = null
         }
         val intent = Intent(this, Character_view::class.java)
         intent.putExtra("CharacterName", view.tag.toString())

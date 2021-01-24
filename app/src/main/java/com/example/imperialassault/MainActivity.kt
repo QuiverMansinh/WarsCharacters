@@ -1,11 +1,18 @@
 package com.example.imperialassault
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +27,91 @@ class MainActivity : AppCompatActivity() {
         })
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        blastAnim = createAnimation("blast")
+        impactAnim = createAnimation("impact")
+        sliceAnim = createAnimation("slice")
+        restAnim = createAnimation("rest")
+
+
+    }
+    companion object{
+        var selectedCharacter:Character? = null
+        var blastAnim: AnimationDrawable = AnimationDrawable()
+        var impactAnim : AnimationDrawable = AnimationDrawable()
+        var restAnim: AnimationDrawable = AnimationDrawable()
+        var sliceAnim: AnimationDrawable = AnimationDrawable()
 
     }
 
+    fun createAnimation(type: String): AnimationDrawable{
+
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels.toFloat()
+        val width = displayMetrics.widthPixels.toFloat()
+
+        val animation = AnimationDrawable()
+
+
+        for(i in 0..9){
+            var bitmap = getBitmap(this, "animations/" + type + "/" + type + "_" + +i + ".png")
+
+
+            if (bitmap != null) {
+
+                val bitmapWidth = width/(height-180)*bitmap.height
+                val bitmapOffset =((bitmap.width-bitmapWidth)/2).toInt()
+
+                bitmap = Bitmap.createBitmap(
+                    bitmap,
+                    bitmapOffset,
+                    0,
+                    bitmapWidth.toInt(),
+                    bitmap.height
+                )
+
+
+                val frame = BitmapDrawable(resources, bitmap);
+                if(type .equals("rest")) {
+                    animation.addFrame(frame, 100)
+                }
+
+                else {
+                    animation.addFrame(frame, 70)
+                }
+            }
+        }
+        animation.setOneShot(true);
+        return animation;
+    }
+
+    open fun getBitmap(context: Context, path: String): Bitmap? {
+        val assetManager = context.assets
+        var inputStream: InputStream? = null
+        var bitmap:Bitmap? = null
+        val options = BitmapFactory.Options()
+        for(i in 1..32) {
+            try {
+                inputStream = assetManager.open(path)
+                options.inSampleSize = i
+                println(i)
+                bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                break
+            } catch (outOfMemoryError: OutOfMemoryError) {
+
+                println("next size" + i)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        try {
+            inputStream?.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return bitmap
+    }
 //    override fun onWindowFocusChanged(hasFocus: Boolean) {
 //        super.onWindowFocusChanged(hasFocus)
 //        if (hasFocus) hideSystemUI()
