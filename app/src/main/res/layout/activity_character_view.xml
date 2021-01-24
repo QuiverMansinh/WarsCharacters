@@ -987,7 +987,6 @@
         android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
         android:layout_height="135dp"
-        android:background="@drawable/panel_segment"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -1027,7 +1026,7 @@
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
-            android:shadowColor="@color/white"
+            android:shadowColor="@color/black"
             android:shadowRadius="0"
             android:text="12"
             android:textColor="@color/black"
@@ -1069,6 +1068,7 @@
                 android:id="@+id/defence"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:background="@drawable/stat_box"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -1110,18 +1110,21 @@
                     android:id="@+id/insight1"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/insight2"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/insight3"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice" />
             </LinearLayout>
 
@@ -1154,6 +1157,7 @@
                     android:id="@+id/strength1"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     android:visibility="visible"
                     app:srcCompat="@drawable/dice" />
 
@@ -1161,6 +1165,7 @@
                     android:id="@+id/strength2"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice"
                     tools:visibility="visible" />
 
@@ -1168,6 +1173,7 @@
                     android:id="@+id/strength3"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice" />
             </LinearLayout>
 
@@ -1196,18 +1202,21 @@
                     android:id="@+id/tech1"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/tech2"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/tech3"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    android:background="@drawable/stat_box"
                     app:srcCompat="@drawable/dice" />
             </LinearLayout>
 

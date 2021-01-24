@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Color.TRANSPARENT
-import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -16,7 +15,7 @@ import android.util.DisplayMetrics
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 
@@ -27,6 +26,7 @@ import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_options.*
+import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 
@@ -40,7 +40,7 @@ import kotlin.random.Random
 var height = 0f
 var width = 0f
 
-class Character_view : AppCompatActivity() {
+class Character_view : AppCompatActivity(){
     var character:Character = Character();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +69,7 @@ class Character_view : AppCompatActivity() {
     fun initScreen(){
         var load = intent.getBooleanExtra("Load", false)
         var characterName: String = intent.getStringExtra("CharacterName").toString()
+
 
         if (!load) {
             when (characterName) {
@@ -301,23 +302,23 @@ class Character_view : AppCompatActivity() {
             if(character.xpCardsEquipped[i]){
                 if(character.xpHealths[i]!=0) {
                     character.health += character.xpHealths[i]
-                    health.setTextColor(Color.GREEN)
+                    health.setTextColor(resources.getColor(R.color.dice_green))
                 }
                 if(character.xpEndurances[i]!=0) {
                     character.endurance += character.xpEndurances[i]
-                    endurance.setTextColor(Color.GREEN)
+                    endurance.setTextColor(resources.getColor(R.color.dice_green))
                 }
                 if(character.xpSpeeds[i]!=0) {
                     character.speed += character.xpSpeeds[i]
-                    speed.setTextColor(Color.GREEN)
+                    speed.setTextColor(resources.getColor(R.color.dice_green))
                 }
             }
         }
         if(isWounded){
             character.endurance--
-            endurance.setTextColor(Color.RED)
+            endurance.setTextColor(resources.getColor(R.color.dice_red))
             character.speed--
-            speed.setTextColor(Color.RED)
+            speed.setTextColor(resources.getColor(R.color.dice_red))
         }
 
         health.setText("" + character.health);
@@ -1116,14 +1117,14 @@ class Character_view : AppCompatActivity() {
         killCounts.add(villain_count)
         villain_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_villian))
-            assistDialog!!.assist_button.setTag(villain)
+            assistDialog!!.unwound_button.setTag(villain)
             assistDialog!!.show()
             true
         }
         killCounts.add(leader_count)
         leader_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_leader))
-            assistDialog!!.assist_button.setTag(leader)
+            assistDialog!!.unwound_button.setTag(leader)
             assistDialog!!.show()
             true
         }
@@ -1135,35 +1136,35 @@ class Character_view : AppCompatActivity() {
                         .icon_vehicle
                 )
             )
-            assistDialog!!.assist_button.setTag(vehicle)
+            assistDialog!!.unwound_button.setTag(vehicle)
             assistDialog!!.show()
             true
         }
         killCounts.add(creature_count)
         creature_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_creature))
-            assistDialog!!.assist_button.setTag(creature)
+            assistDialog!!.unwound_button.setTag(creature)
             assistDialog!!.show()
             true
         }
         killCounts.add(guard_count)
         guard_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_gaurd))
-            assistDialog!!.assist_button.setTag(guard)
+            assistDialog!!.unwound_button.setTag(guard)
             assistDialog!!.show()
             true
         }
         killCounts.add(droid_count)
         droid_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_droid))
-            assistDialog!!.assist_button.setTag(droid)
+            assistDialog!!.unwound_button.setTag(droid)
             assistDialog!!.show()
             true
         }
         killCounts.add(scum_count)
         scum_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_scum))
-            assistDialog!!.assist_button.setTag(scum)
+            assistDialog!!.unwound_button.setTag(scum)
             assistDialog!!.show()
             true
         }
@@ -1175,7 +1176,7 @@ class Character_view : AppCompatActivity() {
                         .icon_trooper
                 )
             )
-            assistDialog!!.assist_button.setTag(trooper)
+            assistDialog!!.unwound_button.setTag(trooper)
             assistDialog!!.show()
             true
         }
@@ -1459,7 +1460,7 @@ class Character_view : AppCompatActivity() {
     var creditsScreen:Dialog? = null
     var settingsScreen:Dialog? = null
     var statsScreen:Dialog? = null
-    var xpSelectScreen:Dialog?=null
+    var xpSelectScreen: Dialog?=null
 
     fun initDialogs(){
         restDialog = Dialog(this)
@@ -1468,6 +1469,10 @@ class Character_view : AppCompatActivity() {
         restDialog!!.setContentView(R.layout.dialog_rest)
         restDialog!!.setCanceledOnTouchOutside(true)
         restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        restDialog!!.rest_button.setOnClickListener {
+            onRest( restDialog!!.rest_button)
+            true
+        }
 
         unwoundDialog = Dialog(this)
         unwoundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1475,6 +1480,10 @@ class Character_view : AppCompatActivity() {
         unwoundDialog!!.setContentView(R.layout.dialog_unwound)
         unwoundDialog!!.setCanceledOnTouchOutside(true)
         unwoundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        unwoundDialog!!.unwound_button.setOnClickListener {
+            onUnwound( unwoundDialog!!.unwound_button)
+            true
+        }
 
         conditionsDialog = Dialog(this)
         conditionsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1570,6 +1579,10 @@ class Character_view : AppCompatActivity() {
         assistDialog!!.setContentView(R.layout.dialog_assist)
         assistDialog!!.setCanceledOnTouchOutside(true)
         assistDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        assistDialog!!.unwound_button.setOnClickListener {
+            onAssist(assistDialog!!.unwound_button)
+            true
+        }
 
         bioDialog = Dialog(this)
         bioDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1577,6 +1590,10 @@ class Character_view : AppCompatActivity() {
         bioDialog!!.setContentView(R.layout.dialog_bio)
         bioDialog!!.setCanceledOnTouchOutside(true)
         bioDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        bioDialog!!.bio_layout.setOnClickListener{
+            bioDialog!!.cancel()
+            true
+        }
 
         saveDialog = Dialog(this)
         saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1620,7 +1637,11 @@ class Character_view : AppCompatActivity() {
         xpSelectScreen!!.setCancelable(false)
         xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
         xpSelectScreen!!.setCanceledOnTouchOutside(true)
+
+
     }
+
+
     //endregion
     //************************************************************************************************************
     //region Stats Screen
