@@ -18,12 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"
             android:layout_marginEnd="25dp"
+            android:layout_marginBottom="25dp"
             android:background="@drawable/item_screen_tabs"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem5"
@@ -42,7 +42,7 @@
                 android:id="@+id/tabItem3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:icon="@drawable/icon_droid" />
+                android:icon="@drawable/item_accessory" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem2"
@@ -62,27 +62,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/tab_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tab_layout">
+            app:layout_constraintTop_toTopOf="parent">
 
         </androidx.viewpager.widget.ViewPager>
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:background="#00FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/button_back" />
-
         <FrameLayout
+            android:id="@+id/frameLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/screen_background"
