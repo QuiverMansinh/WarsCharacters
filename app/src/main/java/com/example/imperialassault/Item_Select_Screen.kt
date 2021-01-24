@@ -22,6 +22,7 @@ class Item_Select_Screen : AppCompatActivity() {
         val adapter = MyAdapter(this, supportFragmentManager,tab_layout.tabCount)
         pager.adapter = adapter
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
+
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {
