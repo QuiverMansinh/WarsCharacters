@@ -28,12 +28,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="biv"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +63,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="gaarkhan"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,7 +93,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="mak"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,7 +124,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="saska"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -155,7 +155,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="davith"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -186,7 +186,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="gideon"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -216,7 +216,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="mhd19"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -246,7 +246,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="shyla"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -276,7 +276,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="diala"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -306,7 +306,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="jyn"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -336,7 +336,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="murne"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -366,7 +366,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="verena"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -396,7 +396,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="fenn"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -426,7 +426,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="loku"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -456,7 +456,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="onar"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -486,7 +486,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="vinto"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -516,7 +516,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="kotun"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -546,7 +546,7 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="jarrod"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -577,7 +577,7 @@
                 android:onClick="onSelect"
                 android:tag="drokkatta"
                 android:visibility="visible"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -608,7 +608,7 @@
                 android:onClick="onSelect"
                 android:tag="ct1701"
                 android:visibility="visible"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -643,7 +643,7 @@
                 android:onClick="onSelect"
                 android:tag="tress"
                 android:visibility="visible"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

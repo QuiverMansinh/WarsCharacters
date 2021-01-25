@@ -19,10 +19,17 @@ class Item_Select_Screen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item__select__screen)
+
         val adapter = MyAdapter(this, supportFragmentManager,tab_layout.tabCount)
         pager.adapter = adapter
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-
+        when(intent.getStringExtra("tab")){
+            "range" -> {pager.setCurrentItem(4)}
+            "melee" -> {pager.setCurrentItem(3)}
+            "accessory" -> {pager.setCurrentItem(2)}
+            "armour" -> {pager.setCurrentItem(1)}
+            "reward" -> {pager.setCurrentItem(0)}
+        }
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {

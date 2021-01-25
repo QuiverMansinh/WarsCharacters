@@ -75,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t1_bactapump" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -92,7 +92,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t1_combatvembrace" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -109,7 +109,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t1_emergancyinjector" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -133,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t1_portablemedkit" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -150,7 +150,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t1_survivalgear" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -207,7 +207,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t2_cyberneticarm" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -224,7 +224,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t2_extraammunition" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -241,7 +241,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t2_mandalorianhelmet" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -265,7 +265,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t2_r5_astromech" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -282,7 +282,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t2_slicingtools" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -339,7 +339,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_combatknife" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -356,7 +356,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_combatvisor" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -373,7 +373,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_concussiongrenades" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -397,7 +397,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_hiddenblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -414,7 +414,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_personalshield" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -431,7 +431,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_powercharger" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -456,7 +456,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_reinforcedhelmet" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -473,7 +473,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/border" />
+                            app:srcCompat="@drawable/acc_t3_supplypack" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
