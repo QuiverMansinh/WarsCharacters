@@ -1015,8 +1015,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.79" />
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintVertical_bias="0.8" />
 
         <TextView
             android:id="@+id/health"
@@ -1052,7 +1052,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
-            app:layout_constraintVertical_bias="0.79" />
+            app:layout_constraintVertical_bias="0.8" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/defence_wrapper"
@@ -1090,10 +1090,12 @@
                 android:id="@+id/insight_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/name"
                 app:layout_constraintStart_toStartOf="@+id/name"
                 app:layout_constraintTop_toBottomOf="@+id/name"
+                app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/insight" />
 
 
@@ -1110,21 +1112,21 @@
                     android:id="@+id/insight1"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/insight2"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/insight3"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice" />
             </LinearLayout>
 
@@ -1133,7 +1135,7 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/agency_fb"
                 android:text="Mak Eshka'rey"
                 android:textColor="@color/black"
@@ -1157,7 +1159,7 @@
                     android:id="@+id/strength1"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     android:visibility="visible"
                     app:srcCompat="@drawable/dice" />
 
@@ -1165,7 +1167,7 @@
                     android:id="@+id/strength2"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice"
                     tools:visibility="visible" />
 
@@ -1173,7 +1175,7 @@
                     android:id="@+id/strength3"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice" />
             </LinearLayout>
 
@@ -1202,21 +1204,21 @@
                     android:id="@+id/tech1"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/tech2"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice" />
 
                 <ImageView
                     android:id="@+id/tech3"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:background="@drawable/stat_box"
+                    android:background="@drawable/dice_box"
                     app:srcCompat="@drawable/dice" />
             </LinearLayout>
 

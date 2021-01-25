@@ -150,14 +150,8 @@ class Character_view : AppCompatActivity(){
 
 
         when (character.defence_dice) {
-            "white" -> ImageViewCompat.setImageTintList(
-                defence,
-                ColorStateList.valueOf(Color.WHITE)
-            )
-            "black" -> ImageViewCompat.setImageTintList(
-                defence,
-                ColorStateList.valueOf(Color.BLACK)
-            )
+            "white" -> defence.setImageDrawable(resources.getDrawable(R.drawable.dice))
+            "black" -> defence.setImageDrawable(resources.getDrawable(R.drawable.dice_black))
             "" -> defence.visibility = View.INVISIBLE
 
         }
@@ -197,39 +191,11 @@ class Character_view : AppCompatActivity(){
     fun setDiceColor(dice: ImageView, color: Char) {
         dice.visibility = ImageView.VISIBLE
         when(color){
-            'B' -> ImageViewCompat.setImageTintList(
-                dice, ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.dice_blue
-                    )
-                )
-            )
-            'G' -> ImageViewCompat.setImageTintList(
-                dice, ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.dice_green
-                    )
-                )
-            )
-            'Y' -> ImageViewCompat.setImageTintList(
-                dice, ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.dice_yellow
-                    )
-                )
-            )
-            'R' -> ImageViewCompat.setImageTintList(
-                dice, ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.dice_red
-                    )
-                )
-            )
-            ' ' -> dice.visibility = ImageView.GONE
+            'B' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_blue))
+            'G' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_green))
+            'Y' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_yellow))
+            'R' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_red))
+            ' ' ->  ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(Color.argb(0,0,0,0)))
         }
     }
 
