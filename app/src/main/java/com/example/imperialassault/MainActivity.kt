@@ -10,8 +10,10 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
@@ -19,28 +21,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        newButton.setOnClickListener({
-            startActivity(Intent(this,Characters_list::class.java))
-        })
-        loadButton.setOnClickListener({
-            startActivity(Intent(this,LoadScreen::class.java))
-        })
+        newButton.setOnClickListener {
+            startActivity(Intent(this, Characters_list::class.java))
+        }
+        loadButton.setOnClickListener {
+            startActivity(Intent(this, LoadScreen::class.java))
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        blastAnim = createAnimation("blast")
-        impactAnim = createAnimation("impact")
-        sliceAnim = createAnimation("slice")
-        restAnim = createAnimation("rest")
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        if(selectedCharacter!=null) {
+            wipeSelectedCharacter()
+        }
+
+        if(blastAnim == null) {
+            blastAnim = createAnimation("blast")
+        }
+        if(impactAnim == null) {
+            impactAnim = createAnimation("impact")
+        }
+        if(sliceAnim == null) {
+            sliceAnim = createAnimation("slice")
+        }
+        if(restAnim == null) {
+            restAnim = createAnimation("rest")
+        }
 
     }
     companion object{
         var selectedCharacter:Character? = null
-        var blastAnim: AnimationDrawable = AnimationDrawable()
-        var impactAnim : AnimationDrawable = AnimationDrawable()
-        var restAnim: AnimationDrawable = AnimationDrawable()
-        var sliceAnim: AnimationDrawable = AnimationDrawable()
+        var blastAnim: AnimationDrawable? = null
+        var impactAnim : AnimationDrawable? = null
+        var restAnim: AnimationDrawable? = null
+        var sliceAnim: AnimationDrawable? = null
 
+        var data:List<CharacterData>? = null
     }
 
     fun createAnimation(type: String): AnimationDrawable{
@@ -102,6 +117,7 @@ class MainActivity : AppCompatActivity() {
                 println("next size" + i)
             } catch (e: Exception) {
                 e.printStackTrace()
+                break
             }
         }
 
@@ -112,31 +128,24 @@ class MainActivity : AppCompatActivity() {
         }
         return bitmap
     }
-//    override fun onWindowFocusChanged(hasFocus: Boolean) {
-//        super.onWindowFocusChanged(hasFocus)
-//        if (hasFocus) hideSystemUI()
-//    }
-//
-//    private fun hideSystemUI() {
-//        // Enables regular immersive mode.
-//        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-//        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
-//                // Set the content to appear under the system bars so that the
-//                // content doesn't resize when the system bars hide and show.
-//                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                // Hide the nav bar and status bar
-//                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                or View.SYSTEM_UI_FLAG_FULLSCREEN)
-//    }
-//
-//    // Shows the system bars by removing all the flags
-//// except for the ones that make the content appear under the system bars.
-//    private fun showSystemUI() {
-//        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-//    }
+
+    fun wipeSelectedCharacter(){
+
+        selectedCharacter!!.currentImage!!.recycle()
+        for (i in 0..8) {
+            if (MainActivity.selectedCharacter!!.xpCardImages[i] != null) {
+                selectedCharacter!!.xpCardImages!![i].recycle()
+            }
+
+        }
+        if (selectedCharacter!!.power != null) {
+            selectedCharacter!!.power!!.recycle()
+            selectedCharacter!!.power_wounded!!.recycle()
+        }
+        if (selectedCharacter!!.portraitImage != null) {
+            selectedCharacter!!.portraitImage = null
+        }
+        selectedCharacter = null
+    }
+
 }

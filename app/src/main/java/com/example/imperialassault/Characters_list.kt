@@ -64,30 +64,32 @@ class Characters_list : AppCompatActivity() {
     }
 
     fun onSelect(view: View) {
-        //Clean up previous character
-        if (MainActivity.selectedCharacter != null) {
-            MainActivity.selectedCharacter!!.currentImage!!.recycle()
-            for (i in 0..8) {
-                if (MainActivity.selectedCharacter!!.xpCardImages[i] != null) {
-                    MainActivity.selectedCharacter!!.xpCardImages!![i].recycle()
-                }
-
-            }
-            if (MainActivity.selectedCharacter!!.power != null) {
-                MainActivity.selectedCharacter!!.power!!.recycle()
-                MainActivity.selectedCharacter!!.power_wounded!!.recycle()
-            }
-            if (MainActivity.selectedCharacter!!.portraitImage != null) {
-                val portraitImage = (MainActivity.selectedCharacter!!.portraitImage) as BitmapDrawable
-                portraitImage.bitmap.recycle()
-                MainActivity.selectedCharacter!!.portraitImage = null
-            }
-            MainActivity.selectedCharacter = null
+        if(MainActivity.selectedCharacter != null) {
+            wipeSelectedCharacter()
         }
         val intent = Intent(this, Character_view::class.java)
         intent.putExtra("CharacterName", view.tag.toString())
         intent.putExtra("Load", false)
         startActivity(intent);
+        finish()
     }
 
+    fun wipeSelectedCharacter(){
+
+        MainActivity.selectedCharacter!!.currentImage!!.recycle()
+        for (i in 0..8) {
+            if (MainActivity.selectedCharacter!!.xpCardImages[i] != null) {
+                MainActivity.selectedCharacter!!.xpCardImages!![i].recycle()
+            }
+
+        }
+        if (MainActivity.selectedCharacter!!.power != null) {
+            MainActivity.selectedCharacter!!.power!!.recycle()
+            MainActivity.selectedCharacter!!.power_wounded!!.recycle()
+        }
+        if (MainActivity.selectedCharacter!!.portraitImage != null) {
+            MainActivity.selectedCharacter!!.portraitImage = null
+        }
+        MainActivity.selectedCharacter = null
+    }
 }

@@ -8,8 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/Theme.ImperialAssault">
+
+
         <activity android:name=".LoadScreen"></activity>
+
         <activity
             android:name=".Item_Select_Screen"
             android:label="@string/title_activity_item__select__screen"

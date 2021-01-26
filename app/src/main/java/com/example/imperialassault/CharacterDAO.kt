@@ -10,11 +10,14 @@ interface CharacterDAO {
     @Query("SELECT * FROM characterdata WHERE id IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<CharacterData>
 
-    @Query("SELECT * FROM characterdata WHERE fileName LIKE :fileName")
-    fun findByName(fileName:String): CharacterData
+    @Query("SELECT * FROM characterdata WHERE fileName LIKE :fileName AND characterName LIKE :characterName")
+    fun loadAllByName(fileName:String,characterName:String): List<CharacterData>
 
     @Insert
     fun insertAll(vararg fileName: CharacterData)
+
+    @Insert
+    fun insert(fileName: CharacterData):Long
 
     @Delete
     fun delete(user: CharacterData)

@@ -2,6 +2,9 @@ package com.example.imperialassault
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,46 +14,47 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import kotlinx.android.synthetic.main.activity_load_screen.*
 
 import kotlinx.coroutines.launch
 
 
 class LoadScreen : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_load_screen)
         val database = AppDatabase.getInstance(this)
-
-
-        var data:List<CharacterData>? = null
-
-            lifecycleScope.launch {
-                data = database!!.getCharacterDAO().getAll()
-                println(data)
-                listSaveFiles(data)
-            }
-
+        lifecycleScope.launch {
+            MainActivity.data = database!!.getCharacterDAO().getAll()
+        }
+        listSaveFiles(MainActivity.data)
     }
+
     private lateinit var listView:ListView
 
-
+    var fileNames = ArrayList<String?>()
     var loadedCharacters = ArrayList<Character>()
+    var adapter:ArrayAdapter<String>? = null
+
     fun listSaveFiles(data : List<CharacterData>?){
         listView = findViewById<ListView>(R.id.load_screen_list)
         listView.divider = null
         listView.dividerHeight = 0
         if( data != null) {
-            var fileNames = ArrayList<String?>()
+
 
             for(i in 0..data.size-1){
                 fileNames.add(data[i].fileName)
                 val character = selectCharacter(data[i].characterName)
+
                 loadedCharacters.add(character)
+                loadedCharacters[i].loadPortraitImage(this)
             }
             fileNames.add("")
             loadedCharacters.add(Character())
 
-            val adapter = SaveFileAdapter(this,fileNames, loadedCharacters)
+            adapter = LoadFileAdapter(this,fileNames, loadedCharacters)
             listView.adapter= adapter
 
 
@@ -142,16 +146,62 @@ class LoadScreen : AppCompatActivity() {
 
 
                     val intent = Intent(this, Character_view::class.java)
+
+                    /*
+                    for(i in 0..loadedCharacters.size-1){
+                        if(i != position){
+                            if(loadedCharacters[i].portraitImage!=null) {
+                                var image: BitmapDrawable =
+                                    loadedCharacters[i].portraitImage as BitmapDrawable
+                                image.getBitmap().recycle();
+                            }
+                            loadedCharacters[i].portraitImage = null
+                        }
+
+                    }
+
+                    adapter!!.notifyDataSetChanged()
+*/
                     intent.putExtra("CharacterName", loadedCharacters[position].name_short)
                     intent.putExtra("Load", true)
                     startActivity(intent);
                     finish()
                 }
             }
+            listView.setOnItemLongClickListener{parent, view, position, id ->
+                //fileNames.removeAt(position)
+                //loadedCharacters.removeAt(position)
+                edit_load_file.visibility = View.VISIBLE
+                edit_load_file_name.setText(""+fileNames[position])
+                edit_load_file_name.requestFocus()
+                positionEditing = position
+                true
+            }
+
         }
 
-
     }
+
+    var positionEditing = -1
+    fun onApply(view:View){
+        fileNames[positionEditing] =  edit_load_file_name.text.toString()
+        adapter!!.notifyDataSetChanged()
+        //TODO update database
+
+
+        edit_load_file.visibility = View.INVISIBLE
+    }
+    fun onDelete(view:View){
+        fileNames.removeAt(positionEditing)
+        loadedCharacters.removeAt(positionEditing)
+        //TODO delete from database
+        val database = AppDatabase.getInstance(this)
+        database!!.getCharacterDAO().delete(MainActivity.data!![positionEditing])
+        adapter!!.notifyDataSetChanged()
+        edit_load_file.visibility = View.INVISIBLE
+    }
+
+
     fun selectCharacter(characterName : String?):Character{
         var character = Character();
         when (characterName) {
@@ -180,13 +230,16 @@ class LoadScreen : AppCompatActivity() {
         }
         return character
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }
 
-class SaveFileAdapter(val context: Activity, val fileNames : ArrayList<String?>, val characters
+class LoadFileAdapter(val context: Activity, val fileNames : ArrayList<String?>, val characters
 :ArrayList<Character>)
-    :ArrayAdapter<String>(context,R.layout.save_load_item,fileNames){
-    override fun getView(position: Int, view: View?, parent:ViewGroup):View{
+    : ArrayAdapter<String>(context,R.layout.save_load_item,fileNames){
+    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
         val button = inflater.inflate(R.layout.save_load_item, null, true)
         if(position < fileNames.size-1) {
@@ -194,6 +247,7 @@ class SaveFileAdapter(val context: Activity, val fileNames : ArrayList<String?>,
             saveNameText.text = fileNames[position]
 
             val saveCharacterImage = button.findViewById(R.id.save_file_image) as ImageView
+
             saveCharacterImage.setImageDrawable(characters[position].portraitImage)
         }
         else{
@@ -202,3 +256,4 @@ class SaveFileAdapter(val context: Activity, val fileNames : ArrayList<String?>,
         return button
     }
 }
+

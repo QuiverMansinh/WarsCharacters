@@ -128,17 +128,6 @@ open class Character {
         currentImage = image
     }
 
-    /*
-    open fun loadTierImages(context: Context){
-        val images = java.util.ArrayList<Bitmap?>()
-        for (i in 0..3) {
-            val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i + "image.png")
-            images.add(image)
-        }
-        tierImages = images
-    }
-*/
-
     open fun loadXPCardImages(context: Context){
         val images = java.util.ArrayList<Bitmap>()
         for (i in 1..9) {
