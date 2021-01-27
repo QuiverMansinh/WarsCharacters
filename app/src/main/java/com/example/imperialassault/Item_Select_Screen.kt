@@ -1,5 +1,6 @@
 package com.example.imperialassault
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_item__select__screen.*
+import kotlinx.android.synthetic.main.list_item.view.*
 import kotlinx.android.synthetic.main.rewards_fragment.*
 import kotlinx.android.synthetic.main.rewards_fragment2.*
 
@@ -65,7 +67,7 @@ internal class MyAdapter(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
-                Rewards()
+                Rewards(context as Activity)
             }1 -> {
                 Armor()
             }2 -> {
@@ -83,7 +85,7 @@ internal class MyAdapter(
     }
 }
 
-class Rewards : Fragment(){
+class Rewards constructor(var context: Activity) : Fragment(){
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -91,7 +93,7 @@ class Rewards : Fragment(){
     ): View? {
         val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(inflater.context)
+        rewardsgrid.adapter = ImageAdapter(context)
         return rewardsView
     }
 }
@@ -136,10 +138,10 @@ class Ranged : Fragment(){
     }
 }
 
-class ImageAdapter internal constructor(private val mContext: Context) : BaseAdapter() {
+class ImageAdapter internal constructor(val mContext: Activity) : BaseAdapter() {
 
     // References to our images
-    private val mThumbIds = arrayOf(
+    val mThumbIds = arrayOf(
         R.drawable.reward1,
         R.drawable.reward2,
         R.drawable.reward3,
@@ -181,17 +183,18 @@ class ImageAdapter internal constructor(private val mContext: Context) : BaseAda
 
     // Create a new ImageView for each item referenced by the Adapter
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val imageView: ImageView
+        var imageView: ImageView
+        var gridItem: View
+
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
-            imageView = ImageView(mContext)
-            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            val inflater = mContext.layoutInflater
+            gridItem = inflater.inflate(R.layout.list_item, null, true)
+            gridItem.reward1.setImageResource(mThumbIds[position])
         } else {
-            imageView = (convertView as ImageView?)!!
+            gridItem = (convertView as View?)!!
         }
-
-        imageView.setImageResource(mThumbIds[position])
-        return imageView
+        return gridItem
     }
 }
 
