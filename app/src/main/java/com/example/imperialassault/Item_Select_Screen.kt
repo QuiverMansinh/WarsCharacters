@@ -5,14 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_item__select__screen.*
+import kotlinx.android.synthetic.main.rewards_fragment.*
+import kotlinx.android.synthetic.main.rewards_fragment2.*
 
 class Item_Select_Screen : AppCompatActivity() {
 
@@ -82,7 +89,10 @@ class Rewards : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.rewards_fragment,container,false)
+        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
+        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
+        rewardsgrid.adapter = ImageAdapter(inflater.context)
+        return rewardsView
     }
 }
 
@@ -125,3 +135,65 @@ class Ranged : Fragment(){
         return inflater.inflate(R.layout.ranged_fragment,container,false)
     }
 }
+
+class ImageAdapter internal constructor(private val mContext: Context) : BaseAdapter() {
+
+    // References to our images
+    private val mThumbIds = arrayOf(
+        R.drawable.reward1,
+        R.drawable.reward2,
+        R.drawable.reward3,
+        R.drawable.reward4,
+        R.drawable.reward5,
+        R.drawable.reward6,
+        R.drawable.reward7,
+        R.drawable.reward8,
+        R.drawable.reward9,
+        R.drawable.reward10,
+        R.drawable.reward11,
+        R.drawable.reward12,
+        R.drawable.reward13,
+        R.drawable.reward14,
+        R.drawable.reward15,
+        R.drawable.reward16,
+        R.drawable.reward17,
+        R.drawable.reward18,
+        R.drawable.reward19,
+        R.drawable.reward20,
+        R.drawable.reward21,
+        R.drawable.reward22,
+        R.drawable.reward23,
+        R.drawable.reward24,
+        R.drawable.reward25,
+    )
+    override fun getCount(): Int {
+        return mThumbIds.size
+    }
+
+    override fun getItem(position: Int): Any? {
+        return null
+    }
+
+    override fun getItemId(position: Int): Long {
+        return 0
+    }
+
+
+    // Create a new ImageView for each item referenced by the Adapter
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val imageView: ImageView
+        if (convertView == null) {
+            // if it's not recycled, initialize some attributes
+            imageView = ImageView(mContext)
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        } else {
+            imageView = (convertView as ImageView?)!!
+        }
+
+        imageView.setImageResource(mThumbIds[position])
+        return imageView
+    }
+}
+
+
+

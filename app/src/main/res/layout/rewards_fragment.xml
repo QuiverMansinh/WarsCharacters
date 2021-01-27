@@ -46,6 +46,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -63,6 +64,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -80,6 +82,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -91,7 +94,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -105,6 +107,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -122,6 +125,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -139,6 +143,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -163,6 +168,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -180,6 +186,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -197,7 +204,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/imageView23"
+                            android:id="@+id/reward9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -222,6 +229,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -239,6 +247,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -256,6 +265,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -280,6 +290,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward13"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -297,6 +308,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -314,7 +326,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/imageView24"
+                            android:id="@+id/reward15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -339,6 +351,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward16"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -356,6 +369,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward17"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -373,6 +387,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward18"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -397,6 +412,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward19"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -414,6 +430,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -431,6 +448,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward21"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
@@ -456,6 +474,7 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/reward22"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
