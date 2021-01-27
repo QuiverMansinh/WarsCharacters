@@ -104,10 +104,7 @@ class Drones : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity)
-        return rewardsView
+        return inflater.inflate(R.layout.drones_fragment,container,false)
     }
 }
 
@@ -117,10 +114,7 @@ class Armor : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity)
-        return rewardsView
+        return inflater.inflate(R.layout.armor_fragment,container,false)
     }
 }
 
@@ -130,10 +124,7 @@ class Melee : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity)
-        return rewardsView
+        return inflater.inflate(R.layout.melee_fragment,container,false)
     }
 }
 
@@ -143,10 +134,7 @@ class Ranged : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity)
-        return rewardsView
+        return inflater.inflate(R.layout.ranged_fragment,container,false)
     }
 }
 
