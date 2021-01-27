@@ -21,6 +21,7 @@ import androidx.core.widget.ImageViewCompat
 import kotlinx.android.synthetic.main.activity_character_view.*
 
 import kotlinx.android.synthetic.main.dialog_assist.*
+import kotlinx.android.synthetic.main.dialog_background.*
 import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_options.*
@@ -1578,6 +1579,18 @@ class Character_view : AppCompatActivity(){
         backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
         //TODO setOnClickListenters backgrounds
+        backgroundDialog!!.desert_background.setOnClickListener{
+            onBackgroundDesert(backgroundDialog!!.desert_background)
+        }
+        backgroundDialog!!.snow_background.setOnClickListener{
+            onBackgroundSnow(backgroundDialog!!.snow_background)
+        }
+        backgroundDialog!!.jungle_background.setOnClickListener{
+            onBackgroundJungle(backgroundDialog!!.jungle_background)
+        }
+        backgroundDialog!!.interior_background.setOnClickListener{
+            onBackgroundInterior(backgroundDialog!!.interior_background)
+        }
 
         settingsScreen= Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         settingsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
