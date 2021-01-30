@@ -46,12 +46,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward1"
+                            android:id="@+id/rew1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward1" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -64,12 +64,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward2"
+                            android:id="@+id/rew2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward2" />
+                            app:srcCompat="@drawable/mel_t1_vibroblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -82,12 +82,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward3"
+                            android:id="@+id/rew3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward3" />
+                            app:srcCompat="@drawable/mel_t1_vibroknife" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -107,12 +107,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward4"
+                            android:id="@+id/rew4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward4" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -125,12 +125,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward5"
+                            android:id="@+id/rew5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward5" />
+                            app:srcCompat="@drawable/mel_t1_vibroblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -143,12 +143,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward6"
+                            android:id="@+id/rew6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward6" />
+                            app:srcCompat="@drawable/mel_t1_vibroknife" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -168,12 +168,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward7"
+                            android:id="@+id/rew7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward7" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -186,12 +186,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward8"
+                            android:id="@+id/rew8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward8" />
+                            app:srcCompat="@drawable/mel_t1_vibroblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -204,12 +204,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward9"
+                            android:id="@+id/rew9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward9" />
+                            app:srcCompat="@drawable/mel_t1_vibroknife" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -229,12 +229,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward10"
+                            android:id="@+id/rew10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward10" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -247,12 +247,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward11"
+                            android:id="@+id/rew11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward11" />
+                            app:srcCompat="@drawable/mel_t1_vibroblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -265,12 +265,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward12"
+                            android:id="@+id/rew12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward12" />
+                            app:srcCompat="@drawable/mel_t1_vibroknife" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -290,12 +290,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward13"
+                            android:id="@+id/rew13"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward13" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -308,12 +308,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward14"
+                            android:id="@+id/rew14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward14" />
+                            app:srcCompat="@drawable/mel_t1_vibroblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -326,12 +326,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward15"
+                            android:id="@+id/rew15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward15" />
+                            app:srcCompat="@drawable/mel_t1_vibroknife" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -351,12 +351,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward16"
+                            android:id="@+id/rew16"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward16" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -369,12 +369,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward17"
+                            android:id="@+id/rew17"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward17" />
+                            app:srcCompat="@drawable/mel_t1_vibroblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -387,12 +387,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward18"
+                            android:id="@+id/rew18"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward18" />
+                            app:srcCompat="@drawable/mel_t1_vibroknife" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -412,12 +412,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward19"
+                            android:id="@+id/rew19"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward19" />
+                            app:srcCompat="@drawable/_1mel_t1_heroweapon" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -430,12 +430,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward20"
+                            android:id="@+id/rew20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward20" />
+                            app:srcCompat="@drawable/mel_t1_armoredgauntlets" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -448,19 +448,18 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward21"
+                            android:id="@+id/rew21"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward21" />
+                            app:srcCompat="@drawable/mel_t1_gaffistick" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -474,12 +473,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
-                            android:id="@+id/reward22"
+                            android:id="@+id/rew22"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward22" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -492,11 +491,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/rew23"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward23" />
+                            app:srcCompat="@drawable/mel_t1_vibroblade" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -506,21 +506,21 @@
                         android:layout_weight="1"
                         android:background="@drawable/border"
                         app:cardCornerRadius="10dp"
-                        app:cardElevation="3dp" >
+                        app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/rew24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward24" />
+                            app:srcCompat="@drawable/mel_t1_vibroknife" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -534,11 +534,12 @@
                         app:cardElevation="3dp">
 
                         <ImageView
+                            android:id="@+id/rew25"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/reward25" />
+                            app:srcCompat="@drawable/mel_t1_punchdagger" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
