@@ -1,11 +1,16 @@
 package com.example.imperialassault
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +19,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_item__select__screen.*
+import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class Item_Select_Screen : AppCompatActivity() {
@@ -32,6 +38,19 @@ class Item_Select_Screen : AppCompatActivity() {
             "armour" -> {pager.setCurrentItem(1)}
             "reward" -> {pager.setCurrentItem(0)}
         }
+
+        showCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        showCardDialog!!.setContentView(R.layout.dialog_show_card)
+        showCardDialog!!.setCancelable(false)
+        showCardDialog!!.setCanceledOnTouchOutside(true)
+        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        showCardDialog!!.show_card_dialog.setOnClickListener {
+            showCardDialog!!.cancel()
+            true
+        }
+
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {
@@ -359,6 +378,10 @@ ArrayList<Int>) :
         if (imageArray[position] > 0){
             gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
             gridItem.item.setImageResource(imageArray[position])
+                gridItem.setOnLongClickListener {
+                    onShowCard(gridItem.item)
+                    true
+                }
         }else if (imageArray[position] == -1){
             gridItem = mContext.layoutInflater.inflate(R.layout.tier1_title, null, true)
         }else if (imageArray[position] == -2){
@@ -385,4 +408,12 @@ ArrayList<Int>,val activity: Fragment ,val fragment: View) {
                 .into(fragment.findViewById(idArrayList[i]))
         }
     }
+}
+
+var showCardDialog: Dialog? = null
+
+fun onShowCard(view: ImageView){
+    var image = ((view).drawable as BitmapDrawable).bitmap
+    showCardDialog!!.card_image.setImageBitmap(image)
+    showCardDialog!!.show()
 }
