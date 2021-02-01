@@ -130,9 +130,13 @@ class Rewards constructor() : Fragment(){
             R.drawable.reward24,
             R.drawable.reward25,
         )
+        var itemsOnOff = arrayListOf<Boolean>()
+        for (i in 0..rewardsPathIds.size-1) {
+            itemsOnOff.add(false)
+        }
         val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
     }
 }
@@ -175,9 +179,13 @@ class Drones : Fragment(){
             R.drawable.acc_t3_supplypack,
             -5,
         )
+        var itemsOnOff = arrayListOf<Boolean>()
+        for (i in 0..rewardsPathIds.size-1) {
+            itemsOnOff.add(false)
+        }
         val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
     }
 }
@@ -208,9 +216,13 @@ class Armor : Fragment(){
             R.drawable.arm_t3_laminatearmor,
             R.drawable.arm_t3_plastoidarmor,
         )
+        var itemsOnOff = arrayListOf<Boolean>()
+        for (i in 0..rewardsPathIds.size-1) {
+            itemsOnOff.add(false)
+        }
         val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
     }
 }
@@ -271,9 +283,13 @@ class Melee : Fragment(){
             R.drawable.mod_t3_vibrogenerator,
             -5,
         )
+        var itemsOnOff = arrayListOf<Boolean>()
+        for (i in 0..rewardsPathIds.size-1) {
+            itemsOnOff.add(false)
+        }
         val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
     }
 }
@@ -346,15 +362,19 @@ class Ranged : Fragment(){
             R.drawable.mod_t3_telescopingsights,
             -5,
         )
+        var itemsOnOff = arrayListOf<Boolean>()
+        for (i in 0..rewardsPathIds.size-1) {
+            itemsOnOff.add(false)
+        }
         val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
     }
 }
 
 class ImageAdapter internal constructor(val mContext: Activity, var imageArray:
-ArrayList<Int>) :
+ArrayList<Int>,var itemsToggle: ArrayList<Boolean>) :
     BaseAdapter
     () {
 
@@ -378,10 +398,26 @@ ArrayList<Int>) :
         if (imageArray[position] > 0){
             gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
             gridItem.item.setImageResource(imageArray[position])
+            if (itemsToggle[position] == true){
+                gridItem.item.alpha = 1f
+            }else if (itemsToggle[position] == false){
+                gridItem.item.alpha = 0.5f
+            }
                 gridItem.setOnLongClickListener {
                     onShowCard(gridItem.item)
                     true
                 }
+            gridItem.setOnClickListener{
+                if (itemsToggle[position] == false){
+                    System.out.println("SIZE SIZE SIZE " + itemsToggle[position])
+                    gridItem.item.animate().alpha(1f).duration = 50
+                    itemsToggle[position] = true
+                }else if (itemsToggle[position] == true){
+                    System.out.println("It Works " + itemsToggle[position])
+                    gridItem.item.animate().alpha(0.5f).duration = 50
+                    itemsToggle[position] = false
+                }
+            }
         }else if (imageArray[position] == -1){
             gridItem = mContext.layoutInflater.inflate(R.layout.tier1_title, null, true)
         }else if (imageArray[position] == -2){
