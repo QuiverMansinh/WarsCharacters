@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.*
@@ -171,7 +172,6 @@ class Character_view : AppCompatActivity(){
         setDiceColor(tech2, character.tech[1]);
         setDiceColor(tech3, character.tech[2]);
 
-        character_type.setText(character.type)
 
         updateImages()
         updateStats()
@@ -241,7 +241,7 @@ class Character_view : AppCompatActivity(){
 
         if(character.layer2 != null){
             character_layer2.visibility = View.VISIBLE
-            character_layer2.foreground = BitmapDrawable(resources, character.layer2);
+            character_layer2.setImageBitmap(character.layer2);
         }
         else{
             character_layer2.visibility = View.GONE
@@ -249,7 +249,7 @@ class Character_view : AppCompatActivity(){
 
         if(character.layer1 != null){
             character_layer1.visibility = View.VISIBLE
-            character_layer1.foreground = BitmapDrawable(resources, character.layer1);
+            character_layer1.setImageBitmap(character.layer1);
         }
         else{
             character_layer1.visibility = View.GONE
@@ -265,31 +265,31 @@ class Character_view : AppCompatActivity(){
         character.health= character.health_default
         character.endurance = character.endurance_default
         character.speed = character.speed_default
-        health.setTextColor(Color.BLACK)
-        endurance.setTextColor(Color.BLACK)
-        speed.setTextColor(Color.BLACK)
+        health.setShadowLayer(5f,0f,0f,Color.BLACK)
+        endurance.setShadowLayer(5f,0f,0f,Color.BLACK)
+        speed.setShadowLayer(5f,0f,0f,Color.BLACK)
 
         for(i in 0..character.xpCardsEquipped.size-1){
             if(character.xpCardsEquipped[i]){
                 if(character.xpHealths[i]!=0) {
                     character.health += character.xpHealths[i]
-                    health.setTextColor(resources.getColor(R.color.dice_green))
+                    health.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_green))
                 }
                 if(character.xpEndurances[i]!=0) {
                     character.endurance += character.xpEndurances[i]
-                    endurance.setTextColor(resources.getColor(R.color.dice_green))
+                    endurance.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_green))
                 }
                 if(character.xpSpeeds[i]!=0) {
                     character.speed += character.xpSpeeds[i]
-                    speed.setTextColor(resources.getColor(R.color.dice_green))
+                    speed.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_green))
                 }
             }
         }
         if(isWounded){
             character.endurance--
-            endurance.setTextColor(resources.getColor(R.color.dice_red))
+            endurance.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_red))
             character.speed--
-            speed.setTextColor(resources.getColor(R.color.dice_red))
+            speed.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_red))
         }
 
         health.setText("" + character.health);
@@ -308,6 +308,33 @@ class Character_view : AppCompatActivity(){
     //region Damage and Strain
     //************************************************************************************************************
 
+    fun getNumber(number:Int):Drawable{
+        var numberImage = R.drawable.number_0
+        when(number){
+            1-> numberImage = R.drawable.number_1
+            2-> numberImage = R.drawable.number_2
+            3-> numberImage = R.drawable.number_3
+            4-> numberImage = R.drawable.number_4
+            5-> numberImage = R.drawable.number_5
+            6-> numberImage = R.drawable.number_6
+            7-> numberImage = R.drawable.number_7
+            8-> numberImage = R.drawable.number_8
+            9-> numberImage = R.drawable.number_9
+            10-> numberImage = R.drawable.number_10
+            11-> numberImage = R.drawable.number_11
+            12-> numberImage = R.drawable.number_12
+            13-> numberImage = R.drawable.number_13
+            14-> numberImage = R.drawable.number_14
+            15-> numberImage = R.drawable.number_15
+            16-> numberImage = R.drawable.number_16
+            17-> numberImage = R.drawable.number_17
+            18-> numberImage = R.drawable.number_18
+            19-> numberImage = R.drawable.number_19
+            20-> numberImage = R.drawable.number_20
+        }
+        return resources.getDrawable(numberImage)
+    }
+
     fun onAddStrain(view: View) {
         if(character.strain < character.endurance) {
             character.strain++
@@ -317,8 +344,8 @@ class Character_view : AppCompatActivity(){
                 minus_strain.animate().alpha(1f)
             }
 
-            add_strain.setText("" + character.strain)
-
+            //add_strain.setText("" + character.strain)
+            add_strain.setImageDrawable(getNumber(character.strain))
         }
         else{
             addDamage()
@@ -330,7 +357,8 @@ class Character_view : AppCompatActivity(){
     fun onMinusStrain(view: View) {
         if(character.strain >0) {
             character.strain--
-            add_strain.setText("" + character.strain)
+            //add_strain.setText("" + character.strain)
+            add_strain.setImageDrawable(getNumber(character.strain))
         }
         if(character.strain==0){
             if(minus_strain.alpha>0f){
@@ -358,12 +386,14 @@ class Character_view : AppCompatActivity(){
 
             if(character.damage < character.health) {
 
-                add_damage.setText("" + character.damage)
+                //add_damage.setText("" + character.damage)
+                add_damage.setImageDrawable(getNumber(character.damage))
             }
             else if(character.damage < character.health*2){
 
                 character.wounded = character.damage-character.health
-                add_damage.setText("" + character.wounded)
+                //add_damage.setText("" + character.wounded)
+                add_damage.setImageDrawable(getNumber(character.wounded))
                 if(!isWounded) {
                     wounded.animate().alpha(1f)
 
@@ -389,7 +419,8 @@ class Character_view : AppCompatActivity(){
             else{
                 character.withdrawn = true
                 character.timesWithdrawn++
-                add_damage.setText("" + character.health)
+                //add_damage.setText("" + character.health)
+                add_damage.setImageDrawable(getNumber(character.health))
                 val slide = ObjectAnimator.ofFloat(
                     character_images, "translationY", 0f, 0f,
                     character_image.height.toFloat()
@@ -427,7 +458,8 @@ class Character_view : AppCompatActivity(){
             character.damage--
             character.withdrawn = false
             if(character.damage < character.health) {
-                add_damage.setText("" + character.damage)
+                //add_damage.setText("" + character.damage)
+                add_damage.setImageDrawable(getNumber(character.damage))
                 if(isWounded) {
                     character.wounded = 0
                     wounded.animate().alpha(0f)
@@ -450,7 +482,8 @@ class Character_view : AppCompatActivity(){
             }
             else if(character.damage < character.health*2){
                 character.wounded = character.damage-character.health
-                add_damage.setText("" + character.wounded)
+                //add_damage.setText("" + character.wounded)
+                add_damage.setImageDrawable(getNumber(character.wounded))
                 val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
                 slide.setDuration(500)
                 slide.start()
@@ -467,7 +500,8 @@ class Character_view : AppCompatActivity(){
         playRestAnim()
         character.damage = 0
         character.wounded = 0
-        add_damage.setText("" + character.damage)
+        //add_damage.setText("" + character.damage)
+        add_damage.setImageDrawable(getNumber(character.damage))
         wounded.animate().alpha(0f)
 
         setDiceColor(strength1, character.strength[0]);
@@ -493,11 +527,13 @@ class Character_view : AppCompatActivity(){
             }
 
             if (character.damage < character.health) {
-                add_damage.setText("" + character.damage)
+                //add_damage.setText("" + character.damage)
+                add_damage.setImageDrawable(getNumber(character.damage))
 
             } else {
                 character.wounded = character.damage - character.health
-                add_damage.setText("" + character.wounded)
+                //add_damage.setText("" + character.wounded)
+                add_damage.setImageDrawable(getNumber(character.wounded))
                 wounded.animate().alpha(1f)
 
                 setDiceColor(strength1, character.strengthWounded[0]);
@@ -530,7 +566,8 @@ class Character_view : AppCompatActivity(){
                 minus_strain.animate().alpha(1f)
             }
 
-            add_strain.setText("" + character.strain)
+            //add_strain.setText("" + character.strain)
+            add_strain.setImageDrawable(getNumber(character.strain))
         }
 
         add_damage.setOnLongClickListener {
@@ -731,7 +768,8 @@ class Character_view : AppCompatActivity(){
                 }
                 character.strain = 0;
             }
-            add_strain.setText("" + character.strain)
+            //add_strain.setText("" + character.strain)
+            add_strain.setImageDrawable(getNumber(character.strain))
             playRestAnim()
             character.timesRested++
             restDialog!!.cancel()
@@ -904,7 +942,7 @@ class Character_view : AppCompatActivity(){
         val lp = kill_tracker_bar.layoutParams
         lp.height = menu_bar.height+22
         kill_tracker_bar.layoutParams = lp
-        var h = menu_bar.height.toFloat()+88+44
+        var h = menu_bar.height.toFloat()+88+66
         if(sideMenuState>-1){
             sideMenuState--
             kill_tracker_bar.animate().translationYBy(h)
@@ -937,7 +975,7 @@ class Character_view : AppCompatActivity(){
         val lp = kill_tracker_bar.layoutParams
         lp.height = menu_bar.height+22
         kill_tracker_bar.layoutParams = lp
-        var h = menu_bar.height.toFloat()+88+44
+        var h = menu_bar.height.toFloat()+88+66
         if(sideMenuState<1){
             sideMenuState++
             kill_tracker_bar.animate().translationYBy(-h)
