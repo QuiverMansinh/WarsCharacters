@@ -172,6 +172,8 @@ class Character_view : AppCompatActivity(){
         setDiceColor(tech2, character.tech[1]);
         setDiceColor(tech3, character.tech[2]);
 
+        character_image.setGlowBitmap(getBitmap(this, "characters/" + character.name_short + "/images/glow.png"))
+        character_image.setCamoBitmap(getBitmap(this, "backgrounds/camo_snow.png"))
 
         updateImages()
         updateStats()
@@ -235,6 +237,7 @@ class Character_view : AppCompatActivity(){
     open fun updateImages(){
         character.updateCharacterImages(this)
         character_image.setImageBitmap(character.currentImage)
+
         if(character.layer1OnTop){
             character_layer1.elevation=1f
         }
@@ -1806,6 +1809,7 @@ class Character_view : AppCompatActivity(){
         if(character.currentImage!=null) {
             character.currentImage!!.recycle()
         }
+
         updateImages()
         updateStats()
 

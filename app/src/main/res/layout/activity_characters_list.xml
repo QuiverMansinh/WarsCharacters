@@ -11,9 +11,9 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,14 +28,14 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardBiv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="biv"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,12 +61,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardGaar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="gaarkhan"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,12 +92,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardMak"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="mak"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,12 +124,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardSaska"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="saska"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,12 +156,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardDavith"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="davith"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -188,12 +188,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardGideon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="gideon"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -219,12 +219,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardMHD"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="mhd19"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -250,12 +250,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardShyla"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="shyla"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -281,12 +281,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardDiala"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="diala"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -312,12 +312,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardJyn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="jyn"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -343,12 +343,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardMurne"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="murne"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -374,12 +374,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardVerena"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="verena"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -405,12 +405,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardFenn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="fenn"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -436,12 +436,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardLoku"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="loku"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -467,12 +467,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardOnar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="onar"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -498,12 +498,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardVinto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="vinto"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -529,12 +529,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardKo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="kotun"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -560,12 +560,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardJarrod"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="jarrod"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -591,13 +591,13 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardDrok"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="drokkatta"
                 android:visibility="visible"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -623,13 +623,13 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardCT"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="onSelect"
                 android:tag="ct1701"
                 android:visibility="visible"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -656,7 +656,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardTress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
@@ -664,7 +664,7 @@
                 android:onClick="onSelect"
                 android:tag="tress"
                 android:visibility="visible"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

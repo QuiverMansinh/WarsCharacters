@@ -425,7 +425,7 @@
         app:layout_constraintStart_toStartOf="@+id/background_image"
         app:layout_constraintTop_toTopOf="@+id/background_image">
 
-        <ImageView
+        <com.example.imperialassault.CharacterImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -454,6 +454,17 @@
             android:scaleType="centerCrop"
             android:src="@drawable/character_select_background"
             android:visibility="visible" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/screen_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     </FrameLayout>
 
     <FrameLayout
@@ -497,7 +508,7 @@
         android:id="@+id/kill_tracker_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -815,7 +826,7 @@
         android:id="@+id/menu_bar"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible"
@@ -1311,13 +1322,15 @@
         android:background="@drawable/damage"
         android:onClick="onAddDamage"
         app:layout_constraintBottom_toTopOf="@+id/add_strain"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/add_strain"
+        app:layout_constraintStart_toStartOf="@+id/add_strain"
         app:srcCompat="@drawable/number_0" />
 
     <ImageView
         android:id="@+id/add_strain"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="70dp"
         android:background="@drawable/strain"
         android:onClick="onAddStrain"
@@ -1340,7 +1353,7 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/add_strain"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/add_strain"
         app:layout_constraintTop_toBottomOf="@+id/add_strain" />
 
     <ImageView
@@ -1376,7 +1389,7 @@
         android:layout_width="60dp"
         android:layout_height="44dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         android:onClick="onExtendUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -1386,7 +1399,7 @@
         android:id="@+id/extend_down_button"
         android:layout_width="60dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="85dp"
         android:onClick="onExtendDown"
         app:layout_constraintBottom_toBottomOf="parent"
