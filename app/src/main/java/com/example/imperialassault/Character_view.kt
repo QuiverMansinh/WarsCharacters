@@ -68,6 +68,7 @@ class Character_view : AppCompatActivity(){
         initScreen()
         initAnimations()
         initKillTracker()
+        startSaveTimer()
     }
     //************************************************************************************************************
     //region Main Screen
@@ -1930,7 +1931,20 @@ class Character_view : AppCompatActivity(){
     //************************************************************************************************************
     //region Saving
     //************************************************************************************************************
+    var secondsSinceLastSave = 0
+    val autosaveTIme = 600
 
+    fun startSaveTimer(){
+        GlobalScope.launch{
+            while(secondsSinceLastSave < autosaveTIme){
+                delay(1000)
+                secondsSinceLastSave++
+            }
+            println("TIMED AUTOSAVE")
+            quickSave()
+            startSaveTimer()
+        }
+    }
 
     fun quickSave(){
         val character = MainActivity.selectedCharacter
@@ -1959,6 +1973,7 @@ class Character_view : AppCompatActivity(){
             }
 
         }
+        secondsSinceLastSave = 0
     }
 
     fun firstManualSave() {
@@ -1981,6 +1996,7 @@ class Character_view : AppCompatActivity(){
 
             }
         }
+        secondsSinceLastSave = 0
     }
 
 
@@ -2003,6 +2019,7 @@ class Character_view : AppCompatActivity(){
 
 
         }
+        secondsSinceLastSave = 0
     }
 
     var saving = false
@@ -2031,7 +2048,6 @@ class Character_view : AppCompatActivity(){
         quickSave()
         super.onStop()
         //TODO
-
     }
 
     fun getCharacterData(fileName:String) : CharacterData{
