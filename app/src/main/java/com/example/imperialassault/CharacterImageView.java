@@ -66,7 +66,7 @@ public class CharacterImageView extends View implements Runnable{
         imageScaled = false;
     }
     public void setGlowBitmap(Bitmap bitmap){
-        System.out.println(bitmap);
+        //System.out.println(bitmap);
         glowImage = bitmap;
         glowScaled = false;
         focusedPaint.setColorFilter(new LightingColorFilter(0,Color.rgb(100,255,100)));

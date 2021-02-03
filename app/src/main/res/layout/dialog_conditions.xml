@@ -133,7 +133,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/agency_fb"
                 android:shadowColor="@color/black"
-                android:shadowRadius="5"
+                android:shadowRadius="10"
                 android:text="CONDITIONS"
                 android:textColor="@color/white"
                 android:textSize="30sp"

@@ -31,7 +31,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onAttack"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
+                android:background="@drawable/save_file_back" />
 
             <LinearLayout
                 android:layout_width="180dp"
@@ -105,7 +105,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onMove"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
+                android:background="@drawable/save_file_back" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -149,7 +149,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onRest"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
@@ -158,7 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
+                android:background="@drawable/save_file_back" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -183,7 +183,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onInteract"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
@@ -192,7 +192,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
+                android:background="@drawable/save_file_back" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -217,7 +217,7 @@
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:onClick="onSpecial"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
@@ -226,7 +226,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
+                android:background="@drawable/save_file_back" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -268,8 +268,8 @@
             android:layout_margin="5dp"
             android:onClick="onRemoveStun"
             android:visibility="visible"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="20dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
             app:cardMaxElevation="5dp">
 
             <ImageView
@@ -277,7 +277,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
+                android:background="@drawable/save_file_back" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -328,7 +328,7 @@
             android:layout_margin="5dp"
             android:onClick="onRemoveBleeding"
             android:visibility="visible"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
 
@@ -337,7 +337,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_backgroud" />
+                android:background="@drawable/save_file_back" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

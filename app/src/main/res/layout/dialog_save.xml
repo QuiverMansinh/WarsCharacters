@@ -54,6 +54,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -64,12 +66,13 @@
 
                     <TextView
                         android:id="@+id/cancel_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
+                        android:background="@drawable/save_file_back_2"
                         android:fontFamily="@font/agency_fb"
                         android:gravity="center"
                         android:onClick="onCancelNewSave"
@@ -85,12 +88,13 @@
 
                     <TextView
                         android:id="@+id/save_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
+                        android:background="@drawable/save_file_back_2"
                         android:fontFamily="@font/agency_fb"
                         android:gravity="center"
                         android:onClick="onSaveNewCharacter"

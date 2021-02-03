@@ -15,6 +15,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_load_screen.*
+import kotlinx.android.synthetic.main.save_load_item.view.*
 
 import kotlinx.coroutines.launch
 
@@ -47,14 +48,13 @@ class LoadScreen : AppCompatActivity() {
             for(i in 0..data.size-1){
                 fileNames.add(data[i].fileName)
                 val character = selectCharacter(data[i].characterName)
-
                 loadedCharacters.add(character)
                 loadedCharacters[i].loadPortraitImage(this)
             }
             fileNames.add("")
             loadedCharacters.add(Character())
 
-            adapter = LoadFileAdapter(this,fileNames, loadedCharacters)
+            adapter = LoadFileAdapter(this,fileNames, loadedCharacters, data)
             listView.adapter= adapter
 
 
@@ -62,6 +62,9 @@ class LoadScreen : AppCompatActivity() {
             listView.setOnItemClickListener  { parent, view, position, id ->
                 if(position<listView.count-1) {
                     println("" + data[position])
+                    loadedCharacters[position].file_name = ""+data[position].fileName
+                    loadedCharacters[position].id = data[position].id
+
                     loadedCharacters[position].damage = data[position].damage
                     loadedCharacters[position].strain = data[position].strain
                     loadedCharacters[position].token = data[position].token
@@ -237,20 +240,35 @@ class LoadScreen : AppCompatActivity() {
 }
 
 class LoadFileAdapter(val context: Activity, val fileNames : ArrayList<String?>, val characters
-:ArrayList<Character>)
+:ArrayList<Character>, val data: List<CharacterData>?)
     : ArrayAdapter<String>(context,R.layout.save_load_item,fileNames){
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
         val button = inflater.inflate(R.layout.save_load_item, null, true)
-        if(position < fileNames.size-1) {
+        if (position < fileNames.size - 1) {
             val saveNameText = button.findViewById(R.id.save_file_name) as TextView
             saveNameText.text = fileNames[position]
 
             val saveCharacterImage = button.findViewById(R.id.save_file_image) as ImageView
 
             saveCharacterImage.setImageDrawable(characters[position].portraitImage)
-        }
-        else{
+
+            var level = 5
+            println("spent "+data!![position].xpSpent + "total "+data!![position].totalXP)
+            if (data!![position].xpSpent <= 1) {
+                level = 1
+            } else if (data!![position].xpSpent <= 4) {
+                level = 2
+            } else if (data!![position].xpSpent <= 7) {
+                level = 3
+            } else if (data!![position].xpSpent <= 10) {
+                level = 4
+            }
+            button.save_file_level.setText("Lv " + level)
+            button.save_file_character.setText("" + characters[position].name)
+            button.save_file_date.setText(""+data!![position].date)
+
+        } else {
             button.visibility = View.INVISIBLE
         }
         return button

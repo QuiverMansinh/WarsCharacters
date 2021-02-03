@@ -14,6 +14,9 @@ import java.io.InputStream
 open class Character {
     var name = ""
     var name_short = ""
+    var file_name = "autosave"
+    var id = -1
+
     var type = ""
     var defence_dice = ""
 

@@ -33,6 +33,8 @@ import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
@@ -66,7 +68,6 @@ class Character_view : AppCompatActivity(){
         initScreen()
         initAnimations()
         initKillTracker()
-
     }
     //************************************************************************************************************
     //region Main Screen
@@ -148,7 +149,7 @@ class Character_view : AppCompatActivity(){
                 }
             }
             MainActivity.selectedCharacter = character
-            println(MainActivity.selectedCharacter)
+
 
         } else {
             character = MainActivity.selectedCharacter!!
@@ -183,7 +184,6 @@ class Character_view : AppCompatActivity(){
         updateStats()
         initDamageAndStrain()
         updateStats()
-
         initConditions()
         updateConditionIcons()
 
@@ -232,14 +232,14 @@ class Character_view : AppCompatActivity(){
             try {
                 inputStream = assetManager.open(path)
                 options.inSampleSize = i
-                println(i)
+
                 bitmap = BitmapFactory.decodeStream(inputStream, null, options)
                 break
             } catch (outOfMemoryError: OutOfMemoryError) {
 
-                println("next size" + i)
+                //println("next size" + i)
             } catch (e: Exception) {
-                e.printStackTrace()
+                //e.printStackTrace()
                 break
             }
         }
@@ -247,16 +247,13 @@ class Character_view : AppCompatActivity(){
         try {
             inputStream?.close()
         } catch (e: Exception) {
-            e.printStackTrace()
+            //e.printStackTrace()
         }
         return bitmap
     }
 
     open fun updateImages(){
         character.updateCharacterImages(this)
-
-
-
         if(animateConditions) {
             if (character.currentImage != null) {
                 character.glowImage = Bitmap.createBitmap(character.currentImage!!)
@@ -335,6 +332,9 @@ class Character_view : AppCompatActivity(){
         health.setText("" + character.health);
         endurance.setText("" + character.endurance);
         speed.setText("" + character.speed);
+
+        //TODO
+        quickSave()
     }
 
     fun onHide(view: View){
@@ -467,6 +467,7 @@ class Character_view : AppCompatActivity(){
                 )
                 slide.setDuration(1500)
                 slide.start()
+                quickSave()
             }
 
             var hitY = ObjectAnimator.ofFloat(
@@ -527,6 +528,7 @@ class Character_view : AppCompatActivity(){
                 val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
                 slide.setDuration(500)
                 slide.start()
+                quickSave()
             }
 
         }
@@ -589,12 +591,11 @@ class Character_view : AppCompatActivity(){
                 setDiceColor(tech3, character.techWounded[2]);
 
                 isWounded = true
-                println()
-                println("withdrawn" + character.withdrawn)
-                println()
+                //println()
+                //println("withdrawn" + character.withdrawn)
+                //println()
                 if (character.withdrawn){
-                    println("SLIDE DOWN")
-
+                    //println("SLIDE DOWN")
                     wounded.animate().translationY(character_image.height.toFloat())
                 }
 
@@ -695,7 +696,7 @@ class Character_view : AppCompatActivity(){
             if (conditionsActive[focused]) {
                 attack_focused.visibility = View.VISIBLE
             } else {
-               attack_focused.visibility = View.GONE
+                attack_focused.visibility = View.GONE
             }
 
             if (conditionsActive[hidden]) {
@@ -905,7 +906,8 @@ class Character_view : AppCompatActivity(){
 
     override fun onUserInteraction() {
         super.onUserInteraction()
-        println("save")
+        //println("save")
+
     }
 
     fun onBiography(view: View) {
@@ -927,9 +929,13 @@ class Character_view : AppCompatActivity(){
         showCardDialog!!.show()
     }
     fun onSave(view: View) {
-
+        if(character.file_name.equals("autosave")) {
+            saveDialog!!.show()
+        }
+        else{
+            quickSave()
+        }
         optionsDialog!!.cancel()
-        saveDialog!!.show()
 
     }
     fun onBackground(view: View) {
@@ -1455,6 +1461,9 @@ class Character_view : AppCompatActivity(){
             conditionsDialog!!.weakened_select.alpha = 0.5f
             character_image.weakened = true
         }
+
+        //TODO
+        quickSave()
     }
 
     //endregion
@@ -1535,6 +1544,8 @@ class Character_view : AppCompatActivity(){
         restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         restDialog!!.rest_button.setOnClickListener {
             onRest(restDialog!!.rest_button)
+            //TODO
+            quickSave()
             true
         }
 
@@ -1546,6 +1557,8 @@ class Character_view : AppCompatActivity(){
         unwoundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         unwoundDialog!!.unwound_button.setOnClickListener {
             onUnwound(unwoundDialog!!.unwound_button)
+            //TODO
+            quickSave()
             true
         }
 
@@ -1614,7 +1627,12 @@ class Character_view : AppCompatActivity(){
         saveDialog!!.setCanceledOnTouchOutside(true)
         saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         saveDialog!!.save_button.setOnClickListener {
-            saveCharacter()
+            if(character.file_name.equals("autosave")) {
+                firstManualSave()
+            }
+            else{
+                createNewSave()
+            }
             saveDialog!!.cancel()
             true
         }
@@ -1650,6 +1668,8 @@ class Character_view : AppCompatActivity(){
         assistDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         assistDialog!!.unwound_button.setOnClickListener {
             onAssist(assistDialog!!.unwound_button)
+            //TODO
+            quickSave()
             true
         }
 
@@ -1676,15 +1696,23 @@ class Character_view : AppCompatActivity(){
         //TODO setOnClickListenters backgrounds
         backgroundDialog!!.desert_background.setOnClickListener{
             onBackgroundDesert(backgroundDialog!!.desert_background)
+            //TODO
+            quickSave()
         }
         backgroundDialog!!.snow_background.setOnClickListener{
             onBackgroundSnow(backgroundDialog!!.snow_background)
+            //TODO
+            quickSave()
         }
         backgroundDialog!!.jungle_background.setOnClickListener{
             onBackgroundJungle(backgroundDialog!!.jungle_background)
+            //TODO
+            quickSave()
         }
         backgroundDialog!!.interior_background.setOnClickListener{
             onBackgroundInterior(backgroundDialog!!.interior_background)
+            //TODO
+            quickSave()
         }
 
         settingsScreen= Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
@@ -1716,6 +1744,8 @@ class Character_view : AppCompatActivity(){
 
 
     }
+
+
 
 
     //endregion
@@ -1888,96 +1918,187 @@ class Character_view : AppCompatActivity(){
     //************************************************************************************************************
     //region Saving
     //************************************************************************************************************
-    fun saveCharacter(){
-        val character = MainActivity.selectedCharacter
-        println("character" + character)
-        if(character!=null){
-            var saveFile= CharacterData(
-                "" + saveDialog!!.save_name.text.toString(),
-                System.currentTimeMillis(),
-                character.name_short,
-                character.damage,
-                character.strain,
-                character.token,
-                character.wounded,
-                character.conditionsActive[0],
-                character.conditionsActive[1],
-                character.conditionsActive[2],
-                character.conditionsActive[3],
-                character.conditionsActive[4],
-                character.totalXP,
-                character.xpSpent,
-                character.xpCardsEquipped[0],
-                character.xpCardsEquipped[1],
-                character.xpCardsEquipped[2],
-                character.xpCardsEquipped[3],
-                character.xpCardsEquipped[4],
-                character.xpCardsEquipped[5],
-                character.xpCardsEquipped[6],
-                character.xpCardsEquipped[7],
-                character.xpCardsEquipped[8],
-                character.weapon1,
-                character.weapon2,
-                character.accessory1,
-                character.accessory2,
-                character.accessory3,
-                character.helmet,
-                character.armour,
-                character.background,
-                character.conditionsActive[0],
-                character.conditionsActive[1],
-                character.conditionsActive[2],
-                character.conditionsActive[3],
-                character.conditionsActive[4],
-                character.killCount[0],
-                character.killCount[1],
-                character.killCount[2],
-                character.killCount[3],
-                character.killCount[4],
-                character.killCount[5],
-                character.killCount[6],
-                character.killCount[7],
-                character.assistCount[0],
-                character.assistCount[1],
-                character.assistCount[2],
-                character.assistCount[3],
-                character.assistCount[4],
-                character.assistCount[5],
-                character.assistCount[6],
-                character.assistCount[7],
-                character.movesTaken,
-                character.attacksMade,
-                character.interactsUsed,
-                character.timesWounded,
-                character.timesRested,
-                character.timesWithdrawn,
-                character.activated,
-                character.damageTaken,
-                character.strainTaken,
-                character.specialActions,
-                character.timesFocused,
-                character.timesHidden,
-                character.timesStunned,
-                character.timesBleeding,
-                character.timesWeakened,
-                character.cratesPickedUp,
-                character.rewardObtained,
-                character.withdrawn
-            )
-            val database = AppDatabase.getInstance(this)
-            runBlocking {
-                launch {
-                    database!!.getCharacterDAO().insert(saveFile)
 
+
+    fun quickSave(){
+        val character = MainActivity.selectedCharacter
+        println("QUICK SAVE character " + character)
+        if(character!=null){
+            var saveFile = getCharacterData(character.file_name)
+            val database = AppDatabase.getInstance(this)
+
+            startSaveAnimation()
+            GlobalScope.launch {
+                while (saving) {
+                    saveAnimation()
+                    delay(10)
                 }
+            }
+            GlobalScope.launch {
+                if(character.id != -1) {
+                    saveFile.id = character.id
+                    database!!.getCharacterDAO().update(saveFile)
+                }
+                else{
+                    character.id = saveFile.id
+                    database!!.getCharacterDAO().insert(saveFile)
+                }
+                stopSaveAnimation()
             }
 
         }
+    }
 
+    fun firstManualSave() {
+        val character = MainActivity.selectedCharacter
+        println("FIRST MANUAL SAVE character " + character)
+        if (character != null) {
+            var saveFile = getCharacterData("" + saveDialog!!.save_name.text.toString())
+            character.file_name = saveFile.fileName + ""
+
+            val database = AppDatabase.getInstance(this)
+            GlobalScope.launch {
+
+                if (character.id != -1) {
+                    saveFile.id = character.id
+                    database!!.getCharacterDAO().update(saveFile)
+                } else {
+                    character.id = saveFile.id
+                    database!!.getCharacterDAO().insert(saveFile)
+                }
+
+            }
+        }
     }
 
 
-    //endregion
+    fun createNewSave(){
+        val character = MainActivity.selectedCharacter
+        println("character" + character)
+        if(character!=null){
+            var saveFile= getCharacterData("" + saveDialog!!.save_name.text.toString())
+            character.file_name = saveFile.fileName+""
+            character.id = saveFile.id
+
+            val database = AppDatabase.getInstance(this)
+
+
+            GlobalScope.launch {
+
+                database!!.getCharacterDAO().insert(saveFile)
+
+            }
+
+
+        }
+    }
+
+    var saving = false
+    var saveTime = 0
+    fun startSaveAnimation(){
+        saving=true
+        saveTime = 0
+    }
+    fun saveAnimation(){
+        saveTime++
+        println("save time " + saveTime)
+    }
+    fun stopSaveAnimation(){
+        saving=false
+    }
+
+    override fun onBackPressed() {
+        //quickSave()
+        super.onBackPressed()
+        //TODO
+
+    }
+
+    override fun onStop() {
+        println("STOP")
+        quickSave()
+        super.onStop()
+        //TODO
+
+    }
+
+    fun getCharacterData(fileName:String) : CharacterData{
+        var data = CharacterData(
+            fileName,
+            System.currentTimeMillis(),
+            character.name_short,
+            character.damage,
+            character.strain,
+            character.token,
+            character.wounded,
+            character.conditionsActive[0],
+            character.conditionsActive[1],
+            character.conditionsActive[2],
+            character.conditionsActive[3],
+            character.conditionsActive[4],
+            character.totalXP,
+            character.xpSpent,
+            character.xpCardsEquipped[0],
+            character.xpCardsEquipped[1],
+            character.xpCardsEquipped[2],
+            character.xpCardsEquipped[3],
+            character.xpCardsEquipped[4],
+            character.xpCardsEquipped[5],
+            character.xpCardsEquipped[6],
+            character.xpCardsEquipped[7],
+            character.xpCardsEquipped[8],
+            character.weapon1,
+            character.weapon2,
+            character.accessory1,
+            character.accessory2,
+            character.accessory3,
+            character.helmet,
+            character.armour,
+            character.background,
+            character.conditionsActive[0],
+            character.conditionsActive[1],
+            character.conditionsActive[2],
+            character.conditionsActive[3],
+            character.conditionsActive[4],
+            character.killCount[0],
+            character.killCount[1],
+            character.killCount[2],
+            character.killCount[3],
+            character.killCount[4],
+            character.killCount[5],
+            character.killCount[6],
+            character.killCount[7],
+            character.assistCount[0],
+            character.assistCount[1],
+            character.assistCount[2],
+            character.assistCount[3],
+            character.assistCount[4],
+            character.assistCount[5],
+            character.assistCount[6],
+            character.assistCount[7],
+            character.movesTaken,
+            character.attacksMade,
+            character.interactsUsed,
+            character.timesWounded,
+            character.timesRested,
+            character.timesWithdrawn,
+            character.activated,
+            character.damageTaken,
+            character.strainTaken,
+            character.specialActions,
+            character.timesFocused,
+            character.timesHidden,
+            character.timesStunned,
+            character.timesBleeding,
+            character.timesWeakened,
+            character.cratesPickedUp,
+            character.rewardObtained,
+            character.withdrawn)
+
+
+        return data
+    }
+//endregion
 }
 
 
