@@ -90,6 +90,7 @@ class Character_biv : Character {
                 currentImage = card6Image
             }
         }
+
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_biv)

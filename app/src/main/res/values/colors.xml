@@ -2,7 +2,7 @@
 <resources>
     <color name="dice_yellow">#FFFF62</color>
     <color name="dice_green">#009C34</color>
-    <color name="dice_red">#EC1F1F</color>
+    <color name="dice_red">#FF5757</color>
     <color name="dice_blue">#155BD1</color>
 
     <color name="black">#FF000000</color>

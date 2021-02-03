@@ -134,7 +134,7 @@ class Rewards constructor() : Fragment(){
         for (i in 0..rewardsPathIds.size-1) {
             itemsOnOff.add(false)
         }
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
@@ -183,7 +183,7 @@ class Drones : Fragment(){
         for (i in 0..rewardsPathIds.size-1) {
             itemsOnOff.add(false)
         }
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
@@ -220,7 +220,7 @@ class Armor : Fragment(){
         for (i in 0..rewardsPathIds.size-1) {
             itemsOnOff.add(false)
         }
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
@@ -287,7 +287,7 @@ class Melee : Fragment(){
         for (i in 0..rewardsPathIds.size-1) {
             itemsOnOff.add(false)
         }
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView
@@ -366,7 +366,7 @@ class Ranged : Fragment(){
         for (i in 0..rewardsPathIds.size-1) {
             itemsOnOff.add(false)
         }
-        val rewardsView = inflater.inflate(R.layout.rewards_fragment2,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
         return rewardsView

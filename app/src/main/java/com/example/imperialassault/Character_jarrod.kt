@@ -94,7 +94,12 @@ class Character_jarrod : Character {
         companionCard  = jaxCard
 
         if(xpCardsEquipped[8]){
-            layer1 = droid_card9
+            if(!conditionsActive[0]) {
+                layer1 = droid_card9
+            }
+            else{
+                layer1 = null
+            }
             if(xpCardsEquipped[5]) {
                 companionCard = jaxCard_card69
             }
@@ -106,7 +111,13 @@ class Character_jarrod : Character {
             if(xpCardsEquipped[5]) {
                 companionCard  = jaxCard_card6
             }
-            layer1 = droid
+            if(!conditionsActive[0]) {
+                layer1 = droid
+            }
+            else{
+                layer1 = null
+            }
+
         }
     }
     override fun loadPortraitImage(context:Context){
