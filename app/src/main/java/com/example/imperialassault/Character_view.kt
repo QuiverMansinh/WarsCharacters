@@ -873,6 +873,11 @@ class Character_view : AppCompatActivity(){
         creditsScreen!!.show()
     }
 
+    fun onDevCredits(view: View) {
+        optionsDialog!!.cancel()
+        developersCreditsScreen!!.show()
+    }
+
     //Backgrounds
     fun onBackgroundSnow(view: View) {
         character.background = "snow"
@@ -1431,6 +1436,8 @@ class Character_view : AppCompatActivity(){
     var statsScreen:Dialog? = null
     var xpSelectScreen: Dialog?=null
 
+    var developersCreditsScreen:Dialog? = null
+
     fun initDialogs(){
         restDialog = Dialog(this)
         restDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1619,7 +1626,12 @@ class Character_view : AppCompatActivity(){
         xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
         xpSelectScreen!!.setCanceledOnTouchOutside(true)
 
-
+        developersCreditsScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        developersCreditsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        developersCreditsScreen!!.setCancelable(false)
+        developersCreditsScreen!!.setContentView(R.layout.credits_to_us)
+        developersCreditsScreen!!.setCanceledOnTouchOutside(true)
+        developersCreditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
     }
 
 
