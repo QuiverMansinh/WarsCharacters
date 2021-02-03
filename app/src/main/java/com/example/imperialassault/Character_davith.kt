@@ -95,13 +95,15 @@ class Character_davith : Character {
             if (card6Image != null) {
                 currentImage = card6Image
             }
-            //card9 tier images
-            else if (xpCardsEquipped[8]) {
-                //TODO check ancient light saber
-                var card9Image = loadCardTierImage(context, tier, "card9")
-                if (card9Image != null) {
-                    currentImage = card9Image
-                }
+
+
+        }
+        //card9 tier images
+        else if (xpCardsEquipped[8]) {
+            //TODO check ancient light saber
+            var card9Image = loadCardTierImage(context, tier, "card9")
+            if (card9Image != null) {
+                currentImage = card9Image
             }
         }
     }

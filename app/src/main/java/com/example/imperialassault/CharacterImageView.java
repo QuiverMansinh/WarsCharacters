@@ -3,11 +3,13 @@ package com.example.imperialassault;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.renderscript.RenderScript;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -18,8 +20,13 @@ import androidx.annotation.Nullable;
 public class CharacterImageView extends View implements Runnable{
     Thread thread;
     public boolean animating = true;
-    Bitmap image, glowImage, camoImage;
-    boolean scaled = false;
+    Bitmap image, glowImage, layer1, layer2;
+
+    boolean imageScaled = false;
+    boolean glowScaled = false;
+    boolean layer1Scaled = false;
+    boolean layer2Scaled = false;
+
     boolean focused = false;
     boolean hidden = false;
     boolean bleeding = false;
@@ -51,85 +58,113 @@ public class CharacterImageView extends View implements Runnable{
         //weakened = true;
         hidden = true;
         stunPaint.setAlpha(75);
+
     }
 
     public void setImageBitmap(Bitmap bitmap){
         image = bitmap;
-        scaled = false;
+        imageScaled = false;
     }
     public void setGlowBitmap(Bitmap bitmap){
         System.out.println(bitmap);
         glowImage = bitmap;
-        scaled = false;
+        glowScaled = false;
+        focusedPaint.setColorFilter(new LightingColorFilter(0,Color.rgb(100,255,100)));
     }
-    public void setCamoBitmap(Bitmap bitmap){
-        System.out.println(bitmap);
-       camoImage = bitmap;
-        scaled = false;
+    public void setLayer1Bitmap(Bitmap bitmap){
+        layer1 = bitmap;
+        layer1Scaled = false;
     }
+
 
     float time = 0;
     Paint paint = new Paint();
     Paint stunPaint = new Paint();
     Paint focusedPaint = new Paint();
     float stunX, stunY;
-
+    float offsetY;
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(!scaled){
-            if(image!=null) {
-                image = Bitmap.createScaledBitmap(image, canvas.getWidth(),  canvas.getHeight(), false);
+        if(!imageScaled) {
+            if (image != null) {
+                image = Bitmap.createScaledBitmap(image, canvas.getWidth(), canvas.getHeight(),
+                        true);
             }
+            imageScaled = true;
+        }
+        if(!glowScaled) {
             if(glowImage!=null) {
-                glowImage = Bitmap.createScaledBitmap(glowImage,  canvas.getWidth(),  canvas.getHeight(), false);
+                glowImage = Bitmap.createScaledBitmap(glowImage,  canvas.getWidth(), canvas.getHeight(), true);
             }
-            if(camoImage!=null) {
-                camoImage = Bitmap.createScaledBitmap(camoImage,  canvas.getWidth(), canvas.getHeight(), false);
-            }
-            scaled = true;
-
+            glowScaled = true;
         }
+        if(!layer1Scaled) {
+            if(layer1!=null) {
+                layer1 = Bitmap.createScaledBitmap(layer1,  canvas.getWidth(), canvas.getHeight(), true);
+            }
+            layer1Scaled = true;
+        }
+
         if(focused && glowImage!=null){
-            canvas.drawBitmap(glowImage, 0, 0, focusedPaint);
+            canvas.drawBitmap(glowImage, 0,  offsetY, focusedPaint);
         }
 
-        canvas.drawBitmap(image,0,0, paint);
+        canvas.drawBitmap(image,0, offsetY, paint);
+        if(layer1!=null) {
+            canvas.drawBitmap(layer1, 0, offsetY, paint);
+        }
+
 
         if(stunned) {
-            canvas.drawBitmap(image,
-                    stunX,
-                    stunY
-                    , stunPaint);
+            canvas.drawBitmap(image, stunX, stunY, stunPaint);
+            if(layer1!=null) {
+                canvas.drawBitmap(layer1, stunX, stunY, stunPaint);
+            }
         }
-        if(hidden && camoImage!=null){
-            canvas.drawBitmap(camoImage, 0, 0, null);
-        }
+
         if(bleeding){
 
         }
     }
 
+
     void update(int deltaTime){
-        if(scaled) {
+        if(imageScaled&&glowScaled) {
             if (stunned) {
                 stunX = (float) Math.cos(time / 1000 * 4) * image.getWidth() / 20;
                 stunY = (float) Math.sin(time / 1000 * 4) * image.getWidth() / 40;
             }
 
             if (weakened) {
-                int weakenedColor = Color.rgb(255,
-                        (int) (255 * (1 + Math.cos(time / 1000 * 4)) / 2),
-                        (int) (255 * (1 + Math.cos(time / 1000 * 4) / 4) / 1.5));
+                offsetY =
+                        -(float)(Math.max(Math.min(Math.sin(time / 1000 * 6+Math.PI),0.8),-0.8))/2*image.getHeight()/200;
+                int weakenedColor = Color.rgb(
+                        (int) (55 * (1 + Math.sin(time / 1000 * 6+Math.PI)) / 2 + 200),
+                        (int) (55 * (1 + Math.sin(time / 1000 * 6+Math.PI)) / 2 + 200),
+                        255);
                 paint.setColorFilter(new LightingColorFilter(weakenedColor, 0));
-
             }
+            else{
+                paint.setColorFilter(null);
+            }
+
+
             if (focused && glowImage != null) {
-                int alpha = (int) (255 * (1 + Math.cos(time / 1000 * 4)) / 2);
+
+
+                int alpha = (int) (255 * (1 + Math.sin(time / 1000 * 6)) / 2);
                 focusedPaint.setAlpha(alpha);
             }
             if (hidden) {
+
+            }
+            if(bleeding){
+                int bleedingColor = Color.rgb(255,
+                        (int) (100 * (1 + Math.sin(time / 1000 * 6)) / 2 + 155),
+                        (int) (100 * (1 + Math.sin(time / 1000 * 6)) / 2 + 155));
+                paint.setColorFilter(new LightingColorFilter(bleedingColor, 0));
 
             }
         }
@@ -143,7 +178,7 @@ public class CharacterImageView extends View implements Runnable{
             //System.out.println("tick");
             update(fixedDeltaTime);
             float dt = System.currentTimeMillis();
-            invalidate();
+            postInvalidate();
             dt = System.currentTimeMillis()-dt;
             int lag = (int)(fixedDeltaTime-dt);
             if(lag > 0){

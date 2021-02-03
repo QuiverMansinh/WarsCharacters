@@ -384,29 +384,27 @@
 
     <ImageView
         android:id="@+id/background_image"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/character_select_background"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/animations"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintBottom_toBottomOf="@+id/overlay"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/animations"
+        app:layout_constraintTop_toTopOf="@+id/overlay"
         app:srcCompat="@color/black" />
 
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/animations"
-        app:layout_constraintEnd_toEndOf="@+id/animations"
-        app:layout_constraintStart_toStartOf="@+id/animations"
-        app:layout_constraintTop_toTopOf="@+id/animations">
+        app:layout_constraintBottom_toBottomOf="@+id/overlay"
+        app:layout_constraintEnd_toEndOf="@+id/overlay"
+        app:layout_constraintStart_toStartOf="@+id/overlay"
+        app:layout_constraintTop_toTopOf="@+id/overlay">
 
         <ImageView
-            android:id="@+id/character_layer1"
+            android:id="@+id/companion_layer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
@@ -436,25 +434,17 @@
 
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="0dp"
+    <com.example.imperialassault.PulsatingImageView
+        android:id="@+id/camouflage"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/animations"
-        app:layout_constraintEnd_toEndOf="@+id/animations"
-        app:layout_constraintStart_toStartOf="@+id/animations"
-        app:layout_constraintTop_toTopOf="@+id/animations">
-
-        <ImageView
-            android:id="@+id/character_layer2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:foreground="@android:color/transparent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/character_select_background"
-            android:visibility="visible" />
-    </FrameLayout>
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/character_select_background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/overlay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/overlay" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -468,7 +458,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/animations"
+        android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="40dp"
@@ -1342,7 +1332,7 @@
         android:id="@+id/add_condition"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/condition"
         android:fontFamily="@font/agency_fb"
         android:gravity="center"
@@ -1407,7 +1397,7 @@
         app:srcCompat="@drawable/extension_down" />
 
     <Button
-        android:id="@+id/companion"
+        android:id="@+id/companion_button"
         android:layout_width="150dp"
         android:layout_height="120dp"
         android:background="#00FFFFFF"
@@ -1423,7 +1413,7 @@
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/companion"
+        app:layout_constraintBottom_toTopOf="@+id/companion_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

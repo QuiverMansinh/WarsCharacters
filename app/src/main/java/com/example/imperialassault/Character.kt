@@ -4,6 +4,11 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.renderscript.Allocation
+import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
+import kotlinx.android.synthetic.main.activity_character_view.*
 import java.io.InputStream
 
 open class Character {
@@ -47,6 +52,7 @@ open class Character {
     var layer2:Bitmap? = null
     var layer1:Bitmap? = null
     var layer1OnTop = false
+    var glowImage:Bitmap?=null
 
     var tier = 0
     //var tierImages = ArrayList<Bitmap?>()
@@ -141,7 +147,7 @@ open class Character {
 
     open fun getBackgroundImage(context: Context): Bitmap? {
         val image = getBitmap(context, "backgrounds/background_"+ background + ".png")
-       return image;
+        return image;
     }
 
     open fun loadPortraitImage(context:Context){
@@ -178,39 +184,38 @@ open class Character {
 
     open fun loadCardTierImage(context: Context, tier:Int, cards:String):Bitmap?{
         val image = getBitmap(context, "characters/" + name_short + "/images/tier" + tier +
-                    "image_"+cards+".png")
+                "image_"+cards+".png")
         return image
     }
 
-    /*
-    open fun loadCardTierImages(context: Context, cards:String): ArrayList<Bitmap?>{
-        val images = java.util.ArrayList<Bitmap?>()
-        for (i in 0..3) {
-            val image = getBitmap(context, "characters/" + name_short + "/images/tier" + i +
-                    "image_"+cards+".png")
-
-            images.add(image)
-
-        }
-        return images
-    }*/
 
     open fun updateCharacterImages(context:Context){
 
         tier = 0
+
         //TODO item conditions
         //tier3 [9xp && (1 tier2 || tier3 item)] || 11xp)
         if(xpSpent>=11){
             tier = 3
+
         }
         //tier2 [6xp && (1 tier2 item)] || 8xp)
         else if(xpSpent >= 8){
             tier = 2
+
         }
         //tier1 [3xp && (1 tier1 item)] || 5xp)
         else if(xpSpent >= 5) {
             tier = 1
+
         }
+        println("glow tier"+tier)
+        //glowImage =  getBitmap(context, "characters/" + name_short + "/images/glow"+tier+".png")
+        //println(glowImage)
+
         loadTierImage(context,tier)
+
+
+
     }
 }

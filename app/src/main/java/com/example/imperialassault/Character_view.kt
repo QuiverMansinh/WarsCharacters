@@ -1,4 +1,5 @@
 package com.example.imperialassault
+
 import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Context
@@ -12,15 +13,16 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.renderscript.Allocation
+import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.core.widget.ImageViewCompat
-
 import kotlinx.android.synthetic.main.activity_character_view.*
-
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
 import kotlinx.android.synthetic.main.dialog_bio.*
@@ -28,12 +30,9 @@ import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_options.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlinx.android.synthetic.main.dialog_save.*
-
 import kotlinx.android.synthetic.main.dialog_show_card.*
-
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
@@ -44,6 +43,11 @@ var width = 0f
 
 class Character_view : AppCompatActivity(){
     var character:Character = Character();
+    var animateConditions = true;
+    var animateDamage = true;
+    var showConditionIcons = false;
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_view)
@@ -62,6 +66,7 @@ class Character_view : AppCompatActivity(){
         initScreen()
         initAnimations()
         initKillTracker()
+
     }
     //************************************************************************************************************
     //region Main Screen
@@ -143,7 +148,7 @@ class Character_view : AppCompatActivity(){
                 }
             }
             MainActivity.selectedCharacter = character
-            println(MainActivity.selectedCharacter )
+            println(MainActivity.selectedCharacter)
 
         } else {
             character = MainActivity.selectedCharacter!!
@@ -172,8 +177,7 @@ class Character_view : AppCompatActivity(){
         setDiceColor(tech2, character.tech[1]);
         setDiceColor(tech3, character.tech[2]);
 
-        character_image.setGlowBitmap(getBitmap(this, "characters/" + character.name_short + "/images/glow.png"))
-        character_image.setCamoBitmap(getBitmap(this, "backgrounds/camo_snow.png"))
+
 
         updateImages()
         updateStats()
@@ -183,11 +187,16 @@ class Character_view : AppCompatActivity(){
         initConditions()
         updateConditionIcons()
 
+
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
+
         if(character.name_short == "jarrod"){
-            companion.visibility = View.VISIBLE
+            companion_button.visibility = View.VISIBLE
+            companion_layer.visibility = View.VISIBLE
         }
         else{
-            companion.visibility = View.GONE
+            companion_button.visibility = View.GONE
+            companion_layer.visibility = View.GONE
         }
 
         background_image.setImageBitmap(character.getBackgroundImage(this))
@@ -201,7 +210,16 @@ class Character_view : AppCompatActivity(){
             'G' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_green))
             'Y' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_yellow))
             'R' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_red))
-            ' ' ->  ImageViewCompat.setImageTintList(dice, ColorStateList.valueOf(Color.argb(0,0,0,0)))
+            ' ' -> ImageViewCompat.setImageTintList(
+                dice, ColorStateList.valueOf(
+                    Color.argb(
+                        0,
+                        0,
+                        0,
+                        0
+                    )
+                )
+            )
         }
     }
 
@@ -236,26 +254,45 @@ class Character_view : AppCompatActivity(){
 
     open fun updateImages(){
         character.updateCharacterImages(this)
+
+
+
+        if(animateConditions) {
+            if (character.currentImage != null) {
+                character.glowImage = Bitmap.createBitmap(character.currentImage!!)
+                val input = Bitmap.createBitmap(character.currentImage!!)
+                val output = Bitmap.createBitmap(character.currentImage!!)
+
+                val rs = RenderScript.create(this)
+                val blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
+                blur.setRadius(25f)
+                val tempIn = Allocation.createFromBitmap(rs, input)
+                val tempOut = Allocation.createFromBitmap(rs, output)
+                blur.setInput(tempIn)
+                blur.forEach(tempOut)
+
+                tempOut.copyTo(character.glowImage)
+
+            }
+            character_image.setGlowBitmap(character.glowImage)
+            character.updateCharacterImages(this)
+        }
         character_image.setImageBitmap(character.currentImage)
 
-        if(character.layer1OnTop){
-            character_layer1.elevation=1f
-        }
 
-        if(character.layer2 != null){
-            character_layer2.visibility = View.VISIBLE
-            character_layer2.setImageBitmap(character.layer2);
-        }
-        else{
-            character_layer2.visibility = View.GONE
-        }
+        if(character.name_short!="jarrod") {
+            character_image.setLayer1Bitmap(character.layer1)
+            //TODO
+            //character_image.setLayer2Bitmap(character.layer2)
 
-        if(character.layer1 != null){
-            character_layer1.visibility = View.VISIBLE
-            character_layer1.setImageBitmap(character.layer1);
         }
-        else{
-            character_layer1.visibility = View.GONE
+        else {
+            if (!conditionsActive[hidden]) {
+                companion_layer.visibility = View.VISIBLE
+                companion_layer.setImageBitmap(character.layer1);
+            } else {
+                companion_layer.visibility = View.GONE
+            }
         }
     }
 
@@ -268,31 +305,31 @@ class Character_view : AppCompatActivity(){
         character.health= character.health_default
         character.endurance = character.endurance_default
         character.speed = character.speed_default
-        health.setShadowLayer(5f,0f,0f,Color.BLACK)
-        endurance.setShadowLayer(5f,0f,0f,Color.BLACK)
-        speed.setShadowLayer(5f,0f,0f,Color.BLACK)
+        health.setShadowLayer(5f, 0f, 0f, Color.BLACK)
+        endurance.setShadowLayer(5f, 0f, 0f, Color.BLACK)
+        speed.setShadowLayer(5f, 0f, 0f, Color.BLACK)
 
         for(i in 0..character.xpCardsEquipped.size-1){
             if(character.xpCardsEquipped[i]){
                 if(character.xpHealths[i]!=0) {
                     character.health += character.xpHealths[i]
-                    health.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_green))
+                    health.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
                 }
                 if(character.xpEndurances[i]!=0) {
                     character.endurance += character.xpEndurances[i]
-                    endurance.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_green))
+                    endurance.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
                 }
                 if(character.xpSpeeds[i]!=0) {
                     character.speed += character.xpSpeeds[i]
-                    speed.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_green))
+                    speed.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
                 }
             }
         }
         if(isWounded){
             character.endurance--
-            endurance.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_red))
+            endurance.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_red))
             character.speed--
-            speed.setShadowLayer(5f,0f,0f,resources.getColor(R.color.dice_red))
+            speed.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_red))
         }
 
         health.setText("" + character.health);
@@ -311,29 +348,29 @@ class Character_view : AppCompatActivity(){
     //region Damage and Strain
     //************************************************************************************************************
 
-    fun getNumber(number:Int):Drawable{
+    fun getNumber(number: Int):Drawable{
         var numberImage = R.drawable.number_0
         when(number){
-            1-> numberImage = R.drawable.number_1
-            2-> numberImage = R.drawable.number_2
-            3-> numberImage = R.drawable.number_3
-            4-> numberImage = R.drawable.number_4
-            5-> numberImage = R.drawable.number_5
-            6-> numberImage = R.drawable.number_6
-            7-> numberImage = R.drawable.number_7
-            8-> numberImage = R.drawable.number_8
-            9-> numberImage = R.drawable.number_9
-            10-> numberImage = R.drawable.number_10
-            11-> numberImage = R.drawable.number_11
-            12-> numberImage = R.drawable.number_12
-            13-> numberImage = R.drawable.number_13
-            14-> numberImage = R.drawable.number_14
-            15-> numberImage = R.drawable.number_15
-            16-> numberImage = R.drawable.number_16
-            17-> numberImage = R.drawable.number_17
-            18-> numberImage = R.drawable.number_18
-            19-> numberImage = R.drawable.number_19
-            20-> numberImage = R.drawable.number_20
+            1 -> numberImage = R.drawable.number_1
+            2 -> numberImage = R.drawable.number_2
+            3 -> numberImage = R.drawable.number_3
+            4 -> numberImage = R.drawable.number_4
+            5 -> numberImage = R.drawable.number_5
+            6 -> numberImage = R.drawable.number_6
+            7 -> numberImage = R.drawable.number_7
+            8 -> numberImage = R.drawable.number_8
+            9 -> numberImage = R.drawable.number_9
+            10 -> numberImage = R.drawable.number_10
+            11 -> numberImage = R.drawable.number_11
+            12 -> numberImage = R.drawable.number_12
+            13 -> numberImage = R.drawable.number_13
+            14 -> numberImage = R.drawable.number_14
+            15 -> numberImage = R.drawable.number_15
+            16 -> numberImage = R.drawable.number_16
+            17 -> numberImage = R.drawable.number_17
+            18 -> numberImage = R.drawable.number_18
+            19 -> numberImage = R.drawable.number_19
+            20 -> numberImage = R.drawable.number_20
         }
         return resources.getDrawable(numberImage)
     }
@@ -918,18 +955,22 @@ class Character_view : AppCompatActivity(){
     fun onBackgroundSnow(view: View) {
         character.background = "snow"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_snow.png"))
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_snow.png"))
     }
     fun onBackgroundJungle(view: View) {
         character.background = "jungle"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_jungle.png"))
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_jungle.png"))
     }
     fun onBackgroundDesert(view: View) {
         character.background = "desert"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_desert.png"))
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_desert.png"))
     }
     fun onBackgroundInterior(view: View) {
         character.background = "interior"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_interior.png"))
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
     }
 
 
@@ -1265,7 +1306,7 @@ class Character_view : AppCompatActivity(){
             character.timesWeakened++
         }
         else{
-            character.timesWeakened--
+            //character.timesWeakened--
         }
         updateConditionIcons()
     }
@@ -1274,7 +1315,7 @@ class Character_view : AppCompatActivity(){
         if(conditionsActive[bleeding]) {
             character.timesBleeding++
         }else{
-            character.timesBleeding--
+            //character.timesBleeding--
         }
         updateConditionIcons()
     }
@@ -1284,7 +1325,7 @@ class Character_view : AppCompatActivity(){
             character.timesStunned++
         }
         else{
-            character.timesStunned--
+            //character.timesStunned--
         }
         updateConditionIcons()
     }
@@ -1292,11 +1333,15 @@ class Character_view : AppCompatActivity(){
         conditionsActive[hidden] =!conditionsActive[hidden]
         if(conditionsActive[hidden]) {
             character.timesHidden++
+
         }
         else{
-            character.timesHidden--
+            //character.timesHidden--
+
         }
         updateConditionIcons()
+
+
     }
     fun onFocused(view: View) {
         conditionsActive[focused] =!conditionsActive[focused]
@@ -1304,7 +1349,7 @@ class Character_view : AppCompatActivity(){
             character.timesFocused++
         }
         else{
-            character.timesFocused--
+            //character.timesFocused--
         }
         updateConditionIcons()
     }
@@ -1325,81 +1370,90 @@ class Character_view : AppCompatActivity(){
         for(i in 0..conditionViews.size-1){
             conditionViews[i].visibility = View.GONE
         }
+        updateImages()
 
-        var active = 0;
-        for(i in 0..conditionsActive.size-1){
-            if(conditionsActive[i]){
-                active++;
-            }
-        }
-        character.conditionsActive = conditionsActive
-
-        if(active<5) {
-            show_conditions.visibility = View.VISIBLE
-            show_all_conditions.visibility = View.INVISIBLE
-
-            var conditionType = 0;
-            for (i in 0..active - 1) {
-                conditionViews[i].visibility = View.VISIBLE
-                for (j in conditionType..conditionDrawable.size - 1) {
-                    if (conditionsActive[j]) {
-                        conditionViews[i].setImageDrawable(resources.getDrawable(conditionDrawable[conditionType]))
-                        conditionViews[i].setTag(conditionType)
-                        conditionType = j + 1;
-                        break
-                    }
-                    conditionType = j + 1;
+        if(showConditionIcons) {
+            var active = 0;
+            for (i in 0..conditionsActive.size - 1) {
+                if (conditionsActive[i]) {
+                    active++;
                 }
             }
-        }
-        else{
-            show_conditions.visibility = View.GONE
-            show_all_conditions.visibility = View.VISIBLE
-        }
-        if(active>2){
-            conditions_row2.visibility = View.VISIBLE
-        }
-        else{
-            conditions_row2.visibility = View.GONE
-        }
-        if(!conditionsActive[hidden]) {
-            conditionsDialog!!.hidden_select.alpha = 1f
-        }
-        else{
-            conditionsDialog!!.hidden_select.alpha = 0.5f
+            character.conditionsActive = conditionsActive
+
+            if (active < 5) {
+                show_conditions.visibility = View.VISIBLE
+                show_all_conditions.visibility = View.INVISIBLE
+
+                var conditionType = 0;
+                for (i in 0..active - 1) {
+                    conditionViews[i].visibility = View.VISIBLE
+                    for (j in conditionType..conditionDrawable.size - 1) {
+                        if (conditionsActive[j]) {
+                            conditionViews[i].setImageDrawable(
+                                resources.getDrawable(
+                                    conditionDrawable[conditionType]
+                                )
+                            )
+                            conditionViews[i].setTag(conditionType)
+                            conditionType = j + 1;
+                            break
+                        }
+                        conditionType = j + 1;
+                    }
+                }
+            } else {
+                show_conditions.visibility = View.GONE
+                show_all_conditions.visibility = View.VISIBLE
+            }
+            if (active > 2) {
+                conditions_row2.visibility = View.VISIBLE
+            } else {
+                conditions_row2.visibility = View.GONE
+            }
         }
 
         if(!conditionsActive[hidden]) {
             conditionsDialog!!.hidden_select.alpha = 1f
+            camouflage.visibility=View.INVISIBLE
         }
         else{
             conditionsDialog!!.hidden_select.alpha = 0.5f
+            camouflage.visibility=View.VISIBLE
         }
 
         if(!conditionsActive[focused]) {
             conditionsDialog!!.focused_select.alpha=1f
+            character_image.focused = false
         }
         else{
             conditionsDialog!!.focused_select.alpha = 0.5f
+            character_image.focused = true
         }
 
         if(!conditionsActive[stunned]) {
             conditionsDialog!!.stunned_select.alpha = 1f
+            character_image.stunned = false
         }
         else{
             conditionsDialog!!.stunned_select.alpha = 0.5f
+            character_image.stunned = true
         }
         if(!conditionsActive[bleeding]) {
             conditionsDialog!!.bleeding_select.alpha = 1f
+            character_image.bleeding = false
         }
         else{
             conditionsDialog!!.bleeding_select.alpha = 0.5f
+            character_image.bleeding = true
         }
         if(!conditionsActive[weakened]) {
             conditionsDialog!!.weakened_select.alpha = 1f
+            character_image.weakened = false
         }
         else{
             conditionsDialog!!.weakened_select.alpha = 0.5f
+            character_image.weakened = true
         }
     }
 
@@ -1421,19 +1475,19 @@ class Character_view : AppCompatActivity(){
     fun playDamageAnim(){
         val animType = Math.random();
         if(animType<0.3){
-            damage_animation.setBackgroundDrawable( MainActivity.blastAnim)
+            damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
             damage_animation.visibility = FrameLayout.VISIBLE
             MainActivity.blastAnim!!.setVisible(true, true)
             MainActivity.blastAnim!!.start()
         }
         else if(animType<0.6){
-            damage_animation.setBackgroundDrawable( MainActivity.sliceAnim)
+            damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
             damage_animation.visibility = FrameLayout.VISIBLE
             MainActivity.sliceAnim!!.setVisible(true, true)
             MainActivity.sliceAnim!!.start()
         }
         else{
-            damage_animation.setBackgroundDrawable( MainActivity.impactAnim)
+            damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
             damage_animation.visibility = FrameLayout.VISIBLE
             MainActivity.impactAnim!!.setVisible(true, true)
             MainActivity.impactAnim!!.start()
@@ -1480,7 +1534,7 @@ class Character_view : AppCompatActivity(){
         restDialog!!.setCanceledOnTouchOutside(true)
         restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         restDialog!!.rest_button.setOnClickListener {
-            onRest( restDialog!!.rest_button)
+            onRest(restDialog!!.rest_button)
             true
         }
 
@@ -1491,7 +1545,7 @@ class Character_view : AppCompatActivity(){
         unwoundDialog!!.setCanceledOnTouchOutside(true)
         unwoundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         unwoundDialog!!.unwound_button.setOnClickListener {
-            onUnwound( unwoundDialog!!.unwound_button)
+            onUnwound(unwoundDialog!!.unwound_button)
             true
         }
 
@@ -1807,7 +1861,7 @@ class Character_view : AppCompatActivity(){
         character.rewardObtained = character.xpCardsEquipped[8]
 
         if(character.currentImage!=null) {
-            character.currentImage!!.recycle()
+            //character.currentImage!!.recycle()
         }
 
         updateImages()
@@ -1836,7 +1890,7 @@ class Character_view : AppCompatActivity(){
     //************************************************************************************************************
     fun saveCharacter(){
         val character = MainActivity.selectedCharacter
-        println("character"+character)
+        println("character" + character)
         if(character!=null){
             var saveFile= CharacterData(
                 "" + saveDialog!!.save_name.text.toString(),
