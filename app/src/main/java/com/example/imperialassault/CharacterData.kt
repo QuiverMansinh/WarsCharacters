@@ -34,13 +34,16 @@ data class CharacterData (
     @ColumnInfo(name = "xpCardsEquipped8") val xpCardsEquipped8: Boolean,
     @ColumnInfo(name = "xpCardsEquipped9") val xpCardsEquipped9: Boolean,
 
-    @ColumnInfo(name = "weapon1") val weapon1: String?,
-    @ColumnInfo(name = "weapon2") val weapon2: String?,
-    @ColumnInfo(name = "accessory1") val accessory1: String?,
-    @ColumnInfo(name = "accessory2") val accessory2: String?,
-    @ColumnInfo(name = "accessory3") val accessory3: String?,
-    @ColumnInfo(name = "helmet") val helmet: String?,
-    @ColumnInfo(name = "armour") val armour: String?,
+    @ColumnInfo(name = "weapon1") val weapon1: Int,
+    @ColumnInfo(name = "weapon2") val weapon2: Int,
+    @ColumnInfo(name = "accessory1") val accessory1: Int,
+    @ColumnInfo(name = "accessory2") val accessory2: Int,
+    @ColumnInfo(name = "accessory3") val accessory3: Int,
+    @ColumnInfo(name = "helmet") val helmet: Int,
+    @ColumnInfo(name = "armour") val armour: Int,
+    @ColumnInfo(name = "meleeMods") val meleeMods:String?,
+    @ColumnInfo(name = "rangedMods") val rangedMods:String?,
+    @ColumnInfo(name = "rewards") val rewards:String?,
 
     @ColumnInfo(name = "background") val background: String?,
 

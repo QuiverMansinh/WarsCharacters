@@ -2082,6 +2082,9 @@ class Character_view : AppCompatActivity(){
             character.accessory3,
             character.helmet,
             character.armour,
+            convertItemIDToString(character.meleeMods),
+            convertItemIDToString(character.rangedMods),
+            convertItemIDToString(character.rewards),
             character.background,
             character.conditionsActive[0],
             character.conditionsActive[1],
@@ -2126,6 +2129,26 @@ class Character_view : AppCompatActivity(){
 
         return data
     }
+
+    fun convertItemIDToString(itemIds: ArrayList<Int>) :String{
+        var itemString = ""
+        for(i in 0..itemIds.size-1){
+            itemString += ","+itemIds[i]
+        }
+        return itemString
+    }
+    fun convertStringToItemID(itemString:String):ArrayList<Int> {
+        var itemIds = arrayListOf<Int>()
+        var itemStrings = itemString.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+
+        for(itemId in itemStrings){
+            if(itemId.isNotEmpty()){
+                itemIds.add(itemId.toInt())
+            }
+        }
+        return itemIds
+    }
+
 //endregion
 }
 

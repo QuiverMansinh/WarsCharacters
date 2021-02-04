@@ -92,13 +92,15 @@ class LoadScreen : AppCompatActivity() {
                         data[position].xpCardsEquipped9
                     )
 
-                    loadedCharacters[position].weapon1 = data[position].weapon1.toString()
-                    loadedCharacters[position].weapon1 = data[position].weapon2.toString()
-                    loadedCharacters[position].accessory1 = data[position].accessory1.toString()
-                    loadedCharacters[position].accessory2 = data[position].accessory2.toString()
-                    loadedCharacters[position].accessory3 = data[position].accessory3.toString()
-                    loadedCharacters[position].helmet = data[position].helmet.toString()
-                    loadedCharacters[position].armour = data[position].armour.toString()
+                    loadedCharacters[position].weapon1 = data[position].weapon1
+                    loadedCharacters[position].weapon1 = data[position].weapon2
+                    loadedCharacters[position].accessory1 = data[position].accessory1
+                    loadedCharacters[position].accessory2 = data[position].accessory2
+                    loadedCharacters[position].accessory3 = data[position].accessory3
+                    loadedCharacters[position].helmet = data[position].helmet
+                    loadedCharacters[position].armour = data[position].armour
+
+                    //TODO rewards and mods
 
                     loadedCharacters[position].background = data[position].background.toString()
 
