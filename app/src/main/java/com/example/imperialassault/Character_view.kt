@@ -1020,22 +1020,22 @@ class Character_view : AppCompatActivity(){
     //Backgrounds
     fun onBackgroundSnow(view: View) {
         character.background = "snow"
-        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_snow.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_snow.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_snow.png"))
     }
     fun onBackgroundJungle(view: View) {
         character.background = "jungle"
-        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_jungle.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_jungle.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_jungle.png"))
     }
     fun onBackgroundDesert(view: View) {
         character.background = "desert"
-        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_desert.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_desert.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_desert.png"))
     }
     fun onBackgroundInterior(view: View) {
         character.background = "interior"
-        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_interior.png"))
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_interior.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
     }
 
