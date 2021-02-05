@@ -152,7 +152,7 @@ open class Character {
     }
 
     open fun getBackgroundImage(context: Context): Bitmap? {
-        val image = getBitmap(context, "backgrounds/background_"+ background + ".png")
+        val image = getBitmap(context, "backgrounds/background_"+ background + ".jpg")
         return image;
     }
 

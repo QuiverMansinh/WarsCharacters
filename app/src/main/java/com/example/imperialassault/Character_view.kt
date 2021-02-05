@@ -243,7 +243,7 @@ class Character_view : AppCompatActivity(){
         updateConditionIcons()
 
 
-        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.jpg"))
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
 
         if(character.name_short == "jarrod"){
             companion_button.visibility = View.VISIBLE
