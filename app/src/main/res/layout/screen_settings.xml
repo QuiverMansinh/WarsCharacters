@@ -2,53 +2,237 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="@drawable/character_select_background">
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/screen_background"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/Credits"
+        <TextView
+            android:id="@+id/textView35"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
-            android:background="@drawable/list_background"
-            android:onClick="onDevCredits"
-            app:cardBackgroundColor="#777777"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="10dp">
+            android:layout_margin="10dp"
+            android:fontFamily="@font/agency_fb"
+            android:gravity="center"
+            android:shadowColor="@color/black"
+            android:shadowRadius="10"
+            android:text="SETTINGS"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/list_background">
+                android:fontFamily="@font/agency_fb"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="Damage Animation"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/agency_fb"
-                    android:gravity="center"
-                    android:text="Credits"
-                    android:textColor="#000000"
-                    android:textSize="36sp"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="60dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/save_file_back_2"
+                android:checked="true"
+                android:fontFamily="@font/advent_pro_semibold"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="ToggleButton"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/textView26"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/agency_fb"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="Condition Animation"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton2"
+                android:layout_width="60dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/save_file_back_2"
+                android:checked="true"
+                android:fontFamily="@font/advent_pro_semibold"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="ToggleButton"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/textView32"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/agency_fb"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="Auto-Image Change"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton3"
+                android:layout_width="60dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/save_file_back_2"
+                android:checked="true"
+                android:fontFamily="@font/advent_pro_semibold"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="ToggleButton"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/textView33"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/agency_fb"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="Action Usage"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton4"
+                android:layout_width="60dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/save_file_back_2"
+                android:checked="true"
+                android:fontFamily="@font/advent_pro_semibold"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="ToggleButton"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/textView25"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/save_file_back"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="10"
+                android:text="Credits"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/screen_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

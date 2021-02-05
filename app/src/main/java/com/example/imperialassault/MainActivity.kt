@@ -1,11 +1,13 @@
 package com.example.imperialassault
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowManager
@@ -19,13 +21,27 @@ import java.io.InputStream
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setAnimation()
         setContentView(R.layout.activity_main)
 
         newButton.setOnClickListener {
-            startActivity(Intent(this, Characters_list::class.java))
+            if (Build.VERSION.SDK_INT > 20) {
+                val options = ActivityOptions.makeSceneTransitionAnimation(this)
+                startActivity(Intent(this, Characters_list::class.java), options.toBundle())
+            }
+            else {
+                startActivity(Intent(this, Characters_list::class.java))
+            }
+
         }
         loadButton.setOnClickListener {
-            startActivity(Intent(this, LoadScreen::class.java))
+            if(Build.VERSION.SDK_INT > 20){
+                val options = ActivityOptions.makeSceneTransitionAnimation(this)
+                startActivity(Intent(this, LoadScreen::class.java),options.toBundle())
+            }
+            else {
+                startActivity(Intent(this, LoadScreen::class.java))
+            }
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -44,10 +60,20 @@ class MainActivity : AppCompatActivity() {
             sliceAnim = createAnimation("slice")
         }
         if(restAnim == null) {
-            restAnim = createAnimation("rest")
+            //Anim = createAnimation("rest")
         }
 
     }
+
+    fun setAnimation(){
+        /*if(Build.VERSION.SDK_INT>20) {
+            val fade = android.transition.Fade()
+            fade.setDuration(100);
+            getWindow().setExitTransition(fade);
+            getWindow().setEnterTransition(fade);
+        }*/
+    }
+
     companion object{
         var selectedCharacter:Character? = null
         var blastAnim: AnimationDrawable? = null

@@ -1,36 +1,110 @@
 package com.example.imperialassault
 
+import android.animation.ObjectAnimator
 import android.app.Activity
+import android.app.ActivityOptions
+import android.app.Dialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.view.Window
+import android.view.animation.DecelerateInterpolator
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_load_screen.*
+import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.android.synthetic.main.save_load_item.view.*
-
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class LoadScreen : AppCompatActivity() {
 
+    var saveDialog:Dialog? = null
+    var width = 0f
+    var height = 0f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setAnimation()
         setContentView(R.layout.activity_load_screen)
+
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        height = displayMetrics.heightPixels.toFloat()
+        width = displayMetrics.widthPixels.toFloat()
+
         val database = AppDatabase.getInstance(this)
         lifecycleScope.launch {
             MainActivity.data = database!!.getCharacterDAO().getAll()
         }
+
+        saveDialog = Dialog(this)
+        saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        saveDialog!!.setCancelable(false)
+        saveDialog!!.setContentView(R.layout.dialog_edit_save)
+        saveDialog!!.setCanceledOnTouchOutside(true)
+        saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        saveDialog!!.edit_load_file_name.requestFocus()
+        saveDialog!!.apply.setOnClickListener {
+            onApply(saveDialog!!.apply)
+            saveDialog!!.cancel()
+            true
+        }
+        saveDialog!!.delete.setOnClickListener {
+            onDelete(saveDialog!!.delete)
+            saveDialog!!.cancel()
+            if(loadedCharacters.size <= 1) {
+                onBackPressed()
+            }
+            true
+        }
+
         listSaveFiles(MainActivity.data)
+        if(loadedCharacters.size <= 1){
+            showNoSavesFoundToast()
+        }
+        println("no save files found " + loadedCharacters.size)
     }
+
+    fun setAnimation(){
+        /*if(Build.VERSION.SDK_INT>20) {
+            val fade = android.transition.Fade()
+            fade.setDuration(100);
+            getWindow().setExitTransition(fade);
+            getWindow().setEnterTransition(fade);
+        }*/
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        if(hasFocus){
+            listView.animate().alpha(1f)
+           for(i in 0..listView.count-1) {
+                try {
+                    val anim = ObjectAnimator.ofFloat(
+                        listView.get(i), "translationX", -width
+                            .toFloat() * (i + 2), 0f
+                    )
+                    anim.interpolator = DecelerateInterpolator()
+                    anim.duration=(150*(i+2)).toLong()
+                    anim.start()
+
+                }
+                catch (e: Exception){
+                    //println(i)
+                }
+            }
+
+        }
+    }
+
 
     private lateinit var listView:ListView
 
@@ -38,10 +112,14 @@ class LoadScreen : AppCompatActivity() {
     var loadedCharacters = ArrayList<Character>()
     var adapter:ArrayAdapter<String>? = null
 
-    fun listSaveFiles(data : List<CharacterData>?){
+    fun listSaveFiles(data: List<CharacterData>?){
         listView = findViewById<ListView>(R.id.load_screen_list)
         listView.divider = null
         listView.dividerHeight = 0
+
+
+
+
         if( data != null) {
 
 
@@ -54,14 +132,14 @@ class LoadScreen : AppCompatActivity() {
             fileNames.add("")
             loadedCharacters.add(Character())
 
-            adapter = LoadFileAdapter(this,fileNames, loadedCharacters, data)
+            adapter = LoadFileAdapter(this, fileNames, loadedCharacters, data)
             listView.adapter= adapter
 
 
             listView.isClickable = true
             listView.setOnItemClickListener  { parent, view, position, id ->
                 if(position<listView.count-1) {
-                    println("" + data[position])
+                    //println("" + data[position])
                     loadedCharacters[position].file_name = ""+data[position].fileName
                     loadedCharacters[position].id = data[position].id
 
@@ -149,7 +227,7 @@ class LoadScreen : AppCompatActivity() {
 
                     MainActivity.selectedCharacter = loadedCharacters[position]
 
-
+                    listView.animate().alpha(0f)
                     val intent = Intent(this, Character_view::class.java)
 
                     /*
@@ -169,17 +247,25 @@ class LoadScreen : AppCompatActivity() {
 */
                     intent.putExtra("CharacterName", loadedCharacters[position].name_short)
                     intent.putExtra("Load", true)
-                    startActivity(intent);
-                    finish()
+                    if (Build.VERSION.SDK_INT > 20) {
+                        val options = ActivityOptions.makeSceneTransitionAnimation(this)
+                        startActivity(intent, options.toBundle())
+                    }
+                    else {
+                        startActivity(intent);
+                    }
+
+                    //finish()
                 }
             }
-            listView.setOnItemLongClickListener{parent, view, position, id ->
+            listView.setOnItemLongClickListener{ parent, view, position, id ->
                 //fileNames.removeAt(position)
                 //loadedCharacters.removeAt(position)
-                edit_load_file.visibility = View.VISIBLE
-                edit_load_file_name.setText(""+fileNames[position])
-                edit_load_file_name.requestFocus()
                 positionEditing = position
+                listView.animate().alpha(0f)
+                saveDialog!!.show()
+                saveDialog!!.edit_load_file_name.setText("" + fileNames[position])
+
                 true
             }
 
@@ -188,50 +274,92 @@ class LoadScreen : AppCompatActivity() {
     }
 
     var positionEditing = -1
-    fun onApply(view:View){
+    fun onApply(view: View){
         fileNames[positionEditing] =  edit_load_file_name.text.toString()
         adapter!!.notifyDataSetChanged()
         //TODO update database
 
 
-        edit_load_file.visibility = View.INVISIBLE
     }
-    fun onDelete(view:View){
+    fun onDelete(view: View){
         fileNames.removeAt(positionEditing)
         loadedCharacters.removeAt(positionEditing)
         //TODO delete from database
         val database = AppDatabase.getInstance(this)
         database!!.getCharacterDAO().delete(MainActivity.data!![positionEditing])
         adapter!!.notifyDataSetChanged()
-        edit_load_file.visibility = View.INVISIBLE
     }
 
 
-    fun selectCharacter(characterName : String?):Character{
+    fun selectCharacter(characterName: String?):Character{
         var character = Character();
         when (characterName) {
-            "biv" -> { character = Character_biv(this) }
-            "davith" -> { character = Character_davith(this) }
-            "diala" -> { character = Character_diala(this) }
-            "drokdatta" -> { character = Character_drokkatta(this) }
-            "fenn" -> { character = Character_fenn(this) }
-            "gaarkhan" -> { character = Character_gaarkhan(this) }
-            "gideon" -> { character = Character_gideon(this) }
-            "jarrod" -> { character = Character_jarrod(this) }
-            "jyn" -> { character = Character_jyn(this) }
-            "loku" -> { character = Character_loku(this) }
-            "kotun" -> { character = Character_kotun(this) }
-            "mak" -> { character = Character_mak(this) }
-            "mhd19" -> { character = Character_mhd19(this) }
-            "murne" -> { character = Character_murne(this) }
-            "onar" -> { character = Character_onar(this) }
-            "saska" -> { character = Character_saska(this) }
-            "shyla" -> { character = Character_shyla(this) }
-            "verena" -> { character = Character_verena(this) }
-            "vinto" -> { character = Character_vinto(this) }
-            "drokkatta" -> { character = Character_drokkatta(this) }
-            "ct1701" -> { character = Character_ct1701(this) }
-            "tress" -> { character = Character_tress(this) }
+            "biv" -> {
+                character = Character_biv(this)
+            }
+            "davith" -> {
+                character = Character_davith(this)
+            }
+            "diala" -> {
+                character = Character_diala(this)
+            }
+            "drokdatta" -> {
+                character = Character_drokkatta(this)
+            }
+            "fenn" -> {
+                character = Character_fenn(this)
+            }
+            "gaarkhan" -> {
+                character = Character_gaarkhan(this)
+            }
+            "gideon" -> {
+                character = Character_gideon(this)
+            }
+            "jarrod" -> {
+                character = Character_jarrod(this)
+            }
+            "jyn" -> {
+                character = Character_jyn(this)
+            }
+            "loku" -> {
+                character = Character_loku(this)
+            }
+            "kotun" -> {
+                character = Character_kotun(this)
+            }
+            "mak" -> {
+                character = Character_mak(this)
+            }
+            "mhd19" -> {
+                character = Character_mhd19(this)
+            }
+            "murne" -> {
+                character = Character_murne(this)
+            }
+            "onar" -> {
+                character = Character_onar(this)
+            }
+            "saska" -> {
+                character = Character_saska(this)
+            }
+            "shyla" -> {
+                character = Character_shyla(this)
+            }
+            "verena" -> {
+                character = Character_verena(this)
+            }
+            "vinto" -> {
+                character = Character_vinto(this)
+            }
+            "drokkatta" -> {
+                character = Character_drokkatta(this)
+            }
+            "ct1701" -> {
+                character = Character_ct1701(this)
+            }
+            "tress" -> {
+                character = Character_tress(this)
+            }
         }
         return character
     }
@@ -239,11 +367,32 @@ class LoadScreen : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
+
+    fun showNoSavesFoundToast(){
+        val noSavesFoundToast= Dialog(this)
+
+        noSavesFoundToast.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        noSavesFoundToast.setCancelable(false)
+        noSavesFoundToast.setContentView(R.layout.dialog_no_savefiles_found)
+
+
+        noSavesFoundToast.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        noSavesFoundToast!!. show()
+        println("sdfsdfsdfsdfsdf")
+        MainScope().launch {
+                delay(2000)
+                noSavesFoundToast.cancel()
+                onBackPressed()
+            }
+
+    }
 }
 
-class LoadFileAdapter(val context: Activity, val fileNames : ArrayList<String?>, val characters
-:ArrayList<Character>, val data: List<CharacterData>?)
-    : ArrayAdapter<String>(context,R.layout.save_load_item,fileNames){
+class LoadFileAdapter(
+    val context: Activity, val fileNames: ArrayList<String?>, val characters
+    : ArrayList<Character>, val data: List<CharacterData>?
+)
+    : ArrayAdapter<String>(context, R.layout.save_load_item, fileNames){
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
         val button = inflater.inflate(R.layout.save_load_item, null, true)
@@ -256,7 +405,7 @@ class LoadFileAdapter(val context: Activity, val fileNames : ArrayList<String?>,
             saveCharacterImage.setImageDrawable(characters[position].portraitImage)
 
             var level = 5
-            println("spent "+data!![position].xpSpent + "total "+data!![position].totalXP)
+            println("spent " + data!![position].xpSpent + "total " + data!![position].totalXP)
             if (data!![position].xpSpent <= 1) {
                 level = 1
             } else if (data!![position].xpSpent <= 4) {
@@ -268,12 +417,17 @@ class LoadFileAdapter(val context: Activity, val fileNames : ArrayList<String?>,
             }
             button.save_file_level.setText("Lv " + level)
             button.save_file_character.setText("" + characters[position].name)
-            button.save_file_date.setText(""+data!![position].date)
+            button.save_file_date.setText("" + data!![position].date)
+
+
 
         } else {
             button.visibility = View.INVISIBLE
         }
         return button
     }
+
+
+
 }
 

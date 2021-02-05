@@ -1,18 +1,24 @@
 package com.example.imperialassault
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.os.Bundle
+import android.transition.Slide
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class Characters_list : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setAnimation()
         setContentView(R.layout.activity_characters_list)
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -63,6 +69,15 @@ class Characters_list : AppCompatActivity() {
         //TODO delete selected character on load
     }
 
+    fun setAnimation(){
+        /*if(Build.VERSION.SDK_INT>20) {
+            val fade = android.transition.Fade()
+            fade.setDuration(100);
+            getWindow().setExitTransition(fade);
+            getWindow().setEnterTransition(fade);
+        }*/
+    }
+
     fun onSelect(view: View) {
         if(MainActivity.selectedCharacter != null) {
             wipeSelectedCharacter()
@@ -70,8 +85,14 @@ class Characters_list : AppCompatActivity() {
         val intent = Intent(this, Character_view::class.java)
         intent.putExtra("CharacterName", view.tag.toString())
         intent.putExtra("Load", false)
-        startActivity(intent);
-        finish()
+        if (Build.VERSION.SDK_INT > 20) {
+            val options = ActivityOptions.makeSceneTransitionAnimation(this)
+            startActivity(intent, options.toBundle())
+        }
+        else {
+            startActivity(intent);
+        }
+        //finish()
     }
 
     fun wipeSelectedCharacter(){
@@ -81,7 +102,6 @@ class Characters_list : AppCompatActivity() {
             if (MainActivity.selectedCharacter!!.xpCardImages[i] != null) {
                 MainActivity.selectedCharacter!!.xpCardImages!![i].recycle()
             }
-
         }
         if (MainActivity.selectedCharacter!!.power != null) {
             MainActivity.selectedCharacter!!.power!!.recycle()

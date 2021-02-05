@@ -19,22 +19,31 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:background="@drawable/character_select_background">
 
             <ImageView
-                android:id="@+id/imageView37"
+                android:id="@+id/imageView35"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/screen_background"
                 android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView34"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView39"
+                android:id="@+id/imageView33"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:background="@drawable/border_side"
+                android:rotation="180"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView34"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:background="@drawable/border_side"
@@ -42,27 +51,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView38"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:background="@drawable/border_side"
-                android:rotation="180"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <EditText
-                android:id="@+id/save_name"
+                android:id="@+id/edit_load_file_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="10"
                 android:fontFamily="@font/agency_fb"
                 android:gravity="center"
-                android:hint="New File Name"
                 android:inputType="textPersonName"
                 android:maxLength="15"
                 android:shadowColor="@color/black"
@@ -73,26 +70,45 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/delete2" />
+
+            <TextView
+                android:id="@+id/delete2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowRadius="5"
+                android:text="EDIT SAVE FILE"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/linearLayout14"
-                android:layout_width="0dp"
+                android:id="@+id/linearLayout13"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/save_name">
+                app:layout_constraintTop_toBottomOf="@+id/edit_load_file_name">
 
                 <TextView
-                    android:id="@+id/cancel_button"
+                    android:id="@+id/delete"
                     android:layout_width="80dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
@@ -100,10 +116,10 @@
                     android:background="@drawable/save_file_back_2"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="onCancelNewSave"
+                    android:onClick="onDelete"
                     android:shadowColor="@color/black"
                     android:shadowRadius="5"
-                    android:text="CANCEL"
+                    android:text="DELETE"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -112,9 +128,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/save_button"
+                    android:id="@+id/apply"
                     android:layout_width="80dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
@@ -122,10 +139,10 @@
                     android:background="@drawable/save_file_back_2"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="onSaveNewCharacter"
+                    android:onClick="onApply"
                     android:shadowColor="@color/black"
                     android:shadowRadius="5"
-                    android:text="SAVE"
+                    android:text="APPLY"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"

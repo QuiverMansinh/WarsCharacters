@@ -35,7 +35,8 @@
                     android:gravity="center"
                     android:text="Credits"
                     android:textColor="#FFFFFF"
-                    android:textSize="36sp" />
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -55,6 +56,56 @@
                     android:text="Fantasy fight games"
                     android:textColor="#FFEB3B"
                     android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView31"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center"
+                    android:text="Illustration By:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="140dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="70dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                tools:srcCompat="@tools:sample/avatars" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/agency_fb"
+                            android:gravity="center"
+                            android:text="Mike Glasswell"
+                            android:textColor="#23F4CA"
+                            android:textSize="24sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView28"
@@ -134,56 +185,6 @@
                             android:fontFamily="@font/agency_fb"
                             android:gravity="center"
                             android:text="Matthew Bogdanov"
-                            android:textColor="#23F4CA"
-                            android:textSize="24sp" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView31"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/agency_fb"
-                    android:gravity="center"
-                    android:text="Illustration By:"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="140dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="70dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:scaleType="fitCenter"
-                                tools:srcCompat="@tools:sample/avatars" />
-                        </androidx.cardview.widget.CardView>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/agency_fb"
-                            android:gravity="center"
-                            android:text="Mike Glasswell"
                             android:textColor="#23F4CA"
                             android:textSize="24sp" />
 

@@ -12,16 +12,22 @@ import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
+import android.transition.Explode
+import android.transition.Slide
 import android.util.DisplayMetrics
 import android.view.*
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.core.widget.ImageViewCompat
+import androidx.transition.Fade
 import kotlinx.android.synthetic.main.activity_character_view.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
@@ -52,6 +58,7 @@ class Character_view : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setAnimation()
         setContentView(R.layout.activity_character_view)
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -70,6 +77,53 @@ class Character_view : AppCompatActivity(){
         initKillTracker()
         startSaveTimer()
     }
+
+    fun setAnimation(){
+        /*
+        if(Build.VERSION.SDK_INT>20) {
+            val fade = android.transition.Fade()
+            fade.setDuration(200);
+            getWindow().setExitTransition(fade);
+            getWindow().setEnterTransition(fade);
+        }*/
+    }
+
+    var loadAnimated = false
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        if(hasFocus&&!loadAnimated ){
+            top_panel.animate().alpha(1f)
+            val animTop = ObjectAnimator.ofFloat(top_panel,"translationY",-top_panel.height
+                .toFloat(),0f)
+
+            animTop .duration=(500).toLong()
+            animTop .start()
+
+
+            bottom_panel.animate().alpha(1f)
+            val animBottom = ObjectAnimator.ofFloat(bottom_panel,"translationY",bottom_panel.height
+                .toFloat(),0f)
+            //animBottom.interpolator = DecelerateInterpolator()
+            animBottom.duration=(500).toLong()
+            animBottom.start()
+
+            left_buttons.animate().alpha(1f)
+            val animButtons = ObjectAnimator.ofFloat(left_buttons,"translationX",-left_buttons.width
+                .toFloat(),0f)
+            //animBottom.interpolator = DecelerateInterpolator()
+            animButtons.duration=(500).toLong()
+            animButtons.start()
+
+            character_images.animate().alpha(1f)
+            val animChar= ObjectAnimator.ofFloat(character_images,"translationX",-character_images.width
+                .toFloat(),-character_images.width.toFloat(),0f)
+            animChar.interpolator = DecelerateInterpolator()
+            animChar.duration=(1000).toLong()
+            animChar.start()
+
+            loadAnimated = true
+        }
+    }
+
     //************************************************************************************************************
     //region Main Screen
     //************************************************************************************************************
@@ -1483,8 +1537,8 @@ class Character_view : AppCompatActivity(){
     var sliceAnim:AnimationDrawable= AnimationDrawable()
 */
     fun initAnimations(){
-        rest_animation.setBackgroundDrawable(MainActivity.restAnim)
-        rest_animation.visibility = FrameLayout.INVISIBLE
+        //rest_animation.setBackgroundDrawable(MainActivity.restAnim)
+        //rest_animation.visibility = FrameLayout.INVISIBLE
     }
 
     fun playDamageAnim(){
@@ -1511,9 +1565,13 @@ class Character_view : AppCompatActivity(){
 
     }
     fun playRestAnim(){
-        rest_animation.visibility = FrameLayout.VISIBLE
-        MainActivity.restAnim!!.setVisible(true, true)
-        MainActivity.restAnim!!.start()
+        //rest_animation.visibility = FrameLayout.VISIBLE
+        //MainActivity.restAnim!!.setVisible(true, true)
+        //MainActivity.restAnim!!.start()
+
+        var restAnim = ObjectAnimator.ofFloat(rest_animation,"alpha",0f,1f,0.75f,0.25f,0f)
+        restAnim.duration = 200
+        restAnim.start()
     }
 
 
@@ -1723,14 +1781,14 @@ class Character_view : AppCompatActivity(){
             quickSave()
         }
 
-        settingsScreen= Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        settingsScreen= Dialog(this)
         settingsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         settingsScreen!!.setCancelable(false)
         settingsScreen!!.setContentView(R.layout.screen_settings)
         settingsScreen!!.setCanceledOnTouchOutside(true)
         settingsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
-        statsScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        statsScreen = Dialog(this)
         statsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         statsScreen!!.setCancelable(false)
         statsScreen!!.setContentView(R.layout.screen_stats)
@@ -1748,6 +1806,7 @@ class Character_view : AppCompatActivity(){
         xpSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         xpSelectScreen!!.setCancelable(false)
         xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
+        statsScreen!!.setCanceledOnTouchOutside(true)
         xpSelectScreen!!.setCanceledOnTouchOutside(true)
 
         developersCreditsScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
@@ -1940,45 +1999,46 @@ class Character_view : AppCompatActivity(){
                 delay(1000)
                 secondsSinceLastSave++
             }
-            println("TIMED AUTOSAVE")
+            //println("TIMED AUTOSAVE")
             quickSave()
             startSaveTimer()
         }
     }
 
     fun quickSave(){
-        val character = MainActivity.selectedCharacter
-        println("QUICK SAVE character " + character)
-        if(character!=null){
-            var saveFile = getCharacterData(character.file_name)
-            val database = AppDatabase.getInstance(this)
+        if(secondsSinceLastSave > 3) {
+            val character = MainActivity.selectedCharacter
+            //println("QUICK SAVE character " + character)
+            if (character != null) {
+                var saveFile = getCharacterData(character.file_name)
+                val database = AppDatabase.getInstance(this)
 
-            startSaveAnimation()
-            GlobalScope.launch {
-                while (saving) {
-                    saveAnimation()
-                    delay(10)
+                startSaveAnimation()
+                GlobalScope.launch {
+                    while (saving) {
+                        saveAnimation()
+                        delay(10)
+                    }
                 }
-            }
-            GlobalScope.launch {
-                if(character.id != -1) {
-                    saveFile.id = character.id
-                    database!!.getCharacterDAO().update(saveFile)
+                GlobalScope.launch {
+                    if (character.id != -1) {
+                        saveFile.id = character.id
+                        database!!.getCharacterDAO().update(saveFile)
+                    } else {
+                        character.id = saveFile.id
+                        database!!.getCharacterDAO().insert(saveFile)
+                    }
+                    stopSaveAnimation()
                 }
-                else{
-                    character.id = saveFile.id
-                    database!!.getCharacterDAO().insert(saveFile)
-                }
-                stopSaveAnimation()
-            }
 
+            }
+            secondsSinceLastSave = 0
         }
-        secondsSinceLastSave = 0
     }
 
     fun firstManualSave() {
         val character = MainActivity.selectedCharacter
-        println("FIRST MANUAL SAVE character " + character)
+        //println("FIRST MANUAL SAVE character " + character)
         if (character != null) {
             var saveFile = getCharacterData("" + saveDialog!!.save_name.text.toString())
             character.file_name = saveFile.fileName + ""
@@ -2002,7 +2062,7 @@ class Character_view : AppCompatActivity(){
 
     fun createNewSave(){
         val character = MainActivity.selectedCharacter
-        println("character" + character)
+        //println("character" + character)
         if(character!=null){
             var saveFile= getCharacterData("" + saveDialog!!.save_name.text.toString())
             character.file_name = saveFile.fileName+""
@@ -2030,7 +2090,7 @@ class Character_view : AppCompatActivity(){
     }
     fun saveAnimation(){
         saveTime++
-        println("save time " + saveTime)
+        //println("save time " + saveTime)
     }
     fun stopSaveAnimation(){
         saving=false
@@ -2044,7 +2104,7 @@ class Character_view : AppCompatActivity(){
     }
 
     override fun onStop() {
-        println("STOP")
+        //println("STOP")
         quickSave()
         super.onStop()
         //TODO

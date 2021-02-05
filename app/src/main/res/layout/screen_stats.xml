@@ -2,13 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="@drawable/character_select_background">
+
+    <ImageView
+        android:id="@+id/imageView30"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/screen_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="300dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
@@ -20,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="155dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -188,7 +199,7 @@
         </LinearLayout>
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
@@ -824,11 +835,10 @@
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -837,7 +847,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
@@ -1428,17 +1438,6 @@
             </ScrollView>
 
         </androidx.cardview.widget.CardView>
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/screen_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
