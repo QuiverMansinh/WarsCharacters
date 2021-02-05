@@ -25,22 +25,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         newButton.setOnClickListener {
+            val intent = Intent(this, Characters_list::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             if (Build.VERSION.SDK_INT > 20) {
+
                 val options = ActivityOptions.makeSceneTransitionAnimation(this)
-                startActivity(Intent(this, Characters_list::class.java), options.toBundle())
+                startActivity(intent, options.toBundle())
             }
             else {
-                startActivity(Intent(this, Characters_list::class.java))
+                startActivity(intent)
             }
 
         }
         loadButton.setOnClickListener {
+            val intent = Intent(this, LoadScreen::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             if(Build.VERSION.SDK_INT > 20){
                 val options = ActivityOptions.makeSceneTransitionAnimation(this)
-                startActivity(Intent(this, LoadScreen::class.java),options.toBundle())
+
+                startActivity(intent,options.toBundle())
             }
             else {
-                startActivity(Intent(this, LoadScreen::class.java))
+                startActivity(intent)
             }
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

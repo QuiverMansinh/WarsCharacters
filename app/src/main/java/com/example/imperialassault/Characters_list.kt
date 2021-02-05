@@ -85,6 +85,7 @@ class Characters_list : AppCompatActivity() {
         val intent = Intent(this, Character_view::class.java)
         intent.putExtra("CharacterName", view.tag.toString())
         intent.putExtra("Load", false)
+
         if (Build.VERSION.SDK_INT > 20) {
             val options = ActivityOptions.makeSceneTransitionAnimation(this)
             startActivity(intent, options.toBundle())

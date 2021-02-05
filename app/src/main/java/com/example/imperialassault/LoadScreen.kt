@@ -93,7 +93,7 @@ class LoadScreen : AppCompatActivity() {
                             .toFloat() * (i + 2), 0f
                     )
                     anim.interpolator = DecelerateInterpolator()
-                    anim.duration=(150*(i+2)).toLong()
+                    anim.duration=(100*(i+2)).toLong()
                     anim.start()
 
                 }
@@ -247,6 +247,7 @@ class LoadScreen : AppCompatActivity() {
 */
                     intent.putExtra("CharacterName", loadedCharacters[position].name_short)
                     intent.putExtra("Load", true)
+
                     if (Build.VERSION.SDK_INT > 20) {
                         val options = ActivityOptions.makeSceneTransitionAnimation(this)
                         startActivity(intent, options.toBundle())
