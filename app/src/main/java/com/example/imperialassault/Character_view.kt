@@ -117,7 +117,7 @@ class Character_view : AppCompatActivity(){
             val animChar= ObjectAnimator.ofFloat(character_images,"translationX",-character_images.width
                 .toFloat(),-character_images.width.toFloat(),0f)
             animChar.interpolator = DecelerateInterpolator()
-            animChar.duration=(1000).toLong()
+            animChar.duration=(800).toLong()
             animChar.start()
 
             loadAnimated = true
