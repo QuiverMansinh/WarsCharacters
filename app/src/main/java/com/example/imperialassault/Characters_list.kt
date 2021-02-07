@@ -86,14 +86,10 @@ class Characters_list : AppCompatActivity() {
         intent.putExtra("CharacterName", view.tag.toString())
         intent.putExtra("Load", false)
 
-        if (Build.VERSION.SDK_INT > 20) {
-            val options = ActivityOptions.makeSceneTransitionAnimation(this)
-            startActivity(intent, options.toBundle())
-        }
-        else {
+
             startActivity(intent);
-        }
-        //finish()
+
+
     }
 
     fun wipeSelectedCharacter(){

@@ -6,6 +6,7 @@ import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
+import kotlinx.android.synthetic.main.activity_character_view.view.*
 import kotlinx.android.synthetic.main.activity_load_screen.*
 import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.android.synthetic.main.save_load_item.view.*
@@ -248,12 +250,19 @@ class LoadScreen : AppCompatActivity() {
                     intent.putExtra("CharacterName", loadedCharacters[position].name_short)
                     intent.putExtra("Load", true)
 
-                    if (Build.VERSION.SDK_INT > 20) {
-                        val options = ActivityOptions.makeSceneTransitionAnimation(this)
-                        startActivity(intent, options.toBundle())
-                    }
-                    else {
+
                         startActivity(intent);
+                    for(i in 0..listView.count-1) {
+                        try {
+
+                         var image = listView.get(i).character_image as ImageView
+                         var b = image.drawable as BitmapDrawable
+                            b.bitmap.recycle()
+                        }
+                        catch (e: Exception){
+                            //println(i)
+                        }
+
                     }
 
                     //finish()
@@ -365,8 +374,26 @@ class LoadScreen : AppCompatActivity() {
         return character
     }
     override fun onBackPressed() {
+        for(i in 0..listView.count-1) {
+            try {
+
+                var image = listView.get(i).character_image as ImageView
+                var b = image.drawable as BitmapDrawable
+                b.bitmap.recycle()
+
+
+                b = listView.get(i).save_file_back.background as BitmapDrawable
+                b.bitmap.recycle()
+
+
+            }
+            catch (e: Exception){
+                //println(i)
+            }
+
+        }
         super.onBackPressed()
-        finish()
+        //finish()
     }
 
     fun showNoSavesFoundToast(){

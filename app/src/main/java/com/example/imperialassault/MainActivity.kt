@@ -26,28 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         newButton.setOnClickListener {
             val intent = Intent(this, Characters_list::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-            if (Build.VERSION.SDK_INT > 20) {
-
-                val options = ActivityOptions.makeSceneTransitionAnimation(this)
-                startActivity(intent, options.toBundle())
-            }
-            else {
                 startActivity(intent)
-            }
-
         }
         loadButton.setOnClickListener {
             val intent = Intent(this, LoadScreen::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-            if(Build.VERSION.SDK_INT > 20){
-                val options = ActivityOptions.makeSceneTransitionAnimation(this)
-
-                startActivity(intent,options.toBundle())
-            }
-            else {
                 startActivity(intent)
-            }
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -64,9 +47,6 @@ class MainActivity : AppCompatActivity() {
         }
         if(sliceAnim == null) {
             sliceAnim = createAnimation("slice")
-        }
-        if(restAnim == null) {
-            //Anim = createAnimation("rest")
         }
 
     }

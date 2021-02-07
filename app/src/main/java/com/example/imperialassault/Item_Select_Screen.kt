@@ -67,7 +67,14 @@ class Item_Select_Screen : AppCompatActivity() {
             }
         })
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }
+
+
 
 @Suppress("DEPRECATION")
 internal class MyAdapter(
