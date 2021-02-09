@@ -28,15 +28,25 @@ class Item_Select_Screen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item__select__screen)
 
-        val adapter = MyAdapter(this, supportFragmentManager,tab_layout.tabCount)
+        val adapter = MyAdapter(this, supportFragmentManager, tab_layout.tabCount)
         pager.adapter = adapter
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-        when(intent.getStringExtra("tab")){
-            "range" -> {pager.setCurrentItem(4)}
-            "melee" -> {pager.setCurrentItem(3)}
-            "accessory" -> {pager.setCurrentItem(2)}
-            "armour" -> {pager.setCurrentItem(1)}
-            "reward" -> {pager.setCurrentItem(0)}
+        when (intent.getStringExtra("tab")) {
+            "range" -> {
+                pager.setCurrentItem(4)
+            }
+            "melee" -> {
+                pager.setCurrentItem(3)
+            }
+            "accessory" -> {
+                pager.setCurrentItem(2)
+            }
+            "armour" -> {
+                pager.setCurrentItem(1)
+            }
+            "reward" -> {
+                pager.setCurrentItem(0)
+            }
         }
 
         showCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
@@ -51,7 +61,7 @@ class Item_Select_Screen : AppCompatActivity() {
             true
         }
 
-        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {
                     pager.currentItem = tab.position
@@ -87,308 +97,104 @@ internal class MyAdapter(
         return when (position) {
             0 -> {
                 Rewards()
-            }1 -> {
+            }
+            1 -> {
                 Armor()
-            }2 -> {
-                Drones()
-            }3 -> {
+            }
+            2 -> {
+                Accessories()
+            }
+            3 -> {
                 Melee()
-            }4 -> {
+            }
+            4 -> {
                 Ranged()
             }
             else -> getItem(position)
         }
     }
+
     override fun getCount(): Int {
         return totalTabs
     }
 }
 
-class Rewards constructor() : Fragment(){
+class Rewards : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rewardsPathIds = arrayListOf<Int>(
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3,
-            R.drawable.reward4,
-            R.drawable.reward5,
-            R.drawable.reward6,
-            R.drawable.reward7,
-            R.drawable.reward8,
-            R.drawable.reward9,
-            R.drawable.reward10,
-            R.drawable.reward11,
-            R.drawable.reward12,
-            R.drawable.reward13,
-            R.drawable.reward14,
-            R.drawable.reward15,
-            R.drawable.reward16,
-            R.drawable.reward17,
-            R.drawable.reward18,
-            R.drawable.reward19,
-            R.drawable.reward20,
-            R.drawable.reward21,
-            R.drawable.reward22,
-            R.drawable.reward23,
-            R.drawable.reward24,
-            R.drawable.reward25,
-        )
-        var itemsOnOff = arrayListOf<Boolean>()
-        for (i in 0..rewardsPathIds.size-1) {
-            itemsOnOff.add(false)
-        }
-        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.RewardsArray)
         return rewardsView
     }
 }
 
-class Drones : Fragment(){
+class Accessories : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rewardsPathIds = arrayListOf<Int>(
-            -6,
-            -1,
-            -6,
-            R.drawable.acc_t1_bactapump,
-            R.drawable.acc_t1_combatvembrace,
-            R.drawable.acc_t1_emergancyinjector,
-            R.drawable.acc_t1_portablemedkit,
-            R.drawable.acc_t1_survivalgear,
-            -5,
-            -6,
-            -2,
-            -6,
-            R.drawable.acc_t2_cyberneticarm,
-            R.drawable.acc_t2_extraammunition,
-            R.drawable.acc_t2_mandalorianhelmet,
-            R.drawable.acc_t2_r5_astromech,
-            R.drawable.acc_t2_slicingtools,
-            -5,
-            -6,
-            -3,
-            -6,
-            R.drawable.acc_t3_combatknife,
-            R.drawable.acc_t3_combatvisor,
-            R.drawable.acc_t3_concussiongrenades,
-            R.drawable.acc_t3_hiddenblade,
-            R.drawable.acc_t3_personalshield,
-            R.drawable.acc_t3_powercharger,
-            R.drawable.acc_t3_reinforcedhelmet,
-            R.drawable.acc_t3_supplypack,
-            -5,
-        )
-        var itemsOnOff = arrayListOf<Boolean>()
-        for (i in 0..rewardsPathIds.size-1) {
-            itemsOnOff.add(false)
-        }
-        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.accArray)
         return rewardsView
     }
 }
 
-class Armor : Fragment(){
+class Armor : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rewardsPathIds = arrayListOf<Int>(
-            -6,
-            -1,
-            -6,
-            R.drawable.arm_t1_combatcoat,
-            R.drawable.arm_t1_responsivearmor,
-            R.drawable.arm_t1_shadowsilkcloak,
-            -6,
-            -2,
-            -6,
-            R.drawable.arm_t2_combatcoat,
-            R.drawable.arm_t2_environmenthazardsuit,
-            R.drawable.arm_t2_laminatearmor,
-            -6,
-            -3,
-            -6,
-            R.drawable.arm_t3_admiralsuniform,
-            R.drawable.arm_t3_laminatearmor,
-            R.drawable.arm_t3_plastoidarmor,
-        )
-        var itemsOnOff = arrayListOf<Boolean>()
-        for (i in 0..rewardsPathIds.size-1) {
-            itemsOnOff.add(false)
-        }
-        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.armorArray)
         return rewardsView
     }
 }
 
-class Melee : Fragment(){
+class Melee : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rewardsPathIds = arrayListOf<Int>(
-            -6,
-            -1,
-            -6,
-            R.drawable.mel_t1_armoredgauntlets,
-            R.drawable.mel_t1_gaffistick,
-            R.drawable.mel_t1_punchdagger,
-            R.drawable.mel_t1_vibroblade,
-            R.drawable.mel_t1_vibroknife,
-            R.drawable.mel_t1_vibrosword,
-            -6,
-            -4,
-            -6,
-            R.drawable.mod_t1_balancedhilt,
-            R.drawable.mod_t1_extendedhaft,
-            -5,
-            -6,
-            -2,
-            -6,
-            R.drawable.mel_t2_bd_1vibroax,
-            R.drawable.mel_t2_doublevibrosword,
-            R.drawable.mel_t2_polearm,
-            R.drawable.mel_t2_stunbaton,
-            R.drawable.mel_t2_vibroknucklers,
-            -5,
-            -6,
-            -4,
-            -6,
-            R.drawable.mod_t2_energizedhilt,
-            R.drawable.mod_t2_highimpactguard,
-            R.drawable.mod_t2_weightedhead,
-            R.drawable.mod_t2_focusingbeam,
-            -5,
-            -5,
-            -6,
-            -3,
-            -6,
-            R.drawable.mel_t3_ancientlightsaber,
-            R.drawable.mel_t3_borifle,
-            R.drawable.mel_t3_electrostaff,
-            R.drawable.mel_t3_forcepike,
-            R.drawable.mel_t3_ryykblades,
-            -5,
-            -6,
-            -4,
-            -6,
-            R.drawable.mod_t3_shockemitter,
-            R.drawable.mod_t3_vibrogenerator,
-            -5,
-        )
-        var itemsOnOff = arrayListOf<Boolean>()
-        for (i in 0..rewardsPathIds.size-1) {
-            itemsOnOff.add(false)
-        }
-        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.meleeArray)
         return rewardsView
     }
 }
 
-class Ranged : Fragment(){
+class Ranged : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rewardsPathIds = arrayListOf<Int>(
-            -6,
-            -1,
-            -6,
-            R.drawable.gun_t1_chargedpistol,
-            R.drawable.gun_t1_ddcdefender,
-            R.drawable.gun_t1_dh17,
-            R.drawable.gun_t1_dl44,
-            R.drawable.gun_t1_e11,
-            R.drawable.gun_t1_handcannon,
-            R.drawable.gun_t1_tatooinehuntingrifle,
-            -5,
-            -5,
-            -6,
-            -4,
-            -6,
-            R.drawable.mod_t1_marksmanbarrel,
-            R.drawable.mod_t1_sniperscope,
-            R.drawable.mod_t1_tacticaldisplay,
-            R.drawable.mod_t1_underbarrelhh4,
-            R.drawable.mod_t1_chargedammopack,
-            -5,
-            -6,
-            -2,
-            -6,
-            R.drawable.gun_t2_434deathhammer,
-            R.drawable.gun_t2_a280,
-            R.drawable.gun_t2_dt12heavyblasterpistol,
-            R.drawable.gun_t2_e11d,
-            R.drawable.gun_t2_ee3carbine,
-            R.drawable.gun_t2_huntersrifle,
-            R.drawable.gun_t2_t21,
-            -5,
-            -5,
-            -6,
-            -4,
-            -6,
-            R.drawable.mod_t2_boltupgrade,
-            R.drawable.mod_t2_overcharger,
-            R.drawable.mod_t2_plasmacell,
-            R.drawable.mod_t2_spreadbarrel,
-            -5,
-            -5,
-            -6,
-            -3,
-            -6,
-            R.drawable.gun_t3_a12sniperrifle,
-            R.drawable.gun_t3_disruptorpistol,
-            R.drawable.gun_t3_dlt19,
-            R.drawable.gun_t3_dxr6,
-            R.drawable.gun_t3_modifiedenergycannon,
-            R.drawable.gun_t3_pulsecannon,
-            R.drawable.gun_t3_sportingblaster,
-            R.drawable.gun_t3_valken38carbine,
-            -5,
-            -6,
-            -4,
-            -6,
-            R.drawable.mod_t3_disruptioncell,
-            R.drawable.mod_t3_telescopingsights,
-            -5,
-        )
-        var itemsOnOff = arrayListOf<Boolean>()
-        for (i in 0..rewardsPathIds.size-1) {
-            itemsOnOff.add(false)
-        }
-        val rewardsView = inflater.inflate(R.layout.item_fragment,container,false) as View
+        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity,rewardsPathIds,itemsOnOff)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.rangedArray)
         return rewardsView
     }
 }
 
-class ImageAdapter internal constructor(val mContext: Activity, var imageArray:
-ArrayList<Int>,var itemsToggle: ArrayList<Boolean>) :
+class ImageAdapter internal constructor(
+    val mContext: Activity, var itemArray:
+    ArrayList<ArrayList<Int>>
+) :
     BaseAdapter
-    () {
+        () {
 
     // References to our images
 
     override fun getCount(): Int {
-        return imageArray.size
+        return itemArray[0].size
     }
 
     override fun getItem(position: Int): Any? {
@@ -398,54 +204,61 @@ ArrayList<Int>,var itemsToggle: ArrayList<Boolean>) :
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
     // Create a new ImageView for each item referenced by the Adapter
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var gridItem: View
 
-        if (imageArray[position] > 0){
+        if (itemArray[0][position] > 0) {
             gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
-            gridItem.item.setImageResource(imageArray[position])
-            if (itemsToggle[position] == true){
+            gridItem.item.setImageResource(itemArray[0][position])
+            if (itemArray[1][position] == 1) {
                 gridItem.item.alpha = 1f
-            }else if (itemsToggle[position] == false){
+            } else if (itemArray[1][position] == 0) {
                 gridItem.item.alpha = 0.5f
             }
-                gridItem.setOnLongClickListener {
-                    onShowCard(gridItem.item)
-                    true
-                }
-            gridItem.setOnClickListener{
-                if (itemsToggle[position] == false){
-                    System.out.println("SIZE SIZE SIZE " + itemsToggle[position])
-                    gridItem.item.animate().alpha(1f).duration = 50
-                    itemsToggle[position] = true
-                }else if (itemsToggle[position] == true){
-                    System.out.println("It Works " + itemsToggle[position])
+            gridItem.setOnLongClickListener {
+                onShowCard(gridItem.item)
+                true
+            }
+            gridItem.setOnClickListener {
+                if (itemArray[1][position] == 0) {
+                    System.out.println("SIZE SIZE SIZE " + itemArray[1][position])
+                    if(itemArray[2][0] != 0){
+                        gridItem.item.animate().alpha(1f).duration = 50
+                        itemArray[1][position] = 1
+                        itemArray[2][0]--
+                    }
+                } else if (itemArray[1][position] == 1) {
+                    System.out.println("It Works " + itemArray[1][position])
                     gridItem.item.animate().alpha(0.5f).duration = 50
-                    itemsToggle[position] = false
+                    itemArray[1][position] = 0
+                    itemArray[2][0]++
                 }
             }
-        }else if (imageArray[position] == -1){
+        } else if (itemArray[0][position] == -1) {
             gridItem = mContext.layoutInflater.inflate(R.layout.tier1_title, null, true)
-        }else if (imageArray[position] == -2){
+        } else if (itemArray[0][position] == -2) {
             gridItem = mContext.layoutInflater.inflate(R.layout.tier2_title, null, true)
-        }else if (imageArray[position] == -3){
+        } else if (itemArray[0][position] == -3) {
             gridItem = mContext.layoutInflater.inflate(R.layout.tier3_title, null, true)
-        }else if (imageArray[position] == -4){
+        } else if (itemArray[0][position] == -4) {
             gridItem = mContext.layoutInflater.inflate(R.layout.mods_divider, null, true)
-        }else if (imageArray[position] == -5){
+        } else if (itemArray[0][position] == -5) {
             gridItem = mContext.layoutInflater.inflate(R.layout.empty_item, null, true)
-        }else {
+        } else {
             gridItem = mContext.layoutInflater.inflate(R.layout.empty_space, null, true)
         }
         return gridItem
     }
 }
 
-class GlideryBullSh constructor(var idArrayList: ArrayList<Int>, var pathToDrawable:
-ArrayList<Int>,val activity: Fragment ,val fragment: View) {
-    fun doYourThing(){
-        for(i in 0..idArrayList.size-1){
+class GlideryBullSh constructor(
+    var idArrayList: ArrayList<Int>, var pathToDrawable:
+    ArrayList<Int>, val activity: Fragment, val fragment: View
+) {
+    fun doYourThing() {
+        for (i in 0..idArrayList.size - 1) {
             Glide.with(activity)
                 .load(pathToDrawable[i])
                 .into(fragment.findViewById(idArrayList[i]))
@@ -455,7 +268,7 @@ ArrayList<Int>,val activity: Fragment ,val fragment: View) {
 
 var showCardDialog: Dialog? = null
 
-fun onShowCard(view: ImageView){
+fun onShowCard(view: ImageView) {
     var image = ((view).drawable as BitmapDrawable).bitmap
     showCardDialog!!.card_image.setImageBitmap(image)
     showCardDialog!!.show()
