@@ -253,18 +253,7 @@ class ImageAdapter internal constructor(
     }
 }
 
-class GlideryBullSh constructor(
-    var idArrayList: ArrayList<Int>, var pathToDrawable:
-    ArrayList<Int>, val activity: Fragment, val fragment: View
-) {
-    fun doYourThing() {
-        for (i in 0..idArrayList.size - 1) {
-            Glide.with(activity)
-                .load(pathToDrawable[i])
-                .into(fragment.findViewById(idArrayList[i]))
-        }
-    }
-}
+
 
 var showCardDialog: Dialog? = null
 

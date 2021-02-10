@@ -1530,12 +1530,9 @@ class Character_view : AppCompatActivity(){
     //************************************************************************************************************
     //region Animations
     //************************************************************************************************************
-    /*
-    var blastAnim:AnimationDrawable = AnimationDrawable()
-    var impactAnim :AnimationDrawable= AnimationDrawable()
-    var restAnim:AnimationDrawable= AnimationDrawable()
-    var sliceAnim:AnimationDrawable= AnimationDrawable()
-*/
+
+
+
     fun initAnimations(){
         //rest_animation.setBackgroundDrawable(MainActivity.restAnim)
         //rest_animation.visibility = FrameLayout.INVISIBLE
@@ -1565,10 +1562,6 @@ class Character_view : AppCompatActivity(){
 
     }
     fun playRestAnim(){
-        //rest_animation.visibility = FrameLayout.VISIBLE
-        //MainActivity.restAnim!!.setVisible(true, true)
-        //MainActivity.restAnim!!.start()
-
         var restAnim = ObjectAnimator.ofFloat(rest_animation,"alpha",0f,1f,0.75f,0.25f,0f)
         restAnim.duration = 200
         restAnim.start()
