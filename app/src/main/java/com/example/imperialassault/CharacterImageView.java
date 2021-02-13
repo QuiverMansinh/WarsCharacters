@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 
 public class CharacterImageView extends View implements Runnable{
     Thread thread;
-    public boolean animating = true;
+
     Bitmap image, glowImage, layer1, layer2;
 
     boolean imageScaled = false;
@@ -32,6 +32,8 @@ public class CharacterImageView extends View implements Runnable{
     boolean bleeding = false;
     boolean stunned = false;
     boolean weakened = false;
+
+    boolean animateConditions = true;
 
     public CharacterImageView(@NonNull Context context) {
         super(context);
@@ -56,7 +58,7 @@ public class CharacterImageView extends View implements Runnable{
         //focused = true;
         //stunned = true;
         //weakened = true;
-        hidden = true;
+        //hidden = true;
         stunPaint.setAlpha(75);
 
     }
@@ -107,24 +109,34 @@ public class CharacterImageView extends View implements Runnable{
             layer1Scaled = true;
         }
 
-        if(focused && glowImage!=null){
+
+
+        if(focused && glowImage!=null && animateConditions){
             canvas.drawBitmap(glowImage, 0,  offsetY, focusedPaint);
         }
-
-        canvas.drawBitmap(image,0, offsetY, paint);
+        if(animateConditions) {
+            canvas.drawBitmap(image, 0, offsetY, paint);
+        } else{
+            canvas.drawBitmap(image, 0, 0, null);
+        }
         if(layer1!=null) {
-            canvas.drawBitmap(layer1, 0, offsetY, paint);
+            if(animateConditions) {
+                canvas.drawBitmap(layer1, 0, offsetY, paint);
+            }
+            else{
+                canvas.drawBitmap(layer1, 0, 0, null);
+            }
         }
 
 
-        if(stunned) {
+        if(stunned && animateConditions) {
             canvas.drawBitmap(image, stunX, stunY, stunPaint);
             if(layer1!=null) {
                 canvas.drawBitmap(layer1, stunX, stunY, stunPaint);
             }
         }
 
-        if(bleeding){
+        if(bleeding && animateConditions){
 
         }
     }
@@ -132,48 +144,51 @@ public class CharacterImageView extends View implements Runnable{
 
     void update(int deltaTime){
         if(imageScaled&&glowScaled) {
-            if (stunned) {
-                stunX = (float) Math.cos(time / 1000 * 4) * image.getWidth() / 20;
-                stunY = (float) Math.sin(time / 1000 * 4) * image.getWidth() / 40;
-            }
+            if(animateConditions) {
+                if (stunned) {
+                    stunX = (float) Math.cos(time / 1000 * 4) * image.getWidth() / 20;
+                    stunY = (float) Math.sin(time / 1000 * 4) * image.getWidth() / 40;
+                }
 
-            if (weakened) {
-                offsetY =
-                        -(float)(Math.max(Math.min(Math.sin(time / 1000 * 6+Math.PI),0.8),-0.8))/2*image.getHeight()/200;
-                int weakenedColor = Color.rgb(
-                        (int) (55 * (1 + Math.sin(time / 1000 * 6+Math.PI)) / 2 + 200),
-                        (int) (55 * (1 + Math.sin(time / 1000 * 6+Math.PI)) / 2 + 200),
-                        255);
-                paint.setColorFilter(new LightingColorFilter(weakenedColor, 0));
-            }
-            else{
-                paint.setColorFilter(null);
-            }
+                if (weakened) {
+                    offsetY =
+                            -(float) (Math.max(Math.min(Math.sin(time / 1000 * 6 + Math.PI), 0.8), -0.8)) / 2 * image.getHeight() / 200;
+                    int weakenedColor = Color.rgb(
+                            (int) (55 * (1 + Math.sin(time / 1000 * 6 + Math.PI)) / 2 + 200),
+                            (int) (55 * (1 + Math.sin(time / 1000 * 6 + Math.PI)) / 2 + 200),
+                            255);
+                    paint.setColorFilter(new LightingColorFilter(weakenedColor, 0));
+                }
 
 
-            if (focused && glowImage != null) {
+                if (focused && glowImage != null) {
+                    int alpha = (int) (255 * (1 + Math.sin(time / 1000 * 6)) / 2);
+                    focusedPaint.setAlpha(alpha);
+                }
 
+                if (hidden) {
 
-                int alpha = (int) (255 * (1 + Math.sin(time / 1000 * 6)) / 2);
-                focusedPaint.setAlpha(alpha);
-            }
-            if (hidden) {
+                }
 
-            }
-            if(bleeding){
-                int bleedingColor = Color.rgb(255,
-                        (int) (100 * (1 + Math.sin(time / 1000 * 6)) / 2 + 155),
-                        (int) (100 * (1 + Math.sin(time / 1000 * 6)) / 2 + 155));
-                paint.setColorFilter(new LightingColorFilter(bleedingColor, 0));
+                if (bleeding) {
+                    int bleedingColor = Color.rgb(255,
+                            (int) (100 * (1 + Math.sin(time / 1000 * 6)) / 2 + 155),
+                            (int) (100 * (1 + Math.sin(time / 1000 * 6)) / 2 + 155));
+                    paint.setColorFilter(new LightingColorFilter(bleedingColor, 0));
+                }
 
+                if(!bleeding && !weakened){
+                    paint.setColorFilter(new LightingColorFilter(Color.WHITE, 0));
+                }
             }
         }
     }
 
     int fixedDeltaTime = 1000/60;
+
     @Override
     public void run() {
-        while(animating) {
+        while(true) {
             time+=fixedDeltaTime;
             //System.out.println("tick");
             update(fixedDeltaTime);

@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.dialog_options.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
+import kotlinx.android.synthetic.main.screen_settings.*
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
 import kotlinx.coroutines.GlobalScope
@@ -51,10 +52,10 @@ var width = 0f
 
 class Character_view : AppCompatActivity(){
     var character:Character = Character();
-    var animateConditions = true;
-    var animateDamage = true;
-    var showConditionIcons = false;
-
+    var animateConditions = true
+    var animateDamage = true
+    var autoImageChange = true
+    var actionUsage = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +78,6 @@ class Character_view : AppCompatActivity(){
         initKillTracker()
         startSaveTimer()
     }
-
     fun setAnimation(){
         /*
         if(Build.VERSION.SDK_INT>20) {
@@ -90,6 +90,8 @@ class Character_view : AppCompatActivity(){
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
+
+
         if(hasFocus&&!loadAnimated ){
             top_panel.animate().alpha(1f)
             val animTop = ObjectAnimator.ofFloat(top_panel,"translationY",-top_panel.height
@@ -97,8 +99,6 @@ class Character_view : AppCompatActivity(){
 
             animTop .duration=(500).toLong()
             animTop .start()
-
-
             bottom_panel.animate().alpha(1f)
             val animBottom = ObjectAnimator.ofFloat(bottom_panel,"translationY",bottom_panel.height
                 .toFloat(),0f)
@@ -108,10 +108,18 @@ class Character_view : AppCompatActivity(){
 
             left_buttons.animate().alpha(1f)
             val animButtons = ObjectAnimator.ofFloat(left_buttons,"translationX",-left_buttons.width
-                .toFloat(),0f)
+                .toFloat(),-8f)
             //animBottom.interpolator = DecelerateInterpolator()
             animButtons.duration=(500).toLong()
             animButtons.start()
+
+            right_buttons.animate().alpha(1f)
+            val animRightButtons = ObjectAnimator.ofFloat(right_buttons,"translationX",right_buttons
+                .width
+                .toFloat(),0f)
+            //animBottom.interpolator = DecelerateInterpolator()
+            animRightButtons.duration=(500).toLong()
+            animRightButtons.start()
 
             character_images.animate().alpha(1f)
             val animChar= ObjectAnimator.ofFloat(character_images,"translationX",-character_images.width
@@ -119,6 +127,14 @@ class Character_view : AppCompatActivity(){
             animChar.interpolator = DecelerateInterpolator()
             animChar.duration=(800).toLong()
             animChar.start()
+
+            companion_layer.animate().alpha(1f)
+            val animcompanion= ObjectAnimator.ofFloat( companion_layer,"translationX",
+                -character_images.width*1.2f
+                .toFloat(),-character_images.width.toFloat()*1.2f,0f)
+            animcompanion.interpolator = DecelerateInterpolator()
+            animcompanion.duration=(800*1.2f).toLong()
+            animcompanion.start()
 
             loadAnimated = true
         }
@@ -129,7 +145,7 @@ class Character_view : AppCompatActivity(){
     //************************************************************************************************************
     var isWounded = false
 
-    fun initScreen(){
+    private fun initScreen(){
         var load = intent.getBooleanExtra("Load", false)
         var characterName: String = intent.getStringExtra("CharacterName").toString()
 
@@ -233,10 +249,8 @@ class Character_view : AppCompatActivity(){
         setDiceColor(tech2, character.tech[1]);
         setDiceColor(tech3, character.tech[2]);
 
-
-
         updateImages()
-        updateStats()
+        //updateStats()
         initDamageAndStrain()
         updateStats()
         initConditions()
@@ -248,17 +262,16 @@ class Character_view : AppCompatActivity(){
         if(character.name_short == "jarrod"){
             companion_button.visibility = View.VISIBLE
             companion_layer.visibility = View.VISIBLE
+            companion_button.isClickable = true
         }
         else{
-            companion_button.visibility = View.GONE
+            companion_button.visibility = View.INVISIBLE
             companion_layer.visibility = View.GONE
+            companion_button.isClickable = false
         }
-
         background_image.setImageBitmap(character.getBackgroundImage(this))
-
     }
-
-    fun setDiceColor(dice: ImageView, color: Char) {
+    private fun setDiceColor(dice: ImageView, color: Char) {
         dice.visibility = ImageView.VISIBLE
         when(color){
             'B' -> dice.setImageDrawable(resources.getDrawable(R.drawable.dice_blue))
@@ -277,7 +290,6 @@ class Character_view : AppCompatActivity(){
             )
         }
     }
-
     open fun getBitmap(context: Context, path: String): Bitmap? {
         val assetManager = context.assets
         var inputStream: InputStream? = null
@@ -306,8 +318,7 @@ class Character_view : AppCompatActivity(){
         }
         return bitmap
     }
-
-    open fun updateImages(){
+    private fun updateImages(){
         character.updateCharacterImages(this)
         if(animateConditions) {
             if (character.currentImage != null) {
@@ -331,29 +342,29 @@ class Character_view : AppCompatActivity(){
         }
         character_image.setImageBitmap(character.currentImage)
 
-
         if(character.name_short!="jarrod") {
             character_image.setLayer1Bitmap(character.layer1)
-            //TODO
-            //character_image.setLayer2Bitmap(character.layer2)
-
         }
         else {
-            if (!conditionsActive[hidden]) {
+            /*
+            if (conditionsActive[hidden] && animateConditions) {
+                companion_layer.visibility = View.INVISIBLE
+
+            } else{*/
                 companion_layer.visibility = View.VISIBLE
                 companion_layer.setImageBitmap(character.layer1);
-            } else {
-                companion_layer.visibility = View.GONE
-            }
+            println("DROIDDDDDDDDDDDDDDD")
+            //}
+        }
+        quickSave()
+    }
+    fun onShowCompanionCard(view: View) {
+        if(character.companionCard != null) {
+            showCardDialog!!.card_image.setImageBitmap(character.companionCard)
+            showCardDialog!!.show()
         }
     }
-
-    fun onShowCompanionCard(view: View) {
-        showCardDialog!!.card_image.setImageBitmap(character.companionCard)
-        showCardDialog!!.show()
-    }
-
-    open fun updateStats(){
+    private fun updateStats(){
         character.health= character.health_default
         character.endurance = character.endurance_default
         character.speed = character.speed_default
@@ -391,19 +402,16 @@ class Character_view : AppCompatActivity(){
         //TODO
         quickSave()
     }
-
     fun onHide(view: View){
         view.visibility = View.INVISIBLE
     }
-
-
 
     //endregion
     //************************************************************************************************************
     //region Damage and Strain
     //************************************************************************************************************
 
-    fun getNumber(number: Int):Drawable{
+    private fun getNumber(number: Int):Drawable{
         var numberImage = R.drawable.number_0
         when(number){
             1 -> numberImage = R.drawable.number_1
@@ -429,7 +437,6 @@ class Character_view : AppCompatActivity(){
         }
         return resources.getDrawable(numberImage)
     }
-
     fun onAddStrain(view: View) {
         if(character.strain < character.endurance) {
             character.strain++
@@ -468,9 +475,7 @@ class Character_view : AppCompatActivity(){
 
         }
     }
-    fun addDamage():Boolean{
-
-
+    private fun addDamage():Boolean{
         if(character.damage < character.health*2) {
             character.damage++
             character.damageTaken++
@@ -525,29 +530,12 @@ class Character_view : AppCompatActivity(){
                 quickSave()
             }
 
-            var hitY = ObjectAnimator.ofFloat(
-                character_images, "translationY", 0f, 20f * Random
-                    .nextFloat(),
-                0f, 20f * Random.nextFloat(), 0f, 20f * Random.nextFloat(), 0f
-            )
-            hitY .setDuration(300)
-            hitY .start()
 
-            var hitX = ObjectAnimator.ofFloat(
-                character_images, "translationX", 0f, -10f * Random
-                    .nextFloat(),
-                0f, -10f * Random.nextFloat(), 0f, -10f * Random.nextFloat(), 0f
-            )
-            hitX .setDuration(300)
-            hitX .start()
 
             return true
         }
         return false
     }
-
-
-
     fun onMinusDamage(view: View) {
         if(character.damage >0) {
 
@@ -617,7 +605,7 @@ class Character_view : AppCompatActivity(){
         updateStats()
         unwoundDialog!!.cancel()
     }
-    fun initDamageAndStrain() {
+    private fun initDamageAndStrain() {
         if(character.damage>0) {
             if (minus_damage.alpha == 0f) {
                 minus_damage.animate().alpha(1f)
@@ -673,7 +661,7 @@ class Character_view : AppCompatActivity(){
             true
         }
         add_strain.setOnLongClickListener {
-            if (actionsLeft > 0) {
+            if (actionsLeft > 0 || !actionUsage) {
                 restDialog!!.show()
             } else {
                 showNoActionsLeftToast()
@@ -688,8 +676,10 @@ class Character_view : AppCompatActivity(){
     //************************************************************************************************************
     var actionsLeft = 0;
     var activated = false
+
     fun onActivate(view: View) {
         if(!activated){
+            /*
             val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 1f, 0f, 0f, 0f)
             flipUnactive.setDuration(300)
             flipUnactive.start()
@@ -698,14 +688,13 @@ class Character_view : AppCompatActivity(){
             flipActive.setDuration(300)
             flipActive.start()
 
+             */
+            unactive.animate().alpha(0f).duration = 100
 
-            action1.visibility = View.VISIBLE
-            action_button1.visibility = View.VISIBLE
-            action_button1.animate().alpha(1f)
-            action2.visibility = View.VISIBLE
-            action_button2.visibility = View.VISIBLE
-            action_button2.animate().alpha(1f)
-            actionsLeft = 2;
+            if(actionUsage) {
+                turnOnActionButtons()
+                actionsLeft = 2;
+            }
             activated = true
 
             character.activated++
@@ -715,10 +704,34 @@ class Character_view : AppCompatActivity(){
         }
     }
 
+    fun turnOnActionButtons(){
+
+        action1.visibility = View.VISIBLE
+        action_button1.visibility = View.VISIBLE
+        action_button1.animate().alpha(1f)
+        action2.visibility = View.VISIBLE
+        action_button2.visibility = View.VISIBLE
+        action_button2.animate().alpha(1f)
+
+        /*
+        action_button1.visibility = View.VISIBLE
+        val flipAction1 = ObjectAnimator.ofFloat(action_button1, "scaleY", 0f, 1f)
+        flipAction1.setDuration(300)
+        flipAction1.start()
+
+        action_button2.visibility = View.VISIBLE
+        val flipAction2 = ObjectAnimator.ofFloat(action_button2, "scaleY", 0f, 1f)
+        flipAction2.setDuration(300)
+        flipAction2.start()
+        */
+
+    }
+
     fun onEndActivation(view: View){
 
         endActivationDialog!!.cancel()
         removeCondition(weakened)
+        /*
         val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 0f, 0f, 0f, 1f)
         flipUnactive.setDuration(300)
         flipUnactive.start()
@@ -726,21 +739,40 @@ class Character_view : AppCompatActivity(){
         val flipActive = ObjectAnimator.ofFloat(active, "scaleX", 1f, 0f, 0f, 0f)
         flipActive.setDuration(300)
         flipActive.start()
+        */
+        unactive.animate().alpha(1f).duration = 100
+
+        if(actionUsage) {
+            turnOffActionButtons()
+        }
+        activated = false
+
+    }
+
+    fun turnOffActionButtons(){
 
         action_button1.animate().alpha(0f)
         action_button1.visibility = View.GONE
 
         action_button2.animate().alpha(0f)
         action_button2.visibility = View.GONE
-        activated = false
+
+/*
+        val flipAction1 = ObjectAnimator.ofFloat(action_button1, "scaleY", 1f, 0f)
+        flipAction1.setDuration(300)
+        flipAction1.start()
+
+
+        val flipAction2 = ObjectAnimator.ofFloat(action_button2, "scaleY", 1f, 0f)
+        flipAction2.setDuration(300)
+        flipAction2.start()
+        */
 
     }
 
     fun onEndActivationNo(view: View){
         endActivationDialog!!.cancel()
     }
-
-
     fun onAction(view: View) {
 
         action_menu.visibility = View.INVISIBLE
@@ -784,28 +816,28 @@ class Character_view : AppCompatActivity(){
         }
 
     }
-
     fun actionCompleted(){
-        if(actionsLeft >0) {
-            actionsLeft--;
-            if (actionsLeft == 1) {
-                action1.visibility = View.INVISIBLE
-            } else if (actionsLeft == 0) {
-                action2.visibility = View.INVISIBLE
+        if(actionUsage) {
+            if (actionsLeft > 0) {
+                actionsLeft--;
+                if (actionsLeft == 1) {
+                    action1.visibility = View.INVISIBLE
+                } else if (actionsLeft == 0) {
+                    action2.visibility = View.INVISIBLE
+                }
+                if (conditionsActive[bleeding]) {
+                    onAddStrain(add_strain)
+                }
             }
-            if (conditionsActive[bleeding]) {
-                onAddStrain(add_strain)
-            }
-        }
-        if(actionsLeft <=0) {
+            if (actionsLeft <= 0) {
 
-            action_menu.visibility = View.INVISIBLE
-            if(activated) {
-                endActivationDialog!!.show()
+                action_menu.visibility = View.INVISIBLE
+                if (activated) {
+                    endActivationDialog!!.show()
+                }
             }
         }
     }
-
     fun onAttack(view: View) {
         if(actionsLeft>0 ) {
             if(!conditionsActive[stunned]) {
@@ -855,7 +887,7 @@ class Character_view : AppCompatActivity(){
         }
     }
     fun onRest(view: View) {
-        if(actionsLeft>0) {
+        if(actionsLeft>0 || !actionUsage) {
             character.strain -= character.endurance
 
             if (character.strain < 0) {
@@ -876,9 +908,8 @@ class Character_view : AppCompatActivity(){
             showNoActionsLeftToast()
         }
     }
-
     fun onRemoveStun(view: View) {
-        if(actionsLeft>0) {
+        if(actionsLeft>0 || !actionUsage) {
             removeCondition(stunned)
             onAction(action_complete)
             actionCompleted()
@@ -887,9 +918,8 @@ class Character_view : AppCompatActivity(){
             showNoActionsLeftToast()
         }
     }
-
     fun onRemoveBleeding(view: View) {
-        if(actionsLeft>0) {
+        if(actionsLeft>0 || !actionUsage) {
             removeCondition(bleeding)
             onAction(action_complete)
             actionCompleted()
@@ -898,7 +928,7 @@ class Character_view : AppCompatActivity(){
             showNoActionsLeftToast()
         }
     }
-    fun showNoActionsLeftToast(){
+    private fun showNoActionsLeftToast(){
         val noActionsLeftToast=Toast(this)
         noActionsLeftToast!!.duration = Toast.LENGTH_SHORT
         noActionsLeftToast!!.view = layoutInflater.inflate(
@@ -935,7 +965,6 @@ class Character_view : AppCompatActivity(){
         showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_hidden))
         showCardDialog!!.show()
     }
-
     fun onShowCard(view: View){
         when(view.getTag()){
             hidden -> onShowHiddenCard(view)
@@ -945,8 +974,6 @@ class Character_view : AppCompatActivity(){
             weakened -> onShowWeakenedCard(view)
         }
     }
-
-
 
     var sideMenuState = 0
 
@@ -958,13 +985,10 @@ class Character_view : AppCompatActivity(){
     fun onShowOptions(view: View) {
         optionsDialog!!.show()
     }
-
     override fun onUserInteraction() {
         super.onUserInteraction()
         //println("save")
-
     }
-
     fun onBiography(view: View) {
         optionsDialog!!.cancel()
         bioDialog!!.bio_title.setText(character.bio_title)
@@ -1006,12 +1030,10 @@ class Character_view : AppCompatActivity(){
         initStatsScreen()
         statsScreen!!.show()
     }
-
     fun onCredits(view: View) {
         optionsDialog!!.cancel()
-        creditsScreen!!.show()
+        developersCreditsScreen!!.show()
     }
-
     fun onDevCredits(view: View) {
         optionsDialog!!.cancel()
         developersCreditsScreen!!.show()
@@ -1039,14 +1061,10 @@ class Character_view : AppCompatActivity(){
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
     }
 
-
-
-
     //endregion
     //************************************************************************************************************
     //region Side Navigation
     //************************************************************************************************************
-
 
     fun onExtendDown(view: View) {
         val lp = kill_tracker_bar.layoutParams
@@ -1113,7 +1131,6 @@ class Character_view : AppCompatActivity(){
         }
 
     }
-
     fun onReward(view: View) {
         val intent = Intent(this, Item_Select_Screen::class.java)
         intent.putExtra("tab", "reward")
@@ -1149,7 +1166,6 @@ class Character_view : AppCompatActivity(){
         xpSelectScreen!!.show()
 
     }
-
 
     //endregion
     //************************************************************************************************************
@@ -1198,7 +1214,6 @@ class Character_view : AppCompatActivity(){
             killCounts[type].setText("" + killCount)
         }
     }
-
     fun onAssist(view: View) {
         when(view.tag){
             villain -> {
@@ -1228,7 +1243,7 @@ class Character_view : AppCompatActivity(){
         }
         assistDialog!!.cancel()
     }
-    fun initKillTracker(){
+    private fun initKillTracker(){
 
         killCounts.add(villain_count)
         villain_button.setOnLongClickListener {
@@ -1321,7 +1336,7 @@ class Character_view : AppCompatActivity(){
         R.drawable.condition_stunned
     )
 
-    fun initConditions(){
+    private fun initConditions(){
         conditionsActive = character.conditionsActive
         conditionViews.add(condition1)
         conditionViews.add(condition2)
@@ -1420,10 +1435,9 @@ class Character_view : AppCompatActivity(){
         updateConditionIcons()
     }
 
+    private fun removeCondition(conditionType: Int){
 
-    fun removeCondition(conditionType: Int){
-
-        if(actionsLeft>0 || conditionType==hidden||conditionType==focused||conditionType==weakened) {
+        if(actionsLeft>0 || conditionType==hidden||conditionType==focused||conditionType ==weakened || !actionUsage) {
             conditionsActive[conditionType] = false
             updateConditionIcons()
         }
@@ -1431,21 +1445,28 @@ class Character_view : AppCompatActivity(){
             showNoActionsLeftToast()
         }
     }
+    private fun updateConditionIcons(){
+        //TODO condition save
 
-    fun updateConditionIcons(){
+        println("condition save")
+        character.conditionsActive = conditionsActive
+        character_image.animateConditions = animateConditions
+        quickSave()
+
         for(i in 0..conditionViews.size-1){
             conditionViews[i].visibility = View.GONE
         }
+        show_all_conditions.visibility = View.GONE
         updateImages()
 
-        if(showConditionIcons) {
+        if(!animateConditions) {
             var active = 0;
             for (i in 0..conditionsActive.size - 1) {
                 if (conditionsActive[i]) {
                     active++;
                 }
             }
-            character.conditionsActive = conditionsActive
+            conditions_row2.visibility = View.GONE
 
             if (active < 5) {
                 show_conditions.visibility = View.VISIBLE
@@ -1479,13 +1500,20 @@ class Character_view : AppCompatActivity(){
             }
         }
 
+
+
         if(!conditionsActive[hidden]) {
             conditionsDialog!!.hidden_select.alpha = 1f
-            camouflage.visibility=View.INVISIBLE
+            camouflage.visibility=View.GONE
         }
         else{
             conditionsDialog!!.hidden_select.alpha = 0.5f
-            camouflage.visibility=View.VISIBLE
+            if(animateConditions) {
+                camouflage.visibility = View.VISIBLE
+            }
+            else{
+                camouflage.visibility=View.GONE
+            }
         }
 
         if(!conditionsActive[focused]) {
@@ -1522,8 +1550,7 @@ class Character_view : AppCompatActivity(){
             character_image.weakened = true
         }
 
-        //TODO
-        quickSave()
+
     }
 
     //endregion
@@ -1531,44 +1558,54 @@ class Character_view : AppCompatActivity(){
     //region Animations
     //************************************************************************************************************
 
-
-
-    fun initAnimations(){
+    private fun initAnimations(){
         //rest_animation.setBackgroundDrawable(MainActivity.restAnim)
         //rest_animation.visibility = FrameLayout.INVISIBLE
     }
+    private fun playDamageAnim(){
+        if(animateDamage) {
+            val animType = Math.random();
+            if (animType < 0.3) {
+                damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
+                damage_animation.visibility = FrameLayout.VISIBLE
+                MainActivity.blastAnim!!.setVisible(true, true)
+                MainActivity.blastAnim!!.start()
+            } else if (animType < 0.6) {
+                damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
+                damage_animation.visibility = FrameLayout.VISIBLE
+                MainActivity.sliceAnim!!.setVisible(true, true)
+                MainActivity.sliceAnim!!.start()
+            } else {
+                damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
+                damage_animation.visibility = FrameLayout.VISIBLE
+                MainActivity.impactAnim!!.setVisible(true, true)
+                MainActivity.impactAnim!!.start()
+            }
+            var hitY = ObjectAnimator.ofFloat(
+                character_images, "translationY", 0f, 20f * Random
+                    .nextFloat(),
+                0f, 20f * Random.nextFloat(), 0f, 20f * Random.nextFloat(), 0f
+            )
+            hitY .setDuration(300)
+            hitY .start()
 
-    fun playDamageAnim(){
-        val animType = Math.random();
-        if(animType<0.3){
-            damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
-            damage_animation.visibility = FrameLayout.VISIBLE
-            MainActivity.blastAnim!!.setVisible(true, true)
-            MainActivity.blastAnim!!.start()
+            var hitX = ObjectAnimator.ofFloat(
+                character_images, "translationX", 0f, -10f * Random
+                    .nextFloat(),
+                0f, -10f * Random.nextFloat(), 0f, -10f * Random.nextFloat(), 0f
+            )
+            hitX .setDuration(300)
+            hitX .start()
         }
-        else if(animType<0.6){
-            damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
-            damage_animation.visibility = FrameLayout.VISIBLE
-            MainActivity.sliceAnim!!.setVisible(true, true)
-            MainActivity.sliceAnim!!.start()
-        }
-        else{
-            damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
-            damage_animation.visibility = FrameLayout.VISIBLE
-            MainActivity.impactAnim!!.setVisible(true, true)
-            MainActivity.impactAnim!!.start()
-        }
-
 
     }
-    fun playRestAnim(){
-        var restAnim = ObjectAnimator.ofFloat(rest_animation,"alpha",0f,1f,0.75f,0.25f,0f)
-        restAnim.duration = 200
-        restAnim.start()
+    private fun playRestAnim(){
+        if(animateDamage) {
+            var restAnim = ObjectAnimator.ofFloat(rest_animation, "alpha", 0f, 1f, 0.75f, 0.25f, 0f)
+            restAnim.duration = 200
+            restAnim.start()
+        }
     }
-
-
-
 
     //endregion
     //************************************************************************************************************
@@ -1583,18 +1620,30 @@ class Character_view : AppCompatActivity(){
     var assistDialog:Dialog? = null
     var optionsDialog:Dialog? = null
     var bioDialog:Dialog? = null
-
     var saveDialog:Dialog? = null
-
     var backgroundDialog:Dialog? = null
-    var creditsScreen:Dialog? = null
     var settingsScreen:Dialog? = null
     var statsScreen:Dialog? = null
     var xpSelectScreen: Dialog?=null
-
     var developersCreditsScreen:Dialog? = null
 
-    fun initDialogs(){
+    private fun initDialogs(){
+        initRestDialog()
+        initUnwoundDialog()
+        initConditionsDialog()
+        initOptionsDialog()
+        initSaveDialog()
+        initShowCardDialog()
+        initEndActivationDialog()
+        initAssistDialog()
+        initBioDialog()
+        initBackgroundDialog()
+        initSettingsDialog()
+        initStatsScreenDialog()
+        initCreditsScreenDialog()
+        initXpSelectScreenDialog()
+    }
+    private fun initRestDialog(){
         restDialog = Dialog(this)
         restDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         restDialog!!.setCancelable(false)
@@ -1607,7 +1656,8 @@ class Character_view : AppCompatActivity(){
             quickSave()
             true
         }
-
+    }
+    private fun initUnwoundDialog(){
         unwoundDialog = Dialog(this)
         unwoundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         unwoundDialog!!.setCancelable(false)
@@ -1620,7 +1670,8 @@ class Character_view : AppCompatActivity(){
             quickSave()
             true
         }
-
+    }
+    private fun initConditionsDialog(){
         conditionsDialog = Dialog(this)
         conditionsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         conditionsDialog!!.setCancelable(false)
@@ -1647,7 +1698,8 @@ class Character_view : AppCompatActivity(){
             true
         }
         conditionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-
+    }
+    private fun initOptionsDialog(){
         optionsDialog = Dialog(this)
         optionsDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         optionsDialog!!.setCancelable(false)
@@ -1678,7 +1730,8 @@ class Character_view : AppCompatActivity(){
             onBackground(optionsDialog!!.backgroundOption)
             true
         }
-
+    }
+    private fun initSaveDialog(){
         saveDialog = Dialog(this)
         saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         saveDialog!!.setCancelable(false)
@@ -1699,7 +1752,8 @@ class Character_view : AppCompatActivity(){
             saveDialog!!.cancel()
             true
         }
-
+    }
+    private fun initShowCardDialog(){
         showCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -1712,13 +1766,16 @@ class Character_view : AppCompatActivity(){
             true
         }
 
+    }
+    private fun initEndActivationDialog(){
         endActivationDialog = Dialog(this)
         endActivationDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         endActivationDialog!!.setCancelable(false)
         endActivationDialog!!.setContentView(R.layout.dialog_end_activation)
         endActivationDialog!!.setCanceledOnTouchOutside(true)
         endActivationDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-
+    }
+    private fun initAssistDialog(){
         assistDialog = Dialog(this)
         assistDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         assistDialog!!.setCancelable(false)
@@ -1731,7 +1788,8 @@ class Character_view : AppCompatActivity(){
             quickSave()
             true
         }
-
+    }
+    private fun initBioDialog(){
         bioDialog = Dialog(this)
         bioDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         bioDialog!!.setCancelable(false)
@@ -1742,66 +1800,8 @@ class Character_view : AppCompatActivity(){
             bioDialog!!.cancel()
             true
         }
-
-
-
-        backgroundDialog = Dialog(this)
-        backgroundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        backgroundDialog!!.setCancelable(false)
-        backgroundDialog!!.setContentView(R.layout.dialog_background)
-        backgroundDialog!!.setCanceledOnTouchOutside(true)
-        backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-
-        //TODO setOnClickListenters backgrounds
-        backgroundDialog!!.desert_background.setOnClickListener{
-            onBackgroundDesert(backgroundDialog!!.desert_background)
-            //TODO
-            quickSave()
-        }
-        backgroundDialog!!.snow_background.setOnClickListener{
-            onBackgroundSnow(backgroundDialog!!.snow_background)
-            //TODO
-            quickSave()
-        }
-        backgroundDialog!!.jungle_background.setOnClickListener{
-            onBackgroundJungle(backgroundDialog!!.jungle_background)
-            //TODO
-            quickSave()
-        }
-        backgroundDialog!!.interior_background.setOnClickListener{
-            onBackgroundInterior(backgroundDialog!!.interior_background)
-            //TODO
-            quickSave()
-        }
-
-        settingsScreen= Dialog(this)
-        settingsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        settingsScreen!!.setCancelable(false)
-        settingsScreen!!.setContentView(R.layout.screen_settings)
-        settingsScreen!!.setCanceledOnTouchOutside(true)
-        settingsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-
-        statsScreen = Dialog(this)
-        statsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        statsScreen!!.setCancelable(false)
-        statsScreen!!.setContentView(R.layout.screen_stats)
-        statsScreen!!.setCanceledOnTouchOutside(true)
-        statsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-
-        creditsScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
-        creditsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        creditsScreen!!.setCancelable(false)
-        creditsScreen!!.setContentView(R.layout.screen_stats)
-        creditsScreen!!.setCanceledOnTouchOutside(true)
-        creditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-
-        xpSelectScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
-        xpSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        xpSelectScreen!!.setCancelable(false)
-        xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
-        statsScreen!!.setCanceledOnTouchOutside(true)
-        xpSelectScreen!!.setCanceledOnTouchOutside(true)
-
+    }
+    private fun initCreditsScreenDialog(){
         developersCreditsScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
         developersCreditsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         developersCreditsScreen!!.setCancelable(false)
@@ -1809,9 +1809,86 @@ class Character_view : AppCompatActivity(){
         developersCreditsScreen!!.setCanceledOnTouchOutside(true)
         developersCreditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
     }
+    private fun initSettingsDialog(){
+        settingsScreen= Dialog(this)
+        settingsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        settingsScreen!!.setCancelable(false)
+        settingsScreen!!.setContentView(R.layout.screen_settings)
+        settingsScreen!!.setCanceledOnTouchOutside(true)
+        settingsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
 
+        settingsScreen!!.toggleDamageAnim!!.isChecked = animateDamage
+        settingsScreen!!.toggleDamageAnim.setOnClickListener{
+            animateDamage = settingsScreen!!.toggleDamageAnim!!.isChecked
+        }
 
+        settingsScreen!!.toggleConditionAnim!!.isChecked = animateConditions
+        settingsScreen!!.toggleConditionAnim.setOnClickListener{
+            animateConditions = settingsScreen!!.toggleConditionAnim!!.isChecked
+            updateConditionIcons()
+        }
 
+        settingsScreen!!.toggleAutoImageChange.isChecked = autoImageChange
+        settingsScreen!!.toggleAutoImageChange.setOnClickListener{
+            autoImageChange = settingsScreen!!.toggleAutoImageChange.isChecked
+        }
+
+        settingsScreen!!.toggleActionUsage.isChecked = actionUsage
+        settingsScreen!!.toggleActionUsage.setOnClickListener{
+            actionUsage = settingsScreen!!.toggleActionUsage.isChecked
+            if(actionUsage){
+                if(activated) {
+                    turnOnActionButtons()
+                }
+            }
+            else{
+                turnOffActionButtons()
+            }
+        }
+
+        settingsScreen!!.creditsButton.setOnClickListener{
+            onCredits(settingsScreen!!.creditsButton)
+        }
+    }
+    private fun initBackgroundDialog(){
+        backgroundDialog = Dialog(this)
+        backgroundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        backgroundDialog!!.setCancelable(false)
+        backgroundDialog!!.setContentView(R.layout.dialog_background)
+        backgroundDialog!!.setCanceledOnTouchOutside(true)
+        backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        backgroundDialog!!.desert_background.setOnClickListener{
+            onBackgroundDesert(backgroundDialog!!.desert_background)
+            quickSave()
+        }
+        backgroundDialog!!.snow_background.setOnClickListener{
+            onBackgroundSnow(backgroundDialog!!.snow_background)
+            quickSave()
+        }
+        backgroundDialog!!.jungle_background.setOnClickListener{
+            onBackgroundJungle(backgroundDialog!!.jungle_background)
+            quickSave()
+        }
+        backgroundDialog!!.interior_background.setOnClickListener{
+            onBackgroundInterior(backgroundDialog!!.interior_background)
+            quickSave()
+        }
+    }
+    private fun initStatsScreenDialog(){
+        statsScreen = Dialog(this)
+        statsScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        statsScreen!!.setCancelable(false)
+        statsScreen!!.setContentView(R.layout.screen_stats)
+        statsScreen!!.setCanceledOnTouchOutside(true)
+        statsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+    }
+    private fun initXpSelectScreenDialog(){
+        xpSelectScreen = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        xpSelectScreen!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        xpSelectScreen!!.setCancelable(false)
+        xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
+        xpSelectScreen!!.setCanceledOnTouchOutside(true)
+    }
 
     //endregion
     //************************************************************************************************************
@@ -1819,7 +1896,6 @@ class Character_view : AppCompatActivity(){
     //************************************************************************************************************
     fun initStatsScreen(){
         statsScreen!!.stats_name.setText("" + character.name)
-
         statsScreen!!.stats_portrait_image.setImageDrawable(character.portraitImage)
         var level = 5
         if(character.xpSpent <= 1){
@@ -1901,8 +1977,6 @@ class Character_view : AppCompatActivity(){
     var xpCardImages = arrayListOf<ImageView>()
 
     fun initXPScreen() {
-
-
         xpCardImages.add(xpSelectScreen!!.XPCard1)
         xpCardImages.add(xpSelectScreen!!.XPCard2)
         xpCardImages.add(xpSelectScreen!!.XPCard3)
@@ -1912,8 +1986,6 @@ class Character_view : AppCompatActivity(){
         xpCardImages.add(xpSelectScreen!!.XPCard7)
         xpCardImages.add(xpSelectScreen!!.XPCard8)
         xpCardImages.add(xpSelectScreen!!.XPCard9)
-
-
 
         for(i in 0.. character.xpCardImages.size-1){
             xpCardImages[i].setImageBitmap(character.xpCardImages[i])
@@ -1932,7 +2004,6 @@ class Character_view : AppCompatActivity(){
         var xpLeft = character.totalXP-character.xpSpent
         xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
     }
-
     fun onShowXPCard(view: ImageView){
         var image = ((view).drawable as BitmapDrawable).bitmap
         showCardDialog!!.card_image.setImageBitmap(image)
@@ -1963,7 +2034,6 @@ class Character_view : AppCompatActivity(){
         updateStats()
 
     }
-
     fun addXP(view: View){
         character.totalXP++
         var xpLeft = character.totalXP-character.xpSpent;
@@ -1978,7 +2048,6 @@ class Character_view : AppCompatActivity(){
         xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
     }
 
-
     //endregion
     //************************************************************************************************************
     //region Saving
@@ -1992,16 +2061,15 @@ class Character_view : AppCompatActivity(){
                 delay(1000)
                 secondsSinceLastSave++
             }
-            //println("TIMED AUTOSAVE")
+            println("TIMED AUTOSAVE")
             quickSave()
             startSaveTimer()
         }
     }
-
     fun quickSave(){
         if(secondsSinceLastSave > 3) {
-            val character = MainActivity.selectedCharacter
-            //println("QUICK SAVE character " + character)
+            //val character = MainActivity.selectedCharacter
+
             if (character != null) {
                 var saveFile = getCharacterData(character.file_name)
                 val database = AppDatabase.getInstance(this)
@@ -2013,14 +2081,18 @@ class Character_view : AppCompatActivity(){
                         delay(10)
                     }
                 }
+
                 GlobalScope.launch {
                     if (character.id != -1) {
                         saveFile.id = character.id
                         database!!.getCharacterDAO().update(saveFile)
+                        println("update save")
                     } else {
                         character.id = saveFile.id
                         database!!.getCharacterDAO().insert(saveFile)
+                        println("insert save")
                     }
+                    println("QUICK SAVE character " + character)
                     stopSaveAnimation()
                 }
 
@@ -2028,10 +2100,9 @@ class Character_view : AppCompatActivity(){
             secondsSinceLastSave = 0
         }
     }
-
     fun firstManualSave() {
-        val character = MainActivity.selectedCharacter
-        //println("FIRST MANUAL SAVE character " + character)
+
+        println("FIRST MANUAL SAVE character " + character)
         if (character != null) {
             var saveFile = getCharacterData("" + saveDialog!!.save_name.text.toString())
             character.file_name = saveFile.fileName + ""
@@ -2051,10 +2122,8 @@ class Character_view : AppCompatActivity(){
         }
         secondsSinceLastSave = 0
     }
-
-
     fun createNewSave(){
-        val character = MainActivity.selectedCharacter
+
         //println("character" + character)
         if(character!=null){
             var saveFile= getCharacterData("" + saveDialog!!.save_name.text.toString())
@@ -2077,6 +2146,7 @@ class Character_view : AppCompatActivity(){
 
     var saving = false
     var saveTime = 0
+
     fun startSaveAnimation(){
         saving=true
         saveTime = 0
@@ -2092,15 +2162,11 @@ class Character_view : AppCompatActivity(){
     override fun onBackPressed() {
         //quickSave()
         super.onBackPressed()
-        //TODO
-
     }
-
     override fun onStop() {
-        //println("STOP")
         quickSave()
+        println("on stop save")
         super.onStop()
-        //TODO
     }
 
     fun getCharacterData(fileName:String) : CharacterData{

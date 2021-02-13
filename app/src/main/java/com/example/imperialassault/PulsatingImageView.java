@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 
 public class PulsatingImageView extends View implements Runnable{
     Thread thread;
-    public boolean animating = true;
     Bitmap image;
     boolean scaled = false;
     public PulsatingImageView(@NonNull Context context) {
@@ -36,11 +35,10 @@ public class PulsatingImageView extends View implements Runnable{
     }
 
     void init(){
-
-
         thread = new Thread(this::run);
         thread.start();
     }
+
 
     public void setImageBitmap(Bitmap bitmap){
         image = bitmap;
@@ -76,18 +74,15 @@ public class PulsatingImageView extends View implements Runnable{
 
     void update(int deltaTime){
         if(scaled) {
-
-
             int alpha = (int) (100+155 * (1 + Math.sin(time / 1000 *4))/2);
             paint.setAlpha(alpha);
-
         }
     }
 
     int fixedDeltaTime = 1000/60;
     @Override
     public void run() {
-        while(animating) {
+        while(true) {
             time+=fixedDeltaTime;
             //System.out.println("tick");
             update(fixedDeltaTime);

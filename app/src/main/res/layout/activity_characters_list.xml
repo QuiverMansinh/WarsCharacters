@@ -22,12 +22,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardBiv"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="biv"
@@ -57,7 +59,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardGaar"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -90,7 +93,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardMak"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -124,7 +128,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardSaska"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -158,7 +163,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardDavith"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -192,7 +198,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardGideon"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -225,7 +232,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardMHD"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -258,7 +266,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardShyla"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -291,7 +300,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardDiala"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -324,7 +334,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardJyn"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -357,7 +368,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardMurne"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -390,7 +402,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardVerena"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -423,7 +436,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardFenn"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -456,7 +470,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardLoku"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -489,7 +504,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardOnar"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -522,7 +538,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardVinto"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -555,7 +572,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardKo"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -588,7 +606,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardJarrod"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -621,7 +640,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardDrok"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -655,7 +675,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardCT"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
@@ -690,7 +711,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CharacterCardTress"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="15dp"
