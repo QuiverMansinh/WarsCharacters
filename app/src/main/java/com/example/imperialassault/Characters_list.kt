@@ -88,7 +88,7 @@ class Characters_list : AppCompatActivity() {
 
 
             startActivity(intent);
-
+        finish()
 
     }
 

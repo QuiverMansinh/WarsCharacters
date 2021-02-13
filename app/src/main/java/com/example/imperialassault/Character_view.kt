@@ -250,7 +250,7 @@ class Character_view : AppCompatActivity(){
         setDiceColor(tech3, character.tech[2]);
 
         updateImages()
-        //updateStats()
+        updateStats()
         initDamageAndStrain()
         updateStats()
         initConditions()
@@ -356,7 +356,7 @@ class Character_view : AppCompatActivity(){
             println("DROIDDDDDDDDDDDDDDD")
             //}
         }
-        quickSave()
+        //quickSave()
     }
     fun onShowCompanionCard(view: View) {
         if(character.companionCard != null) {
@@ -1448,7 +1448,6 @@ class Character_view : AppCompatActivity(){
     private fun updateConditionIcons(){
         //TODO condition save
 
-        println("condition save")
         character.conditionsActive = conditionsActive
         character_image.animateConditions = animateConditions
         quickSave()
@@ -1457,7 +1456,7 @@ class Character_view : AppCompatActivity(){
             conditionViews[i].visibility = View.GONE
         }
         show_all_conditions.visibility = View.GONE
-        updateImages()
+
 
         if(!animateConditions) {
             var active = 0;
@@ -1550,6 +1549,7 @@ class Character_view : AppCompatActivity(){
             character_image.weakened = true
         }
 
+        updateImages()
 
     }
 
@@ -2067,36 +2067,26 @@ class Character_view : AppCompatActivity(){
         }
     }
     fun quickSave(){
-        if(secondsSinceLastSave > 3) {
+        //if(secondsSinceLastSave > 3) {
             //val character = MainActivity.selectedCharacter
 
-            if (character != null) {
+
                 var saveFile = getCharacterData(character.file_name)
                 val database = AppDatabase.getInstance(this)
 
-                startSaveAnimation()
-                GlobalScope.launch {
-                    while (saving) {
-                        saveAnimation()
-                        delay(10)
-                    }
-                }
 
                 GlobalScope.launch {
-                    if (character.id != -1) {
-                        saveFile.id = character.id
-                        database!!.getCharacterDAO().update(saveFile)
-                        println("update save")
-                    } else {
-                        character.id = saveFile.id
-                        database!!.getCharacterDAO().insert(saveFile)
-                        println("insert save")
-                    }
-                    println("QUICK SAVE character " + character)
-                    stopSaveAnimation()
-                }
+                        if (character.id != -1) {
+                            saveFile.id = character.id
+                            database!!.getCharacterDAO().update(saveFile)
+                            println("update save")
+                        } else {
+                            character.id = saveFile.id
+                            database!!.getCharacterDAO().insert(saveFile)
+                            println("insert save")
+                        }
+                        println("QUICK SAVE character " + character + " " + character.id)
 
-            }
             secondsSinceLastSave = 0
         }
     }
@@ -2144,23 +2134,8 @@ class Character_view : AppCompatActivity(){
         secondsSinceLastSave = 0
     }
 
-    var saving = false
-    var saveTime = 0
-
-    fun startSaveAnimation(){
-        saving=true
-        saveTime = 0
-    }
-    fun saveAnimation(){
-        saveTime++
-        //println("save time " + saveTime)
-    }
-    fun stopSaveAnimation(){
-        saving=false
-    }
-
     override fun onBackPressed() {
-        //quickSave()
+        quickSave()
         super.onBackPressed()
     }
     override fun onStop() {

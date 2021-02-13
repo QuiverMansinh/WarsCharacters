@@ -265,7 +265,7 @@ class LoadScreen : AppCompatActivity() {
 
                     }
 
-                    //finish()
+                    finish()
                 }
             }
             listView.setOnItemLongClickListener{ parent, view, position, id ->
@@ -393,7 +393,7 @@ class LoadScreen : AppCompatActivity() {
 
         }
         super.onBackPressed()
-        //finish()
+        finish()
     }
 
     fun showNoSavesFoundToast(){
