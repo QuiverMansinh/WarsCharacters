@@ -6,6 +6,8 @@ object items {
     var accArray = ArrayList<ArrayList<Int>>()
     var meleeArray = ArrayList<ArrayList<Int>>()
     var rangedArray = ArrayList<ArrayList<Int>>()
+    var weaponsEquipped = 2
+    var whichHelmet = 0
 
     init {
         RewardsArray.add(
@@ -69,6 +71,35 @@ object items {
         RewardsArray.add(
             arrayListOf(
                 25,
+            )
+        )
+        RewardsArray.add(
+            arrayListOf(
+                0,
+                0,
+                0,
+                0,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                10,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
             )
         )
         accArray.add(
@@ -356,7 +387,59 @@ object items {
         )
         meleeArray.add(
             arrayListOf(
-                2,
+                0,
+            )
+        )
+        meleeArray.add(
+            arrayListOf(
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
             )
         )
         rangedArray.add(
@@ -499,7 +582,81 @@ object items {
         )
         rangedArray.add(
             arrayListOf(
-                2,
+                0,
+            )
+        )
+        rangedArray.add(
+            arrayListOf(
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
             )
         )
     }

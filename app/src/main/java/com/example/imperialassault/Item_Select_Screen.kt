@@ -127,7 +127,7 @@ class Rewards : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.RewardsArray)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.RewardsArray,"Rewards")
         return rewardsView
     }
 }
@@ -140,7 +140,7 @@ class Accessories : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.accArray)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.accArray,"Accessories")
         return rewardsView
     }
 }
@@ -153,7 +153,7 @@ class Armor : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.armorArray)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.armorArray,"Armor")
         return rewardsView
     }
 }
@@ -166,7 +166,7 @@ class Melee : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.meleeArray)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.meleeArray,"Melee")
         return rewardsView
     }
 }
@@ -179,14 +179,14 @@ class Ranged : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.rangedArray)
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.rangedArray,"Ranged")
         return rewardsView
     }
 }
 
 class ImageAdapter internal constructor(
     val mContext: Activity, var itemArray:
-    ArrayList<ArrayList<Int>>
+    ArrayList<ArrayList<Int>>, var which: String
 ) :
     BaseAdapter
         () {
@@ -223,17 +223,61 @@ class ImageAdapter internal constructor(
             }
             gridItem.setOnClickListener {
                 if (itemArray[1][position] == 0) {
-                    System.out.println("SIZE SIZE SIZE " + itemArray[1][position])
-                    if(itemArray[2][0] != 0){
+                    if ((which == "Ranged" || which == "Melee") && items.weaponsEquipped != 0){
+                        items.weaponsEquipped--
+                        gridItem.item.animate().alpha(1f).duration = 50
+                        itemArray[1][position] = 1
+                    }else if(which == "Accessories"){
+                        if ((itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet &&
+                            items.whichHelmet == 0) || (itemArray[0][position] == R.drawable
+                                .acc_t3_reinforcedhelmet &&
+                            items.whichHelmet == 0) && itemArray[2][0] != 0){
+                                if (itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet){
+                                    items.whichHelmet = 1
+                                }else{
+                                    items.whichHelmet = 2
+                                }
+                                System.out.println("Yes" + items.whichHelmet)
+                            gridItem.item.animate().alpha(1f).duration = 50
+                            itemArray[1][position] = 1
+                            itemArray[2][0]--
+                        }else if ((itemArray[0][position] != R.drawable.acc_t2_mandalorianhelmet)&&
+                                (itemArray[0][position] != R.drawable
+                                    .acc_t3_reinforcedhelmet)&&itemArray[2][0] != 0){
+                                        System.out.println("nooooo")
+                            gridItem.item.animate().alpha(1f).duration = 50
+                            itemArray[1][position] = 1
+                            itemArray[2][0]--
+                        }
+                    }else if(itemArray[2][0] != 0){
                         gridItem.item.animate().alpha(1f).duration = 50
                         itemArray[1][position] = 1
                         itemArray[2][0]--
                     }
+                    Character().health+itemArray[3][position]
                 } else if (itemArray[1][position] == 1) {
-                    System.out.println("It Works " + itemArray[1][position])
-                    gridItem.item.animate().alpha(0.5f).duration = 50
-                    itemArray[1][position] = 0
-                    itemArray[2][0]++
+                    if ((which == "Ranged" || which == "Melee")){
+                        items.weaponsEquipped++
+                        itemArray[1][position] = 0
+                        gridItem.item.animate().alpha(0.5f).duration = 50
+                    }else if ((which == "Accessories")){
+                        if (itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet || itemArray[0][position] == R.drawable
+                                .acc_t3_reinforcedhelmet){
+                            items.whichHelmet = 0
+                            itemArray[2][0]++
+                            itemArray[1][position] = 0
+                            gridItem.item.animate().alpha(0.5f).duration = 50
+                        }else{
+                            itemArray[1][position] = 0
+                            gridItem.item.animate().alpha(0.5f).duration = 50
+                            itemArray[2][0]++
+                        }
+                    }else{
+                        gridItem.item.animate().alpha(0.5f).duration = 50
+                        itemArray[1][position] = 0
+                        itemArray[2][0]++
+                        Character().health-itemArray[3][position]
+                    }
                 }
             }
         } else if (itemArray[0][position] == -1) {
