@@ -108,7 +108,7 @@ class Character_view : AppCompatActivity(){
 
             left_buttons.animate().alpha(1f)
             val animButtons = ObjectAnimator.ofFloat(left_buttons,"translationX",-left_buttons.width
-                .toFloat(),-8f)
+                .toFloat(),0f)
             //animBottom.interpolator = DecelerateInterpolator()
             animButtons.duration=(500).toLong()
             animButtons.start()
