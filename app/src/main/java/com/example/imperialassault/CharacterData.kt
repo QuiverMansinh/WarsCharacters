@@ -39,10 +39,9 @@ data class CharacterData (
     @ColumnInfo(name = "accessory1") val accessory1: Int,
     @ColumnInfo(name = "accessory2") val accessory2: Int,
     @ColumnInfo(name = "accessory3") val accessory3: Int,
-    @ColumnInfo(name = "helmet") val helmet: Int,
+    @ColumnInfo(name = "helmet") val helmet: Boolean,
     @ColumnInfo(name = "armour") val armour: Int,
-    @ColumnInfo(name = "meleeMods") val meleeMods:String?,
-    @ColumnInfo(name = "rangedMods") val rangedMods:String?,
+    @ColumnInfo(name = "mods") val mods:String?,
     @ColumnInfo(name = "rewards") val rewards:String?,
 
     @ColumnInfo(name = "background") val background: String?,

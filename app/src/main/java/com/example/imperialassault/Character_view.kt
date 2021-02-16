@@ -12,22 +12,17 @@ import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
-import android.transition.Explode
-import android.transition.Slide
 import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.core.widget.ImageViewCompat
-import androidx.transition.Fade
 import kotlinx.android.synthetic.main.activity_character_view.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
@@ -43,7 +38,6 @@ import kotlinx.android.synthetic.main.screen_xp_select.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.io.InputStream
 import kotlin.random.Random
 
@@ -70,8 +64,6 @@ class Character_view : AppCompatActivity(){
         height = displayMetrics.heightPixels.toFloat()
         width = displayMetrics.widthPixels.toFloat()
 
-
-
         initDialogs()
         initScreen()
         initAnimations()
@@ -90,7 +82,8 @@ class Character_view : AppCompatActivity(){
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-
+        updateStats()
+        updateImages()
 
         if(hasFocus&&!loadAnimated ){
             top_panel.animate().alpha(1f)
@@ -319,44 +312,45 @@ class Character_view : AppCompatActivity(){
         return bitmap
     }
     private fun updateImages(){
-        character.updateCharacterImages(this)
-        if(animateConditions) {
-            if (character.currentImage != null) {
-                character.glowImage = Bitmap.createBitmap(character.currentImage!!)
-                val input = Bitmap.createBitmap(character.currentImage!!)
-                val output = Bitmap.createBitmap(character.currentImage!!)
-
-                val rs = RenderScript.create(this)
-                val blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
-                blur.setRadius(25f)
-                val tempIn = Allocation.createFromBitmap(rs, input)
-                val tempOut = Allocation.createFromBitmap(rs, output)
-                blur.setInput(tempIn)
-                blur.forEach(tempOut)
-
-                tempOut.copyTo(character.glowImage)
-
-            }
-            character_image.setGlowBitmap(character.glowImage)
+        if(autoImageChange) {
             character.updateCharacterImages(this)
-        }
-        character_image.setImageBitmap(character.currentImage)
+            if (animateConditions) {
+                if (character.currentImage != null) {
+                    character.glowImage = Bitmap.createBitmap(character.currentImage!!)
+                    val input = Bitmap.createBitmap(character.currentImage!!)
+                    val output = Bitmap.createBitmap(character.currentImage!!)
 
-        if(character.name_short!="jarrod") {
-            character_image.setLayer1Bitmap(character.layer1)
-        }
-        else {
-            /*
+                    val rs = RenderScript.create(this)
+                    val blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
+                    blur.setRadius(25f)
+                    val tempIn = Allocation.createFromBitmap(rs, input)
+                    val tempOut = Allocation.createFromBitmap(rs, output)
+                    blur.setInput(tempIn)
+                    blur.forEach(tempOut)
+
+                    tempOut.copyTo(character.glowImage)
+
+                }
+                character_image.setGlowBitmap(character.glowImage)
+                character.updateCharacterImages(this)
+            }
+            character_image.setImageBitmap(character.currentImage)
+
+            if (character.name_short != "jarrod") {
+                character_image.setLayer1Bitmap(character.layer1)
+            } else {
+                /*
             if (conditionsActive[hidden] && animateConditions) {
                 companion_layer.visibility = View.INVISIBLE
 
             } else{*/
                 companion_layer.visibility = View.VISIBLE
                 companion_layer.setImageBitmap(character.layer1);
-            println("DROIDDDDDDDDDDDDDDD")
-            //}
+                println("DROIDDDDDDDDDDDDDDD")
+                //}
+            }
+            //quickSave()
         }
-        //quickSave()
     }
     fun onShowCompanionCard(view: View) {
         if(character.companionCard != null) {
@@ -368,32 +362,42 @@ class Character_view : AppCompatActivity(){
         character.health= character.health_default
         character.endurance = character.endurance_default
         character.speed = character.speed_default
-        health.setShadowLayer(5f, 0f, 0f, Color.BLACK)
-        endurance.setShadowLayer(5f, 0f, 0f, Color.BLACK)
-        speed.setShadowLayer(5f, 0f, 0f, Color.BLACK)
 
         for(i in 0..character.xpCardsEquipped.size-1){
             if(character.xpCardsEquipped[i]){
                 if(character.xpHealths[i]!=0) {
                     character.health += character.xpHealths[i]
-                    health.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
                 }
                 if(character.xpEndurances[i]!=0) {
                     character.endurance += character.xpEndurances[i]
-                    endurance.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
                 }
                 if(character.xpSpeeds[i]!=0) {
                     character.speed += character.xpSpeeds[i]
-                    speed.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
                 }
             }
         }
+
+        for(i in 0..character.accessories.size-1){
+            character.health += Items.accArray!![character.accessories[i]].health
+            character.endurance += Items.accArray!![character.accessories[i]].endurance
+        }
+        for(i in 0..character.armor.size-1){
+            character.health += Items.armorArray!![character.armor[i]].health
+            //character.endurance += Items.armorArray!![character.armor[i]].endurance
+        }
+        for(i in 0..character.rewards.size-1){
+            character.health += Items.rewardsArray!![character.rewards[i]].health
+            //character.endurance += Items.armorArray!![character.armor[i]].endurance
+        }
+
         if(isWounded){
             character.endurance--
-            endurance.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_red))
             character.speed--
-            speed.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_red))
         }
+
+        setStatColor(health, character.health, character.health_default)
+        setStatColor(endurance, character.endurance, character.endurance_default)
+        setStatColor(speed, character.speed, character.speed_default)
 
         health.setText("" + character.health);
         endurance.setText("" + character.endurance);
@@ -402,6 +406,19 @@ class Character_view : AppCompatActivity(){
         //TODO
         quickSave()
     }
+
+    private fun setStatColor(stat:TextView, current:Int, default:Int){
+        if(current > default){
+            stat.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
+        }
+        else if(current < default){
+            stat.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_red))
+        }
+        else{
+            stat.setShadowLayer(5f, 0f, 0f, Color.BLACK)
+        }
+    }
+
     fun onHide(view: View){
         view.visibility = View.INVISIBLE
     }
@@ -603,7 +620,7 @@ class Character_view : AppCompatActivity(){
 
         isWounded = false
         updateStats()
-        unwoundDialog!!.cancel()
+        unwoundDialog!!.dismiss()
     }
     private fun initDamageAndStrain() {
         if(character.damage>0) {
@@ -729,7 +746,7 @@ class Character_view : AppCompatActivity(){
 
     fun onEndActivation(view: View){
 
-        endActivationDialog!!.cancel()
+        endActivationDialog!!.dismiss()
         removeCondition(weakened)
         /*
         val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 0f, 0f, 0f, 1f)
@@ -771,7 +788,7 @@ class Character_view : AppCompatActivity(){
     }
 
     fun onEndActivationNo(view: View){
-        endActivationDialog!!.cancel()
+        endActivationDialog!!.dismiss()
     }
     fun onAction(view: View) {
 
@@ -900,7 +917,7 @@ class Character_view : AppCompatActivity(){
             add_strain.setImageDrawable(getNumber(character.strain))
             playRestAnim()
             character.timesRested++
-            restDialog!!.cancel()
+            restDialog!!.dismiss()
 
             actionCompleted()
         }
@@ -990,14 +1007,14 @@ class Character_view : AppCompatActivity(){
         //println("save")
     }
     fun onBiography(view: View) {
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
         bioDialog!!.bio_title.setText(character.bio_title)
         bioDialog!!.bio_quote.setText(character.bio_quote)
         bioDialog!!.bio_text.setText(character.bio_text)
         bioDialog!!.show()
     }
     fun onPower(view: View) {
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
         if(!isWounded) {
             showCardDialog!!.card_image.setImageBitmap(character.power)
         }
@@ -1014,28 +1031,28 @@ class Character_view : AppCompatActivity(){
         else{
             quickSave()
         }
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
 
     }
     fun onBackground(view: View) {
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
         backgroundDialog!!.show()
     }
     fun onSettings(view: View) {
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
         settingsScreen!!.show()
     }
     fun onStatistics(view: View) {
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
         initStatsScreen()
         statsScreen!!.show()
     }
     fun onCredits(view: View) {
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
         developersCreditsScreen!!.show()
     }
     fun onDevCredits(view: View) {
-        optionsDialog!!.cancel()
+        optionsDialog!!.dismiss()
         developersCreditsScreen!!.show()
     }
 
@@ -1241,7 +1258,7 @@ class Character_view : AppCompatActivity(){
                 character.assistCount[trooper]++
             }
         }
-        assistDialog!!.cancel()
+        assistDialog!!.dismiss()
     }
     private fun initKillTracker(){
 
@@ -1653,7 +1670,7 @@ class Character_view : AppCompatActivity(){
         restDialog!!.rest_button.setOnClickListener {
             onRest(restDialog!!.rest_button)
             //TODO
-            quickSave()
+            //quickSave()
             true
         }
     }
@@ -1667,7 +1684,7 @@ class Character_view : AppCompatActivity(){
         unwoundDialog!!.unwound_button.setOnClickListener {
             onUnwound(unwoundDialog!!.unwound_button)
             //TODO
-            quickSave()
+            //quickSave()
             true
         }
     }
@@ -1745,11 +1762,11 @@ class Character_view : AppCompatActivity(){
             else{
                 createNewSave()
             }
-            saveDialog!!.cancel()
+            saveDialog!!.dismiss()
             true
         }
         saveDialog!!.cancel_button.setOnClickListener {
-            saveDialog!!.cancel()
+            saveDialog!!.dismiss()
             true
         }
     }
@@ -1762,7 +1779,7 @@ class Character_view : AppCompatActivity(){
         showCardDialog!!.setCanceledOnTouchOutside(true)
         showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         showCardDialog!!.show_card_dialog.setOnClickListener {
-            showCardDialog!!.cancel()
+            showCardDialog!!.dismiss()
             true
         }
 
@@ -1797,7 +1814,7 @@ class Character_view : AppCompatActivity(){
         bioDialog!!.setCanceledOnTouchOutside(true)
         bioDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         bioDialog!!.bio_layout.setOnClickListener{
-            bioDialog!!.cancel()
+            bioDialog!!.dismiss()
             true
         }
     }
@@ -2169,15 +2186,14 @@ class Character_view : AppCompatActivity(){
             character.xpCardsEquipped[6],
             character.xpCardsEquipped[7],
             character.xpCardsEquipped[8],
-            character.weapon1,
-            character.weapon2,
-            character.accessory1,
-            character.accessory2,
-            character.accessory3,
+            character.weapons.getOrElse(0){-1},
+            character.weapons.getOrElse(1){-1},
+            character.accessories.getOrElse(0){-1},
+            character.accessories.getOrElse(1){-1},
+            character.accessories.getOrElse(2){-1},
             character.helmet,
-            character.armour,
-            convertItemIDToString(character.meleeMods),
-            convertItemIDToString(character.rangedMods),
+            character.armor.getOrElse(0){-1},
+            convertItemIDToString(character.mods),
             convertItemIDToString(character.rewards),
             character.background,
             character.conditionsActive[0],

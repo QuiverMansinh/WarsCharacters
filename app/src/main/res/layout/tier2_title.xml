@@ -6,15 +6,20 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textView37"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/advent_pro_semibold"
+        android:fontFamily="@font/agency_fb"
         android:gravity="center"
-        android:text="Tier 2"
-        android:textColor="#FFFFFF"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:shadowColor="@color/black"
+        android:shadowRadius="10"
+        android:text="TIER 2"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

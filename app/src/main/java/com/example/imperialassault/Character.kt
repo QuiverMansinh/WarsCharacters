@@ -80,15 +80,14 @@ open class Character {
     var xpSpent = 0
     var xpCardsEquipped: BooleanArray= booleanArrayOf(false,false,false,false,false,false,false,false,false)
 
-    var weapon1 = -1
-    var weapon2 = -1
-    var accessory1 = -1
-    var accessory2 = -1
-    var accessory3 = -1
-    var helmet = -1
-    var armour = -1
+    var weapons = arrayListOf<Int>()
+    var accessories = arrayListOf<Int>()
+    var helmet = false
+    var armor = arrayListOf<Int>()
     var rewards  = arrayListOf<Int>()
-    var rangedMods = arrayListOf<Int>()
+    var mods = arrayListOf<Int>()
+
+    //TODO remove
     var meleeMods = arrayListOf<Int>()
 
     var background = "interior"

@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_item__select__screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
@@ -79,8 +78,8 @@ class Item_Select_Screen : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         finish()
+        super.onBackPressed()
     }
 }
 
@@ -127,7 +126,7 @@ class Rewards : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.RewardsArray,"Rewards")
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.rewardsArray!!)
         return rewardsView
     }
 }
@@ -140,7 +139,7 @@ class Accessories : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.accArray,"Accessories")
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.accArray!!)
         return rewardsView
     }
 }
@@ -153,7 +152,7 @@ class Armor : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.armorArray,"Armor")
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.armorArray!!)
         return rewardsView
     }
 }
@@ -166,7 +165,7 @@ class Melee : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.meleeArray,"Melee")
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.meleeArray!!)
         return rewardsView
     }
 }
@@ -179,22 +178,21 @@ class Ranged : Fragment() {
     ): View? {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, items.rangedArray,"Ranged")
+        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.rangedArray!!)
         return rewardsView
     }
 }
 
 class ImageAdapter internal constructor(
     val mContext: Activity, var itemArray:
-    ArrayList<ArrayList<Int>>, var which: String
+    Array<Item>
 ) :
-    BaseAdapter
-        () {
+    BaseAdapter() {
 
     // References to our images
 
     override fun getCount(): Int {
-        return itemArray[0].size
+        return itemArray.size
     }
 
     override fun getItem(position: Int): Any? {
@@ -209,25 +207,183 @@ class ImageAdapter internal constructor(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var gridItem: View
 
-        if (itemArray[0][position] > 0) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
-            gridItem.item.setImageResource(itemArray[0][position])
-            if (itemArray[1][position] == 1) {
-                gridItem.item.alpha = 1f
-            } else if (itemArray[1][position] == 0) {
-                gridItem.item.alpha = 0.5f
+
+        var currentItem = itemArray.get(position)
+
+        if (currentItem.type >= 0) {
+
+                gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
+
+            gridItem.item.setImageResource(currentItem.resourceId)
+            gridItem.item.alpha = 0.5f
+            var character = MainActivity.selectedCharacter!!
+            when (currentItem.type) {
+                Items.reward -> {
+                    if (character.rewards.contains(currentItem.index)) {
+                        gridItem.item.alpha = 1f
+                    }
+                }
+                Items.acc -> {
+                    if (character.accessories.contains(currentItem.index)) {
+                        gridItem.item.alpha = 1f
+                    }
+                }
+                Items.armor -> {
+                    if (character.armor.contains(currentItem.index)) {
+                        gridItem.item.alpha = 1f
+                    }
+                }
+                Items.melee -> {
+                    if (character.weapons.contains(currentItem.index) || character.mods.contains(currentItem.index)) {
+                        gridItem.item.alpha = 1f
+                    }
+                }
+                Items.ranged -> {
+                    if (character.weapons.contains(currentItem.index) || character.mods.contains(currentItem.index)) {
+                        gridItem.item.alpha = 1f
+                    }
+                }
             }
+            //TODO load eqipped items
+
             gridItem.setOnLongClickListener {
                 onShowCard(gridItem.item)
                 true
             }
+
             gridItem.setOnClickListener {
-                if (itemArray[1][position] == 0) {
-                    if ((which == "Ranged" || which == "Melee") && items.weaponsEquipped != 0){
+                when (currentItem.type) {
+                    Items.reward -> {
+                        gridItem.item.alpha = equipReward(currentItem)
+                    }
+                    Items.acc -> {
+                        gridItem.item.alpha = equipAcc(currentItem)
+                    }
+                    Items.armor -> {
+                        gridItem.item.alpha = equipArmor(currentItem)
+                    }
+                    Items.melee -> {
+                        gridItem.item.alpha = equipWeapon(currentItem)
+                    }
+                    Items.ranged -> {
+                        gridItem.item.alpha = equipWeapon(currentItem)
+                    }
+                }
+            }
+        } else {
+            gridItem = mContext.layoutInflater.inflate(currentItem.resourceId, null, true)
+        }
+
+        return gridItem
+    }
+
+
+    fun equipReward(item:Item):Float{
+        var character = MainActivity.selectedCharacter!!
+
+        //remove if already equipped
+        if(character.rewards.remove(item.index)){
+            return 0.5f
+        }
+
+        //equip if not equipped
+        character.rewards.add(item.index)
+        return 1f
+    }
+
+    fun equipAcc(item:Item):Float{
+        var character = MainActivity.selectedCharacter!!
+
+        if(character.accessories.remove(item.index)){
+            if(item.subType == Items.helmet){
+                character.helmet = false
+            }
+            return 0.5f
+        }
+
+        //equip if slot available
+        if(character.accessories.size < 3){
+            if(item.subType == Items.helmet){
+                if(!character.helmet) {
+                    character.helmet = true
+                    character.accessories.add(item.index)
+                    return 1f
+                }
+            }
+            else{
+                character.accessories.add(item.index)
+                return 1f
+            }
+        }
+
+        //not equipped
+        return 0.5f
+    }
+
+    fun equipArmor(item:Item):Float{
+        var character = MainActivity.selectedCharacter!!
+
+        //remove if already equipped
+        if(character.armor.remove(item.index)){
+            return 0.5f
+        }
+
+        //equip if slot available
+        if(character.armor.size < 1){
+            character.armor.add(item.index)
+            return 1f
+        }
+
+        //not equipped
+        return 0.5f
+    }
+
+    fun equipWeapon(item:Item):Float{
+        var character = MainActivity.selectedCharacter!!
+
+        if(item.subType == Items.mod){
+            //remove if already equipped
+            if(character.mods.remove(item.index)){
+                return 0.5f
+            }
+            //equip if not equipped
+            character.mods.add(item.index)
+            return 1f
+        }
+        else {
+            //remove if already equipped
+            if(character.weapons.remove(item.index)){
+                return 0.5f
+            }
+            //equip if slot available
+            if(character.weapons.size < 2){
+                character.weapons.add(item.index)
+                return 1f
+            }
+        }
+
+        //not equipped
+        return 0.5f
+    }
+}
+
+var showCardDialog: Dialog? = null
+fun onShowCard(view: ImageView) {
+    var image = ((view).drawable as BitmapDrawable).bitmap
+    showCardDialog!!.card_image.setImageBitmap(image)
+    showCardDialog!!.show()
+}
+
+
+/* if (itemArray[1][position] == 0) {
+                    if ((itemType == "Ranged" || itemType == "Melee") && items.weaponsEquipped != 0){
                         items.weaponsEquipped--
                         gridItem.item.animate().alpha(1f).duration = 50
                         itemArray[1][position] = 1
-                    }else if(which == "Accessories"){
+
+
+
+                    }else if(itemType == "Accessories"){
                         if ((itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet &&
                             items.whichHelmet == 0) || (itemArray[0][position] == R.drawable
                                 .acc_t3_reinforcedhelmet &&
@@ -256,11 +412,11 @@ class ImageAdapter internal constructor(
                     }
                     Character().health+itemArray[3][position]
                 } else if (itemArray[1][position] == 1) {
-                    if ((which == "Ranged" || which == "Melee")){
+                    if ((itemType == "Ranged" || itemType == "Melee")){
                         items.weaponsEquipped++
                         itemArray[1][position] = 0
                         gridItem.item.animate().alpha(0.5f).duration = 50
-                    }else if ((which == "Accessories")){
+                    }else if ((itemType == "Accessories")){
                         if (itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet || itemArray[0][position] == R.drawable
                                 .acc_t3_reinforcedhelmet){
                             items.whichHelmet = 0
@@ -278,31 +434,4 @@ class ImageAdapter internal constructor(
                         itemArray[2][0]++
                         Character().health-itemArray[3][position]
                     }
-                }
-            }
-        } else if (itemArray[0][position] == -1) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.tier1_title, null, true)
-        } else if (itemArray[0][position] == -2) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.tier2_title, null, true)
-        } else if (itemArray[0][position] == -3) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.tier3_title, null, true)
-        } else if (itemArray[0][position] == -4) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.mods_divider, null, true)
-        } else if (itemArray[0][position] == -5) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.empty_item, null, true)
-        } else {
-            gridItem = mContext.layoutInflater.inflate(R.layout.empty_space, null, true)
-        }
-        return gridItem
-    }
-}
-
-
-
-var showCardDialog: Dialog? = null
-
-fun onShowCard(view: ImageView) {
-    var image = ((view).drawable as BitmapDrawable).bitmap
-    showCardDialog!!.card_image.setImageBitmap(image)
-    showCardDialog!!.show()
-}
+                }*/

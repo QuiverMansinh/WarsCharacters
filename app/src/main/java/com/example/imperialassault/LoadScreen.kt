@@ -2,16 +2,13 @@ package com.example.imperialassault
 
 import android.animation.ObjectAnimator
 import android.app.Activity
-import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -21,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_character_view.view.*
-import kotlinx.android.synthetic.main.activity_load_screen.*
 import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.android.synthetic.main.save_load_item.view.*
 import kotlinx.coroutines.*
@@ -172,13 +168,13 @@ class LoadScreen : AppCompatActivity() {
                         data[position].xpCardsEquipped9
                     )
 
-                    loadedCharacters[position].weapon1 = data[position].weapon1
-                    loadedCharacters[position].weapon1 = data[position].weapon2
-                    loadedCharacters[position].accessory1 = data[position].accessory1
-                    loadedCharacters[position].accessory2 = data[position].accessory2
-                    loadedCharacters[position].accessory3 = data[position].accessory3
+                    if(data[position].weapon1!=-1){ loadedCharacters[position].weapons.add(data[position].weapon1)}
+                    if(data[position].weapon2!=-1){ loadedCharacters[position].weapons.add(data[position].weapon2)}
+                    if(data[position].accessory1!=-1){ loadedCharacters[position].accessories.add(data[position].accessory1)}
+                    if(data[position].accessory2!=-1){ loadedCharacters[position].accessories.add(data[position].accessory2)}
+                    if(data[position].accessory3!=-1){ loadedCharacters[position].accessories.add(data[position].accessory3)}
                     loadedCharacters[position].helmet = data[position].helmet
-                    loadedCharacters[position].armour = data[position].armour
+                    if(data[position].armour != -1) { loadedCharacters[position].armor.add(data[position].armour) }
 
                     //TODO rewards and mods
 
