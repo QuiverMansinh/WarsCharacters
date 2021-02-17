@@ -44,7 +44,7 @@ import kotlin.random.Random
 var height = 0f
 var width = 0f
 
-class Character_view : AppCompatActivity(){
+class CharacterScreen : AppCompatActivity(){
     var character:Character = Character();
     var animateConditions = true
     var animateDamage = true
@@ -412,7 +412,7 @@ class Character_view : AppCompatActivity(){
             stat.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_green))
         }
         else if(current < default){
-            stat.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.dice_red))
+            stat.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.stat_orange))
         }
         else{
             stat.setShadowLayer(5f, 0f, 0f, Color.BLACK)
@@ -1149,31 +1149,30 @@ class Character_view : AppCompatActivity(){
 
     }
     fun onReward(view: View) {
-        val intent = Intent(this, Item_Select_Screen::class.java)
-        intent.putExtra("tab", "reward")
+        val intent = Intent(this, RewardsScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onAccessory(view: View) {
-        val intent = Intent(this, Item_Select_Screen::class.java)
+        val intent = Intent(this, ItemSelectScreen::class.java)
         intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onArmour(view: View) {
-        val intent = Intent(this, Item_Select_Screen::class.java)
+        val intent = Intent(this, ItemSelectScreen::class.java)
         intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onMelee(view: View) {
-        val intent = Intent(this, Item_Select_Screen::class.java)
+        val intent = Intent(this, ItemSelectScreen::class.java)
         intent.putExtra("tab", "melee")
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onRange(view: View) {
-        val intent = Intent(this, Item_Select_Screen::class.java)
+        val intent = Intent(this, ItemSelectScreen::class.java)
         intent.putExtra("tab", "range")
         //intent.putExtra("Load",false)
         startActivity(intent);

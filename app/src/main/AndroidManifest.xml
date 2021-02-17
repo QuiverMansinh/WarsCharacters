@@ -4,22 +4,20 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Character Tracker"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:largeHeap="true"
-        android:hardwareAccelerated="true"
         android:theme="@style/Theme.ImperialAssault">
-
-
-        <activity android:name=".LoadScreen"></activity>
-
+        <activity android:name=".RewardsScreen"></activity>
+        <activity android:name=".LoadScreen" />
         <activity
-            android:name=".Item_Select_Screen"
+            android:name=".ItemSelectScreen"
             android:label="@string/title_activity_item__select__screen"
             android:theme="@style/Theme.ImperialAssault.NoActionBar" />
-        <activity android:name=".Character_view" />
+        <activity android:name=".CharacterScreen" />
         <activity android:name=".Characters_list" />
         <activity android:name=".MainActivity">
             <intent-filter>

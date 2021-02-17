@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_item__select__screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class Item_Select_Screen : AppCompatActivity() {
+class ItemSelectScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +32,15 @@ class Item_Select_Screen : AppCompatActivity() {
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
         when (intent.getStringExtra("tab")) {
             "range" -> {
-                pager.setCurrentItem(4)
-            }
-            "melee" -> {
                 pager.setCurrentItem(3)
             }
-            "accessory" -> {
+            "melee" -> {
                 pager.setCurrentItem(2)
             }
-            "armour" -> {
+            "accessory" -> {
                 pager.setCurrentItem(1)
             }
-            "reward" -> {
+            "armour" -> {
                 pager.setCurrentItem(0)
             }
         }
@@ -95,18 +92,15 @@ internal class MyAdapter(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
-                Rewards()
-            }
-            1 -> {
                 Armor()
             }
-            2 -> {
+            1 -> {
                 Accessories()
             }
-            3 -> {
+            2 -> {
                 Melee()
             }
-            4 -> {
+            3 -> {
                 Ranged()
             }
             else -> getItem(position)
@@ -115,19 +109,6 @@ internal class MyAdapter(
 
     override fun getCount(): Int {
         return totalTabs
-    }
-}
-
-class Rewards : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.rewardsArray!!)
-        return rewardsView
     }
 }
 

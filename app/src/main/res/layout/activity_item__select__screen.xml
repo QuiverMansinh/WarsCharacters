@@ -24,13 +24,6 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/reward_button"
-                android:icon="@drawable/reward_button" />
-
-            <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

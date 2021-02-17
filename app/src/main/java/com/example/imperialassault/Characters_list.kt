@@ -82,7 +82,7 @@ class Characters_list : AppCompatActivity() {
         if(MainActivity.selectedCharacter != null) {
             wipeSelectedCharacter()
         }
-        val intent = Intent(this, Character_view::class.java)
+        val intent = Intent(this, CharacterScreen::class.java)
         intent.putExtra("CharacterName", view.tag.toString())
         intent.putExtra("Load", false)
 

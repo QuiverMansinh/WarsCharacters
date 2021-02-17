@@ -226,7 +226,7 @@ class LoadScreen : AppCompatActivity() {
                     MainActivity.selectedCharacter = loadedCharacters[position]
 
                     listView.animate().alpha(0f)
-                    val intent = Intent(this, Character_view::class.java)
+                    val intent = Intent(this, CharacterScreen::class.java)
 
                     /*
                     for(i in 0..loadedCharacters.size-1){
