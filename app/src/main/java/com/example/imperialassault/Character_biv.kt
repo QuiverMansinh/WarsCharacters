@@ -68,8 +68,11 @@ class Character_biv : Character {
 
     override fun loadImages(context: Context){
         super.loadImages(context)
+
         updateCharacterImages(context)
     }
+
+
 
     //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context:Context){

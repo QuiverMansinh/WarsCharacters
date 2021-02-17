@@ -128,9 +128,8 @@ open class Character {
 
         loadXPCardImages(context)
         loadPowerImages(context)
-
-
-
+        startingRangedWeapon = loadStartingWeaponRanged(context)
+        startingMeleeWeapon = loadStartingWeaponMelee(context)
     }
 
     open fun loadPowerImages(context: Context) {
@@ -151,6 +150,14 @@ open class Character {
             }
         }
         xpCardImages = images
+    }
+
+    fun loadStartingWeaponRanged(context: Context):Bitmap?{
+        return getBitmap(context, "characters/" + name_short + "/xpcards/starting_weapon_ranged.jpg")
+    }
+
+    fun loadStartingWeaponMelee(context: Context):Bitmap?{
+        return getBitmap(context, "characters/" + name_short + "/xpcards/starting_weapon_melee.jpg")
     }
 
     open fun getBackgroundImage(context: Context): Bitmap? {
