@@ -187,14 +187,10 @@ class ImageAdapter internal constructor(
     // Create a new ImageView for each item referenced by the Adapter
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var gridItem: View
-
-
         var currentItem = itemArray.get(position)
 
         if (currentItem.type >= 0) {
-
-                gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
-
+            gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
             gridItem.item.setImageResource(currentItem.resourceId)
             gridItem.item.alpha = 0.5f
             var character = MainActivity.selectedCharacter!!

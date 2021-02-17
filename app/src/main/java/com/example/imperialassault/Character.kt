@@ -57,6 +57,9 @@ open class Character {
     var layer1OnTop = false
     var glowImage:Bitmap?=null
 
+    var startingMeleeWeapon:Bitmap?=null
+    var startingRangedWeapon:Bitmap?=null
+
     var tier = 0
     //var tierImages = ArrayList<Bitmap?>()
 
