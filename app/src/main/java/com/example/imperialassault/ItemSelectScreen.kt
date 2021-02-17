@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -191,9 +193,19 @@ class ImageAdapter internal constructor(
 
         if (currentItem.type >= 0) {
             gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
-            gridItem.item.setImageResource(currentItem.resourceId)
             gridItem.item.alpha = 0.5f
             var character = MainActivity.selectedCharacter!!
+
+            if(character.startingMeleeWeapon != null && position == 3 && currentItem
+                    .type == Items.melee){
+                gridItem.item.setImageBitmap(character.startingMeleeWeapon)
+            }else if(character.startingRangedWeapon != null && position == 3 && currentItem
+                    .type == Items.ranged){
+                gridItem.item.setImageBitmap(character.startingRangedWeapon)
+            }else{
+                gridItem.item.setImageResource(currentItem.resourceId)
+            }
+
             when (currentItem.type) {
                 Items.reward -> {
                     if (character.rewards.contains(currentItem.index)) {

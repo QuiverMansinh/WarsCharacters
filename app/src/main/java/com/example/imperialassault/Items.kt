@@ -192,13 +192,17 @@ object Items {
             titleTier1,
             emptySpace,
 
+            Item(melee, R.drawable.gun_t1_heroweapon),
             Item(melee, R.drawable.mel_t1_armoredgauntlets),
             Item(melee, R.drawable.mel_t1_gaffistick),
-            Item(melee, R.drawable.mel_t1_punchdagger),
 
+            Item(melee, R.drawable.mel_t1_punchdagger),
             Item(melee, R.drawable.mel_t1_vibroblade),
             Item(melee, R.drawable.mel_t1_vibroknife),
+
             Item(melee, R.drawable.mel_t1_vibrosword),
+            emptyItem,
+            emptyItem,
 
             emptySpace,
             modsDivider,
@@ -265,43 +269,43 @@ object Items {
             titleTier1,
             emptySpace,
 
-            Item(melee, R.drawable.gun_t1_chargedpistol),
-            Item(melee, R.drawable.gun_t1_ddcdefender),
-            Item(melee, R.drawable.gun_t1_dh17),
+            Item(ranged, R.drawable.gun_t1_heroweapon),
+            Item(ranged, R.drawable.gun_t1_chargedpistol),
+            Item(ranged, R.drawable.gun_t1_ddcdefender),
 
-            Item(melee, R.drawable.gun_t1_dl44),
-            Item(melee, R.drawable.gun_t1_e11),
-            Item(melee, R.drawable.gun_t1_handcannon),
+            Item(ranged, R.drawable.gun_t1_dh17),
+            Item(ranged, R.drawable.gun_t1_dl44),
+            Item(ranged, R.drawable.gun_t1_e11),
 
-            Item(melee, R.drawable.gun_t1_tatooinehuntingrifle),
-            emptyItem,
+            Item(ranged, R.drawable.gun_t1_handcannon),
+            Item(ranged, R.drawable.gun_t1_tatooinehuntingrifle),
             emptyItem,
 
             emptySpace,
             modsDivider,
             emptySpace,
 
-            Item(melee, R.drawable.mod_t1_marksmanbarrel,mod),
-            Item(melee, R.drawable.mod_t1_sniperscope,mod),
-            Item(melee, R.drawable.mod_t1_tacticaldisplay,mod),
+            Item(ranged, R.drawable.mod_t1_marksmanbarrel,mod),
+            Item(ranged, R.drawable.mod_t1_sniperscope,mod),
+            Item(ranged, R.drawable.mod_t1_tacticaldisplay,mod),
 
-            Item(melee, R.drawable.mod_t1_underbarrelhh4,mod),
-            Item(melee, R.drawable.mod_t1_chargedammopack,mod),
+            Item(ranged, R.drawable.mod_t1_underbarrelhh4,mod),
+            Item(ranged, R.drawable.mod_t1_chargedammopack,mod),
             emptyItem,
 
             emptySpace,
             titleTier2,
             emptySpace,
 
-            Item(melee, R.drawable.gun_t2_434deathhammer),
-            Item(melee, R.drawable.gun_t2_a280),
-            Item(melee, R.drawable.gun_t2_dt12heavyblasterpistol),
+            Item(ranged, R.drawable.gun_t2_434deathhammer),
+            Item(ranged, R.drawable.gun_t2_a280),
+            Item(ranged, R.drawable.gun_t2_dt12heavyblasterpistol),
 
-            Item(melee, R.drawable.gun_t2_e11d),
-            Item(melee, R.drawable.gun_t2_ee3carbine),
-            Item(melee, R.drawable.gun_t2_huntersrifle),
+            Item(ranged, R.drawable.gun_t2_e11d),
+            Item(ranged, R.drawable.gun_t2_ee3carbine),
+            Item(ranged, R.drawable.gun_t2_huntersrifle),
 
-            Item(melee, R.drawable.gun_t2_t21),
+            Item(ranged, R.drawable.gun_t2_t21),
             emptyItem,
             emptyItem,
 
@@ -309,11 +313,11 @@ object Items {
             modsDivider,
             emptySpace,
 
-            Item(melee, R.drawable.mod_t2_boltupgrade,mod),
-            Item(melee, R.drawable.mod_t2_overcharger,mod),
-            Item(melee, R.drawable.mod_t2_plasmacell,mod),
+            Item(ranged, R.drawable.mod_t2_boltupgrade,mod),
+            Item(ranged, R.drawable.mod_t2_overcharger,mod),
+            Item(ranged, R.drawable.mod_t2_plasmacell,mod),
 
-            Item(melee, R.drawable.mod_t2_spreadbarrel,mod),
+            Item(ranged, R.drawable.mod_t2_spreadbarrel,mod),
             emptyItem,
             emptyItem,
 
@@ -321,24 +325,24 @@ object Items {
             titleTier3,
             emptySpace,
 
-            Item(melee, R.drawable.gun_t3_a12sniperrifle),
-            Item(melee, R.drawable.gun_t3_disruptorpistol),
-            Item(melee, R.drawable.gun_t3_dlt19),
+            Item(ranged, R.drawable.gun_t3_a12sniperrifle),
+            Item(ranged, R.drawable.gun_t3_disruptorpistol),
+            Item(ranged, R.drawable.gun_t3_dlt19),
 
-            Item(melee, R.drawable.gun_t3_dxr6),
-            Item(melee, R.drawable.gun_t3_modifiedenergycannon),
-            Item(melee, R.drawable.gun_t3_pulsecannon),
+            Item(ranged, R.drawable.gun_t3_dxr6),
+            Item(ranged, R.drawable.gun_t3_modifiedenergycannon),
+            Item(ranged, R.drawable.gun_t3_pulsecannon),
 
-            Item(melee, R.drawable.gun_t3_sportingblaster),
-            Item(melee, R.drawable.gun_t3_valken38carbine),
+            Item(ranged, R.drawable.gun_t3_sportingblaster),
+            Item(ranged, R.drawable.gun_t3_valken38carbine),
             emptyItem,
 
             emptySpace,
             modsDivider,
             emptySpace,
 
-            Item(melee, R.drawable.mod_t3_disruptioncell,mod),
-            Item(melee, R.drawable.mod_t3_telescopingsights,mod),
+            Item(ranged, R.drawable.mod_t3_disruptioncell,mod),
+            Item(ranged, R.drawable.mod_t3_telescopingsights,mod),
             emptyItem)
 
         for(i in 0..rangedArray!!.size-1){
