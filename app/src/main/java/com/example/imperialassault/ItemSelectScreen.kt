@@ -1,12 +1,10 @@
 package com.example.imperialassault
-
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -280,6 +277,9 @@ class ImageAdapter internal constructor(
         return 1f
     }
 
+    //TODO 3 rewards count towards accessory limit (AdrenalImplants, QuickDrawHolster,
+    // BardottanShard)
+
     fun equipAcc(item:Item):Float{
         var character = MainActivity.selectedCharacter!!
 
@@ -363,64 +363,3 @@ fun onShowCard(view: ImageView) {
     showCardDialog!!.show()
 }
 
-
-/* if (itemArray[1][position] == 0) {
-                    if ((itemType == "Ranged" || itemType == "Melee") && items.weaponsEquipped != 0){
-                        items.weaponsEquipped--
-                        gridItem.item.animate().alpha(1f).duration = 50
-                        itemArray[1][position] = 1
-
-
-
-                    }else if(itemType == "Accessories"){
-                        if ((itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet &&
-                            items.whichHelmet == 0) || (itemArray[0][position] == R.drawable
-                                .acc_t3_reinforcedhelmet &&
-                            items.whichHelmet == 0) && itemArray[2][0] != 0){
-                                if (itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet){
-                                    items.whichHelmet = 1
-                                }else{
-                                    items.whichHelmet = 2
-                                }
-                                System.out.println("Yes" + items.whichHelmet)
-                            gridItem.item.animate().alpha(1f).duration = 50
-                            itemArray[1][position] = 1
-                            itemArray[2][0]--
-                        }else if ((itemArray[0][position] != R.drawable.acc_t2_mandalorianhelmet)&&
-                                (itemArray[0][position] != R.drawable
-                                    .acc_t3_reinforcedhelmet)&&itemArray[2][0] != 0){
-                                        System.out.println("nooooo")
-                            gridItem.item.animate().alpha(1f).duration = 50
-                            itemArray[1][position] = 1
-                            itemArray[2][0]--
-                        }
-                    }else if(itemArray[2][0] != 0){
-                        gridItem.item.animate().alpha(1f).duration = 50
-                        itemArray[1][position] = 1
-                        itemArray[2][0]--
-                    }
-                    Character().health+itemArray[3][position]
-                } else if (itemArray[1][position] == 1) {
-                    if ((itemType == "Ranged" || itemType == "Melee")){
-                        items.weaponsEquipped++
-                        itemArray[1][position] = 0
-                        gridItem.item.animate().alpha(0.5f).duration = 50
-                    }else if ((itemType == "Accessories")){
-                        if (itemArray[0][position] == R.drawable.acc_t2_mandalorianhelmet || itemArray[0][position] == R.drawable
-                                .acc_t3_reinforcedhelmet){
-                            items.whichHelmet = 0
-                            itemArray[2][0]++
-                            itemArray[1][position] = 0
-                            gridItem.item.animate().alpha(0.5f).duration = 50
-                        }else{
-                            itemArray[1][position] = 0
-                            gridItem.item.animate().alpha(0.5f).duration = 50
-                            itemArray[2][0]++
-                        }
-                    }else{
-                        gridItem.item.animate().alpha(0.5f).duration = 50
-                        itemArray[1][position] = 0
-                        itemArray[2][0]++
-                        Character().health-itemArray[3][position]
-                    }
-                }*/
