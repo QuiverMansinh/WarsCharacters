@@ -33,7 +33,7 @@ object Items {
     const val astromechIndex = 15
     const val combatVisorIndex = 19
     const val reinforcedHelmetIndex = 23
-    const val ancientLightSaberIndex = 45
+    const val ancientLightSaberIndex = 39
     const val quickDrawHolsterIndex = 18
     const val adrenalImplantsIndex = 0
     const val bardottanShardIndex = 3
@@ -226,14 +226,6 @@ object Items {
             titleTier2,
             emptySpace,
 
-            Item(melee,1, R.drawable.mod_t1_balancedhilt,mod),
-            Item(melee,1, R.drawable.mod_t1_extendedhaft,mod),
-            emptyItem,
-
-            emptySpace,
-            titleTier2,
-            emptySpace,
-
             Item(melee,2, R.drawable.mel_t2_bd_1vibroax),
             Item(melee,2, R.drawable.mel_t2_doublevibrosword),
             Item(melee,2, R.drawable.mel_t2_polearm),
@@ -250,7 +242,7 @@ object Items {
             Item(melee,2, R.drawable.mod_t2_highimpactguard,mod),
             Item(melee,2, R.drawable.mod_t2_weightedhead,mod),
 
-            Item(melee, R.drawable.mod_t2_focusingbeam,mod),
+            Item(melee,2, R.drawable.mod_t2_focusingbeam,mod),
             emptyItem,
             emptyItem,
 
