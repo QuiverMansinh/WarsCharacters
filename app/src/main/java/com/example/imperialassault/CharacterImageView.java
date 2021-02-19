@@ -2,14 +2,14 @@ package com.example.imperialassault;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
+
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.renderscript.RenderScript;
+
+
 import android.util.AttributeSet;
 import android.view.View;
 

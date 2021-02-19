@@ -122,7 +122,7 @@ class Character_davith : Character {
                 currentImage = ancientLightSaberImage
             }
         }
-
+        println(""+ancientLightSaber + " " + tier)
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_davith)

@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 class Character_diala : Character {
-    var ancientLightSaberImage:Bitmap? = null
+
     constructor(context: Context){
         //default values
         name = "Diala Passil"
@@ -63,7 +63,7 @@ class Character_diala : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        ancientLightSaberImage = getBitmap(context,"characters/diala/images/tier3image_ancient_light_saber.png")
+
     }
 
 
@@ -77,12 +77,14 @@ class Character_diala : Character {
             if (card9Image != null) {
                 currentImage = card9Image
             }
-            if(tier == 3) {
-                if (ancientLightSaber) {
-                    currentImage = ancientLightSaberImage
-                }
+
+        }
+        if(tier == 3) {
+            if (ancientLightSaber) {
+                currentImage = getBitmap(context,"characters/diala/images/tier3image_ancient_light_saber.png")
             }
         }
+        println(""+ancientLightSaber + " " + tier)
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_diala)

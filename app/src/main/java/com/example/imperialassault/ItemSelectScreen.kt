@@ -193,12 +193,17 @@ class ImageAdapter internal constructor(
             gridItem.item.alpha = 0.5f
             var character = MainActivity.selectedCharacter!!
 
-            if(character.startingMeleeWeapon != null && position == 3 && currentItem
-                    .type == Items.melee){
-                gridItem.item.setImageBitmap(character.startingMeleeWeapon)
-            }else if(character.startingRangedWeapon != null && position == 3 && currentItem
-                    .type == Items.ranged){
-                gridItem.item.setImageBitmap(character.startingRangedWeapon)
+            if(position == 3 && currentItem.type == Items.melee){
+                if(character.startingMeleeWeapon != null ) {
+                    gridItem.item.setImageBitmap(character.startingMeleeWeapon)
+                }
+                else{
+                    gridItem.visibility = View.GONE
+                }
+            }else if(position == 3 && currentItem.type == Items.ranged){
+                if(character.startingRangedWeapon != null) {
+                    gridItem.item.setImageBitmap(character.startingRangedWeapon)
+                }
             }else{
                 gridItem.item.setImageResource(currentItem.resourceId)
             }
@@ -250,6 +255,7 @@ class ImageAdapter internal constructor(
                     }
                     Items.melee -> {
                         gridItem.item.alpha = equipWeapon(currentItem)
+                        println(currentItem.index)
                     }
                     Items.ranged -> {
                         gridItem.item.alpha = equipWeapon(currentItem)
