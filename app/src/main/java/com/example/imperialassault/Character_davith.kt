@@ -70,9 +70,6 @@ class Character_davith : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context) {
         super.loadImages(context)
-        //ALSImages = loadCardTierImages(context, "ancient_light_saber")
-       // card6ALSImages = loadCardTierImages(context, "card6_ancient_light_saber")
-        //card9ALSImages = loadCardTierImages(context, "card9_ancient_light_saber")
     }
 
     //TODO alter for reward, duplicates, tier
@@ -91,6 +88,7 @@ class Character_davith : Character {
         //card6 tier images
         else if (xpCardsEquipped[5]) {
             //TODO check ancient light saber
+
             var card6Image = loadCardTierImage(context, tier, "card6")
             if (card6Image != null) {
                 currentImage = card6Image

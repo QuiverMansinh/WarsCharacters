@@ -60,6 +60,12 @@ open class Character {
     var startingMeleeWeapon:Bitmap?=null
     var startingRangedWeapon:Bitmap?=null
 
+    var ancientLightSaber = false
+    var combatVisor= false
+    var mandoHelmet = false
+    var reinforcedHelmet = false
+    var astromech = false
+
     var tier = 0
     //var tierImages = ArrayList<Bitmap?>()
 
@@ -89,9 +95,6 @@ open class Character {
     var armor = arrayListOf<Int>()
     var rewards  = arrayListOf<Int>()
     var mods = arrayListOf<Int>()
-
-    //TODO remove
-    var meleeMods = arrayListOf<Int>()
 
     var background = "interior"
 
@@ -205,32 +208,80 @@ open class Character {
 
 
     open fun updateCharacterImages(context:Context){
+        ancientLightSaber = false
+        combatVisor= false
+        mandoHelmet = false
+        reinforcedHelmet = false
+        astromech = false
 
+        var tier1Equipped = 0
+        var tier2Equipped = 0
+        var tier3Equipped = 0
+
+        for(i in 0..weapons.size-1){
+            var index = weapons[i]
+            if(index == Items.ancientLightSaberIndex){
+                ancientLightSaber = true
+            }
+            var item:Item
+            if(index > Items.meleeArray!!.size-1){
+                index-=Items.meleeArray!!.size
+                item = Items.rangedArray!![index]
+            }
+            else{
+                item = Items.meleeArray!![index]
+            }
+            when(item.tier){
+                1->tier1Equipped++
+                2->tier2Equipped++
+                3->tier3Equipped++
+            }
+        }
+        for(i in 0..armor.size-1){
+            var index = armor[i]
+            var item:Item
+            item = Items.armorArray!![index]
+            when(item.tier){
+                1->tier1Equipped++
+                2->tier2Equipped++
+                3->tier3Equipped++
+            }
+        }
+        for(i in 0..accessories.size-1){
+            var index = accessories[i]
+            if(index == Items.reinforcedHelmetIndex){
+                reinforcedHelmet = true
+            }
+            if(index == Items.mandoHelmetIndex){
+                mandoHelmet = true
+            }
+            if(index == Items.combatVisorIndex){
+                combatVisor = true
+            }
+            if(index == Items.astromechIndex){
+                astromech = true
+            }
+
+            var item:Item
+            item = Items.accArray!![index]
+
+            when(item.tier){
+                1->tier1Equipped++
+                2->tier2Equipped++
+                3->tier3Equipped++
+            }
+        }
         tier = 0
 
-        //TODO item conditions
-        //tier3 [9xp && (1 tier2 || tier3 item)] || 11xp)
-        if(xpSpent>=11){
+        if((xpSpent>=9 && (tier2Equipped >=1|| tier3Equipped >=1))||xpSpent>=11){
             tier = 3
-
         }
-        //tier2 [6xp && (1 tier2 item)] || 8xp)
-        else if(xpSpent >= 8){
+        else if((xpSpent>=6 && tier2Equipped >=1)||xpSpent >= 8){
             tier = 2
-
         }
-        //tier1 [3xp && (1 tier1 item)] || 5xp)
-        else if(xpSpent >= 5) {
+        else if((xpSpent>=3 && tier1Equipped>=1)||xpSpent >= 5) {
             tier = 1
-
         }
-        println("glow tier"+tier)
-        //glowImage =  getBitmap(context, "characters/" + name_short + "/images/glow"+tier+".png")
-        //println(glowImage)
-
         loadTierImage(context,tier)
-
-
-
     }
 }
