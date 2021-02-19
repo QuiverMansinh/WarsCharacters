@@ -218,8 +218,8 @@ object Items {
             modsDivider,
             emptySpace,
 
-            Item(melee, R.drawable.mod_t1_balancedhilt,mod),
-            Item(melee, R.drawable.mod_t1_extendedhaft,mod),
+            Item(melee,1, R.drawable.mod_t1_balancedhilt,mod),
+            Item(melee,1, R.drawable.mod_t1_extendedhaft,mod),
             emptyItem,
 
             emptySpace,
@@ -323,7 +323,7 @@ object Items {
             Item(ranged,2, R.drawable.gun_t2_ee3carbine),
             Item(ranged,2, R.drawable.gun_t2_huntersrifle),
 
-            Item(melee,2, R.drawable.gun_t2_t21),
+            Item(ranged,2, R.drawable.gun_t2_t21),
             emptyItem,
             emptyItem,
 
@@ -335,7 +335,7 @@ object Items {
             Item(ranged,2, R.drawable.mod_t2_overcharger,mod),
             Item(ranged,2, R.drawable.mod_t2_plasmacell,mod),
 
-            Item(melee,2, R.drawable.mod_t2_spreadbarrel,mod),
+            Item(ranged,2, R.drawable.mod_t2_spreadbarrel,mod),
             emptyItem,
             emptyItem,
 

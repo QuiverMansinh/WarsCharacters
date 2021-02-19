@@ -76,34 +76,53 @@ class Character_davith : Character {
     override fun updateCharacterImages(context: Context) {
         super.updateCharacterImages(context)
 
-        //card6 and card9 combined tier images
 
+
+        //card6 and card9 combined tier images
         if (xpCardsEquipped[5] && xpCardsEquipped[8]) {
             var card69Image = loadCardTierImage(context, tier, "card6_card9")
             if (card69Image != null) {
                 currentImage = card69Image
             }
         }
-
         //card6 tier images
         else if (xpCardsEquipped[5]) {
-            //TODO check ancient light saber
-
-            var card6Image = loadCardTierImage(context, tier, "card6")
-            if (card6Image != null) {
-                currentImage = card6Image
+            if(ancientLightSaber){
+                var card6Image = loadCardTierImage(context, tier, "card6_ancient_light_saber")
+                if (card6Image != null) {
+                    currentImage = card6Image
+                }
             }
-
+            else {
+                var card6Image = loadCardTierImage(context, tier, "card6")
+                if (card6Image != null) {
+                    currentImage = card6Image
+                }
+            }
 
         }
         //card9 tier images
         else if (xpCardsEquipped[8]) {
-            //TODO check ancient light saber
-            var card9Image = loadCardTierImage(context, tier, "card9")
-            if (card9Image != null) {
-                currentImage = card9Image
+            if(ancientLightSaber) {
+                var card9Image = loadCardTierImage(context, tier, "card9_ancient_light_saber")
+                if (card9Image != null) {
+                    currentImage = card9Image
+                }
+            }
+            else {
+                var card9Image = loadCardTierImage(context, tier, "card9")
+                if (card9Image != null) {
+                    currentImage = card9Image
+                }
             }
         }
+        else if(ancientLightSaber){
+            var ancientLightSaberImage = loadCardTierImage(context, tier, "ancient_light_saber")
+            if (ancientLightSaberImage != null) {
+                currentImage = ancientLightSaberImage
+            }
+        }
+
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_davith)

@@ -2,10 +2,9 @@ package com.example.imperialassault
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.example.imperialassault.Character
 
 class Character_diala : Character {
-    var greenLightSaber:Bitmap? = null
+    var ancientLightSaberImage:Bitmap? = null
     constructor(context: Context){
         //default values
         name = "Diala Passil"
@@ -64,10 +63,9 @@ class Character_diala : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        greenLightSaber = getBitmap(context,"characters/diala/images/tier3image_green_light_saber.png")
+        ancientLightSaberImage = getBitmap(context,"characters/diala/images/tier3image_ancient_light_saber.png")
     }
 
-    var holdingGreenLightSaber = true
 
     //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context: Context){
@@ -80,10 +78,9 @@ class Character_diala : Character {
                 currentImage = card9Image
             }
             if(tier == 3) {
-                if (!holdingGreenLightSaber) {
-                    currentImage = greenLightSaber
+                if (ancientLightSaber) {
+                    currentImage = ancientLightSaberImage
                 }
-                holdingGreenLightSaber = !holdingGreenLightSaber
             }
         }
     }
