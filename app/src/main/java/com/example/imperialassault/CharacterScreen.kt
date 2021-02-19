@@ -82,8 +82,10 @@ class CharacterScreen : AppCompatActivity(){
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-        updateStats()
-        updateImages()
+        if(hasFocus) {
+            updateStats()
+            updateImages()
+        }
 
         if(hasFocus&&!loadAnimated ){
             top_panel.animate().alpha(1f)
@@ -214,9 +216,16 @@ class CharacterScreen : AppCompatActivity(){
             }
             MainActivity.selectedCharacter = character
 
+            if (character.startingRangedWeapon != null) {
+                character.weapons.add(Items.rangedArray!![3].index)
+            }
+            if (character.startingMeleeWeapon != null) {
+                character.weapons.add(Items.meleeArray!![3].index)
+            }
 
         } else {
             character = MainActivity.selectedCharacter!!
+
         }
         if(character.portraitImage==null) {
             character.loadPortraitImage(this)
@@ -254,12 +263,12 @@ class CharacterScreen : AppCompatActivity(){
 
         if(character.name_short == "jarrod"){
             companion_button.visibility = View.VISIBLE
-            companion_layer.visibility = View.VISIBLE
+
             companion_button.isClickable = true
         }
         else{
             companion_button.visibility = View.INVISIBLE
-            companion_layer.visibility = View.GONE
+
             companion_button.isClickable = false
         }
         background_image.setImageBitmap(character.getBackgroundImage(this))
@@ -335,20 +344,24 @@ class CharacterScreen : AppCompatActivity(){
                 character.updateCharacterImages(this)
             }
             character_image.setImageBitmap(character.currentImage)
+            character_image.setLayer1Bitmap(character.layer1)
+            character_image.setLayer2Bitmap(character.layer2)
 
-            if (character.name_short != "jarrod") {
-                character_image.setLayer1Bitmap(character.layer1)
-            } else {
-                /*
-            if (conditionsActive[hidden] && animateConditions) {
-                companion_layer.visibility = View.INVISIBLE
-
-            } else{*/
-                companion_layer.visibility = View.VISIBLE
-                companion_layer.setImageBitmap(character.layer1);
-                println("DROIDDDDDDDDDDDDDDD")
-                //}
+            println(character.companionImage)
+            if(character.companionImage != null) {
+                if (conditionsActive[hidden] && animateConditions) {
+                    companion_layer.visibility = View.INVISIBLE
+                }
+                else {
+                    companion_layer.setImageBitmap(character.companionImage)
+                    companion_layer.visibility = View.VISIBLE
+                }
             }
+            else{
+                companion_layer.visibility = View.GONE
+            }
+
+
             //quickSave()
         }
     }

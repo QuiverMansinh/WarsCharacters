@@ -59,10 +59,28 @@ class Character_kotun : Character {
                 "\n\nHaving worked as a merchant for so long, Ko-Tun has learned the value of " +
                 "being adaptable; commonly bringing large reserves of ammo, and weapon modifications for her squad on each outing. " +
                 "In her spare time Ko-Tun focuses on new business deals for Gideon's Cell and the Rebellion at large, or more intel on her MIA father. " +
-                "Sahm-Ken will not remain a ghost for long as Ko-Tun plans to﻿ remain ever-vigilant."    }
+                "Sahm-Ken will not remain a ghost for long as Ko-Tun plans to remain ever-vigilant."    }
 
     //TODO alter for reward, duplicates, tier
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_kotun)
+    }
+
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
+
+        if(reinforcedHelmet){
+            layer2 = getBitmap(context, "characters/" + name_short + "/images/reinforced_helmet.png")
+        }
+        else{
+            layer2 = null
+        }
+
+        if(combatVisor){
+            layer1 = getBitmap(context, "characters/" + name_short + "/images/combat_visor.png")
+        }
+        else{
+            layer1 = null
+        }
     }
 }

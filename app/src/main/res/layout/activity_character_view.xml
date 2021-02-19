@@ -410,8 +410,6 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:alpha="0"
-            android:background="@android:color/transparent"
-            android:foreground="@android:color/transparent"
             android:scaleType="centerCrop"
             android:src="@drawable/character_select_background" />
     </FrameLayout>
@@ -432,7 +430,6 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/character_select_background"
             android:visibility="visible" />
 
     </FrameLayout>
@@ -443,7 +440,6 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/character_select_background"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/background_image"
         app:layout_constraintEnd_toEndOf="@+id/background_image"

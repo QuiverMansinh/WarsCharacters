@@ -31,8 +31,8 @@ object Items {
     //image change items
     const val mandoHelmetIndex = 14
     const val astromechIndex = 15
-    const val combatVisorIndex = 19
-    const val reinforcedHelmetIndex = 23
+    const val combatVisorIndex = 22
+    const val reinforcedHelmetIndex = 27
     const val ancientLightSaberIndex = 39
     const val quickDrawHolsterIndex = 18
     const val adrenalImplantsIndex = 0

@@ -81,15 +81,22 @@ class Character_mhd19 : Character {
     //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context: Context){
         super.updateCharacterImages(context)
-
-        //card6 tier images
-        if(xpCardsEquipped[8]){
+        if(tier == 3){
+            if(reinforcedHelmet || combatVisor || xpCardsEquipped[8]){
+                var helmetImage = loadCardTierImage(context, tier, "helmet")
+                if (helmetImage != null) {
+                    currentImage = helmetImage
+                }
+            }
+        }
+        else if(xpCardsEquipped[8]){
             var card9Image = loadCardTierImage(context, tier, "card9")
             if (card9Image != null) {
                 currentImage = card9Image
             }
-
         }
+
+
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_mhd)

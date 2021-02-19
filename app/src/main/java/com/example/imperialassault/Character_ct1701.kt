@@ -79,19 +79,6 @@ class Character_ct1701 : Character {
                 "\"Wildfire\" has decided his waning years wouldn't be spent in leisure; this old" +
                 " soldier is determined to die in combat, for glory, for his friends, and for a noble purpose of his own choosing." }
 
-    //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-        tier1duplicate = getBitmap(context, "characters/ct1701/images/tier1image_duplicate.png")
-        tier2duplicate = getBitmap(context, "characters/ct1701/images/tier2image_duplicate.png")
-        tier3duplicate = getBitmap(context, "characters/ct1701/images/tier3image_duplicate.png")
-
-        tier1helmet = getBitmap(context, "characters/ct1701/images/tier1_helmet.png")
-        tier2helmet = getBitmap(context, "characters/ct1701/images/tier2_helmet.png")
-        tier3helmet = getBitmap(context, "characters/ct1701/images/tier3_helmet.png")
-
-    }
 
     //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context: Context){
@@ -101,21 +88,35 @@ class Character_ct1701 : Character {
 
         if(tier == 1){
             if(ran<0.5){
-                currentImage = tier1duplicate
+                currentImage = getBitmap(context, "characters/ct1701/images/tier1image_duplicate.png")
             }
         }
         else if(tier == 2){
             if(ran<0.5){
-                currentImage = tier2duplicate
+                currentImage = getBitmap(context, "characters/ct1701/images/tier2image_duplicate.png")
             }
         }
         else if(tier == 3){
             if(ran<0.5){
-                currentImage = tier3duplicate
+                currentImage = getBitmap(context, "characters/ct1701/images/tier3image_duplicate.png")
             }
         }
 
         //todo helmet
+        if(mandoHelmet || reinforcedHelmet || combatVisor){
+            if(tier == 3) {
+                layer2 = getBitmap(context, "characters/" + name_short + "/images/tier3_helmet.png")
+            }
+            else if(tier == 2){
+                layer2 = getBitmap(context, "characters/" + name_short + "/images/tier2_helmet.png")
+            }
+            else {
+                layer2 = getBitmap(context, "characters/" + name_short + "/images/tier1_helmet.png")
+            }
+        }
+        else{
+            layer2 = null
+        }
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_ct)

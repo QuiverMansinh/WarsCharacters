@@ -60,7 +60,7 @@ class LoadScreen : AppCompatActivity() {
             onDelete(saveDialog!!.delete)
             saveDialog!!.cancel()
             if(loadedCharacters.size <= 1) {
-                onBackPressed()
+                showNoSavesFoundToast()
             }
             true
         }
@@ -69,7 +69,7 @@ class LoadScreen : AppCompatActivity() {
         if(loadedCharacters.size <= 1){
             showNoSavesFoundToast()
         }
-        println("no save files found " + loadedCharacters.size)
+        println("no save files" + loadedCharacters.size)
     }
 
     fun setAnimation(){
@@ -176,7 +176,10 @@ class LoadScreen : AppCompatActivity() {
                     loadedCharacters[position].helmet = data[position].helmet
                     if(data[position].armour != -1) { loadedCharacters[position].armor.add(data[position].armour) }
 
+
+
                     //TODO rewards and mods
+
 
                     loadedCharacters[position].background = data[position].background.toString()
 
@@ -402,7 +405,6 @@ class LoadScreen : AppCompatActivity() {
 
         noSavesFoundToast.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         noSavesFoundToast!!. show()
-        println("sdfsdfsdfsdfsdf")
         MainScope().launch {
                 delay(2000)
                 noSavesFoundToast.cancel()

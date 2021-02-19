@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:shadowColor="@color/black"
                 android:shadowRadius="5"
-                android:text="NO SAVE FILES FOUND"
+                android:text="NO SAVE FILES"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"

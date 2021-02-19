@@ -48,7 +48,6 @@ class Character_biv : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        layer1OnTop = true
 
         loadImages(context)
 
@@ -81,7 +80,7 @@ class Character_biv : Character {
         //card5 overlay
         layer1 = null
         if(xpCardsEquipped[4]){
-            var card5Image = loadCardTierImage(context,tier,"card5")
+            var card5Image = loadCardTierImage(context,Math.max(1,tier),"card5")
             if(card5Image!=null){
                 layer1 = card5Image
             }
@@ -96,6 +95,26 @@ class Character_biv : Character {
             }
         }
 
+        if(mandoHelmet){
+            if(tier == 3) {
+                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando_tier3.png")
+            }
+            else{
+                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
+            }
+        }
+
+        else if(reinforcedHelmet){
+            if(Math.random()<0.5){
+                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet1_random.png")
+            }
+            else{
+                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet2_random.png")
+            }
+        }
+        else{
+            layer2 = null
+        }
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_biv)

@@ -49,8 +49,6 @@ class Character_shyla : Character {
         //Update images
 
         //update strain, update damage, xp, cards, weapons
-        layer1OnTop = true
-
         loadImages(context)
 
         bio_title = "Professional Mercenary"
@@ -92,6 +90,12 @@ class Character_shyla : Character {
         }
 
         //todo helmet
+        if(mandoHelmet || combatVisor || reinforcedHelmet){
+            var helmetImage = loadCardTierImage(context,tier,"helmet")
+            if(helmetImage != null) {
+                currentImage = helmetImage
+            }
+        }
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_shyla)

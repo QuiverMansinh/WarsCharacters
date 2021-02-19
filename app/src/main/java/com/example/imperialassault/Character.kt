@@ -54,7 +54,7 @@ open class Character {
     var currentImage:Bitmap? = null
     var layer2:Bitmap? = null
     var layer1:Bitmap? = null
-    var layer1OnTop = false
+    var companionImage:Bitmap? = null
     var glowImage:Bitmap?=null
 
     var startingMeleeWeapon:Bitmap?=null
@@ -133,6 +133,9 @@ open class Character {
         loadPowerImages(context)
         startingRangedWeapon = loadStartingWeaponRanged(context)
         startingMeleeWeapon = loadStartingWeaponMelee(context)
+
+        
+
     }
 
     open fun loadPowerImages(context: Context) {
@@ -220,9 +223,7 @@ open class Character {
 
         for(i in 0..weapons.size-1){
             var index = weapons[i]
-            if(index == Items.ancientLightSaberIndex){
-                ancientLightSaber = true
-            }
+            ancientLightSaber = index == Items.ancientLightSaberIndex
             var item:Item
             if(index > Items.meleeArray!!.size-1){
                 index-=Items.meleeArray!!.size
@@ -249,18 +250,12 @@ open class Character {
         }
         for(i in 0..accessories.size-1){
             var index = accessories[i]
-            if(index == Items.reinforcedHelmetIndex){
-                reinforcedHelmet = true
-            }
-            if(index == Items.mandoHelmetIndex){
-                mandoHelmet = true
-            }
-            if(index == Items.combatVisorIndex){
-                combatVisor = true
-            }
-            if(index == Items.astromechIndex){
-                astromech = true
-            }
+            reinforcedHelmet = index == Items.reinforcedHelmetIndex
+            mandoHelmet = index == Items.mandoHelmetIndex
+            combatVisor = index == Items.combatVisorIndex
+            astromech = index == Items.astromechIndex
+
+
 
             var item:Item
             item = Items.accArray!![index]

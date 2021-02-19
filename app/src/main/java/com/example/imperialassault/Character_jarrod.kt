@@ -54,8 +54,6 @@ class Character_jarrod : Character {
         //Get Images
         //Update images
 
-        //update strain, update damage, xp, cards, weapons
-        layer1OnTop = true
         loadImages(context)
 
         bio_title = "Robotic Overlord"
@@ -78,6 +76,7 @@ class Character_jarrod : Character {
         super.loadImages(context)
         droid = getBitmap(context, "characters/jarrod/images/droid.png")
         droid_card9 = getBitmap(context, "characters/jarrod/images/droid_card9.png")
+        companionImage = droid
 
         jaxCard = getBitmap(context, "characters/jarrod/images/jax.png")
         jaxCard_card6 = getBitmap(context, "characters/jarrod/images/jax_card6.png")
@@ -94,12 +93,7 @@ class Character_jarrod : Character {
         companionCard  = jaxCard
 
         if(xpCardsEquipped[8]){
-            if(!conditionsActive[0]) {
-                layer1 = droid_card9
-            }
-            else{
-                layer1 = null
-            }
+            companionImage = droid_card9
             if(xpCardsEquipped[5]) {
                 companionCard = jaxCard_card69
             }
@@ -111,13 +105,7 @@ class Character_jarrod : Character {
             if(xpCardsEquipped[5]) {
                 companionCard  = jaxCard_card6
             }
-            if(!conditionsActive[0]) {
-                layer1 = droid
-            }
-            else{
-                layer1 = null
-            }
-
+            companionImage = droid
         }
     }
     override fun loadPortraitImage(context:Context){

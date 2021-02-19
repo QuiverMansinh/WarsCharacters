@@ -27,13 +27,13 @@
                 android:id="@+id/tabItem4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:icon="@drawable/item_armour" />
+                android:icon="@drawable/item_accessory" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:icon="@drawable/item_accessory" />
+                android:icon="@drawable/item_armour" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem2"

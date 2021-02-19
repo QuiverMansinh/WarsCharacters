@@ -78,6 +78,13 @@ class Character_murne : Character {
         else{
             layer1 = null
         }
+
+        if(mandoHelmet){
+            layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
+        }
+        else{
+            layer2 = null
+        }
     }
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_murne)

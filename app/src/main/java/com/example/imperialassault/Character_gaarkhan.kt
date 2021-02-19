@@ -62,4 +62,16 @@ class Character_gaarkhan : Character {
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_gaarkhan)
     }
+
+    //TODO alter for reward, duplicates, tier
+    override fun updateCharacterImages(context: Context){
+        super.updateCharacterImages(context)
+
+        if(reinforcedHelmet || combatVisor){
+            layer2 = getBitmap(context, "characters/" + name_short + "/images/tier3image_helmet.png")
+        }
+        else{
+            layer2 = null
+        }
+    }
 }

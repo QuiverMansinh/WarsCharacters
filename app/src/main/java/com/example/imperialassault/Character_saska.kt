@@ -72,7 +72,7 @@ class Character_saska : Character {
         super.updateCharacterImages(context)
 
         //card9 tier images
-        if(xpCardsEquipped[8]){
+        if(xpCardsEquipped[8] || combatVisor){
             var card9Image = loadCardTierImage(context, tier, "card9")
             if (card9Image != null) {
                 currentImage = card9Image

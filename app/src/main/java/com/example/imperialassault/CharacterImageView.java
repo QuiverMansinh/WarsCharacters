@@ -20,7 +20,7 @@ import androidx.annotation.Nullable;
 public class CharacterImageView extends View implements Runnable{
     Thread thread;
 
-    Bitmap image, glowImage, layer1, layer2;
+    Bitmap image, glowImage,layer1, layer2;
 
     boolean imageScaled = false;
     boolean glowScaled = false;
@@ -78,6 +78,11 @@ public class CharacterImageView extends View implements Runnable{
         layer1Scaled = false;
     }
 
+    public void setLayer2Bitmap(Bitmap bitmap){
+        layer2 = bitmap;
+        layer2Scaled = false;
+    }
+
 
     float time = 0;
     Paint paint = new Paint();
@@ -102,6 +107,8 @@ public class CharacterImageView extends View implements Runnable{
             }
             glowScaled = true;
         }
+
+
         if(!layer1Scaled) {
             if(layer1!=null) {
                 layer1 = Bitmap.createScaledBitmap(layer1,  canvas.getWidth(), canvas.getHeight(), true);
@@ -109,7 +116,12 @@ public class CharacterImageView extends View implements Runnable{
             layer1Scaled = true;
         }
 
-
+        if(!layer2Scaled) {
+            if(layer2!=null) {
+                layer2 = Bitmap.createScaledBitmap(layer2,  canvas.getWidth(), canvas.getHeight(), true);
+            }
+            layer2Scaled = true;
+        }
 
         if(focused && glowImage!=null && animateConditions){
             canvas.drawBitmap(glowImage, 0,  offsetY, focusedPaint);
@@ -119,6 +131,16 @@ public class CharacterImageView extends View implements Runnable{
         } else{
             canvas.drawBitmap(image, 0, 0, null);
         }
+
+        if(layer2!=null) {
+            if(animateConditions) {
+                canvas.drawBitmap(layer2, 0, offsetY, paint);
+            }
+            else{
+                canvas.drawBitmap(layer2, 0, 0, null);
+            }
+        }
+
         if(layer1!=null) {
             if(animateConditions) {
                 canvas.drawBitmap(layer1, 0, offsetY, paint);
@@ -133,6 +155,9 @@ public class CharacterImageView extends View implements Runnable{
             canvas.drawBitmap(image, stunX, stunY, stunPaint);
             if(layer1!=null) {
                 canvas.drawBitmap(layer1, stunX, stunY, stunPaint);
+            }
+            if(layer2!=null) {
+                canvas.drawBitmap(layer2, stunX, stunY, stunPaint);
             }
         }
 

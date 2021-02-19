@@ -36,10 +36,10 @@ class ItemSelectScreen : AppCompatActivity() {
             "melee" -> {
                 pager.setCurrentItem(2)
             }
-            "accessory" -> {
+            "armour" -> {
                 pager.setCurrentItem(1)
             }
-            "armour" -> {
+            "accessory" -> {
                 pager.setCurrentItem(0)
             }
         }
@@ -91,10 +91,10 @@ internal class MyAdapter(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
-                Armor()
+                Accessories()
             }
             1 -> {
-                Accessories()
+                Armor()
             }
             2 -> {
                 Melee()
@@ -193,18 +193,13 @@ class ImageAdapter internal constructor(
             gridItem.item.alpha = 0.5f
             var character = MainActivity.selectedCharacter!!
 
-            if(position == 3 && currentItem.type == Items.melee){
-                if(character.startingMeleeWeapon != null ) {
-                    gridItem.item.setImageBitmap(character.startingMeleeWeapon)
-                }
-                else{
-                    gridItem.visibility = View.GONE
-                }
-            }else if(position == 3 && currentItem.type == Items.ranged){
-                if(character.startingRangedWeapon != null) {
-                    gridItem.item.setImageBitmap(character.startingRangedWeapon)
-                }
-            }else{
+            if(position == 3 && currentItem.type == Items.melee && character.startingMeleeWeapon != null ){
+                gridItem.item.setImageBitmap(character.startingMeleeWeapon)
+            }
+            else if(position == 3 && currentItem.type == Items.ranged && character.startingRangedWeapon != null){
+                gridItem.item.setImageBitmap(character.startingRangedWeapon)
+            }
+            else{
                 gridItem.item.setImageResource(currentItem.resourceId)
             }
 
@@ -249,13 +244,14 @@ class ImageAdapter internal constructor(
                     }
                     Items.acc -> {
                         gridItem.item.alpha = equipAcc(currentItem)
+                        println(currentItem.index)
                     }
                     Items.armor -> {
                         gridItem.item.alpha = equipArmor(currentItem)
                     }
                     Items.melee -> {
                         gridItem.item.alpha = equipWeapon(currentItem)
-                        println(currentItem.index)
+
                     }
                     Items.ranged -> {
                         gridItem.item.alpha = equipWeapon(currentItem)
