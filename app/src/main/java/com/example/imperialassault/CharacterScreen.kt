@@ -29,12 +29,20 @@ import kotlinx.android.synthetic.main.dialog_background.*
 import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_conditions.*
 import kotlinx.android.synthetic.main.dialog_options.*
+import kotlinx.android.synthetic.main.dialog_quick_view.*
+import kotlinx.android.synthetic.main.dialog_quick_view_button.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.screen_settings.*
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
+import kotlinx.android.synthetic.main.screen_xp_select.quick_view_weapon
+import kotlinx.android.synthetic.main.screen_xp_select.quick_view_weapon1
+import kotlinx.android.synthetic.main.screen_xp_select.quick_view_armor
+import kotlinx.android.synthetic.main.screen_xp_select.quick_view_acc
+import kotlinx.android.synthetic.main.screen_xp_select.quick_view_acc1
+import kotlinx.android.synthetic.main.screen_xp_select.quick_view_acc2
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -126,7 +134,7 @@ class CharacterScreen : AppCompatActivity(){
             companion_layer.animate().alpha(1f)
             val animcompanion= ObjectAnimator.ofFloat( companion_layer,"translationX",
                 -character_images.width*1.2f
-                .toFloat(),-character_images.width.toFloat()*1.2f,0f)
+                    .toFloat(),-character_images.width.toFloat()*1.2f,0f)
             animcompanion.interpolator = DecelerateInterpolator()
             animcompanion.duration=(800*1.2f).toLong()
             animcompanion.start()
@@ -1655,6 +1663,8 @@ class CharacterScreen : AppCompatActivity(){
     var statsScreen:Dialog? = null
     var xpSelectScreen: Dialog?=null
     var developersCreditsScreen:Dialog? = null
+    var quickViewDialog:Dialog? = null
+    var quickViewButtonDialog:Dialog? = null
 
     private fun initDialogs(){
         initRestDialog()
@@ -1671,6 +1681,8 @@ class CharacterScreen : AppCompatActivity(){
         initStatsScreenDialog()
         initCreditsScreenDialog()
         initXpSelectScreenDialog()
+        initQuickViewDialog()
+
     }
     private fun initRestDialog(){
         restDialog = Dialog(this)
@@ -1917,6 +1929,126 @@ class CharacterScreen : AppCompatActivity(){
         xpSelectScreen!!.setCancelable(false)
         xpSelectScreen!!.setContentView(R.layout.screen_xp_select)
         xpSelectScreen!!.setCanceledOnTouchOutside(true)
+        xpSelectScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+    }
+
+    private fun initQuickViewDialog(){
+        quickViewDialog = Dialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        quickViewDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        quickViewDialog!!.setCancelable(false)
+        quickViewDialog!!.setContentView(R.layout.dialog_quick_view)
+        quickViewDialog!!.setCanceledOnTouchOutside(true)
+        quickViewDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+
+        character_images.setOnLongClickListener{
+            quickViewButtonDialog!!.show()
+            true
+        }
+        quickViewDialog!!.quick_view_back.setOnClickListener{
+            quickViewDialog!!.dismiss()
+        }
+
+
+
+        quickViewButtonDialog = Dialog(this)
+        quickViewButtonDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        quickViewButtonDialog!!.setCancelable(false)
+        quickViewButtonDialog!!.setContentView(R.layout.dialog_quick_view_button)
+        quickViewButtonDialog!!.setCanceledOnTouchOutside(true)
+        quickViewDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        quickViewDialog!!.quick_view_weapon.setOnClickListener{onShowItemCard(quickViewDialog!!.quick_view_weapon)}
+        quickViewDialog!!.quick_view_weapon1.setOnClickListener{onShowItemCard(quickViewDialog!!.quick_view_weapon1)}
+        quickViewDialog!!.quick_view_armor.setOnClickListener{onShowItemCard(quickViewDialog!!.quick_view_armor)}
+        quickViewDialog!!.quick_view_acc.setOnClickListener{onShowItemCard(quickViewDialog!!.quick_view_acc)}
+        quickViewDialog!!.quick_view_acc1.setOnClickListener{onShowItemCard(quickViewDialog!!.quick_view_acc1)}
+        quickViewDialog!!.quick_view_acc2.setOnClickListener{onShowItemCard(quickViewDialog!!.quick_view_acc2)}
+
+        quickViewButtonDialog!!.quick_view_button.setOnClickListener{
+            quickViewDialog!!.show()
+            quickViewButtonDialog!!.dismiss()
+            var weaponIndex = character.weapons.getOrElse(0){-1}
+            var weaponIndex1 = character.weapons.getOrElse(1){-1}
+
+            var imageId = R.drawable.empty_item_slot
+            quickViewDialog!!.weapon_type.visibility = View.VISIBLE
+            if(weaponIndex >=0){
+                if(weaponIndex > Items.meleeArray!!.size){
+                    weaponIndex -= Items.meleeArray!!.size
+                    imageId = Items.rangedArray!![weaponIndex].resourceId
+                    quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
+                }
+                else{
+                    imageId = Items.meleeArray!![weaponIndex].resourceId
+                    quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
+                }
+                //quickViewDialog!!.weapon_type.visibility = View.GONE
+            }
+            quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
+
+
+            imageId = R.drawable.empty_item_slot
+            quickViewDialog!!.weapon1_type.visibility = View.VISIBLE
+            if(weaponIndex1 >=0){
+                if(weaponIndex1 > Items.meleeArray!!.size){
+                    weaponIndex1 -= Items.meleeArray!!.size
+                    imageId = Items.rangedArray!![weaponIndex1].resourceId
+                    quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
+                }
+                else{
+                    imageId = Items.meleeArray!![weaponIndex1].resourceId
+                    quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
+                }
+                //quickViewDialog!!.weapon1_type.visibility = View.GONE
+            }
+            quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
+
+
+            imageId = R.drawable.empty_item_slot
+            quickViewDialog!!.armor_type.visibility = View.VISIBLE
+            var armorIndex = character.armor.getOrElse(0){-1}
+            if(armorIndex >=0){
+                imageId = Items.armorArray!![armorIndex].resourceId
+                //quickViewDialog!!.armor_type.visibility = View.GONE
+            }
+            quickViewDialog!!.quick_view_armor.setImageResource(imageId)
+
+
+            imageId = R.drawable.empty_item_slot
+            quickViewDialog!!.acc_type.visibility = View.VISIBLE
+            var accIndex = character.accessories.getOrElse(0){-1}
+            if(accIndex >=0){
+                imageId = Items.accArray!![accIndex].resourceId
+                //quickViewDialog!!.acc_type.visibility = View.GONE
+            }
+            quickViewDialog!!.quick_view_acc.setImageResource(imageId)
+
+
+            imageId = R.drawable.empty_item_slot
+            quickViewDialog!!.acc1_type.visibility = View.VISIBLE
+            var accIndex1 = character.accessories.getOrElse(1){-1}
+            if(accIndex >=0){
+                imageId = Items.accArray!![accIndex1].resourceId
+                quickViewDialog!!.quick_view_acc1.setImageResource(imageId)
+                //quickViewDialog!!.acc1_type.visibility = View.GONE
+            }
+            quickViewDialog!!.quick_view_acc1.setImageResource(imageId)
+
+            imageId = R.drawable.empty_item_slot
+            quickViewDialog!!.acc2_type.visibility = View.VISIBLE
+            var accIndex2 = character.accessories.getOrElse(1){-1}
+            if(accIndex >=0){
+                imageId = Items.accArray!![accIndex2].resourceId
+                //quickViewDialog!!.acc2_type.visibility = View.GONE
+            }
+            quickViewDialog!!.quick_view_acc2.setImageResource(imageId)
+
+        }
+    }
+    fun onShowItemCard(view: ImageView) {
+        var image = ((view).drawable as BitmapDrawable).bitmap
+        showCardDialog!!.card_image.setImageBitmap(image)
+        showCardDialog!!.show()
+
     }
 
     //endregion
@@ -2007,14 +2139,14 @@ class CharacterScreen : AppCompatActivity(){
 
     fun initXPScreen() {
         xpCardImages.add(xpSelectScreen!!.XPCard1)
-        xpCardImages.add(xpSelectScreen!!.XPCard2)
-        xpCardImages.add(xpSelectScreen!!.XPCard3)
+        xpCardImages.add(xpSelectScreen!!.quick_view_weapon)
+        xpCardImages.add(xpSelectScreen!!.quick_view_weapon1)
         xpCardImages.add(xpSelectScreen!!.XPCard4)
-        xpCardImages.add(xpSelectScreen!!.XPCard5)
+        xpCardImages.add(xpSelectScreen!!.quick_view_armor)
         xpCardImages.add(xpSelectScreen!!.XPCard6)
-        xpCardImages.add(xpSelectScreen!!.XPCard7)
-        xpCardImages.add(xpSelectScreen!!.XPCard8)
-        xpCardImages.add(xpSelectScreen!!.XPCard9)
+        xpCardImages.add(xpSelectScreen!!.quick_view_acc)
+        xpCardImages.add(xpSelectScreen!!.quick_view_acc1)
+        xpCardImages.add(xpSelectScreen!!.quick_view_acc2)
 
         for(i in 0.. character.xpCardImages.size-1){
             xpCardImages[i].setImageBitmap(character.xpCardImages[i])
@@ -2097,24 +2229,24 @@ class CharacterScreen : AppCompatActivity(){
     }
     fun quickSave(){
         //if(secondsSinceLastSave > 3) {
-            //val character = MainActivity.selectedCharacter
+        //val character = MainActivity.selectedCharacter
 
 
-                var saveFile = getCharacterData(character.file_name)
-                val database = AppDatabase.getInstance(this)
+        var saveFile = getCharacterData(character.file_name)
+        val database = AppDatabase.getInstance(this)
 
 
-                GlobalScope.launch {
-                        if (character.id != -1) {
-                            saveFile.id = character.id
-                            database!!.getCharacterDAO().update(saveFile)
-                            println("update save")
-                        } else {
-                            character.id = saveFile.id
-                            database!!.getCharacterDAO().insert(saveFile)
-                            println("insert save")
-                        }
-                        println("QUICK SAVE character " + character + " " + character.id)
+        GlobalScope.launch {
+            if (character.id != -1) {
+                saveFile.id = character.id
+                database!!.getCharacterDAO().update(saveFile)
+                println("update save")
+            } else {
+                character.id = saveFile.id
+                database!!.getCharacterDAO().insert(saveFile)
+                println("insert save")
+            }
+            println("QUICK SAVE character " + character + " " + character.id)
 
             secondsSinceLastSave = 0
         }

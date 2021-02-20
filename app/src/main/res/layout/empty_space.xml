@@ -17,7 +17,7 @@
         android:text="TIER 1"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/cardView3"

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
-        <activity android:name=".RewardsScreen"></activity>
+        <activity android:name=".QuickViewScreen"></activity>
+        <activity android:name=".RewardsScreen" />
         <activity android:name=".LoadScreen" />
         <activity
             android:name=".ItemSelectScreen"

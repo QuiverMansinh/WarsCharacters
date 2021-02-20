@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_item__select__screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
-import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.grid_item.view.*
 
 class ItemSelectScreen : AppCompatActivity() {
 
@@ -44,7 +44,7 @@ class ItemSelectScreen : AppCompatActivity() {
             }
         }
 
-        showCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         showCardDialog!!.setContentView(R.layout.dialog_show_card)
@@ -189,7 +189,7 @@ class ImageAdapter internal constructor(
         var currentItem = itemArray.get(position)
 
         if (currentItem.type >= 0) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.list_item, null, true)
+            gridItem = mContext.layoutInflater.inflate(R.layout.grid_item, null, true)
             gridItem.item.alpha = 0.5f
             var character = MainActivity.selectedCharacter!!
 
@@ -271,16 +271,63 @@ class ImageAdapter internal constructor(
 
         //remove if already equipped
         if(character.rewards.remove(item.index)){
+            when(item.index){
+                Items.adrenalImplantsIndex ->character.adenalImplants = false
+                Items.bardottanShardIndex ->character.bardottanShard = false
+                Items.quickDrawHolsterIndex ->character.quickDrawHolster = false
+            }
             return 0.5f
         }
 
         //equip if not equipped
+
+        if(item.index == Items.adrenalImplantsIndex) {
+            if (character.accessories.size < getMaxAcc()) {
+                character.rewards.add(item.index)
+                character.adenalImplants = true
+                return 1f
+            }
+            else{
+                return 0.5f
+            }
+        }
+        if(item.index == Items.bardottanShardIndex){
+            if(character.accessories.size < getMaxAcc()) {
+                character.rewards.add(item.index)
+                character.bardottanShard = true
+                return 1f
+            }
+            else{
+                return 0.5f
+            }
+        }
+
+        if(item.index == Items.quickDrawHolsterIndex) {
+            if (character.accessories.size < getMaxAcc()) {
+                character.rewards.add(item.index)
+                character.quickDrawHolster = true
+                return 1f
+            }
+            else{
+                return 0.5f
+            }
+        }
+
         character.rewards.add(item.index)
         return 1f
     }
 
-    //TODO 3 rewards count towards accessory limit (AdrenalImplants, QuickDrawHolster,
+
+    // 3 rewards count towards accessory limit (AdrenalImplants, QuickDrawHolster,
     // BardottanShard)
+    fun getMaxAcc():Int{
+        var character = MainActivity.selectedCharacter!!
+        var maxAcc = 3
+        if(character.adenalImplants){maxAcc--}
+        if(character.bardottanShard){maxAcc--}
+        if(character.quickDrawHolster){maxAcc--}
+        return maxAcc
+    }
 
     fun equipAcc(item:Item):Float{
         var character = MainActivity.selectedCharacter!!
@@ -289,15 +336,16 @@ class ImageAdapter internal constructor(
             if(item.subType == Items.helmet){
                 character.helmet = false
             }
+
             return 0.5f
         }
-
         //equip if slot available
-        if(character.accessories.size < 3){
+        if(character.accessories.size < getMaxAcc()){
             if(item.subType == Items.helmet){
                 if(!character.helmet) {
                     character.helmet = true
                     character.accessories.add(item.index)
+
                     return 1f
                 }
             }
@@ -310,6 +358,7 @@ class ImageAdapter internal constructor(
         //not equipped
         return 0.5f
     }
+
 
     fun equipArmor(item:Item):Float{
         var character = MainActivity.selectedCharacter!!
@@ -361,6 +410,7 @@ class ImageAdapter internal constructor(
 var showCardDialog: Dialog? = null
 fun onShowCard(view: ImageView) {
     var image = ((view).drawable as BitmapDrawable).bitmap
+    println(image)
     showCardDialog!!.card_image.setImageBitmap(image)
     showCardDialog!!.show()
 }

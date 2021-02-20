@@ -33,9 +33,9 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="90dp"
-        app:cardBackgroundColor="@color/cardview_dark_background"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="3dp"
-        app:cardElevation="5dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/XPCard2"
+                        android:id="@+id/quick_view_weapon"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -102,7 +102,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/XPCard3"
+                        android:id="@+id/quick_view_weapon1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -148,7 +148,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/XPCard5"
+                        android:id="@+id/quick_view_armor"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -194,7 +194,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/XPCard7"
+                        android:id="@+id/quick_view_acc"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -213,7 +213,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/XPCard8"
+                        android:id="@+id/quick_view_acc1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -232,7 +232,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/XPCard9"
+                        android:id="@+id/quick_view_acc2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"

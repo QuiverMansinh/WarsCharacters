@@ -66,6 +66,10 @@ open class Character {
     var reinforcedHelmet = false
     var astromech = false
 
+    var adenalImplants = false
+    var quickDrawHolster = false
+    var bardottanShard = false
+
     var tier = 0
     //var tierImages = ArrayList<Bitmap?>()
 
