@@ -202,6 +202,15 @@ class ImageAdapter internal constructor(
             else{
                 gridItem.item.setImageResource(currentItem.resourceId)
             }
+            if (character.startingMeleeWeapon == null && position == 3){
+                gridItem.item.setImageResource(R.drawable.mel_t1_vibrosword)
+            }else if (character.startingMeleeWeapon == null && position == 10){
+                gridItem = mContext.layoutInflater.inflate(R.layout.empty_item, null, true)
+            }else if (character.startingRangedWeapon == null && position == 3){
+                gridItem.item.setImageResource(R.drawable.gun_t1_tatooinehuntingrifle)
+            }else if (character.startingRangedWeapon == null && position == 11){
+                gridItem = mContext.layoutInflater.inflate(R.layout.empty_item, null, true)
+            }
 
             when (currentItem.type) {
                 Items.reward -> {
