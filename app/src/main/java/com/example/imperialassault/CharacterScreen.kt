@@ -131,8 +131,8 @@ class CharacterScreen : AppCompatActivity(){
             animChar.duration=(800).toLong()
             animChar.start()
 
-            companion_layer.animate().alpha(1f)
-            val animcompanion= ObjectAnimator.ofFloat( companion_layer,"translationX",
+            companion_image.animate().alpha(1f)
+            val animcompanion= ObjectAnimator.ofFloat( companion_image,"translationX",
                 -character_images.width*1.2f
                     .toFloat(),-character_images.width.toFloat()*1.2f,0f)
             animcompanion.interpolator = DecelerateInterpolator()
@@ -358,15 +358,15 @@ class CharacterScreen : AppCompatActivity(){
             println(character.companionImage)
             if(character.companionImage != null) {
                 if (conditionsActive[hidden] && animateConditions) {
-                    companion_layer.visibility = View.INVISIBLE
+                    companion_image.visibility = View.INVISIBLE
                 }
                 else {
-                    companion_layer.setImageBitmap(character.companionImage)
-                    companion_layer.visibility = View.VISIBLE
+                    companion_image.setImageBitmap(character.companionImage)
+                    companion_image.visibility = View.VISIBLE
                 }
             }
             else{
-                companion_layer.visibility = View.GONE
+                companion_image.visibility = View.GONE
             }
 
 

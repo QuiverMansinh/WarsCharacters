@@ -6,10 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -120,6 +117,7 @@ class Accessories : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.accArray!!)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
         return rewardsView
     }
 }
@@ -133,6 +131,7 @@ class Armor : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.armorArray!!)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
         return rewardsView
     }
 }
@@ -146,6 +145,7 @@ class Melee : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.meleeArray!!)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
         return rewardsView
     }
 }
@@ -159,6 +159,7 @@ class Ranged : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.rangedArray!!)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
         return rewardsView
     }
 }
@@ -168,7 +169,96 @@ class ImageAdapter internal constructor(
     Array<Item>
 ) :
     BaseAdapter() {
+    var gridItems = arrayListOf<View>()
+    init {
 
+        for (i in 0..itemArray.size - 1) {
+            var gridItem: View
+            var currentItem = itemArray.get(i)
+
+            if (currentItem.type >= 0) {
+                gridItem = mContext.layoutInflater.inflate(R.layout.grid_item, null, true)
+                gridItem.item.alpha = 0.5f
+                var character = MainActivity.selectedCharacter!!
+
+                if (i == 3 && currentItem.type == Items.melee && character.startingMeleeWeapon !=
+                    null) {
+                    gridItem.item.setImageBitmap(character.startingMeleeWeapon)
+                } else if (i == 3 && currentItem.type == Items.ranged && character
+                        .startingRangedWeapon != null) {
+                    gridItem.item.setImageBitmap(character.startingRangedWeapon)
+                } else {
+                    gridItem.item.setImageResource(currentItem.resourceId)
+                }
+
+                when (currentItem.type) {
+                    Items.reward -> {
+                        if (character.rewards.contains(currentItem.index)) {
+                            gridItem.item.alpha = 1f
+                        }
+                    }
+                    Items.acc -> {
+                        if (character.accessories.contains(currentItem.index)) {
+                            gridItem.item.alpha = 1f
+                        }
+                    }
+                    Items.armor -> {
+                        if (character.armor.contains(currentItem.index)) {
+                            gridItem.item.alpha = 1f
+                        }
+                    }
+                    Items.melee -> {
+                        if (character.weapons.contains(currentItem.index) || character.mods.contains(
+                                currentItem.index
+                            )
+                        ) {
+                            gridItem.item.alpha = 1f
+                        }
+                    }
+                    Items.ranged -> {
+                        if (character.weapons.contains(currentItem.index) || character.mods.contains(
+                                currentItem.index
+                            )
+                        ) {
+                            gridItem.item.alpha = 1f
+                        }
+                    }
+                }
+                //TODO load eqipped items
+
+                gridItem.setOnLongClickListener {
+                    onShowCard(gridItem.item)
+                    true
+                }
+
+                gridItem.setOnClickListener {
+                    when (currentItem.type) {
+                        Items.reward -> {
+                            gridItem.item.alpha = equipReward(currentItem)
+                        }
+                        Items.acc -> {
+                            gridItem.item.alpha = equipAcc(currentItem)
+                            println(currentItem.index)
+                        }
+                        Items.armor -> {
+                            gridItem.item.alpha = equipArmor(currentItem)
+                        }
+                        Items.melee -> {
+                            gridItem.item.alpha = equipWeapon(currentItem)
+
+                        }
+                        Items.ranged -> {
+                            gridItem.item.alpha = equipWeapon(currentItem)
+                        }
+                    }
+                }
+
+            } else {
+                gridItem = mContext.layoutInflater.inflate(currentItem.resourceId, null, true)
+            }
+            gridItems.add(gridItem)
+        }
+    }
     // References to our images
 
     override fun getCount(): Int {
@@ -183,86 +273,11 @@ class ImageAdapter internal constructor(
         return position.toLong()
     }
 
+
+
     // Create a new ImageView for each item referenced by the Adapter
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var gridItem: View
-        var currentItem = itemArray.get(position)
-
-        if (currentItem.type >= 0) {
-            gridItem = mContext.layoutInflater.inflate(R.layout.grid_item, null, true)
-            gridItem.item.alpha = 0.5f
-            var character = MainActivity.selectedCharacter!!
-
-            if(position == 3 && currentItem.type == Items.melee && character.startingMeleeWeapon != null ){
-                gridItem.item.setImageBitmap(character.startingMeleeWeapon)
-            }
-            else if(position == 3 && currentItem.type == Items.ranged && character.startingRangedWeapon != null){
-                gridItem.item.setImageBitmap(character.startingRangedWeapon)
-            }
-            else{
-                gridItem.item.setImageResource(currentItem.resourceId)
-            }
-
-            when (currentItem.type) {
-                Items.reward -> {
-                    if (character.rewards.contains(currentItem.index)) {
-                        gridItem.item.alpha = 1f
-                    }
-                }
-                Items.acc -> {
-                    if (character.accessories.contains(currentItem.index)) {
-                        gridItem.item.alpha = 1f
-                    }
-                }
-                Items.armor -> {
-                    if (character.armor.contains(currentItem.index)) {
-                        gridItem.item.alpha = 1f
-                    }
-                }
-                Items.melee -> {
-                    if (character.weapons.contains(currentItem.index) || character.mods.contains(currentItem.index)) {
-                        gridItem.item.alpha = 1f
-                    }
-                }
-                Items.ranged -> {
-                    if (character.weapons.contains(currentItem.index) || character.mods.contains(currentItem.index)) {
-                        gridItem.item.alpha = 1f
-                    }
-                }
-            }
-            //TODO load eqipped items
-
-            gridItem.setOnLongClickListener {
-                onShowCard(gridItem.item)
-                true
-            }
-
-            gridItem.setOnClickListener {
-                when (currentItem.type) {
-                    Items.reward -> {
-                        gridItem.item.alpha = equipReward(currentItem)
-                    }
-                    Items.acc -> {
-                        gridItem.item.alpha = equipAcc(currentItem)
-                        println(currentItem.index)
-                    }
-                    Items.armor -> {
-                        gridItem.item.alpha = equipArmor(currentItem)
-                    }
-                    Items.melee -> {
-                        gridItem.item.alpha = equipWeapon(currentItem)
-
-                    }
-                    Items.ranged -> {
-                        gridItem.item.alpha = equipWeapon(currentItem)
-                    }
-                }
-            }
-        } else {
-            gridItem = mContext.layoutInflater.inflate(currentItem.resourceId, null, true)
-        }
-
-        return gridItem
+        return gridItems.get(position)
     }
 
 

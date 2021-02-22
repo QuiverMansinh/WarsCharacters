@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.Window
 import android.widget.GridView
 import android.widget.ImageView
@@ -17,8 +18,10 @@ class RewardsScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rewards_screen)
 
+
         val rewardsgrid = this.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this, Items.rewardsArray!!)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
 
         showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,6 +35,7 @@ class RewardsScreen : AppCompatActivity() {
             true
         }
     }
+
 
     override fun onBackPressed() {
         finish()
