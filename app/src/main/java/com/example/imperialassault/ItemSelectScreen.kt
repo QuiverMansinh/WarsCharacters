@@ -169,6 +169,7 @@ class ImageAdapter internal constructor(
     Array<Item>
 ) :
     BaseAdapter() {
+
     var gridItems = arrayListOf<View>()
     init {
 
@@ -189,6 +190,7 @@ class ImageAdapter internal constructor(
                     gridItem.item.setImageBitmap(character.startingRangedWeapon)
                 } else {
                     gridItem.item.setImageResource(currentItem.resourceId)
+
                 }
 
                 when (currentItem.type) {

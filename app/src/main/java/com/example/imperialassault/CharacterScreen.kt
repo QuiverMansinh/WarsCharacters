@@ -17,6 +17,7 @@ import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
+import android.text.method.LinkMovementMethod
 import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.DecelerateInterpolator
@@ -24,6 +25,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
 import kotlinx.android.synthetic.main.activity_character_view.*
+import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
 import kotlinx.android.synthetic.main.dialog_bio.*
@@ -1849,6 +1851,9 @@ class CharacterScreen : AppCompatActivity(){
         developersCreditsScreen!!.setContentView(R.layout.credits_to_us)
         developersCreditsScreen!!.setCanceledOnTouchOutside(true)
         developersCreditsScreen!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        developersCreditsScreen!!.textView41.setMovementMethod(LinkMovementMethod.getInstance())
+        developersCreditsScreen!!.textView43.setMovementMethod(LinkMovementMethod.getInstance())
+        developersCreditsScreen!!.textView44.setMovementMethod(LinkMovementMethod.getInstance())
     }
     private fun initSettingsDialog(){
         settingsScreen= Dialog(this)

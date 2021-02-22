@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setAnimation()
         setContentView(R.layout.activity_main)
-
         newButton.setOnClickListener {
             val intent = Intent(this, Characters_list::class.java)
                 startActivity(intent)
@@ -48,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         if(sliceAnim == null) {
             sliceAnim = createAnimation("slice")
         }
-
     }
 
     fun setAnimation(){
