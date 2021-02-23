@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/textView24"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/agency_fb"
         android:gravity="center"
@@ -20,7 +20,6 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,16 +29,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="90dp"
-        app:cardBackgroundColor="@color/shadow"
-        app:cardCornerRadius="3dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView24">
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -83,7 +82,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/quick_view_weapon"
+                        android:id="@+id/XPCard2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -102,7 +101,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/quick_view_weapon1"
+                        android:id="@+id/XPCard3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -148,7 +147,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/quick_view_armor"
+                        android:id="@+id/XPCard5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -194,7 +193,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/quick_view_acc"
+                        android:id="@+id/XPCard7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -213,7 +212,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/quick_view_acc1"
+                        android:id="@+id/XPCard8"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
@@ -232,7 +231,7 @@
                     app:cardElevation="3dp">
 
                     <ImageView
-                        android:id="@+id/quick_view_acc2"
+                        android:id="@+id/XPCard9"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"

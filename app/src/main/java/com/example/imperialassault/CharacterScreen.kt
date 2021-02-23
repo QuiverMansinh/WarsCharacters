@@ -39,12 +39,6 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.screen_settings.*
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
-import kotlinx.android.synthetic.main.screen_xp_select.quick_view_weapon
-import kotlinx.android.synthetic.main.screen_xp_select.quick_view_weapon1
-import kotlinx.android.synthetic.main.screen_xp_select.quick_view_armor
-import kotlinx.android.synthetic.main.screen_xp_select.quick_view_acc
-import kotlinx.android.synthetic.main.screen_xp_select.quick_view_acc1
-import kotlinx.android.synthetic.main.screen_xp_select.quick_view_acc2
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -1949,7 +1943,16 @@ class CharacterScreen : AppCompatActivity(){
 
             var imageId = R.drawable.empty_item_slot
             quickViewDialog!!.weapon_type.visibility = View.VISIBLE
-            if(weaponIndex >=0){
+
+            if(weaponIndex == 3){
+                quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingMeleeWeapon)
+                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
+            }
+            else if(weaponIndex == 3+Items.meleeArray!!.size) {
+                quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingRangedWeapon)
+                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
+            }
+            else if(weaponIndex > 0){
                 if(weaponIndex > Items.meleeArray!!.size){
                     weaponIndex -= Items.meleeArray!!.size
                     imageId = Items.rangedArray!![weaponIndex].resourceId
@@ -1960,13 +1963,24 @@ class CharacterScreen : AppCompatActivity(){
                     quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
                 }
                 //quickViewDialog!!.weapon_type.visibility = View.GONE
+                quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
             }
-            quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
+
+
 
 
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.weapon1_type.visibility = View.VISIBLE
-            if(weaponIndex1 >=0){
+
+            if(weaponIndex1 == 3){
+                quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingMeleeWeapon)
+                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
+            }
+            else if(weaponIndex1 == 3+Items.meleeArray!!.size) {
+                quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingRangedWeapon)
+                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
+            }
+            else if(weaponIndex1 >=0){
                 if(weaponIndex1 > Items.meleeArray!!.size){
                     weaponIndex1 -= Items.meleeArray!!.size
                     imageId = Items.rangedArray!![weaponIndex1].resourceId
@@ -1977,8 +1991,9 @@ class CharacterScreen : AppCompatActivity(){
                     quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
                 }
                 //quickViewDialog!!.weapon1_type.visibility = View.GONE
+                quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
+
             }
-            quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
 
 
             imageId = R.drawable.empty_item_slot
@@ -2117,14 +2132,14 @@ class CharacterScreen : AppCompatActivity(){
 
     fun initXPScreen() {
         xpCardImages.add(xpSelectScreen!!.XPCard1)
-        xpCardImages.add(xpSelectScreen!!.quick_view_weapon)
-        xpCardImages.add(xpSelectScreen!!.quick_view_weapon1)
+        xpCardImages.add(xpSelectScreen!!.XPCard2)
+        xpCardImages.add(xpSelectScreen!!.XPCard3)
         xpCardImages.add(xpSelectScreen!!.XPCard4)
-        xpCardImages.add(xpSelectScreen!!.quick_view_armor)
+        xpCardImages.add(xpSelectScreen!!.XPCard5)
         xpCardImages.add(xpSelectScreen!!.XPCard6)
-        xpCardImages.add(xpSelectScreen!!.quick_view_acc)
-        xpCardImages.add(xpSelectScreen!!.quick_view_acc1)
-        xpCardImages.add(xpSelectScreen!!.quick_view_acc2)
+        xpCardImages.add(xpSelectScreen!!.XPCard7)
+        xpCardImages.add(xpSelectScreen!!.XPCard8)
+        xpCardImages.add(xpSelectScreen!!.XPCard9)
 
         for(i in 0.. character.xpCardImages.size-1){
             xpCardImages[i].setImageBitmap(character.xpCardImages[i])

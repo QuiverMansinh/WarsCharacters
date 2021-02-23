@@ -59,7 +59,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/shadow"
-                    app:cardCornerRadius="7dp"
+                    app:cardCornerRadius="13dp"
                     app:cardElevation="3dp">
 
                     <ImageView
@@ -89,7 +89,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/shadow"
-                    app:cardCornerRadius="7dp"
+                    app:cardCornerRadius="13dp"
                     app:cardElevation="3dp">
 
                     <ImageView
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     app:cardBackgroundColor="@color/shadow"
-                    app:cardCornerRadius="7dp"
+                    app:cardCornerRadius="13dp"
                     app:cardElevation="3dp">
 
                     <ImageView
@@ -202,7 +202,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/shadow"
-                    app:cardCornerRadius="7dp"
+                    app:cardCornerRadius="13dp"
                     app:cardElevation="3dp">
 
                     <ImageView
@@ -231,7 +231,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/shadow"
-                    app:cardCornerRadius="7dp"
+                    app:cardCornerRadius="13dp"
                     app:cardElevation="3dp">
 
                     <ImageView
@@ -260,7 +260,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/shadow"
-                    app:cardCornerRadius="7dp"
+                    app:cardCornerRadius="14dp"
                     app:cardElevation="3dp">
 
                     <ImageView
