@@ -35,17 +35,17 @@ public class CharacterImageView extends View implements Runnable{
 
     boolean animateConditions = true;
 
-    public CharacterImageView(@NonNull Context context) {
+    public CharacterImageView( Context context) {
         super(context);
         init();
     }
 
-    public CharacterImageView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public CharacterImageView( Context context,  AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CharacterImageView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CharacterImageView(Context context,  AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -94,75 +94,75 @@ public class CharacterImageView extends View implements Runnable{
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(!imageScaled) {
-            if (image != null) {
-                image = Bitmap.createScaledBitmap(image, canvas.getWidth(), canvas.getHeight(),
-                        true);
+        if(image!=null) {
+            if (!imageScaled) {
+                if (image != null) {
+                    image = Bitmap.createScaledBitmap(image, canvas.getWidth(), canvas.getHeight(),
+                            true);
+                }
+                imageScaled = true;
             }
-            imageScaled = true;
-        }
-        if(!glowScaled) {
-            if(glowImage!=null) {
-                glowImage = Bitmap.createScaledBitmap(glowImage,  canvas.getWidth(), canvas.getHeight(), true);
+            if (!glowScaled) {
+                if (glowImage != null) {
+                    glowImage = Bitmap.createScaledBitmap(glowImage, canvas.getWidth(), canvas.getHeight(), true);
+                }
+                glowScaled = true;
             }
-            glowScaled = true;
-        }
 
 
-        if(!layer1Scaled) {
-            if(layer1!=null) {
-                layer1 = Bitmap.createScaledBitmap(layer1,  canvas.getWidth(), canvas.getHeight(), true);
+            if (!layer1Scaled) {
+                if (layer1 != null) {
+                    layer1 = Bitmap.createScaledBitmap(layer1, canvas.getWidth(), canvas.getHeight(), true);
+                }
+                layer1Scaled = true;
             }
-            layer1Scaled = true;
-        }
 
-        if(!layer2Scaled) {
-            if(layer2!=null) {
-                layer2 = Bitmap.createScaledBitmap(layer2,  canvas.getWidth(), canvas.getHeight(), true);
+            if (!layer2Scaled) {
+                if (layer2 != null) {
+                    layer2 = Bitmap.createScaledBitmap(layer2, canvas.getWidth(), canvas.getHeight(), true);
+                }
+                layer2Scaled = true;
             }
-            layer2Scaled = true;
-        }
 
-        if(focused && glowImage!=null && animateConditions){
-            canvas.drawBitmap(glowImage, 0,  offsetY, focusedPaint);
-        }
-        if(animateConditions) {
-            canvas.drawBitmap(image, 0, offsetY, paint);
-        } else{
-            canvas.drawBitmap(image, 0, 0, null);
-        }
+            if (focused && glowImage != null && animateConditions) {
+                canvas.drawBitmap(glowImage, 0, offsetY, focusedPaint);
+            }
+            if (animateConditions) {
+                canvas.drawBitmap(image, 0, offsetY, paint);
+            } else {
+                canvas.drawBitmap(image, 0, 0, null);
+            }
 
-        if(layer2!=null) {
-            if(animateConditions) {
-                canvas.drawBitmap(layer2, 0, offsetY, paint);
+            if (layer2 != null) {
+                if (animateConditions) {
+                    canvas.drawBitmap(layer2, 0, offsetY, paint);
+                } else {
+                    canvas.drawBitmap(layer2, 0, 0, null);
+                }
             }
-            else{
-                canvas.drawBitmap(layer2, 0, 0, null);
-            }
-        }
 
-        if(layer1!=null) {
-            if(animateConditions) {
-                canvas.drawBitmap(layer1, 0, offsetY, paint);
+            if (layer1 != null) {
+                if (animateConditions) {
+                    canvas.drawBitmap(layer1, 0, offsetY, paint);
+                } else {
+                    canvas.drawBitmap(layer1, 0, 0, null);
+                }
             }
-            else{
-                canvas.drawBitmap(layer1, 0, 0, null);
-            }
-        }
 
 
-        if(stunned && animateConditions) {
-            canvas.drawBitmap(image, stunX, stunY, stunPaint);
-            if(layer1!=null) {
-                canvas.drawBitmap(layer1, stunX, stunY, stunPaint);
+            if (stunned && animateConditions) {
+                canvas.drawBitmap(image, stunX, stunY, stunPaint);
+                if (layer1 != null) {
+                    canvas.drawBitmap(layer1, stunX, stunY, stunPaint);
+                }
+                if (layer2 != null) {
+                    canvas.drawBitmap(layer2, stunX, stunY, stunPaint);
+                }
             }
-            if(layer2!=null) {
-                canvas.drawBitmap(layer2, stunX, stunY, stunPaint);
+
+            if (bleeding && animateConditions) {
+
             }
-        }
-
-        if(bleeding && animateConditions){
-
         }
     }
 

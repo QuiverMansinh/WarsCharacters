@@ -12,8 +12,6 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import java.io.InputStream
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         if(selectedCharacter!=null) {
-            wipeSelectedCharacter()
+            //wipeSelectedCharacter()
         }
 
         if(blastAnim == null) {

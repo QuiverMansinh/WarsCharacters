@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/character_select_background"
-    tools:context=".RewardsScreen">
+    tools:context=".AccScreen">
 
     <TextView
         android:id="@+id/item_title"
@@ -16,7 +16,7 @@
         android:gravity="center"
         android:shadowColor="@color/black"
         android:shadowRadius="10"
-        android:text="REWARDS"
+        android:text="ACCESSORIES"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="30sp"
@@ -27,6 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -36,7 +37,7 @@
         app:cardBackgroundColor="@color/shadow"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_title">
@@ -48,6 +49,64 @@
             android:numColumns="3" />
     </androidx.cardview.widget.CardView>
 
+    <LinearLayout
+        android:id="@+id/linearLayout15"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/save_file_back"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/to_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/save_file_back"
+            android:onClick="onToAcc"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_accessory" />
+
+        <ImageView
+            android:id="@+id/to_armor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/save_file_back"
+            android:onClick="onToArmor"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_armour" />
+
+        <ImageView
+            android:id="@+id/to_melee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/save_file_back"
+            android:onClick="onToMelee"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_melee" />
+
+        <ImageView
+            android:id="@+id/to_ranged"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/save_file_back"
+            android:onClick="onToRanged"
+            android:padding="5dp"
+            app:srcCompat="@drawable/item_ranged" />
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/imageView36"
         android:layout_width="wrap_content"
@@ -58,4 +117,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

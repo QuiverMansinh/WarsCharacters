@@ -20,13 +20,13 @@ open class Character {
     var type = ""
     var defence_dice = ""
 
-    var strength = ""
-    var insight = ""
-    var tech = ""
+    var strength = "RGB"
+    var insight = "RGB"
+    var tech = "RGB"
 
-    var strengthWounded = ""
-    var insightWounded = ""
-    var techWounded = ""
+    var strengthWounded = "RGB"
+    var insightWounded = "RGB"
+    var techWounded = "RGB"
 
 
     var health_default = 10
@@ -193,9 +193,9 @@ open class Character {
                 break
             } catch (outOfMemoryError:OutOfMemoryError) {
 
-                println("next size"+i)
+                //println("next size"+i)
             } catch (e: Exception) {
-                e.printStackTrace()
+                //e.printStackTrace()
             }
         }
 

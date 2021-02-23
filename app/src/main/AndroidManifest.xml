@@ -11,13 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
-        <activity android:name=".QuickViewScreen"></activity>
         <activity android:name=".RewardsScreen" />
         <activity android:name=".LoadScreen" />
         <activity
             android:name=".ItemSelectScreen"
             android:label="@string/title_activity_item__select__screen"
             android:theme="@style/Theme.ImperialAssault.NoActionBar" />
+        <activity android:name=".RangedScreen" />
+        <activity android:name=".MeleeScreen" />
+        <activity android:name=".AccScreen" />
+        <activity android:name=".ArmorScreen" />
         <activity android:name=".CharacterScreen" />
         <activity android:name=".Characters_list" />
         <activity android:name=".MainActivity">

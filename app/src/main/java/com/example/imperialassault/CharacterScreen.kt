@@ -92,9 +92,11 @@ class CharacterScreen : AppCompatActivity(){
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
+        println(" CHARACTER"+MainActivity.selectedCharacter)
         if(hasFocus) {
             updateStats()
             updateImages()
+            quickSave()
         }
 
         if(hasFocus&&!loadAnimated ){
@@ -232,15 +234,13 @@ class CharacterScreen : AppCompatActivity(){
             if (character.startingMeleeWeapon != null) {
                 character.weapons.add(Items.meleeArray!![3].index)
             }
-
         } else {
-            character = MainActivity.selectedCharacter!!
-
+                character = MainActivity.selectedCharacter!!
         }
         if(character.portraitImage==null) {
             character.loadPortraitImage(this)
         }
-        name.setText("" + character.name);
+        name.setText("" + character.name)
 
 
         when (character.defence_dice) {
@@ -249,17 +249,7 @@ class CharacterScreen : AppCompatActivity(){
             "" -> defence.visibility = View.INVISIBLE
 
         }
-        setDiceColor(strength1, character.strength[0]);
-        setDiceColor(strength2, character.strength[1]);
-        setDiceColor(strength3, character.strength[2]);
 
-        setDiceColor(insight1, character.insight[0]);
-        setDiceColor(insight2, character.insight[1]);
-        setDiceColor(insight3, character.insight[2]);
-
-        setDiceColor(tech1, character.tech[0]);
-        setDiceColor(tech2, character.tech[1]);
-        setDiceColor(tech3, character.tech[2]);
 
         updateImages()
         updateStats()
@@ -267,6 +257,7 @@ class CharacterScreen : AppCompatActivity(){
         updateStats()
         initConditions()
         updateConditionIcons()
+
 
 
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
@@ -426,8 +417,35 @@ class CharacterScreen : AppCompatActivity(){
         endurance.setText("" + character.endurance);
         speed.setText("" + character.speed);
 
+        if(!isWounded) {
+
+            setDiceColor(strength1, character.strength[0]);
+            setDiceColor(strength2, character.strength[1]);
+            setDiceColor(strength3, character.strength[2]);
+
+            setDiceColor(insight1, character.insight[0]);
+            setDiceColor(insight2, character.insight[1]);
+            setDiceColor(insight3, character.insight[2]);
+
+            setDiceColor(tech1, character.tech[0]);
+            setDiceColor(tech2, character.tech[1]);
+            setDiceColor(tech3, character.tech[2]);
+        }
+        else{
+            setDiceColor(strength1, character.strengthWounded[0]);
+            setDiceColor(strength2, character.strengthWounded[1]);
+            setDiceColor(strength3, character.strengthWounded[2]);
+
+            setDiceColor(insight1, character.insightWounded[0]);
+            setDiceColor(insight2, character.insightWounded[1]);
+            setDiceColor(insight3, character.insightWounded[2]);
+
+            setDiceColor(tech1, character.techWounded[0]);
+            setDiceColor(tech2, character.techWounded[1]);
+            setDiceColor(tech3, character.techWounded[2]);
+        }
         //TODO
-        quickSave()
+        //quickSave()
     }
 
     private fun setStatColor(stat:TextView, current:Int, default:Int){
@@ -537,18 +555,6 @@ class CharacterScreen : AppCompatActivity(){
                 if(!isWounded) {
                     wounded.animate().alpha(1f)
 
-                    setDiceColor(strength1, character.strengthWounded[0]);
-                    setDiceColor(strength2, character.strengthWounded[1]);
-                    setDiceColor(strength3, character.strengthWounded[2]);
-
-                    setDiceColor(insight1, character.insightWounded[0]);
-                    setDiceColor(insight2, character.insightWounded[1]);
-                    setDiceColor(insight3, character.insightWounded[2]);
-
-                    setDiceColor(tech1, character.techWounded[0]);
-                    setDiceColor(tech2, character.techWounded[1]);
-                    setDiceColor(tech3, character.techWounded[2]);
-
 
                     character.timesWounded++
                     isWounded = true
@@ -587,19 +593,6 @@ class CharacterScreen : AppCompatActivity(){
                 if(isWounded) {
                     character.wounded = 0
                     wounded.animate().alpha(0f)
-
-                    setDiceColor(strength1, character.strength[0]);
-                    setDiceColor(strength2, character.strength[1]);
-                    setDiceColor(strength3, character.strength[2]);
-
-                    setDiceColor(insight1, character.insight[0]);
-                    setDiceColor(insight2, character.insight[1]);
-                    setDiceColor(insight3, character.insight[2]);
-
-                    setDiceColor(tech1, character.tech[0]);
-                    setDiceColor(tech2, character.tech[1]);
-                    setDiceColor(tech3, character.tech[2]);
-
                     isWounded = false
                     updateStats()
                 }
@@ -628,19 +621,6 @@ class CharacterScreen : AppCompatActivity(){
         //add_damage.setText("" + character.damage)
         add_damage.setImageDrawable(getNumber(character.damage))
         wounded.animate().alpha(0f)
-
-        setDiceColor(strength1, character.strength[0]);
-        setDiceColor(strength2, character.strength[1]);
-        setDiceColor(strength3, character.strength[2]);
-
-        setDiceColor(insight1, character.insight[0]);
-        setDiceColor(insight2, character.insight[1]);
-        setDiceColor(insight3, character.insight[2]);
-
-        setDiceColor(tech1, character.tech[0]);
-        setDiceColor(tech2, character.tech[1]);
-        setDiceColor(tech3, character.tech[2]);
-
         isWounded = false
         updateStats()
         unwoundDialog!!.dismiss()
@@ -661,19 +641,8 @@ class CharacterScreen : AppCompatActivity(){
                 add_damage.setImageDrawable(getNumber(character.wounded))
                 wounded.animate().alpha(1f)
 
-                setDiceColor(strength1, character.strengthWounded[0]);
-                setDiceColor(strength2, character.strengthWounded[1]);
-                setDiceColor(strength3, character.strengthWounded[2]);
-
-                setDiceColor(insight1, character.insightWounded[0]);
-                setDiceColor(insight2, character.insightWounded[1]);
-                setDiceColor(insight3, character.insightWounded[2]);
-
-                setDiceColor(tech1, character.techWounded[0]);
-                setDiceColor(tech2, character.techWounded[1]);
-                setDiceColor(tech3, character.techWounded[2]);
-
                 isWounded = true
+                updateStats()
                 //println()
                 //println("withdrawn" + character.withdrawn)
                 //println()
@@ -1177,26 +1146,30 @@ class CharacterScreen : AppCompatActivity(){
         startActivity(intent);
     }
     fun onAccessory(view: View) {
-        val intent = Intent(this, ItemSelectScreen::class.java)
-        intent.putExtra("tab", "accessory")
+        //val intent = Intent(this, ItemSelectScreen::class.java)
+        //intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
+        val intent = Intent(this, AccScreen::class.java)
         startActivity(intent);
     }
     fun onArmour(view: View) {
-        val intent = Intent(this, ItemSelectScreen::class.java)
-        intent.putExtra("tab", "armour")
+        //val intent = Intent(this, ItemSelectScreen::class.java)
+        //intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
+        val intent = Intent(this, ArmorScreen::class.java)
         startActivity(intent);
     }
     fun onMelee(view: View) {
-        val intent = Intent(this, ItemSelectScreen::class.java)
-        intent.putExtra("tab", "melee")
+        //val intent = Intent(this, ItemSelectScreen::class.java)
+        //intent.putExtra("tab", "melee")
+        val intent = Intent(this, MeleeScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
     fun onRange(view: View) {
-        val intent = Intent(this, ItemSelectScreen::class.java)
-        intent.putExtra("tab", "range")
+        //val intent = Intent(this, ItemSelectScreen::class.java)
+        //intent.putExtra("tab", "range")
+        val intent = Intent(this, RangedScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
     }
@@ -1489,7 +1462,7 @@ class CharacterScreen : AppCompatActivity(){
 
         character.conditionsActive = conditionsActive
         character_image.animateConditions = animateConditions
-        quickSave()
+        //quickSave()
 
         for(i in 0..conditionViews.size-1){
             conditionViews[i].visibility = View.GONE
@@ -1905,19 +1878,19 @@ class CharacterScreen : AppCompatActivity(){
         backgroundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         backgroundDialog!!.desert_background.setOnClickListener{
             onBackgroundDesert(backgroundDialog!!.desert_background)
-            quickSave()
+            //quickSave()
         }
         backgroundDialog!!.snow_background.setOnClickListener{
             onBackgroundSnow(backgroundDialog!!.snow_background)
-            quickSave()
+            //quickSave()
         }
         backgroundDialog!!.jungle_background.setOnClickListener{
             onBackgroundJungle(backgroundDialog!!.jungle_background)
-            quickSave()
+           // quickSave()
         }
         backgroundDialog!!.interior_background.setOnClickListener{
             onBackgroundInterior(backgroundDialog!!.interior_background)
-            quickSave()
+          //  quickSave()
         }
     }
     private fun initStatsScreenDialog(){

@@ -2,6 +2,7 @@ package com.example.imperialassault
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -11,16 +12,24 @@ import android.view.ViewConfiguration
 import android.view.Window
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.TextView
 import kotlinx.android.synthetic.main.dialog_show_card.*
 
-class RewardsScreen : AppCompatActivity() {
+class AccScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rewards_screen)
+        setContentView(R.layout.activity_item_screen)
 
+        var title = findViewById<TextView>(R.id.item_title)
+        title.setText("ACCESSORIES")
+
+        findViewById<ImageView>(R.id.to_acc).alpha = 1f
+        findViewById<ImageView>(R.id.to_armor).alpha = 0.5f
+        findViewById<ImageView>(R.id.to_melee).alpha = 0.5f
+        findViewById<ImageView>(R.id.to_ranged).alpha = 0.5f
 
         val rewardsgrid = this.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this, Items.rewardsArray!!)
+        rewardsgrid.adapter = ImageAdapter(this, Items.accArray!!)
         rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
 
         showCardDialog = Dialog(this)
@@ -36,11 +45,32 @@ class RewardsScreen : AppCompatActivity() {
         }
     }
 
-
-    override fun onBackPressed() {
-       // finish()
-        super.onBackPressed()
+    fun onToAcc(view:View){
+        //val intent = Intent(this, AccScreen::class.java)
+        //startActivity(intent)
     }
 
-    fun onToAcc(view: View) {}
+    fun onToArmor(view:View){
+        val intent = Intent(this, ArmorScreen::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun onToMelee(view:View){
+        val intent = Intent(this, MeleeScreen::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun onToRanged(view:View){
+        val intent = Intent(this, RangedScreen::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
+    }
 }
