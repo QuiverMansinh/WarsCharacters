@@ -25,6 +25,8 @@ class Characters_list : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
+        //Characters list for List view to choose characters
+
         var CharactersImage= arrayListOf<ImageView>(
             findViewById(R.id.imageViewBiv),
             findViewById(R.id.imageViewGaar),
@@ -51,6 +53,8 @@ class Characters_list : AppCompatActivity() {
         var allChSel = BitmapFactory.decodeResource(resources,R.drawable
             .allcharacterselect_21)
         allChSel = Bitmap.createScaledBitmap(allChSel,2048,683,false)
+
+        //code bellow cuts out image  assets from one image sheet for Character list.
 
         var row = 6
         var col = 4

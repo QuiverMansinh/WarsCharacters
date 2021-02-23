@@ -26,6 +26,9 @@ class ItemSelectScreen : AppCompatActivity() {
         val adapter = MyAdapter(this, supportFragmentManager, tab_layout.tabCount)
         pager.adapter = adapter
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
+
+        //defining Which tab is active
+
         when (intent.getStringExtra("tab")) {
             "range" -> {
                 pager.setCurrentItem(3)
@@ -40,6 +43,8 @@ class ItemSelectScreen : AppCompatActivity() {
                 pager.setCurrentItem(0)
             }
         }
+
+        //Dialog that shows up card while long-Pressed
 
         showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -76,7 +81,7 @@ class ItemSelectScreen : AppCompatActivity() {
     }
 }
 
-
+//creating CUSTOM Adapter for cards view grid
 
 @Suppress("DEPRECATION")
 internal class MyAdapter(
@@ -107,6 +112,8 @@ internal class MyAdapter(
         return totalTabs
     }
 }
+
+//Code bellow creates fragments for each section:Accessories,Armor,Melee,Ranged.
 
 class Accessories : Fragment() {
     override fun onCreateView(
@@ -163,6 +170,8 @@ class Ranged : Fragment() {
         return rewardsView
     }
 }
+
+//Code bellow creates image adapter for inflating images and layout into gridview.
 
 class ImageAdapter internal constructor(
     val mContext: Activity, var itemArray:
