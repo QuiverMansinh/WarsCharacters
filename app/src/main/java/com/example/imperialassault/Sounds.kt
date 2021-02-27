@@ -3,9 +3,10 @@ package com.example.imperialassault
 import android.content.Context
 import android.media.MediaPlayer
 
-class Sounds {
+object Sounds {
 
     var soundplayer: MediaPlayer = MediaPlayer()
+    var currentWeaponTypes = arrayListOf<Int>(0,0)
 
     fun weaponSound(context: Context, weaponSoundType: Int) {
         when (weaponSoundType) {
@@ -25,15 +26,29 @@ class Sounds {
                 soundplayer = MediaPlayer.create(context, R.raw.gun_loading)
                 return soundplayer.start()
             }
-            5 -> {
+        }
+    }
+    fun impactSound(context: Context){
+        var whichSound = 0
+        if (currentWeaponTypes[0]==0){
+            whichSound = currentWeaponTypes[1]
+        }else if (currentWeaponTypes[0]==0) whichSound = currentWeaponTypes[0]
+        else if (currentWeaponTypes[0]!=0 && currentWeaponTypes[1]!=0) whichSound =
+            (Math.random()*2).toInt()
+        when(currentWeaponTypes[whichSound]){
+            1 -> {
                 soundplayer = MediaPlayer.create(context, R.raw.stabby_stabby)
                 return soundplayer.start()
             }
-            6 -> {
+            2 -> {
                 soundplayer = MediaPlayer.create(context, R.raw.lightsaber_stabby_stabby)
                 return soundplayer.start()
             }
-            7 -> {
+            3 -> {
+                soundplayer = MediaPlayer.create(context, R.raw.electric)
+                return soundplayer.start()
+            }
+            4 -> {
                 soundplayer = MediaPlayer.create(context, R.raw.gaster_blaster_master)
                 return soundplayer.start()
             }

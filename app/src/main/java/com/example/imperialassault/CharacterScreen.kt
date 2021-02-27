@@ -1211,6 +1211,7 @@ class CharacterScreen : AppCompatActivity(){
         killCount++
         character.killCount[type]=killCount
         killCounts[type].setText("" + killCount)
+        Sounds.impactSound(this.applicationContext)
     }
     fun killCountDown(type: Int){
         var killCount = Integer.parseInt(killCounts[type].text.toString())
