@@ -82,6 +82,8 @@ class Characters_list : AppCompatActivity() {
         }*/
     }
 
+    //Load layout for selected character (pointing out it's tag to note which assets to load)
+
     fun onSelect(view: View) {
         if(MainActivity.selectedCharacter != null) {
             wipeSelectedCharacter()
