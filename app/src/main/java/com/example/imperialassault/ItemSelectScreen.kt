@@ -267,7 +267,7 @@ class ImageAdapter internal constructor(
                         }
                     }
                     if (gridItem.item.alpha == 0.5f) {
-
+                        //TODO Rejection sounds
                     } else {
                         Sounds().weaponSound(context, currentItem.weaponType)
                     }
