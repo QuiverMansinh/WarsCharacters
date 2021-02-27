@@ -31,8 +31,8 @@ object Sounds {
     fun impactSound(context: Context){
         var whichSound = 0
         if (currentWeaponTypes[0]==0){
-            whichSound = currentWeaponTypes[1]
-        }else if (currentWeaponTypes[0]==0) whichSound = currentWeaponTypes[0]
+            whichSound = 1
+        }else if (currentWeaponTypes[0]==0) whichSound = 0
         else if (currentWeaponTypes[0]!=0 && currentWeaponTypes[1]!=0) whichSound =
             (Math.random()*2).toInt()
         when(currentWeaponTypes[whichSound]){

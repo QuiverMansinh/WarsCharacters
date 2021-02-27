@@ -2658,6 +2658,9 @@ class CharacterScreen : AppCompatActivity() {
     override fun onBackPressed() {
         quickSave()
         super.onBackPressed()
+
+        Sounds.currentWeaponTypes[0] = 0
+        Sounds.currentWeaponTypes[1] = 0
     }
 
     override fun onStop() {
