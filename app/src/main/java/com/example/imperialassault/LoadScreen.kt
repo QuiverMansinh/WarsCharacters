@@ -179,8 +179,12 @@ class LoadScreen : AppCompatActivity() {
 
 
                     //TODO rewards and mods
+                    loadedCharacters[position].rewards = convertStringToItemID(""+data[position].rewards)
+                    loadedCharacters[position].mods = convertStringToItemID(""+data[position].mods)
+println()
+                    println("Load Mods "+data[position].mods)
 
-
+                    println( " "+loadedCharacters[position].mods.size)
                     loadedCharacters[position].background = data[position].background.toString()
 
                     loadedCharacters[position].killCount = arrayOf(
@@ -280,6 +284,18 @@ class LoadScreen : AppCompatActivity() {
 
         }
 
+    }
+
+    fun convertStringToItemID(itemString:String):ArrayList<Int> {
+        var itemIds = arrayListOf<Int>()
+        var itemStrings = itemString.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+
+        for(itemId in itemStrings){
+            if(itemId.isNotEmpty()){
+                itemIds.add(itemId.toInt())
+            }
+        }
+        return itemIds
     }
 
     var positionEditing = -1

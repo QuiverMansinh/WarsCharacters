@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_item_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 
 class ArmorScreen : AppCompatActivity() {
@@ -23,11 +24,9 @@ class ArmorScreen : AppCompatActivity() {
         var title = findViewById<TextView>(R.id.item_title)
         title.setText("ARMOR")
 
-        findViewById<ImageView>(R.id.to_acc).alpha = 0.5f
-        findViewById<ImageView>(R.id.to_armor).alpha = 1f
-        findViewById<ImageView>(R.id.to_melee).alpha = 0.5f
-        findViewById<ImageView>(R.id.to_ranged).alpha = 0.5f
-
+        to_melee.setBackgroundColor(resources.getColor(R.color.shadow))
+        to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
+        to_acc.setBackgroundColor(resources.getColor(R.color.shadow))
 
 
         val rewardsgrid = this.findViewById<ImageView>(R.id.rewards_grid) as GridView

@@ -179,34 +179,34 @@ class ImageAdapter internal constructor(
 
             if (currentItem.type >= 0) {
                 gridItem = mContext.layoutInflater.inflate(R.layout.grid_item, null, true)
-                gridItem.item.alpha = 0.5f
+                gridItem.grid_image.alpha = 0.5f
                 var character = MainActivity.selectedCharacter!!
 
                 if (i == 3 && currentItem.type == Items.melee && character.startingMeleeWeapon !=
                     null) {
-                    gridItem.item.setImageBitmap(character.startingMeleeWeapon)
+                    gridItem.grid_image.setImageBitmap(character.startingMeleeWeapon)
                 } else if (i == 3 && currentItem.type == Items.ranged && character
                         .startingRangedWeapon != null) {
-                    gridItem.item.setImageBitmap(character.startingRangedWeapon)
+                    gridItem.grid_image.setImageBitmap(character.startingRangedWeapon)
                 } else {
-                    gridItem.item.setImageResource(currentItem.resourceId)
+                    gridItem.grid_image.setImageResource(currentItem.resourceId)
 
                 }
 
                 when (currentItem.type) {
                     Items.reward -> {
                         if (character.rewards.contains(currentItem.index)) {
-                            gridItem.item.alpha = 1f
+                            gridItem.grid_image.alpha = 1f
                         }
                     }
                     Items.acc -> {
                         if (character.accessories.contains(currentItem.index)) {
-                            gridItem.item.alpha = 1f
+                            gridItem.grid_image.alpha = 1f
                         }
                     }
                     Items.armor -> {
                         if (character.armor.contains(currentItem.index)) {
-                            gridItem.item.alpha = 1f
+                            gridItem.grid_image.alpha = 1f
                         }
                     }
                     Items.melee -> {
@@ -214,7 +214,7 @@ class ImageAdapter internal constructor(
                                 currentItem.index
                             )
                         ) {
-                            gridItem.item.alpha = 1f
+                            gridItem.grid_image.alpha = 1f
                         }
                     }
                     Items.ranged -> {
@@ -222,35 +222,35 @@ class ImageAdapter internal constructor(
                                 currentItem.index
                             )
                         ) {
-                            gridItem.item.alpha = 1f
+                            gridItem.grid_image.alpha = 1f
                         }
                     }
                 }
                 //TODO load eqipped items
 
                 gridItem.setOnLongClickListener {
-                    onShowCard(gridItem.item)
+                    onShowCard(gridItem.grid_image)
                     true
                 }
 
                 gridItem.setOnClickListener {
                     when (currentItem.type) {
                         Items.reward -> {
-                            gridItem.item.alpha = equipReward(currentItem)
+                            gridItem.grid_image.alpha = equipReward(currentItem)
                         }
                         Items.acc -> {
-                            gridItem.item.alpha = equipAcc(currentItem)
+                            gridItem.grid_image.alpha = equipAcc(currentItem)
                             println(currentItem.index)
                         }
                         Items.armor -> {
-                            gridItem.item.alpha = equipArmor(currentItem)
+                            gridItem.grid_image.alpha = equipArmor(currentItem)
                         }
                         Items.melee -> {
-                            gridItem.item.alpha = equipWeapon(currentItem)
+                            gridItem.grid_image.alpha = equipWeapon(currentItem)
 
                         }
                         Items.ranged -> {
-                            gridItem.item.alpha = equipWeapon(currentItem)
+                            gridItem.grid_image.alpha = equipWeapon(currentItem)
                         }
                     }
                 }
