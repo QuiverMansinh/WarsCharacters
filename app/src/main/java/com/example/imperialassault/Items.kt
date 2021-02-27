@@ -204,8 +204,8 @@ object Items {
             emptySpace,
 
             Item(melee, 1, R.drawable.gun_t1_heroweapon,"melee"),
-            Item(melee, 1, R.drawable.mel_t1_armoredgauntlets,"melee"),
-            Item(melee, 1, R.drawable.mel_t1_gaffistick,"melee"),
+            Item(melee, 1, R.drawable.mel_t1_armoredgauntlets,"equip"),
+            Item(melee, 1, R.drawable.mel_t1_gaffistick,"equip"),
 
             Item(melee, 1, R.drawable.mel_t1_punchdagger,"melee"),
             Item(melee, 1, R.drawable.mel_t1_vibroblade,"melee"),
@@ -255,7 +255,7 @@ object Items {
             Item(melee, 3, R.drawable.mel_t3_borifle,"melee"),
             Item(melee, 3, R.drawable.mel_t3_electrostaff,"electric"),
 
-            Item(melee, 3, R.drawable.mel_t3_forcepike,"melee"),
+            Item(melee, 3, R.drawable.mel_t3_forcepike,"equip"),
             Item(melee, 3, R.drawable.mel_t3_ryykblades,"melee"),
             emptyItem,
 
@@ -395,5 +395,6 @@ class Item() {
         if (weaponType == "lightSaber") this.weaponType = 2
         if (weaponType == "electric") this.weaponType = 3
         if (weaponType == "blaster") this.weaponType = 4
+        if (weaponType == "equip") this.weaponType = 5
     }
 }

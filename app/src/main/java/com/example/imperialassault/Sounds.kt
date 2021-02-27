@@ -26,6 +26,10 @@ object Sounds {
                 soundplayer = MediaPlayer.create(context, R.raw.gun_loading)
                 return soundplayer.start()
             }
+            5 -> {
+                soundplayer = MediaPlayer.create(context, R.raw.item_equip)
+                return soundplayer.start()
+            }
         }
     }
     fun impactSound(context: Context){
@@ -49,6 +53,26 @@ object Sounds {
                 return soundplayer.start()
             }
             4 -> {
+                soundplayer = MediaPlayer.create(context, R.raw.gaster_blaster_master)
+                return soundplayer.start()
+            }
+            5 -> {
+                soundplayer = MediaPlayer.create(context, R.raw.bit_punch)
+                return soundplayer.start()
+            }
+        }
+    }
+    fun youGotHurt(context: Context,whichWeapon:Int){
+        when(whichWeapon){
+            1 -> {
+                soundplayer = MediaPlayer.create(context, R.raw.stabby_stabby)
+                return soundplayer.start()
+            }
+            2 -> {
+                soundplayer = MediaPlayer.create(context, R.raw.electric)
+                return soundplayer.start()
+            }
+            3 -> {
                 soundplayer = MediaPlayer.create(context, R.raw.gaster_blaster_master)
                 return soundplayer.start()
             }
