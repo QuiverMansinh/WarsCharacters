@@ -869,6 +869,7 @@ class CharacterScreen : AppCompatActivity() {
                 actionCompleted()
                 onAction(action_complete)
                 character.attacksMade++
+                Sounds.impactSound(this.applicationContext)
             }
         } else {
             showNoActionsLeftToast()
@@ -1300,7 +1301,6 @@ class CharacterScreen : AppCompatActivity() {
         killCount++
         character.killCount[type] = killCount
         killCounts[type].setText("" + killCount)
-        Sounds.impactSound(this.applicationContext)
     }
 
     fun killCountDown(type: Int) {
