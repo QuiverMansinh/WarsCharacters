@@ -55,7 +55,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/item_screen_tabs"
+        android:background="@drawable/tabs"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,8 +65,8 @@
             android:id="@+id/to_acc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
             android:layout_weight="1"
+            android:background="@drawable/item_screen_tabs"
             android:onClick="onToAcc"
             android:padding="5dp"
             app:srcCompat="@drawable/item_accessory" />
@@ -75,8 +75,8 @@
             android:id="@+id/to_armor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
             android:layout_weight="1"
+            android:background="@drawable/item_screen_tabs"
             android:onClick="onToArmor"
             android:padding="5dp"
             app:srcCompat="@drawable/item_armour" />
@@ -85,8 +85,8 @@
             android:id="@+id/to_melee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
             android:layout_weight="1"
+            android:background="@drawable/item_screen_tabs"
             android:onClick="onToMelee"
             android:padding="5dp"
             app:srcCompat="@drawable/item_melee" />
@@ -95,8 +95,8 @@
             android:id="@+id/to_ranged"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
             android:layout_weight="1"
+            android:background="@drawable/item_screen_tabs"
             android:onClick="onToRanged"
             android:padding="5dp"
             app:srcCompat="@drawable/item_ranged" />

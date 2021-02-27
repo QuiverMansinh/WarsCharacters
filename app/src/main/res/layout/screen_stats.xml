@@ -172,6 +172,7 @@
                                 app:autoSizeTextType="uniform"
                                 app:layout_constraintBottom_toTopOf="@+id/stats_kill_death_ratio"
                                 app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -268,10 +269,13 @@
                                 android:id="@+id/stats_kill_total"
                                 android:layout_width="24dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_margin="2dp"
                                 android:layout_weight="0"
+                                android:background="@null"
                                 android:fontFamily="@font/agency_fb"
                                 android:gravity="center"
+                                android:singleLine="true"
                                 android:text="0"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
@@ -400,6 +404,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="2dp"
                                 android:layout_weight="0"
+                                android:background="@null"
                                 android:fontFamily="@font/agency_fb"
                                 android:gravity="center"
                                 android:text="0"
@@ -840,6 +845,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -1436,6 +1442,72 @@
 
                 </LinearLayout>
             </ScrollView>
+
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/edit_stat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/shadow"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/cardview_dark_background"
+            app:cardCornerRadius="35sp"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/addStat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:background="#00FFFFFF"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/plus_button" />
+
+                <TextView
+                    android:id="@+id/stat_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="10"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/minusStat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:background="#00FFFFFF"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/minus_button" />
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
     </FrameLayout>

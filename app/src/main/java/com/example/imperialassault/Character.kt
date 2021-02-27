@@ -126,7 +126,7 @@ open class Character {
 
     var withdrawn = false
     var rewardObtained = false
-
+    
     //endregion
     //****************************************************************************************************
 

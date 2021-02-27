@@ -8,6 +8,7 @@
     android:background="@color/shadow">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/show_card_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -25,7 +26,7 @@
             android:layout_height="450dp"
             android:adjustViewBounds="false"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/card_stunned" />
+            android:visibility="visible" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

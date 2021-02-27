@@ -5,12 +5,6 @@ import android.graphics.Bitmap
 import com.example.imperialassault.Character
 
 class Character_davith : Character {
-    
-    //ALS ancient light saber
-    var ALSImages = ArrayList<Bitmap?>()
-    var card6ALSImages = ArrayList<Bitmap?>()
-    var card9ALSImages = ArrayList<Bitmap?>()
-
     constructor(context: Context) {
         //default values
         name = "Davith Elso"
