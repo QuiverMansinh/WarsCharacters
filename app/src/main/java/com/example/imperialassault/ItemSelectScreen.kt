@@ -1,4 +1,5 @@
 package com.example.imperialassault
+
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -26,6 +27,9 @@ class ItemSelectScreen : AppCompatActivity() {
         val adapter = MyAdapter(this, supportFragmentManager, tab_layout.tabCount)
         pager.adapter = adapter
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
+
+        //defining Which tab is active
+
         when (intent.getStringExtra("tab")) {
             "range" -> {
                 pager.setCurrentItem(3)
@@ -40,6 +44,8 @@ class ItemSelectScreen : AppCompatActivity() {
                 pager.setCurrentItem(0)
             }
         }
+
+        //Dialog that shows up card while long-Pressed
 
         showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -76,7 +82,7 @@ class ItemSelectScreen : AppCompatActivity() {
     }
 }
 
-
+//creating CUSTOM Adapter for cards view grid
 
 @Suppress("DEPRECATION")
 internal class MyAdapter(
@@ -108,6 +114,8 @@ internal class MyAdapter(
     }
 }
 
+//Code bellow creates fragments for each section:Accessories,Armor,Melee,Ranged.
+
 class Accessories : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,7 +125,7 @@ class Accessories : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.accArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
         return rewardsView
     }
 }
@@ -131,7 +139,7 @@ class Armor : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.armorArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
         return rewardsView
     }
 }
@@ -145,7 +153,7 @@ class Melee : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.meleeArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
         return rewardsView
     }
 }
@@ -159,10 +167,12 @@ class Ranged : Fragment() {
         val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
         val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.rangedArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
+        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
         return rewardsView
     }
 }
+
+//Code bellow creates image adapter for inflating images and layout into gridview.
 
 class ImageAdapter internal constructor(
     val mContext: Activity, var itemArray:
@@ -171,6 +181,7 @@ class ImageAdapter internal constructor(
     BaseAdapter() {
 
     var gridItems = arrayListOf<View>()
+
     init {
 
         for (i in 0..itemArray.size - 1) {
@@ -178,6 +189,7 @@ class ImageAdapter internal constructor(
             var currentItem = itemArray.get(i)
 
             if (currentItem.type >= 0) {
+
                 gridItem = mContext.layoutInflater.inflate(R.layout.grid_item, null, true)
                 gridItem.grid_image.alpha = 0.5f
                 var character = MainActivity.selectedCharacter!!
@@ -188,6 +200,7 @@ class ImageAdapter internal constructor(
                 } else if (i == 3 && currentItem.type == Items.ranged && character
                         .startingRangedWeapon != null) {
                     gridItem.grid_image.setImageBitmap(character.startingRangedWeapon)
+
                 } else {
                     gridItem.grid_image.setImageResource(currentItem.resourceId)
 
@@ -253,6 +266,11 @@ class ImageAdapter internal constructor(
                             gridItem.grid_image.alpha = equipWeapon(currentItem)
                         }
                     }
+                    if (gridItem.grid_image.alpha == 0.5f) {
+                        //TODO Rejection sounds
+                    } else {
+                        Sounds().weaponSound(mContext, currentItem.weaponType)
+                    }
                 }
 
             } else {
@@ -276,56 +294,52 @@ class ImageAdapter internal constructor(
     }
 
 
-
     // Create a new ImageView for each item referenced by the Adapter
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return gridItems.get(position)
     }
 
 
-    fun equipReward(item:Item):Float{
+    fun equipReward(item: Item): Float {
         var character = MainActivity.selectedCharacter!!
 
         //remove if already equipped
-        if(character.rewards.remove(item.index)){
-            when(item.index){
-                Items.adrenalImplantsIndex ->character.adenalImplants = false
-                Items.bardottanShardIndex ->character.bardottanShard = false
-                Items.quickDrawHolsterIndex ->character.quickDrawHolster = false
+        if (character.rewards.remove(item.index)) {
+            when (item.index) {
+                Items.adrenalImplantsIndex -> character.adenalImplants = false
+                Items.bardottanShardIndex -> character.bardottanShard = false
+                Items.quickDrawHolsterIndex -> character.quickDrawHolster = false
             }
             return 0.5f
         }
 
         //equip if not equipped
 
-        if(item.index == Items.adrenalImplantsIndex) {
+        if (item.index == Items.adrenalImplantsIndex) {
             if (character.accessories.size < getMaxAcc()) {
                 character.rewards.add(item.index)
                 character.adenalImplants = true
                 return 1f
-            }
-            else{
+            } else {
                 return 0.5f
             }
         }
-        if(item.index == Items.bardottanShardIndex){
-            if(character.accessories.size < getMaxAcc()) {
+        if (item.index == Items.bardottanShardIndex) {
+            if (character.accessories.size < getMaxAcc()) {
                 character.rewards.add(item.index)
                 character.bardottanShard = true
                 return 1f
-            }
-            else{
+            } else {
                 return 0.5f
             }
         }
 
-        if(item.index == Items.quickDrawHolsterIndex) {
+        if (item.index == Items.quickDrawHolsterIndex) {
             if (character.accessories.size < getMaxAcc()) {
                 character.rewards.add(item.index)
                 character.quickDrawHolster = true
                 return 1f
-            }
-            else{
+            } else {
                 return 0.5f
             }
         }
@@ -337,36 +351,41 @@ class ImageAdapter internal constructor(
 
     // 3 rewards count towards accessory limit (AdrenalImplants, QuickDrawHolster,
     // BardottanShard)
-    fun getMaxAcc():Int{
+    fun getMaxAcc(): Int {
         var character = MainActivity.selectedCharacter!!
         var maxAcc = 3
-        if(character.adenalImplants){maxAcc--}
-        if(character.bardottanShard){maxAcc--}
-        if(character.quickDrawHolster){maxAcc--}
+        if (character.adenalImplants) {
+            maxAcc--
+        }
+        if (character.bardottanShard) {
+            maxAcc--
+        }
+        if (character.quickDrawHolster) {
+            maxAcc--
+        }
         return maxAcc
     }
 
-    fun equipAcc(item:Item):Float{
+    fun equipAcc(item: Item): Float {
         var character = MainActivity.selectedCharacter!!
 
-        if(character.accessories.remove(item.index)){
-            if(item.subType == Items.helmet){
+        if (character.accessories.remove(item.index)) {
+            if (item.subType == Items.helmet) {
                 character.helmet = false
             }
 
             return 0.5f
         }
         //equip if slot available
-        if(character.accessories.size < getMaxAcc()){
-            if(item.subType == Items.helmet){
-                if(!character.helmet) {
+        if (character.accessories.size < getMaxAcc()) {
+            if (item.subType == Items.helmet) {
+                if (!character.helmet) {
                     character.helmet = true
                     character.accessories.add(item.index)
 
                     return 1f
                 }
-            }
-            else{
+            } else {
                 character.accessories.add(item.index)
                 return 1f
             }
@@ -377,16 +396,16 @@ class ImageAdapter internal constructor(
     }
 
 
-    fun equipArmor(item:Item):Float{
+    fun equipArmor(item: Item): Float {
         var character = MainActivity.selectedCharacter!!
 
         //remove if already equipped
-        if(character.armor.remove(item.index)){
+        if (character.armor.remove(item.index)) {
             return 0.5f
         }
 
         //equip if slot available
-        if(character.armor.size < 1){
+        if (character.armor.size < 1) {
             character.armor.add(item.index)
             return 1f
         }
@@ -395,25 +414,24 @@ class ImageAdapter internal constructor(
         return 0.5f
     }
 
-    fun equipWeapon(item:Item):Float{
+    fun equipWeapon(item: Item): Float {
         var character = MainActivity.selectedCharacter!!
 
-        if(item.subType == Items.mod){
+        if (item.subType == Items.mod) {
             //remove if already equipped
-            if(character.mods.remove(item.index)){
+            if (character.mods.remove(item.index)) {
                 return 0.5f
             }
             //equip if not equipped
             character.mods.add(item.index)
             return 1f
-        }
-        else {
+        } else {
             //remove if already equipped
-            if(character.weapons.remove(item.index)){
+            if (character.weapons.remove(item.index)) {
                 return 0.5f
             }
             //equip if slot available
-            if(character.weapons.size < 2){
+            if (character.weapons.size < 2) {
                 character.weapons.add(item.index)
                 return 1f
             }

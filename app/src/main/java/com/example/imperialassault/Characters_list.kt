@@ -25,6 +25,8 @@ class Characters_list : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
+        //Characters list for List view to choose characters
+
         var CharactersImage= arrayListOf<ImageView>(
             findViewById(R.id.imageViewBiv),
             findViewById(R.id.imageViewGaar),
@@ -52,6 +54,8 @@ class Characters_list : AppCompatActivity() {
             .allcharacterselect_21)
         allChSel = Bitmap.createScaledBitmap(allChSel,2048,683,false)
 
+        //code bellow cuts out image  assets from one image sheet for Character list.
+
         var row = 6
         var col = 4
         var width = 2048/col
@@ -77,6 +81,8 @@ class Characters_list : AppCompatActivity() {
             getWindow().setEnterTransition(fade);
         }*/
     }
+
+    //Load layout for selected character (pointing out it's tag to note which assets to load)
 
     fun onSelect(view: View) {
         if(MainActivity.selectedCharacter != null) {
