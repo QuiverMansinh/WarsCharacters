@@ -5,74 +5,104 @@ import android.media.MediaPlayer
 
 object Sounds {
 
+    // TODO please implement soundpool
     var soundplayer: MediaPlayer = MediaPlayer()
+
+
     var currentWeaponTypes = arrayListOf<Int>(0,0)
 
-    fun weaponSound(context: Context, weaponSoundType: Int) {
-        when (weaponSoundType) {
-            1 -> {
-                soundplayer = MediaPlayer.create(context, R.raw.shing)
+    val default = 0
+    val lightSaber = 1
+    val electric = 2
+    val slice = 3
+    val blaster = 4
+    val impact = 5
+    val armor = 6
+    val clothing = 7
+    val astromech = 8
+
+    fun equipSound(context: Context, equipSoundType: Int) {
+        when (equipSoundType) {
+            default ->{
+                soundplayer = MediaPlayer.create(context, R.raw.equip)
                 return soundplayer.start()
             }
-            2 -> {
+            lightSaber -> {
                 soundplayer = MediaPlayer.create(context, R.raw.light_saber)
                 return soundplayer.start()
             }
-            3 -> {
+            electric -> {
                 soundplayer = MediaPlayer.create(context, R.raw.electric)
                 return soundplayer.start()
             }
-            4 -> {
-                soundplayer = MediaPlayer.create(context, R.raw.gun_loading)
+            slice -> {
+                soundplayer = MediaPlayer.create(context, R.raw.shing)
                 return soundplayer.start()
             }
-            5 -> {
-                soundplayer = MediaPlayer.create(context, R.raw.item_equip)
+            blaster -> {
+                soundplayer = MediaPlayer.create(context, R.raw.equip_gun)
+                return soundplayer.start()
+            }
+            impact -> {
+                soundplayer = MediaPlayer.create(context, R.raw.equip_impact)
+                return soundplayer.start()
+            }
+            armor -> {
+                soundplayer = MediaPlayer.create(context, R.raw.equip_armor)
+                return soundplayer.start()
+            }
+            clothing -> {
+                soundplayer = MediaPlayer.create(context, R.raw.equip_clothing)
+                return soundplayer.start()
+            }
+            astromech -> {
+                soundplayer = MediaPlayer.create(context, R.raw.droid)
                 return soundplayer.start()
             }
         }
     }
-    fun impactSound(context: Context){
+    fun attackSound(context: Context){
         var whichSound = 0
+
         if (currentWeaponTypes[0]==0){
             whichSound = 1
-        }else if (currentWeaponTypes[0]==0) whichSound = 0
-        else if (currentWeaponTypes[0]!=0 && currentWeaponTypes[1]!=0) whichSound =
-            (Math.random()*2).toInt()
+        }
+        else if (currentWeaponTypes[0]==0) whichSound = 0
+        else if (currentWeaponTypes[0]!=0 && currentWeaponTypes[1]!=0) whichSound = (Math.random()*2).toInt()
         when(currentWeaponTypes[whichSound]){
-            1 -> {
-                soundplayer = MediaPlayer.create(context, R.raw.stabby_stabby)
+            slice -> {
+                soundplayer = MediaPlayer.create(context, R.raw.slice)
                 return soundplayer.start()
             }
-            2 -> {
+            lightSaber -> {
                 soundplayer = MediaPlayer.create(context, R.raw.lightsaber_stabby_stabby)
                 return soundplayer.start()
             }
-            3 -> {
+            electric -> {
                 soundplayer = MediaPlayer.create(context, R.raw.electric)
                 return soundplayer.start()
             }
-            4 -> {
+            blaster -> {
                 soundplayer = MediaPlayer.create(context, R.raw.gaster_blaster_master)
                 return soundplayer.start()
             }
-            5 -> {
-                soundplayer = MediaPlayer.create(context, R.raw.bit_punch)
+            impact -> {
+                soundplayer = MediaPlayer.create(context, R.raw.impact)
                 return soundplayer.start()
             }
         }
     }
-    fun youGotHurt(context: Context,whichWeapon:Int){
+    fun damagedSound(context: Context,whichWeapon:Int){
         when(whichWeapon){
-            1 -> {
-                soundplayer = MediaPlayer.create(context, R.raw.stabby_stabby)
+            slice -> {
+                soundplayer = MediaPlayer.create(context, R.raw.slice)
                 return soundplayer.start()
             }
-            2 -> {
-                soundplayer = MediaPlayer.create(context, R.raw.electric)
+            impact -> {
+                soundplayer = MediaPlayer.create(context, R.raw.impact)
                 return soundplayer.start()
             }
-            3 -> {
+            blaster -> {
                 soundplayer = MediaPlayer.create(context, R.raw.gaster_blaster_master)
                 return soundplayer.start()
             }

@@ -156,6 +156,15 @@ class CharacterScreen : AppCompatActivity() {
             loadAnimated = true
         }
     }
+    fun resetUI(){
+        top_panel.animate().alpha(0f)
+        bottom_panel.animate().alpha(0f)
+        left_buttons.animate().alpha(0f)
+        right_buttons.animate().alpha(0f)
+        character_images.animate().alpha(0f)
+        companion_image.animate().alpha(0f)
+        loadAnimated = false
+    }
 
     //************************************************************************************************************
     //region Main Screen
@@ -334,6 +343,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     private fun updateImages() {
+
         if (autoImageChange) {
             character.updateCharacterImages(this)
             if (animateConditions) {
@@ -360,6 +370,14 @@ class CharacterScreen : AppCompatActivity() {
             character_image.setLayer1Bitmap(character.layer1)
             character_image.setLayer2Bitmap(character.layer2)
 
+            if(!character.name_short.equals("Jarrod")){
+                if(character.astromech) {
+                    character.companionImage = (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
+                }
+                else{
+                    character.companionImage = null
+                }
+            }
             println(character.companionImage)
             if (character.companionImage != null) {
                 if (conditionsActive[hidden] && animateConditions) {
@@ -869,7 +887,7 @@ class CharacterScreen : AppCompatActivity() {
                 actionCompleted()
                 onAction(action_complete)
                 character.attacksMade++
-                Sounds.impactSound(this.applicationContext)
+                Sounds.attackSound(this.applicationContext)
             }
         } else {
             showNoActionsLeftToast()
@@ -1173,44 +1191,55 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onReward(view: View) {
+        resetUI()
         val intent = Intent(this, RewardsScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
+
     }
 
     fun onAccessory(view: View) {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
+        resetUI()
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent);
+
     }
 
     fun onArmour(view: View) {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
+        resetUI()
         val intent = Intent(this, ArmorScreen::class.java)
         startActivity(intent);
+
     }
 
     fun onMelee(view: View) {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "melee")
+        resetUI()
         val intent = Intent(this, MeleeScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
+
     }
 
     fun onRange(view: View) {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "range")
+        resetUI()
         val intent = Intent(this, RangedScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
+
     }
 
     fun onXPScreen(view: View) {
+        resetUI()
         initXPScreen()
         xpSelectScreen!!.show()
 
@@ -1662,20 +1691,26 @@ class CharacterScreen : AppCompatActivity() {
         if (animateDamage) {
             val animType = Math.random();
             if (animType < 0.3) {
+                Sounds.damagedSound(this, Sounds.blaster)
                 damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.blastAnim!!.setVisible(true, true)
                 MainActivity.blastAnim!!.start()
+
             } else if (animType < 0.6) {
+                Sounds.damagedSound(this, Sounds.slice)
                 damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.sliceAnim!!.setVisible(true, true)
                 MainActivity.sliceAnim!!.start()
+
             } else {
+                Sounds.damagedSound(this, Sounds.impact)
                 damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.impactAnim!!.setVisible(true, true)
                 MainActivity.impactAnim!!.start()
+
             }
             var hitY = ObjectAnimator.ofFloat(
                 character_images, "translationY", 0f, 20f * Random
@@ -2145,7 +2180,7 @@ class CharacterScreen : AppCompatActivity() {
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.acc1_type.visibility = View.VISIBLE
             var accIndex1 = character.accessories.getOrElse(1) { -1 }
-            if (accIndex >= 0) {
+            if (accIndex1 >= 0) {
                 imageId = Items.accArray!![accIndex1].resourceId
                 quickViewDialog!!.quick_view_acc1.setImageResource(imageId)
                 //quickViewDialog!!.acc1_type.visibility = View.GONE
@@ -2155,7 +2190,7 @@ class CharacterScreen : AppCompatActivity() {
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.acc2_type.visibility = View.VISIBLE
             var accIndex2 = character.accessories.getOrElse(1) { -1 }
-            if (accIndex >= 0) {
+            if (accIndex2 >= 0) {
                 imageId = Items.accArray!![accIndex2].resourceId
                 //quickViewDialog!!.acc2_type.visibility = View.GONE
             }
