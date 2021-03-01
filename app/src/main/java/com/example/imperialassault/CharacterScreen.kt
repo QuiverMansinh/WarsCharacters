@@ -98,6 +98,8 @@ class CharacterScreen : AppCompatActivity() {
         }
 
         if (hasFocus && !loadAnimated) {
+
+
             top_panel.animate().alpha(1f)
             val animTop = ObjectAnimator.ofFloat(
                 top_panel, "translationY", -top_panel.height
@@ -152,6 +154,9 @@ class CharacterScreen : AppCompatActivity() {
             animcompanion.interpolator = DecelerateInterpolator()
             animcompanion.duration = (800 * 1.2f).toLong()
             animcompanion.start()
+
+            updateSideBarState()
+            kill_tracker_bar.visibility = View.VISIBLE
 
             loadAnimated = true
         }
@@ -370,7 +375,7 @@ class CharacterScreen : AppCompatActivity() {
             character_image.setLayer1Bitmap(character.layer1)
             character_image.setLayer2Bitmap(character.layer2)
 
-            if(!character.name_short.equals("Jarrod")){
+            if(!character.name_short.equals("jarrod")){
                 if(character.astromech) {
                     character.companionImage = (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
                 }
@@ -536,8 +541,11 @@ class CharacterScreen : AppCompatActivity() {
             add_strain.setImageDrawable(getNumber(character.strain))
         } else {
             addDamage()
-
+            if(animateDamage) {
+                hitAnim()
+            }
         }
+
         playRestAnim()
 
     }
@@ -651,8 +659,14 @@ class CharacterScreen : AppCompatActivity() {
         add_damage.setImageDrawable(getNumber(character.damage))
         wounded.animate().alpha(0f)
         isWounded = false
-        updateStats()
         unwoundDialog!!.dismiss()
+        character.withdrawn = false
+        val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
+        slide.setDuration(500)
+        slide.start()
+        updateStats()
+        quickSave()
+
     }
 
     private fun initDamageAndStrain() {
@@ -736,7 +750,7 @@ class CharacterScreen : AppCompatActivity() {
             }
             activated = true
 
-            character.activated++
+
         } else {
             onEndActivation(view)
         }
@@ -782,6 +796,12 @@ class CharacterScreen : AppCompatActivity() {
 
         if (actionUsage) {
             turnOffActionButtons()
+            if(actionsLeft == 0){
+                character.activated++
+            }
+        }
+        else{
+            character.activated++
         }
         activated = false
 
@@ -868,6 +888,7 @@ class CharacterScreen : AppCompatActivity() {
                 if (conditionsActive[bleeding]) {
                     onAddStrain(add_strain)
                 }
+                action_menu.visibility = View.INVISIBLE
             }
             if (actionsLeft <= 0) {
 
@@ -885,7 +906,7 @@ class CharacterScreen : AppCompatActivity() {
                 removeCondition(focused)
                 removeCondition(hidden)
                 actionCompleted()
-                onAction(action_complete)
+
                 character.attacksMade++
                 Sounds.attackSound(this.applicationContext)
             }
@@ -898,7 +919,7 @@ class CharacterScreen : AppCompatActivity() {
         if (actionsLeft > 0) {
             if (!conditionsActive[stunned]) {
                 actionCompleted()
-                onAction(action_complete)
+
                 character.movesTaken++
             }
         } else {
@@ -910,7 +931,7 @@ class CharacterScreen : AppCompatActivity() {
         if (actionsLeft > 0) {
             if (!conditionsActive[stunned]) {
                 actionCompleted()
-                onAction(action_complete)
+
                 character.specialActions++
             }
         } else {
@@ -921,7 +942,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onInteract(view: View) {
         if (actionsLeft > 0) {
             actionCompleted()
-            onAction(action_complete)
+
             character.interactsUsed++
         } else {
             showNoActionsLeftToast()
@@ -953,7 +974,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onRemoveStun(view: View) {
         if (actionsLeft > 0 || !actionUsage) {
             removeCondition(stunned)
-            onAction(action_complete)
+
             actionCompleted()
         } else {
             showNoActionsLeftToast()
@@ -963,7 +984,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onRemoveBleeding(view: View) {
         if (actionsLeft > 0 || !actionUsage) {
             removeCondition(bleeding)
-            onAction(action_complete)
+
             actionCompleted()
         } else {
             showNoActionsLeftToast()
@@ -1122,72 +1143,44 @@ class CharacterScreen : AppCompatActivity() {
     //************************************************************************************************************
     //region Side Navigation
     //************************************************************************************************************
-
-    fun onExtendDown(view: View) {
-        val lp = kill_tracker_bar.layoutParams
-        lp.height = menu_bar.height + 22
-        kill_tracker_bar.layoutParams = lp
-        var h = menu_bar.height.toFloat() + 88 + 66
-        if (sideMenuState > -1) {
-            sideMenuState--
-            kill_tracker_bar.animate().translationYBy(h)
-            menu_bar.animate().translationYBy(h)
-        }
+fun updateSideBarState(){
         when (sideMenuState) {
             -1 -> {
                 extend_down_button.animate().alpha(0f);
                 extend_up_button.animate().alpha(1f)
-                kill_tracker_bar.animate().translationY(h)
-                menu_bar.animate().translationY(h)
+                kill_tracker_bar.animate().translationY(0f)
+                menu_bar.animate().translationY(height)
             }
             0 -> {
                 extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(1f)
-                kill_tracker_bar.animate().translationY(0f)
+                kill_tracker_bar.animate().translationY(-height)
                 menu_bar.animate().translationY(0f)
             }
             1 -> {
                 extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)
-                kill_tracker_bar.animate().translationY(-h)
-                menu_bar.animate().translationY(-h)
+                kill_tracker_bar.animate().translationY(-2*height)
+                menu_bar.animate().translationY(-height)
             }
+        }
+
+    }
+    fun onExtendDown(view: View) {
+
+        if (sideMenuState > -1) {
+            sideMenuState--
+            updateSideBarState()
         }
 
 
     }
 
     fun onExtendUp(view: View) {
-        val lp = kill_tracker_bar.layoutParams
-        lp.height = menu_bar.height + 22
-        kill_tracker_bar.layoutParams = lp
-        var h = menu_bar.height.toFloat() + 88 + 66
         if (sideMenuState < 1) {
             sideMenuState++
-            kill_tracker_bar.animate().translationYBy(-h)
-            menu_bar.animate().translationYBy(-h)
+            updateSideBarState()
         }
-        when (sideMenuState) {
-            -1 -> {
-                extend_down_button.animate().alpha(0f);
-                extend_up_button.animate().alpha(1f)
-                kill_tracker_bar.animate().translationY(h)
-                menu_bar.animate().translationY(h)
-            }
-            0 -> {
-                extend_down_button.animate().alpha(1f)
-                extend_up_button.animate().alpha(1f)
-                kill_tracker_bar.animate().translationY(0f)
-                menu_bar.animate().translationY(0f)
-            }
-            1 -> {
-                extend_down_button.animate().alpha(1f)
-                extend_up_button.animate().alpha(0f)
-                kill_tracker_bar.animate().translationY(-h)
-                menu_bar.animate().translationY(-h)
-            }
-        }
-
     }
 
     fun onReward(view: View) {
@@ -1712,23 +1705,27 @@ class CharacterScreen : AppCompatActivity() {
                 MainActivity.impactAnim!!.start()
 
             }
-            var hitY = ObjectAnimator.ofFloat(
-                character_images, "translationY", 0f, 20f * Random
-                    .nextFloat(),
-                0f, 20f * Random.nextFloat(), 0f, 20f * Random.nextFloat(), 0f
-            )
-            hitY.setDuration(300)
-            hitY.start()
-
-            var hitX = ObjectAnimator.ofFloat(
-                character_images, "translationX", 0f, -10f * Random
-                    .nextFloat(),
-                0f, -10f * Random.nextFloat(), 0f, -10f * Random.nextFloat(), 0f
-            )
-            hitX.setDuration(300)
-            hitX.start()
+            hitAnim();
         }
 
+    }
+
+    fun hitAnim(){
+        var hitY = ObjectAnimator.ofFloat(
+            character_images, "translationY", 0f, 20f * Random
+                .nextFloat(),
+            0f, 20f * Random.nextFloat(), 0f, 20f * Random.nextFloat(), 0f
+        )
+        hitY.setDuration(300)
+        hitY.start()
+
+        var hitX = ObjectAnimator.ofFloat(
+            character_images, "translationX", 0f, -10f * Random
+                .nextFloat(),
+            0f, -10f * Random.nextFloat(), 0f, -10f * Random.nextFloat(), 0f
+        )
+        hitX.setDuration(300)
+        hitX.start()
     }
 
     private fun playRestAnim() {

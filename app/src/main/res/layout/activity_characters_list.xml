@@ -33,8 +33,8 @@
                 android:layout_margin="15dp"
                 android:onClick="onSelect"
                 android:tag="biv"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -67,8 +67,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="gaarkhan"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -101,8 +101,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="mak"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -136,8 +136,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="saska"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -171,8 +171,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="davith"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -206,8 +206,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="gideon"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -240,8 +240,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="mhd19"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -274,8 +274,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="shyla"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -308,8 +308,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="diala"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -342,8 +342,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="jyn"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -376,8 +376,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="murne"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -410,8 +410,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="verena"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -444,8 +444,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="fenn"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -478,8 +478,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="loku"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -512,8 +512,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="onar"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -546,8 +546,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="vinto"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -580,8 +580,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="kotun"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -614,8 +614,8 @@
                 android:layout_marginBottom="15dp"
                 android:onClick="onSelect"
                 android:tag="jarrod"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -649,8 +649,8 @@
                 android:onClick="onSelect"
                 android:tag="drokkatta"
                 android:visibility="visible"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -684,8 +684,8 @@
                 android:onClick="onSelect"
                 android:tag="ct1701"
                 android:visibility="visible"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -720,8 +720,8 @@
                 android:onClick="onSelect"
                 android:tag="tress"
                 android:visibility="visible"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="10dp">
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

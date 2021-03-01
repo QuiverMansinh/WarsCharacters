@@ -512,7 +512,7 @@
 
         <ImageView
             android:id="@+id/extend_up_button"
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="44dp"
             android:layout_marginTop="60dp"
             android:onClick="onExtendUp"
@@ -522,7 +522,7 @@
 
         <ImageView
             android:id="@+id/extend_down_button"
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="44dp"
             android:layout_marginBottom="90dp"
             android:onClick="onExtendDown"
@@ -533,16 +533,17 @@
         <LinearLayout
             android:id="@+id/kill_tracker_bar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/extend_up_button"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/extend_down_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/extend_up_button">
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -552,7 +553,6 @@
                     android:id="@+id/villain_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -569,7 +569,7 @@
 
                 <ImageView
                     android:id="@+id/villain_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -580,7 +580,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -590,7 +590,6 @@
                     android:id="@+id/leader_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -607,7 +606,7 @@
 
                 <ImageView
                     android:id="@+id/leader_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -618,7 +617,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -628,7 +627,6 @@
                     android:id="@+id/vehicle_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -645,7 +643,7 @@
 
                 <ImageView
                     android:id="@+id/vehicle_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -656,7 +654,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -666,7 +664,6 @@
                     android:id="@+id/creature_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -683,7 +680,7 @@
 
                 <ImageView
                     android:id="@+id/creature_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -694,7 +691,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -704,7 +701,6 @@
                     android:id="@+id/guard_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -721,7 +717,7 @@
 
                 <ImageView
                     android:id="@+id/guard_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -732,7 +728,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -742,7 +738,6 @@
                     android:id="@+id/droid_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -759,7 +754,7 @@
 
                 <ImageView
                     android:id="@+id/droid_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -770,7 +765,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -780,7 +775,6 @@
                     android:id="@+id/scum_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -797,7 +791,7 @@
 
                 <ImageView
                     android:id="@+id/scum_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -808,7 +802,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -818,7 +812,6 @@
                     android:id="@+id/trooper_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
@@ -835,7 +828,7 @@
 
                 <ImageView
                     android:id="@+id/trooper_button"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
@@ -860,7 +853,7 @@
 
             <ImageView
                 android:id="@+id/rewards_button"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onReward"
@@ -868,7 +861,7 @@
 
             <ImageView
                 android:id="@+id/xp_button"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onXPScreen"
@@ -876,7 +869,7 @@
 
             <ImageView
                 android:id="@+id/item_accessory_button"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onAccessory"
@@ -884,7 +877,7 @@
 
             <ImageView
                 android:id="@+id/item_armour_button"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onArmour"
@@ -892,7 +885,7 @@
 
             <ImageView
                 android:id="@+id/item_melee_button"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onMelee"
@@ -900,7 +893,7 @@
 
             <ImageView
                 android:id="@+id/item_ranged_button"
-                android:layout_width="match_parent"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onRange"

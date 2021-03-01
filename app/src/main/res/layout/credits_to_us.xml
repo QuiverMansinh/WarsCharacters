@@ -41,11 +41,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:text="Main title/character portraits:"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/textView27"
@@ -55,17 +56,18 @@
                     android:gravity="center"
                     android:text="Fantasy fight games"
                     android:textColor="#FFEB3B"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textView31"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:text="Illustration By:"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -81,31 +83,90 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="70dp" />
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:fontFamily="@font/agency_fb"
                             android:gravity="center"
-                            android:text="Onar Koma Illustration - Nail Reed"
-                            android:textColor="#23F4CA"
-                            android:textSize="24sp" />
+                            android:text="Mike Glasswell"
+                            android:textColor="#FFEB3B"
+                            android:textSize="18sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="50dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/michaelg"
+                                android:scaleType="fitCenter" />
+                        </androidx.cardview.widget.CardView>
 
                         <TextView
-                            android:id="@+id/textView43"
+                            android:id="@+id/textView41"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="@string/NailReed"
+                            android:text="@string/Glasswell"
                             android:textColorLink="#8AD6FF" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:fontFamily="@font/agency_fb"
+                                android:gravity="center"
+                                android:text="Onar Koma Illustration - Nail Reed"
+                                android:textColor="#FFEB3B"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView43"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:gravity="center"
+                                android:text="@string/NailReed"
+                                android:textColorLink="#8AD6FF" />
+                        </LinearLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="70dp" />
 
                     </LinearLayout>
 
@@ -131,54 +192,8 @@
                             android:fontFamily="@font/agency_fb"
                             android:gravity="center"
                             android:text="Vinto Hreeda Illustration - David Ogilvie"
-                            android:textColor="#23F4CA"
-                            android:textSize="24sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:fontFamily="@font/agency_fb"
-                            android:gravity="center"
-                            android:text="Mike Glasswell"
-                            android:textColor="#FF1B1B"
-                            android:textSize="24sp" />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="70dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:adjustViewBounds="true"
-                                android:scaleType="fitCenter"
-                                tools:srcCompat="@drawable/michaelg" />
-                        </androidx.cardview.widget.CardView>
-
-                        <TextView
-                            android:id="@+id/textView41"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/Glasswell"
-                            android:textColorLink="#8AD6FF" />
+                            android:textColor="#FFEB3B"
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
@@ -188,11 +203,12 @@
                     android:id="@+id/textView28"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:text="App coding:"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -216,9 +232,9 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/agency_fb"
                             android:gravity="center"
-                            android:text="Mansinh Someone"
+                            android:text="Manny Kwong"
                             android:textColor="#FFEB3B"
-                            android:textSize="24sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -235,8 +251,8 @@
                             android:fontFamily="@font/agency_fb"
                             android:gravity="center"
                             android:text="Matthew Bogdanov"
-                            android:textColor="#23F4CA"
-                            android:textSize="24sp" />
+                            android:textColor="#FFEB3B"
+                            android:textSize="18sp" />
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="100dp"
@@ -245,14 +261,14 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
-                            app:cardCornerRadius="70dp">
+                            app:cardCornerRadius="50dp">
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
-                                android:scaleType="fitCenter"
-                                tools:srcCompat="@drawable/matthewpfp" />
+                                android:background="@drawable/matthewpfp"
+                                android:scaleType="fitCenter" />
                         </androidx.cardview.widget.CardView>
 
                         <TextView
@@ -266,6 +282,27 @@
 
                     </LinearLayout>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center"
+                    android:text="Character Bio Writers:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView40"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center"
+                    android:text="Fantasy fight games"
+                    android:textColor="#FFEB3B"
+                    android:textSize="18sp" />
 
             </LinearLayout>
         </ScrollView>
