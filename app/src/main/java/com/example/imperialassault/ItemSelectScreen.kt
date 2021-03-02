@@ -363,7 +363,7 @@ class ImageAdapter internal constructor(
         }
 
         if (item.index == Items.quickDrawHolsterIndex) {
-            if (character.accessories.size < getMaxAcc()) {
+        if (character.accessories.size < getMaxAcc()) {
                 character.rewards.add(item.index)
                 character.quickDrawHolster = true
                 return 1f
