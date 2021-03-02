@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
-import android.net.Uri
 
 object Sounds {
 
@@ -18,12 +17,16 @@ object Sounds {
     val default = 0
     val lightSaber = 1
     val electric = 2
-    val slice = 3
-    val blaster = 4
-    val impact = 5
-    val armor = 6
-    val clothing = 7
-    val astromech = 8
+    val shing = 3
+    val equip_gun = 4
+    val equip_impact = 5
+    val equip_armor = 6
+    val equip_clothing = 7
+    val droid = 8
+    val slice = 9
+    val lightsaber_stabby_stabby = 10
+    val gaster_blaster_master = 11
+    val impact = 12
 
     var sPBuilder = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_GAME)
@@ -49,7 +52,6 @@ object Sounds {
             soundPool.load(context, R.raw.droid, 1),
             soundPool.load(context, R.raw.slice, 1),
             soundPool.load(context, R.raw.lightsaber_stabby_stabby, 1),
-            soundPool.load(context, R.raw.electric, 1),
             soundPool.load(context, R.raw.gaster_blaster_master, 1),
             soundPool.load(context, R.raw.impact, 1),
         )
@@ -59,47 +61,47 @@ object Sounds {
         when (equipSoundType) {
             default -> {
                 soundPool.play(
-                    sEPool[0],
+                    sEPool[default],
                 1f, 1f, 1, 0, 1f)
             }
             lightSaber -> {
                 soundPool.play(
-                    sEPool[1],
+                    sEPool[lightSaber],
                     1f, 1f, 1, 0, 1f)
             }
             electric -> {
                 soundPool.play(
-                    sEPool[2],
+                    sEPool[electric],
                     1f, 1f, 1, 0, 1f)
             }
-            slice -> {
+            shing -> {
                 soundPool.play(
-                    sEPool[3],
+                    sEPool[shing],
                     1f, 1f, 1, 0, 1f)
             }
-            blaster -> {
+            equip_gun -> {
                 soundPool.play(
-                    sEPool[4],
+                    sEPool[equip_gun],
                     1f, 1f, 1, 0, 1f)
             }
-            impact -> {
+            equip_impact -> {
                 soundPool.play(
-                    sEPool[5],
+                    sEPool[equip_impact],
                     1f, 1f, 1, 0, 1f)
             }
-            armor -> {
+            equip_armor -> {
                 soundPool.play(
-                    sEPool[6],
+                    sEPool[equip_armor],
                     1f, 1f, 1, 0, 1f)
             }
-            clothing -> {
+            equip_clothing -> {
                 soundPool.play(
-                    sEPool[7],
+                    sEPool[equip_clothing],
                     1f, 1f, 1, 0, 1f)
             }
-            astromech -> {
+            droid -> {
                 soundPool.play(
-                    sEPool[8],
+                    sEPool[droid],
                     1f, 1f, 1, 0, 1f)
             }
         }
@@ -114,42 +116,50 @@ object Sounds {
         else if (currentWeaponTypes[0] != 0 && currentWeaponTypes[1] != 0) whichSound =
             (Math.random() * 2).toInt()
         when (currentWeaponTypes[whichSound]) {
-            slice -> {
-                soundplayer = MediaPlayer.create(context, R.raw.slice)
-                return soundplayer.start()
+            shing -> {
+                soundPool.play(
+                    sEPool[slice],
+                    1f, 1f, 1, 0, 1f)
             }
             lightSaber -> {
-                soundplayer = MediaPlayer.create(context, R.raw.lightsaber_stabby_stabby)
-                return soundplayer.start()
+                soundPool.play(
+                    sEPool[lightsaber_stabby_stabby],
+                    1f, 1f, 1, 0, 1f)
             }
             electric -> {
-                soundplayer = MediaPlayer.create(context, R.raw.electric)
-                return soundplayer.start()
+                soundPool.play(
+                    sEPool[electric],
+                    1f, 1f, 1, 0, 1f)
             }
-            blaster -> {
-                soundplayer = MediaPlayer.create(context, R.raw.gaster_blaster_master)
-                return soundplayer.start()
+            equip_gun -> {
+                soundPool.play(
+                    sEPool[gaster_blaster_master],
+                    1f, 1f, 1, 0, 1f)
             }
-            impact -> {
-                soundplayer = MediaPlayer.create(context, R.raw.impact)
-                return soundplayer.start()
+            equip_impact -> {
+                soundPool.play(
+                    sEPool[impact],
+                    1f, 1f, 1, 0, 1f)
             }
         }
     }
 
     fun damagedSound(context: Context, whichWeapon: Int) {
         when (whichWeapon) {
-            slice -> {
-                soundplayer = MediaPlayer.create(context, R.raw.slice)
-                return soundplayer.start()
+            shing -> {
+                soundPool.play(
+                    sEPool[slice],
+                    1f, 1f, 1, 0, 1f)
             }
-            impact -> {
-                soundplayer = MediaPlayer.create(context, R.raw.impact)
-                return soundplayer.start()
+            equip_impact -> {
+                soundPool.play(
+                    sEPool[impact],
+                    1f, 1f, 1, 0, 1f)
             }
-            blaster -> {
-                soundplayer = MediaPlayer.create(context, R.raw.gaster_blaster_master)
-                return soundplayer.start()
+            equip_gun -> {
+                soundPool.play(
+                    sEPool[gaster_blaster_master],
+                    1f, 1f, 1, 0, 1f)
             }
         }
     }

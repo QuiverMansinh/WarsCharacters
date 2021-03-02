@@ -37,7 +37,6 @@ import kotlinx.android.synthetic.main.dialog_quick_view_button.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
-import kotlinx.android.synthetic.main.dialog_show_card.view.*
 import kotlinx.android.synthetic.main.grid_item.view.*
 import kotlinx.android.synthetic.main.screen_settings.*
 import kotlinx.android.synthetic.main.screen_stats.*
@@ -161,7 +160,8 @@ class CharacterScreen : AppCompatActivity() {
             loadAnimated = true
         }
     }
-    fun resetUI(){
+
+    fun resetUI() {
         top_panel.animate().alpha(0f)
         bottom_panel.animate().alpha(0f)
         left_buttons.animate().alpha(0f)
@@ -375,11 +375,11 @@ class CharacterScreen : AppCompatActivity() {
             character_image.setLayer1Bitmap(character.layer1)
             character_image.setLayer2Bitmap(character.layer2)
 
-            if(!character.name_short.equals("jarrod")){
-                if(character.astromech) {
-                    character.companionImage = (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
-                }
-                else{
+            if (!character.name_short.equals("jarrod")) {
+                if (character.astromech) {
+                    character.companionImage =
+                        (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
+                } else {
                     character.companionImage = null
                 }
             }
@@ -541,7 +541,7 @@ class CharacterScreen : AppCompatActivity() {
             add_strain.setImageDrawable(getNumber(character.strain))
         } else {
             addDamage()
-            if(animateDamage) {
+            if (animateDamage) {
                 hitAnim()
             }
         }
@@ -796,11 +796,10 @@ class CharacterScreen : AppCompatActivity() {
 
         if (actionUsage) {
             turnOffActionButtons()
-            if(actionsLeft == 0){
+            if (actionsLeft == 0) {
                 character.activated++
             }
-        }
-        else{
+        } else {
             character.activated++
         }
         activated = false
@@ -1143,7 +1142,7 @@ class CharacterScreen : AppCompatActivity() {
     //************************************************************************************************************
     //region Side Navigation
     //************************************************************************************************************
-fun updateSideBarState(){
+    fun updateSideBarState() {
         when (sideMenuState) {
             -1 -> {
                 extend_down_button.animate().alpha(0f);
@@ -1160,12 +1159,13 @@ fun updateSideBarState(){
             1 -> {
                 extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)
-                kill_tracker_bar.animate().translationY(-2*height)
+                kill_tracker_bar.animate().translationY(-2 * height)
                 menu_bar.animate().translationY(-height)
             }
         }
 
     }
+
     fun onExtendDown(view: View) {
 
         if (sideMenuState > -1) {
@@ -1684,21 +1684,21 @@ fun updateSideBarState(){
         if (animateDamage) {
             val animType = Math.random();
             if (animType < 0.3) {
-                Sounds.damagedSound(this, Sounds.blaster)
+                Sounds.damagedSound(this, Sounds.equip_gun)
                 damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.blastAnim!!.setVisible(true, true)
                 MainActivity.blastAnim!!.start()
 
             } else if (animType < 0.6) {
-                Sounds.damagedSound(this, Sounds.slice)
+                Sounds.damagedSound(this, Sounds.shing)
                 damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.sliceAnim!!.setVisible(true, true)
                 MainActivity.sliceAnim!!.start()
 
             } else {
-                Sounds.damagedSound(this, Sounds.impact)
+                Sounds.damagedSound(this, Sounds.equip_impact)
                 damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.impactAnim!!.setVisible(true, true)
@@ -1710,7 +1710,7 @@ fun updateSideBarState(){
 
     }
 
-    fun hitAnim(){
+    fun hitAnim() {
         var hitY = ObjectAnimator.ofFloat(
             character_images, "translationY", 0f, 20f * Random
                 .nextFloat(),
@@ -2081,7 +2081,7 @@ fun updateSideBarState(){
         mods1!!.setOnClickListener {
             quickViewDialog!!.show_mods.visibility = View.VISIBLE
         }
-        quickViewDialog!!.show_mods.setOnClickListener{
+        quickViewDialog!!.show_mods.setOnClickListener {
             quickViewDialog!!.show_mods.visibility = View.INVISIBLE
         }
 
@@ -2199,7 +2199,7 @@ fun updateSideBarState(){
 
 
 
-            quickViewDialog!!.mods_grid_view.adapter = ModListAdapter(this,character.mods)
+            quickViewDialog!!.mods_grid_view.adapter = ModListAdapter(this, character.mods)
         }
     }
 
@@ -2434,11 +2434,13 @@ fun updateSideBarState(){
             }
         }
         statsScreen!!.minusStat.setOnClickListener {
-            if (currentStatEditing != null ) {
-                currentStatEditing!!.text = "" + Math.max(Integer.parseInt(
-                    (currentStatEditing!!.getText()
-                        .toString())
-                ) - 1,0)
+            if (currentStatEditing != null) {
+                currentStatEditing!!.text = "" + Math.max(
+                    Integer.parseInt(
+                        (currentStatEditing!!.getText()
+                            .toString())
+                    ) - 1, 0
+                )
                 statsScreen!!.stat_text.setText(currentStatEditing!!.text.toString())
                 updateKillTracker()
             }
@@ -2511,8 +2513,12 @@ fun updateSideBarState(){
         statsScreen!!.stats_kill_total.setText("" + totalKills)
         statsScreen!!.stats_assist_total.setText("" + totalAssists)
         if (character.timesWounded > 0) {
-            statsScreen!!.stats_kill_death_ratio.setText("" + Math.round(10*totalKills.toFloat()
-                    / character.timesWounded).toFloat()/10f)
+            statsScreen!!.stats_kill_death_ratio.setText(
+                "" + Math.round(
+                    10 * totalKills.toFloat()
+                            / character.timesWounded
+                ).toFloat() / 10f
+            )
         } else {
             statsScreen!!.stats_kill_death_ratio.setText("-")
         }
@@ -2800,6 +2806,7 @@ class ModListAdapter internal constructor(
 
     var items = arrayListOf<View>()
     var showCardDialog: Dialog? = null
+
     init {
         showCardDialog = Dialog(mContext)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)

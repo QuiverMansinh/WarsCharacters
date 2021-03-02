@@ -392,13 +392,13 @@ class Item() {
         this.type = type
         this.tier = tier
 
-        if (soundType == "slice") this.soundType = Sounds.slice
+        if (soundType == "slice") this.soundType = Sounds.shing
         if (soundType == "lightSaber") this.soundType = Sounds.lightSaber
         if (soundType == "electric") this.soundType =  Sounds.electric
-        if (soundType == "blaster") this.soundType =  Sounds.blaster
-        if (soundType == "impact") this.soundType =  Sounds.impact
-        if (soundType == "armor") this.soundType =  Sounds.armor
-        if (soundType == "clothing") this.soundType =  Sounds.clothing
-        if (soundType == "astromech") this.soundType =  Sounds.astromech
+        if (soundType == "blaster") this.soundType =  Sounds.equip_gun
+        if (soundType == "impact") this.soundType =  Sounds.equip_impact
+        if (soundType == "armor") this.soundType =  Sounds.equip_armor
+        if (soundType == "clothing") this.soundType =  Sounds.equip_clothing
+        if (soundType == "astromech") this.soundType =  Sounds.droid
     }
 }
