@@ -28,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
+                android:background="@drawable/save_file_back"
+                android:foreground="?attr/selectableItemBackgroundBorderless" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -58,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
+                android:background="@drawable/save_file_back"
+                android:foreground="?attr/selectableItemBackgroundBorderless" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -87,7 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
+                android:background="@drawable/save_file_back"
+                android:foreground="?attr/selectableItemBackgroundBorderless" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -116,7 +119,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
+                android:background="@drawable/save_file_back"
+                android:foreground="?attr/selectableItemBackgroundBorderless" />
 
             <TextView
                 android:id="@+id/textView20"
@@ -147,7 +151,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
+                android:background="@drawable/save_file_back"
+                android:foreground="?attr/selectableItemBackgroundBorderless" />
 
             <TextView
                 android:id="@+id/textView21"
@@ -176,7 +181,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
+                android:background="@drawable/save_file_back"
+                android:foreground="?attr/selectableItemBackgroundBorderless" />
 
             <TextView
                 android:id="@+id/textView22"

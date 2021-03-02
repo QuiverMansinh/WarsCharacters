@@ -796,7 +796,7 @@ class CharacterScreen : AppCompatActivity() {
 
         if (actionUsage) {
             turnOffActionButtons()
-            if(actionsLeft == 0){
+            if(actionsLeft <= 1){
                 character.activated++
             }
         }
