@@ -1684,21 +1684,21 @@ fun updateSideBarState(){
         if (animateDamage) {
             val animType = Math.random();
             if (animType < 0.3) {
-                Sounds.damagedSound(this, Sounds.blaster)
+                Sounds.damagedSound(this, Sounds.equip_gun)
                 damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.blastAnim!!.setVisible(true, true)
                 MainActivity.blastAnim!!.start()
 
             } else if (animType < 0.6) {
-                Sounds.damagedSound(this, Sounds.slice)
+                Sounds.damagedSound(this, Sounds.shing)
                 damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.sliceAnim!!.setVisible(true, true)
                 MainActivity.sliceAnim!!.start()
 
             } else {
-                Sounds.damagedSound(this, Sounds.impact)
+                Sounds.damagedSound(this, Sounds.equip_impact)
                 damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.impactAnim!!.setVisible(true, true)
