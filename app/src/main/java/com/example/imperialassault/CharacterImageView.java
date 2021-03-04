@@ -91,20 +91,24 @@ public class CharacterImageView extends View implements Runnable{
     float stunX, stunY;
     float offsetY;
 
+
+
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(image!=null) {
             if (!imageScaled) {
                 if (image != null) {
-                    image = Bitmap.createScaledBitmap(image, canvas.getWidth(), canvas.getHeight(),
+                    image = Bitmap.createScaledBitmap(image, canvas.getWidth(),
+                            (int)((float)image.getHeight()/image.getWidth()*canvas.getWidth()),
                             true);
                 }
                 imageScaled = true;
             }
             if (!glowScaled) {
                 if (glowImage != null) {
-                    glowImage = Bitmap.createScaledBitmap(glowImage, canvas.getWidth(), canvas.getHeight(), true);
+                    glowImage = Bitmap.createScaledBitmap(glowImage, canvas.getWidth(),
+                            (int)((float)glowImage.getHeight()/glowImage.getWidth()*canvas.getWidth()), true);
                 }
                 glowScaled = true;
             }
@@ -112,14 +116,19 @@ public class CharacterImageView extends View implements Runnable{
 
             if (!layer1Scaled) {
                 if (layer1 != null) {
-                    layer1 = Bitmap.createScaledBitmap(layer1, canvas.getWidth(), canvas.getHeight(), true);
+                    layer1 = Bitmap.createScaledBitmap(layer1, canvas.getWidth(),
+                            (int)((float)layer1.getHeight()/layer1.getWidth()*canvas.getWidth()),
+                            true);
                 }
                 layer1Scaled = true;
             }
 
             if (!layer2Scaled) {
                 if (layer2 != null) {
-                    layer2 = Bitmap.createScaledBitmap(layer2, canvas.getWidth(), canvas.getHeight(), true);
+                    layer2 = Bitmap.createScaledBitmap(layer2, canvas.getWidth(),
+                            (int)((float)layer2.getHeight()/layer2.getWidth()*canvas.getWidth()),
+                            true);
+
                 }
                 layer2Scaled = true;
             }

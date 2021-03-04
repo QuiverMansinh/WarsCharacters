@@ -274,11 +274,12 @@ println()
             listView.setOnItemLongClickListener{ parent, view, position, id ->
                 //fileNames.removeAt(position)
                 //loadedCharacters.removeAt(position)
-                positionEditing = position
-                listView.animate().alpha(0f)
-                saveDialog!!.show()
-                saveDialog!!.edit_load_file_name.setText("" + fileNames[position])
-
+                if(deleteFinished) {
+                    positionEditing = position
+                    listView.animate().alpha(0f)
+                    saveDialog!!.show()
+                    saveDialog!!.edit_load_file_name.setText("" + fileNames[position])
+                }
                 true
             }
 
@@ -306,12 +307,18 @@ println()
 
 
     }
+
+    var deleteFinished = true
     fun onDelete(view: View){
         fileNames.removeAt(positionEditing)
         loadedCharacters.removeAt(positionEditing)
         //TODO delete from database
         val database = AppDatabase.getInstance(this)
-        database!!.getCharacterDAO().delete(MainActivity.data!![positionEditing])
+        GlobalScope.launch {
+            deleteFinished = false
+            database!!.getCharacterDAO().delete(MainActivity.data!![positionEditing])
+            deleteFinished = true
+        }
         adapter!!.notifyDataSetChanged()
     }
 
@@ -389,26 +396,27 @@ println()
         return character
     }
     override fun onBackPressed() {
-        for(i in 0..listView.count-1) {
-            try {
+        if(deleteFinished) {
+            for (i in 0..listView.count - 1) {
+                try {
 
-                var image = listView.get(i).character_image as ImageView
-                var b = image.drawable as BitmapDrawable
-                b.bitmap.recycle()
+                    var image = listView.get(i).character_image as ImageView
+                    var b = image.drawable as BitmapDrawable
+                    b.bitmap.recycle()
 
 
-                b = listView.get(i).save_file_back.background as BitmapDrawable
-                b.bitmap.recycle()
+                    b = listView.get(i).save_file_back.background as BitmapDrawable
+                    b.bitmap.recycle()
 
+
+                } catch (e: Exception) {
+                    //println(i)
+                }
 
             }
-            catch (e: Exception){
-                //println(i)
-            }
-
+            super.onBackPressed()
+            finish()
         }
-        super.onBackPressed()
-        finish()
     }
 
     fun showNoSavesFoundToast(){
@@ -424,7 +432,7 @@ println()
         MainScope().launch {
                 delay(2000)
                 noSavesFoundToast.cancel()
-                onBackPressed()
+
             }
 
     }

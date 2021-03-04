@@ -21,11 +21,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setAnimation()
         setContentView(R.layout.activity_main)
+
         newButton.setOnClickListener {
+            newButton.animate().alpha(0.5f).duration = 50
+            fade_out.animate().alpha(1f).duration = 150
             val intent = Intent(this, Characters_list::class.java)
                 startActivity(intent)
         }
         loadButton.setOnClickListener {
+            loadButton.animate().alpha(0.5f).duration = 50
+            fade_out.animate().alpha(1f).duration = 150
             val intent = Intent(this, LoadScreen::class.java)
                 startActivity(intent)
         }
@@ -47,6 +52,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        fade_out.animate().alpha(0f)
+        newButton.animate().alpha(1f)
+        loadButton.animate().alpha(1f)
+    }
     fun setAnimation(){
         /*if(Build.VERSION.SDK_INT>20) {
             val fade = android.transition.Fade()
