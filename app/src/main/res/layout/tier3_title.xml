@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
     android:paddingTop="10dp"
     android:paddingBottom="5dp">
 
@@ -11,6 +14,9 @@
         android:id="@+id/textView38"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:fontFamily="@font/agency_fb"
         android:gravity="center"
         android:shadowColor="@color/black"

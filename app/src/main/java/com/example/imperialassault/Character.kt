@@ -138,8 +138,12 @@ open class Character {
         startingRangedWeapon = loadStartingWeaponRanged(context)
         startingMeleeWeapon = loadStartingWeaponMelee(context)
 
-        
-
+        if (startingMeleeWeapon != null) {
+            Sounds.currentWeaponTypes[0] = 1
+        }
+        if (startingRangedWeapon != null){
+            Sounds.currentWeaponTypes[1] = 4
+        }
     }
 
     open fun loadPowerImages(context: Context) {

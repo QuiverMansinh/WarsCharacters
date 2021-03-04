@@ -19,6 +19,7 @@ import java.io.InputStream
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Sounds.sounEPool(this)
         setAnimation()
         setContentView(R.layout.activity_main)
 

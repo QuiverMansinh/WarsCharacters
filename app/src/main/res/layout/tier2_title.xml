@@ -4,12 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:clickable="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
 
     <TextView
         android:id="@+id/textView37"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:fontFamily="@font/agency_fb"
         android:gravity="center"
         android:paddingTop="10dp"

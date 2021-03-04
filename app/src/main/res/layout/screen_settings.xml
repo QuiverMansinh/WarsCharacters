@@ -292,6 +292,7 @@
                 android:layout_height="44dp"
                 android:background="@drawable/save_file_back"
                 android:fontFamily="@font/agency_fb"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:shadowColor="@color/black"
                 android:shadowRadius="10"

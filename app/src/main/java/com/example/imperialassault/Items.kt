@@ -113,22 +113,22 @@ object Items {
             emptySpace,
 
             Item(acc, 2, R.drawable.acc_t2_cyberneticarm),
-            Item(acc, 2, R.drawable.acc_t2_extraammunition),
+            Item(acc, 2, R.drawable.acc_t2_extraammunition,"blaster"),
             Item(acc, 2, R.drawable.acc_t2_mandalorianhelmet, helmet),
 
-            Item(acc, 2, R.drawable.acc_t2_r5_astromech),
-            Item(acc, 2, R.drawable.acc_t2_slicingtools),
+            Item(acc, 2, R.drawable.acc_t2_r5_astromech, "astromech"),
+            Item(acc, 2, R.drawable.acc_t2_slicingtools, "slice"),
             emptyItem,
 
             emptySpace,
             titleTier3,
             emptySpace,
 
-            Item(acc, 3, R.drawable.acc_t3_combatknife),
+            Item(acc, 3, R.drawable.acc_t3_combatknife, "slice"),
             Item(acc, 3, R.drawable.acc_t3_combatvisor),
             Item(acc, 3, R.drawable.acc_t3_concussiongrenades),
 
-            Item(acc, 3, R.drawable.acc_t3_hiddenblade),
+            Item(acc, 3, R.drawable.acc_t3_hiddenblade, "slice"),
             Item(acc, 3, R.drawable.acc_t3_personalshield),
             Item(acc, 3, R.drawable.acc_t3_powercharger),
 
@@ -157,25 +157,25 @@ object Items {
             titleTier1,
             emptySpace,
 
-            Item(armor, 1, R.drawable.arm_t1_combatcoat),
-            Item(armor, 1, R.drawable.arm_t1_responsivearmor),
-            Item(armor, 1, R.drawable.arm_t1_shadowsilkcloak),
+            Item(armor, 1, R.drawable.arm_t1_combatcoat,"clothing"),
+            Item(armor, 1, R.drawable.arm_t1_responsivearmor,"armor"),
+            Item(armor, 1, R.drawable.arm_t1_shadowsilkcloak,"clothing"),
 
             emptySpace,
             titleTier2,
             emptySpace,
 
-            Item(armor, 2, R.drawable.arm_t2_combatcoat),
-            Item(armor, 2, R.drawable.arm_t2_environmenthazardsuit),
-            Item(armor, 2, R.drawable.arm_t2_laminatearmor),
+            Item(armor, 2, R.drawable.arm_t2_combatcoat,"clothing"),
+            Item(armor, 2, R.drawable.arm_t2_environmenthazardsuit,"clothing"),
+            Item(armor, 2, R.drawable.arm_t2_laminatearmor,"armor"),
 
             emptySpace,
             titleTier3,
             emptySpace,
 
-            Item(armor, 3, R.drawable.arm_t3_admiralsuniform),
-            Item(armor, 3, R.drawable.arm_t3_laminatearmor),
-            Item(armor, 3, R.drawable.arm_t3_plastoidarmor)
+            Item(armor, 3, R.drawable.arm_t3_admiralsuniform,"clothing"),
+            Item(armor, 3, R.drawable.arm_t3_laminatearmor,"armor"),
+            Item(armor, 3, R.drawable.arm_t3_plastoidarmor,"armor")
         )
 
         for (i in 0..armorArray!!.size - 1) {
@@ -203,15 +203,15 @@ object Items {
             titleTier1,
             emptySpace,
 
-            Item(melee, 1, R.drawable.gun_t1_heroweapon,"melee"),
-            Item(melee, 1, R.drawable.mel_t1_armoredgauntlets,"melee"),
-            Item(melee, 1, R.drawable.mel_t1_gaffistick,"melee"),
+            Item(melee, 1, R.drawable.gun_t1_heroweapon,"impact"),
+            Item(melee, 1, R.drawable.mel_t1_armoredgauntlets,"impact"),
+            Item(melee, 1, R.drawable.mel_t1_gaffistick,"impact"),
 
-            Item(melee, 1, R.drawable.mel_t1_punchdagger,"melee"),
-            Item(melee, 1, R.drawable.mel_t1_vibroblade,"melee"),
-            Item(melee, 1, R.drawable.mel_t1_vibroknife,"melee"),
+            Item(melee, 1, R.drawable.mel_t1_punchdagger,"slice"),
+            Item(melee, 1, R.drawable.mel_t1_vibroblade,"slice"),
+            Item(melee, 1, R.drawable.mel_t1_vibroknife,"slice"),
 
-            Item(melee, 1, R.drawable.mel_t1_vibrosword,"melee"),
+            Item(melee, 1, R.drawable.mel_t1_vibrosword,"slice"),
             emptyItem,
             emptyItem,
 
@@ -227,12 +227,12 @@ object Items {
             titleTier2,
             emptySpace,
 
-            Item(melee, 2, R.drawable.mel_t2_bd_1vibroax,"melee"),
-            Item(melee, 2, R.drawable.mel_t2_doublevibrosword,"melee"),
-            Item(melee, 2, R.drawable.mel_t2_polearm,"melee"),
+            Item(melee, 2, R.drawable.mel_t2_bd_1vibroax,"impact"),
+            Item(melee, 2, R.drawable.mel_t2_doublevibrosword,"slice"),
+            Item(melee, 2, R.drawable.mel_t2_polearm,"impact"),
 
             Item(melee, 2, R.drawable.mel_t2_stunbaton,"electric"),
-            Item(melee, 2, R.drawable.mel_t2_vibroknucklers,"melee"),
+            Item(melee, 2, R.drawable.mel_t2_vibroknucklers,"impact"),
             emptyItem,
 
             emptySpace,
@@ -252,11 +252,11 @@ object Items {
             emptySpace,
 
             Item(melee, 3, R.drawable.mel_t3_ancientlightsaber,"lightSaber"),
-            Item(melee, 3, R.drawable.mel_t3_borifle,"melee"),
+            Item(melee, 3, R.drawable.mel_t3_borifle,"impact"),
             Item(melee, 3, R.drawable.mel_t3_electrostaff,"electric"),
 
-            Item(melee, 3, R.drawable.mel_t3_forcepike,"melee"),
-            Item(melee, 3, R.drawable.mel_t3_ryykblades,"melee"),
+            Item(melee, 3, R.drawable.mel_t3_forcepike,"impact"),
+            Item(melee, 3, R.drawable.mel_t3_ryykblades,"slice"),
             emptyItem,
 
             emptySpace,
@@ -372,28 +372,33 @@ class Item() {
     var health = 0
     var endurance = 0
     var tier = 0
-    var weaponType = 0
+    var soundType = 0 //default sound type
 
     constructor(type: Int, tier: Int, resourceId: Int) : this() {
         this.resourceId = resourceId
         this.type = type
-
+        this.tier = tier
     }
 
     constructor(type: Int, tier: Int, resourceId: Int, subType: Int) : this() {
         this.resourceId = resourceId
         this.type = type
         this.subType = subType
+        this.tier = tier
     }
 
-    constructor(type: Int, tier: Int, resourceId: Int, weaponType: String) : this() {
-
+    constructor(type: Int, tier: Int, resourceId: Int, soundType: String) : this() {
         this.resourceId = resourceId
         this.type = type
+        this.tier = tier
 
-        if (weaponType == "melee") this.weaponType = 1
-        if (weaponType == "lightSaber") this.weaponType = 2
-        if (weaponType == "electric") this.weaponType = 3
-        if (weaponType == "blaster") this.weaponType = 4
+        if (soundType == "slice") this.soundType = Sounds.shing
+        if (soundType == "lightSaber") this.soundType = Sounds.lightSaber
+        if (soundType == "electric") this.soundType =  Sounds.electric
+        if (soundType == "blaster") this.soundType =  Sounds.equip_gun
+        if (soundType == "impact") this.soundType =  Sounds.equip_impact
+        if (soundType == "armor") this.soundType =  Sounds.equip_armor
+        if (soundType == "clothing") this.soundType =  Sounds.equip_clothing
+        if (soundType == "astromech") this.soundType =  Sounds.droid
     }
 }

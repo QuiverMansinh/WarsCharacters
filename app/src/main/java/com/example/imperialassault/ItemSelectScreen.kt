@@ -193,17 +193,28 @@ class ImageAdapter internal constructor(
                 gridItem.grid_image.alpha = 0.5f
                 var character = MainActivity.selectedCharacter!!
 
-                if (i == 3 && currentItem.type == Items.melee && character.startingMeleeWeapon !=
-                    null
-                ) {
-                    gridItem.grid_image.setImageBitmap(character.startingMeleeWeapon)
-                } else if (i == 3 && currentItem.type == Items.ranged && character
-                        .startingRangedWeapon != null
-                ) {
-                    gridItem.grid_image.setImageBitmap(character.startingRangedWeapon)
-                } else {
-                    gridItem.grid_image.setImageResource(currentItem.resourceId)
+                if (i == 3 && currentItem.type == Items.melee){
+                    if(character.startingMeleeWeapon != null) {
+                        gridItem.grid_image.setImageBitmap(character.startingMeleeWeapon)
+                        setClickables(gridItem, currentItem)
+                    }
+                    else{
+                        gridItem.grid_image.setImageResource(currentItem.resourceId)
+                    }
+                }
+                else if (i == 3 && currentItem.type == Items.ranged) {
+                    if (character.startingRangedWeapon != null) {
+                        gridItem.grid_image.setImageBitmap(character.startingRangedWeapon)
+                        setClickables(gridItem, currentItem)
+                    }
+                    else{
+                        gridItem.grid_image.setImageResource(currentItem.resourceId)
+                    }
 
+                }
+                else {
+                    gridItem.grid_image.setImageResource(currentItem.resourceId)
+                    setClickables(gridItem, currentItem)
                 }
 
                 when (currentItem.type) {
@@ -241,43 +252,7 @@ class ImageAdapter internal constructor(
                 }
                 //TODO load eqipped items
 
-                gridItem.setOnLongClickListener {
-                    onShowCard(gridItem.grid_image)
-                    true
-                }
 
-                gridItem.setOnClickListener {
-                    when (currentItem.type) {
-                        Items.reward -> {
-                            gridItem.grid_image.alpha = equipReward(currentItem)
-                        }
-                        Items.acc -> {
-                            gridItem.grid_image.alpha = equipAcc(currentItem)
-                            println(currentItem.index)
-                        }
-                        Items.armor -> {
-                            gridItem.grid_image.alpha = equipArmor(currentItem)
-                        }
-                        Items.melee -> {
-                            gridItem.grid_image.alpha = equipWeapon(currentItem)
-
-                        }
-                        Items.ranged -> {
-                            gridItem.grid_image.alpha = equipWeapon(currentItem)
-                        }
-                    }
-                    if (gridItem.grid_image.alpha == 0.5f) {
-                        //TODO Rejection sounds
-                        if (currentItem.weaponType == Sounds.currentWeaponTypes[0]){
-                            Sounds.currentWeaponTypes[0] = 0
-                        }else Sounds.currentWeaponTypes[1] = 0
-                    } else {
-                        Sounds.weaponSound(context, currentItem.weaponType)
-                        if (Sounds.currentWeaponTypes[0]==0){
-                            Sounds.currentWeaponTypes[0] = currentItem.weaponType
-                        }else Sounds.currentWeaponTypes[1] = currentItem.weaponType
-                    }
-                }
 
             } else {
                 gridItem = context.layoutInflater.inflate(currentItem.resourceId, null, true)
@@ -287,6 +262,45 @@ class ImageAdapter internal constructor(
     }
     // References to our images
 
+    fun setClickables(gridItem:View, currentItem:Item){
+        gridItem.setOnLongClickListener {
+            onShowCard(gridItem.grid_image)
+            true
+        }
+
+        gridItem.setOnClickListener {
+            when (currentItem.type) {
+                Items.reward -> {
+                    gridItem.grid_image.alpha = equipReward(currentItem)
+                }
+                Items.acc -> {
+                    gridItem.grid_image.alpha = equipAcc(currentItem)
+                    println(currentItem.index)
+                }
+                Items.armor -> {
+                    gridItem.grid_image.alpha = equipArmor(currentItem)
+                }
+                Items.melee -> {
+                    gridItem.grid_image.alpha = equipWeapon(currentItem)
+
+                }
+                Items.ranged -> {
+                    gridItem.grid_image.alpha = equipWeapon(currentItem)
+                }
+            }
+            if (gridItem.grid_image.alpha == 0.5f) {
+                //TODO unequipsound
+                if (currentItem.soundType == Sounds.currentWeaponTypes[0]){
+                    Sounds.currentWeaponTypes[0] = 0
+                }else Sounds.currentWeaponTypes[1] = 0
+            } else {
+                Sounds.equipSound(context, currentItem.soundType)
+                if (Sounds.currentWeaponTypes[0]==0){
+                    Sounds.currentWeaponTypes[0] = currentItem.soundType
+                }else Sounds.currentWeaponTypes[1] = currentItem.soundType
+            }
+        }
+    }
     override fun getCount(): Int {
         return itemArray.size
     }
@@ -297,6 +311,14 @@ class ImageAdapter internal constructor(
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
+    }
+
+    override fun isEnabled(position: Int): Boolean {
+        return false
+    }
+
+    override fun areAllItemsEnabled(): Boolean {
+        return false
     }
 
 
@@ -341,7 +363,7 @@ class ImageAdapter internal constructor(
         }
 
         if (item.index == Items.quickDrawHolsterIndex) {
-            if (character.accessories.size < getMaxAcc()) {
+        if (character.accessories.size < getMaxAcc()) {
                 character.rewards.add(item.index)
                 character.quickDrawHolster = true
                 return 1f
