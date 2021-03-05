@@ -445,7 +445,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
+            android:scaleType="fitStart"
             android:visibility="visible" />
 
     </FrameLayout>
@@ -478,8 +478,8 @@
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -522,7 +522,7 @@
         android:id="@+id/right_buttons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="5dp"
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -541,7 +541,7 @@
             android:id="@+id/extend_down_button"
             android:layout_width="70dp"
             android:layout_height="44dp"
-            android:layout_marginBottom="90dp"
+            android:layout_marginBottom="100dp"
             android:onClick="onExtendDown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -1044,7 +1044,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="125dp"
         android:alpha="0"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -1065,6 +1065,7 @@
             android:id="@+id/speed"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_marginStart="15dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
@@ -1077,7 +1078,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/name" />
+            app:layout_constraintStart_toEndOf="@+id/tech3" />
 
         <TextView
             android:id="@+id/health"
@@ -1102,6 +1103,7 @@
             android:id="@+id/endurance"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
@@ -1114,7 +1116,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/name" />
+            app:layout_constraintEnd_toStartOf="@+id/strength1" />
 
         <FrameLayout
             android:id="@+id/defence_wrapper"
@@ -1137,7 +1139,7 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="180dp"
+            android:layout_width="170dp"
             android:layout_height="55dp"
             android:background="@drawable/name_back"
             android:fontFamily="@font/agency_fb"
@@ -1160,7 +1162,7 @@
             android:layout_height="25dp"
             android:layout_marginStart="20dp"
             app:layout_constraintStart_toEndOf="@+id/insight_icon"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintTop_toTopOf="@+id/insight_icon"
             app:srcCompat="@drawable/tech" />
 
         <ImageView
@@ -1196,6 +1198,7 @@
             android:id="@+id/insight_icon"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="@+id/name"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toBottomOf="@+id/name"
@@ -1236,7 +1239,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toStartOf="@+id/insight_icon"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintTop_toTopOf="@+id/insight_icon"
             app:srcCompat="@drawable/strength" />
 
         <ImageView
@@ -1516,7 +1519,6 @@
         android:id="@+id/left_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">

@@ -7,7 +7,6 @@ import android.media.SoundPool
 
 object Sounds {
 
-    // TODO please implement soundpool
 
     var soundplayer: MediaPlayer = MediaPlayer()
 
@@ -38,23 +37,33 @@ object Sounds {
         .build()
 
     lateinit var sEPool: ArrayList<Int>
+    var loaded = false
 
     fun sounEPool(context: Context) {
-        sEPool = arrayListOf(
-            soundPool.load(context, R.raw.equip, 1),
-            soundPool.load(context, R.raw.light_saber, 1),
-            soundPool.load(context, R.raw.electric, 1),
-            soundPool.load(context, R.raw.shing, 1),
-            soundPool.load(context, R.raw.equip_gun, 1),
-            soundPool.load(context, R.raw.equip_impact, 1),
-            soundPool.load(context, R.raw.equip_armor, 1),
-            soundPool.load(context, R.raw.equip_clothing, 1),
-            soundPool.load(context, R.raw.droid, 1),
-            soundPool.load(context, R.raw.slice, 1),
-            soundPool.load(context, R.raw.lightsaber_stabby_stabby, 1),
-            soundPool.load(context, R.raw.gaster_blaster_master, 1),
-            soundPool.load(context, R.raw.impact, 1),
-        )
+        println("sdfsdf")
+        if(!loaded) {
+            println("sdfsdf LOAD")
+            sEPool = arrayListOf(
+                soundPool.load(context, R.raw.select, 1),
+                soundPool.load(context, R.raw.light_saber, 1),
+                soundPool.load(context, R.raw.electric, 1),
+                soundPool.load(context, R.raw.shing, 1),
+                soundPool.load(context, R.raw.equip_gun, 1),
+                soundPool.load(context, R.raw.equip_impact, 1),
+                soundPool.load(context, R.raw.equip_armor, 1),
+                soundPool.load(context, R.raw.equip_clothing, 1),
+                soundPool.load(context, R.raw.droid, 1),
+                soundPool.load(context, R.raw.slice, 1),
+                soundPool.load(context, R.raw.lightsaber_stabby_stabby, 1),
+                soundPool.load(context, R.raw.gaster_blaster_master, 1),
+                soundPool.load(context, R.raw.impact, 1),
+            )
+            loaded=true
+        }
+    }
+
+    fun buttonSound(){
+        soundPool.play(sEPool[default], 1f, 1f, 1, 0, 1f)
     }
 
     fun equipSound(context: Context, equipSoundType: Int) {

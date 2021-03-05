@@ -22,8 +22,8 @@ interface CharacterDAO {
     @Insert
     fun insert(fileName: CharacterData):Long
 
-    @Delete
-    fun delete(character: CharacterData)
+    @Query("DELETE FROM characterdata WHERE id LIKE :deleteId")
+    fun deleteById(deleteId:Int)
 
     @Update
     fun update(character: CharacterData)

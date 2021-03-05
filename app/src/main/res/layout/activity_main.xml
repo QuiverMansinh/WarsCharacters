@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
     android:clickable="true"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity">
 
     <ImageView
@@ -28,12 +29,11 @@
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:clickable="true"
+        android:clickable="false"
         android:elevation="5dp"
         android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:focusableInTouchMode="false"
         android:foreground="?attr/selectableItemBackground"
-        android:hapticFeedbackEnabled="true"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="false"
@@ -45,14 +45,14 @@
 
         <ImageButton
             android:id="@+id/newButton"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:background="#00FFFFFF"
+            android:background="@drawable/new_button"
             android:clickable="true"
-            android:focusableInTouchMode="true"
-            android:foreground="?attr/selectableItemBackground"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:hapticFeedbackEnabled="true"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/imageButton2"
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.892"
-            app:srcCompat="@drawable/new_button" />
+            app:srcCompat="?attr/selectableItemBackgroundBorderless" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -69,12 +69,11 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:clickable="true"
+        android:clickable="false"
         android:elevation="5dp"
         android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:focusableInTouchMode="false"
         android:foreground="?attr/selectableItemBackground"
-        android:hapticFeedbackEnabled="true"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="false"
@@ -84,15 +83,14 @@
 
         <ImageButton
             android:id="@+id/loadButton"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:background="#00FFFFFF"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:hapticFeedbackEnabled="true"
+            android:adjustViewBounds="false"
+            android:background="@drawable/load_button"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hapticFeedbackEnabled="false"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/imageButton2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +98,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.892"
-            app:srcCompat="@drawable/load_button" />
+            app:srcCompat="?attr/selectableItemBackgroundBorderless" />
 
     </androidx.cardview.widget.CardView>
 

@@ -3,6 +3,7 @@ package com.example.imperialassault
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -16,7 +17,9 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.core.view.size
 import androidx.lifecycle.lifecycleScope
+import androidx.work.*
 import kotlinx.android.synthetic.main.activity_character_view.view.*
 import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.android.synthetic.main.save_load_item.view.*
@@ -58,15 +61,15 @@ class LoadScreen : AppCompatActivity() {
         }
         saveDialog!!.delete.setOnClickListener {
             onDelete(saveDialog!!.delete)
-            saveDialog!!.cancel()
-            if(loadedCharacters.size <= 1) {
+
+            if(loadedCharacters.size == 0) {
                 showNoSavesFoundToast()
             }
             true
         }
 
         listSaveFiles(MainActivity.data)
-        if(loadedCharacters.size <= 1){
+        if(loadedCharacters.size ==0){
             showNoSavesFoundToast()
         }
         println("no save files" + loadedCharacters.size)
@@ -87,7 +90,7 @@ class LoadScreen : AppCompatActivity() {
            for(i in 0..listView.count-1) {
                 try {
                     val anim = ObjectAnimator.ofFloat(
-                        listView.get(i), "translationX", -width
+                        listView[i], "translationX", -width
                             .toFloat() * (i + 2), 0f
                     )
                     anim.interpolator = DecelerateInterpolator()
@@ -108,7 +111,7 @@ class LoadScreen : AppCompatActivity() {
 
     var fileNames = ArrayList<String?>()
     var loadedCharacters = ArrayList<Character>()
-    var adapter:ArrayAdapter<String>? = null
+    var adapter:LoadFileAdapter? = null
 
     fun listSaveFiles(data: List<CharacterData>?){
         listView = findViewById<ListView>(R.id.load_screen_list)
@@ -127,8 +130,8 @@ class LoadScreen : AppCompatActivity() {
                 loadedCharacters.add(character)
                 loadedCharacters[i].loadPortraitImage(this)
             }
-            fileNames.add("")
-            loadedCharacters.add(Character())
+
+
 
             adapter = LoadFileAdapter(this, fileNames, loadedCharacters, data)
             listView.adapter= adapter
@@ -136,7 +139,10 @@ class LoadScreen : AppCompatActivity() {
 
             listView.isClickable = true
             listView.setOnItemClickListener  { parent, view, position, id ->
-                if(position<listView.count-1) {
+                if(position<listView.count) {
+
+                    listView.alpha = 0f
+
                     //println("" + data[position])
                     loadedCharacters[position].file_name = ""+data[position].fileName
                     loadedCharacters[position].id = data[position].id
@@ -181,7 +187,7 @@ class LoadScreen : AppCompatActivity() {
                     //TODO rewards and mods
                     loadedCharacters[position].rewards = convertStringToItemID(""+data[position].rewards)
                     loadedCharacters[position].mods = convertStringToItemID(""+data[position].mods)
-println()
+
                     println("Load Mods "+data[position].mods)
 
                     println( " "+loadedCharacters[position].mods.size)
@@ -253,19 +259,13 @@ println()
                     intent.putExtra("CharacterName", loadedCharacters[position].name_short)
                     intent.putExtra("Load", true)
 
+                    startActivity(intent);
+                    //adapter!!.finish()
 
-                        startActivity(intent);
-                    for(i in 0..listView.count-1) {
-                        try {
+                    for(i in 0..data.size-1){
 
-                         var image = listView.get(i).character_image as ImageView
-                         var b = image.drawable as BitmapDrawable
-                            b.bitmap.recycle()
-                        }
-                        catch (e: Exception){
-                            //println(i)
-                        }
-
+                        var portrait = loadedCharacters[i].portraitImage as BitmapDrawable
+                        //portrait.bitmap.recycle()
                     }
 
                     finish()
@@ -274,12 +274,12 @@ println()
             listView.setOnItemLongClickListener{ parent, view, position, id ->
                 //fileNames.removeAt(position)
                 //loadedCharacters.removeAt(position)
-                if(deleteFinished) {
+
                     positionEditing = position
                     listView.animate().alpha(0f)
                     saveDialog!!.show()
                     saveDialog!!.edit_load_file_name.setText("" + fileNames[position])
-                }
+
                 true
             }
 
@@ -308,18 +308,24 @@ println()
 
     }
 
-    var deleteFinished = true
+
     fun onDelete(view: View){
         fileNames.removeAt(positionEditing)
         loadedCharacters.removeAt(positionEditing)
-        //TODO delete from database
-        val database = AppDatabase.getInstance(this)
-        GlobalScope.launch {
-            deleteFinished = false
-            database!!.getCharacterDAO().delete(MainActivity.data!![positionEditing])
-            deleteFinished = true
-        }
         adapter!!.notifyDataSetChanged()
+        saveDialog!!.cancel()
+
+
+        val deleteWorkRequestBuilder = OneTimeWorkRequest.Builder(deleteWorker::class.java)
+        val data = Data.Builder()
+        data.putInt("position", positionEditing)
+        deleteWorkRequestBuilder.setInputData(data.build())
+
+
+
+        WorkManager.getInstance(this).enqueue(deleteWorkRequestBuilder.build())
+
+
     }
 
 
@@ -396,27 +402,11 @@ println()
         return character
     }
     override fun onBackPressed() {
-        if(deleteFinished) {
-            for (i in 0..listView.count - 1) {
-                try {
-
-                    var image = listView.get(i).character_image as ImageView
-                    var b = image.drawable as BitmapDrawable
-                    b.bitmap.recycle()
 
 
-                    b = listView.get(i).save_file_back.background as BitmapDrawable
-                    b.bitmap.recycle()
-
-
-                } catch (e: Exception) {
-                    //println(i)
-                }
-
-            }
             super.onBackPressed()
-            finish()
-        }
+
+
     }
 
     fun showNoSavesFoundToast(){
@@ -430,7 +420,7 @@ println()
         noSavesFoundToast.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         noSavesFoundToast!!. show()
         MainScope().launch {
-                delay(2000)
+                delay(1000)
                 noSavesFoundToast.cancel()
 
             }
@@ -443,41 +433,75 @@ class LoadFileAdapter(
     : ArrayList<Character>, val data: List<CharacterData>?
 )
     : ArrayAdapter<String>(context, R.layout.save_load_item, fileNames){
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
+
+    var saveFiles = arrayListOf<View>()
+
+    init{
         val inflater = context.layoutInflater
-        val button = inflater.inflate(R.layout.save_load_item, null, true)
-        if (position < fileNames.size - 1) {
-            val saveNameText = button.findViewById(R.id.save_file_name) as TextView
-            saveNameText.text = fileNames[position]
+        for(i in 0..fileNames.size-1){
 
-            val saveCharacterImage = button.findViewById(R.id.save_file_image) as ImageView
+            val button = inflater.inflate(R.layout.save_load_item, null, true)
 
-            saveCharacterImage.setImageDrawable(characters[position].portraitImage)
+                val saveNameText = button.findViewById(R.id.save_file_name) as TextView
+                saveNameText.text = fileNames[i]
 
-            var level = 5
-            println("spent " + data!![position].xpSpent + "total " + data!![position].totalXP)
-            if (data!![position].xpSpent <= 1) {
-                level = 1
-            } else if (data!![position].xpSpent <= 4) {
-                level = 2
-            } else if (data!![position].xpSpent <= 7) {
-                level = 3
-            } else if (data!![position].xpSpent <= 10) {
-                level = 4
-            }
-            button.save_file_level.setText("Lv " + level)
-            button.save_file_character.setText("" + characters[position].name)
-            button.save_file_date.setText("" + data!![position].date)
+                val saveCharacterImage = button.findViewById(R.id.save_file_image) as ImageView
+
+                saveCharacterImage.setImageDrawable(characters[i].portraitImage)
+
+                var level = 5
+                println("spent " + data!![i].xpSpent + "total " + data!![i].totalXP)
+                if (data!![i].xpSpent <= 1) {
+                    level = 1
+                } else if (data!![i].xpSpent <= 4) {
+                    level = 2
+                } else if (data!![i].xpSpent <= 7) {
+                    level = 3
+                } else if (data!![i].xpSpent <= 10) {
+                    level = 4
+                }
+                button.save_file_level.setText("Lv " + level)
+                button.save_file_character.setText("" + characters[i].name)
+                button.save_file_date.setText("" + data!![i].date)
 
 
-
-        } else {
-            button.visibility = View.INVISIBLE
+            saveFiles.add(button)
         }
-        return button
     }
 
+    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
 
+        return saveFiles[position]
+    }
+
+    fun finish(){
+        for(i in 0..saveFiles.size-1){
+            var image = saveFiles[i].save_file_image as ImageView
+            var b = image.drawable as BitmapDrawable
+            b.bitmap.recycle()
+            b = saveFiles[i].save_file_back.background as BitmapDrawable
+            b.bitmap.recycle()
+
+        }
+    }
+
+}
+
+//TODO?????????
+class deleteWorker(val context: Context, params: WorkerParameters): Worker
+    (context,
+    params){
+
+
+
+    override fun doWork(): Result {
+        var positionEditing = inputData.getInt("position",-1)
+        if(positionEditing!=-1) {
+            val database = AppDatabase.getInstance(context)
+            database!!.getCharacterDAO().deleteById(MainActivity.data!![positionEditing].id)
+        }
+        return Result.success()
+    }
 
 }
 

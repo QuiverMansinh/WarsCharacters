@@ -13,10 +13,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 public class CharacterImageView extends View implements Runnable{
     Thread thread;
 
@@ -89,8 +85,9 @@ public class CharacterImageView extends View implements Runnable{
     Paint stunPaint = new Paint();
     Paint focusedPaint = new Paint();
     float stunX, stunY;
-    float offsetY;
-
+    float moveY;
+    int imageHeight = 0;
+    int offsetY = 0;
 
 
     @Override
@@ -99,16 +96,16 @@ public class CharacterImageView extends View implements Runnable{
         if(image!=null) {
             if (!imageScaled) {
                 if (image != null) {
-                    image = Bitmap.createScaledBitmap(image, canvas.getWidth(),
-                            (int)((float)image.getHeight()/image.getWidth()*canvas.getWidth()),
-                            true);
+                    imageHeight =(int)((float)image.getHeight()/image.getWidth()*getWidth());
+                    image = Bitmap.createScaledBitmap(image, getWidth(), imageHeight, true);
+                    offsetY = Math.max(getHeight()-imageHeight,0);
                 }
                 imageScaled = true;
             }
             if (!glowScaled) {
                 if (glowImage != null) {
-                    glowImage = Bitmap.createScaledBitmap(glowImage, canvas.getWidth(),
-                            (int)((float)glowImage.getHeight()/glowImage.getWidth()*canvas.getWidth()), true);
+                    glowImage = Bitmap.createScaledBitmap(glowImage, getWidth(),
+                            imageHeight, true);
                 }
                 glowScaled = true;
             }
@@ -116,8 +113,8 @@ public class CharacterImageView extends View implements Runnable{
 
             if (!layer1Scaled) {
                 if (layer1 != null) {
-                    layer1 = Bitmap.createScaledBitmap(layer1, canvas.getWidth(),
-                            (int)((float)layer1.getHeight()/layer1.getWidth()*canvas.getWidth()),
+                    layer1 = Bitmap.createScaledBitmap(layer1, getWidth(),
+                            imageHeight,
                             true);
                 }
                 layer1Scaled = true;
@@ -125,8 +122,8 @@ public class CharacterImageView extends View implements Runnable{
 
             if (!layer2Scaled) {
                 if (layer2 != null) {
-                    layer2 = Bitmap.createScaledBitmap(layer2, canvas.getWidth(),
-                            (int)((float)layer2.getHeight()/layer2.getWidth()*canvas.getWidth()),
+                    layer2 = Bitmap.createScaledBitmap(layer2, getWidth(),
+                            imageHeight,
                             true);
 
                 }
@@ -134,38 +131,38 @@ public class CharacterImageView extends View implements Runnable{
             }
 
             if (focused && glowImage != null && animateConditions) {
-                canvas.drawBitmap(glowImage, 0, offsetY, focusedPaint);
+                canvas.drawBitmap(glowImage, 0, moveY +offsetY, focusedPaint);
             }
             if (animateConditions) {
-                canvas.drawBitmap(image, 0, offsetY, paint);
+                canvas.drawBitmap(image, 0, moveY +offsetY, paint);
             } else {
-                canvas.drawBitmap(image, 0, 0, null);
+                canvas.drawBitmap(image, 0, offsetY, null);
             }
 
             if (layer2 != null) {
                 if (animateConditions) {
-                    canvas.drawBitmap(layer2, 0, offsetY, paint);
+                    canvas.drawBitmap(layer2, 0, moveY +offsetY, paint);
                 } else {
-                    canvas.drawBitmap(layer2, 0, 0, null);
+                    canvas.drawBitmap(layer2, 0, offsetY, null);
                 }
             }
 
             if (layer1 != null) {
                 if (animateConditions) {
-                    canvas.drawBitmap(layer1, 0, offsetY, paint);
+                    canvas.drawBitmap(layer1, 0, moveY +offsetY, paint);
                 } else {
-                    canvas.drawBitmap(layer1, 0, 0, null);
+                    canvas.drawBitmap(layer1, 0, offsetY, null);
                 }
             }
 
 
             if (stunned && animateConditions) {
-                canvas.drawBitmap(image, stunX, stunY, stunPaint);
+                canvas.drawBitmap(image, stunX, stunY+offsetY, stunPaint);
                 if (layer1 != null) {
-                    canvas.drawBitmap(layer1, stunX, stunY, stunPaint);
+                    canvas.drawBitmap(layer1, stunX, stunY+offsetY, stunPaint);
                 }
                 if (layer2 != null) {
-                    canvas.drawBitmap(layer2, stunX, stunY, stunPaint);
+                    canvas.drawBitmap(layer2, stunX, stunY+offsetY, stunPaint);
                 }
             }
 
@@ -185,7 +182,7 @@ public class CharacterImageView extends View implements Runnable{
                 }
 
                 if (weakened) {
-                    offsetY =
+                    moveY =
                             -(float) (Math.max(Math.min(Math.sin(time / 1000 * 6 + Math.PI), 0.8), -0.8)) / 2 * image.getHeight() / 200;
                     int weakenedColor = Color.rgb(
                             (int) (55 * (1 + Math.sin(time / 1000 * 6 + Math.PI)) / 2 + 200),

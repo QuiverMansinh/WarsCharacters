@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
@@ -16,6 +17,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class Characters_list : AppCompatActivity() {
+    var charactersImage = arrayListOf<ImageView>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setAnimation()
@@ -27,7 +29,7 @@ class Characters_list : AppCompatActivity() {
 
         //Characters list for List view to choose characters
 
-        var CharactersImage= arrayListOf<ImageView>(
+        charactersImage = arrayListOf<ImageView>(
             findViewById(R.id.imageViewBiv),
             findViewById(R.id.imageViewGaar),
             findViewById(R.id.imageViewMak),
@@ -65,8 +67,11 @@ class Characters_list : AppCompatActivity() {
         for (r in 0..row-1){
             for (c in 0..col-1){
                 if(buffer1 > 20) break
-                CharactersImage[buffer1++].setImageBitmap(Bitmap.createBitmap(allChSel,0+
-                        (width*c),0+(height*r),width-1,height-1))
+                var drawable = BitmapDrawable( Bitmap.createBitmap
+                (allChSel,0+
+                (width*c),0+(height*r),width-1,height-1))
+
+                charactersImage[buffer1++].setImageDrawable(drawable)
             }
         }
 
@@ -85,6 +90,11 @@ class Characters_list : AppCompatActivity() {
     //Load layout for selected character (pointing out it's tag to note which assets to load)
 
     fun onSelect(view: View) {
+        for(i in 0..charactersImage.count()-1){
+            if(charactersImage[i] != view){
+                charactersImage[i].alpha = 0f
+            }
+        }
         if(MainActivity.selectedCharacter != null) {
             wipeSelectedCharacter()
         }
@@ -93,7 +103,7 @@ class Characters_list : AppCompatActivity() {
         intent.putExtra("Load", false)
 
 
-            startActivity(intent);
+        startActivity(intent);
         finish()
 
     }
