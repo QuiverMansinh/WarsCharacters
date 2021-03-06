@@ -121,15 +121,15 @@ object Sounds {
         val character = MainActivity.selectedCharacter!!
         var whichSound = 0
         if(character.weapons.size>0) {
-            var index = character.weapons[0]
-            if(character.weapons[0]>Items.meleeArray!!.size){
+            var whichWeapon =(Math.random()*character.weapons.size).toInt()
+            var index = character.weapons[whichWeapon]
+            if(character.weapons[whichWeapon]>=Items.meleeArray!!.size){
                 index-=Items.meleeArray!!.size
                 whichSound = Items.rangedArray!![index].soundType
             }
             else{
                 whichSound = Items.meleeArray!![index].soundType
             }
-
         }
 
         when (whichSound) {
