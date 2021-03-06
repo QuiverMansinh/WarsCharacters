@@ -90,6 +90,7 @@ class Characters_list : AppCompatActivity() {
     //Load layout for selected character (pointing out it's tag to note which assets to load)
 
     fun onSelect(view: View) {
+        Sounds.selectSound()
         for(i in 0..charactersImage.count()-1){
             if(charactersImage[i] != view){
                 charactersImage[i].alpha = 0f

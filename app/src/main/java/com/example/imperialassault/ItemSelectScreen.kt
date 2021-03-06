@@ -288,16 +288,8 @@ class ImageAdapter internal constructor(
                     gridItem.grid_image.alpha = equipWeapon(currentItem)
                 }
             }
-            if (gridItem.grid_image.alpha == 0.5f) {
-                //TODO unequipsound
-                if (currentItem.soundType == Sounds.currentWeaponTypes[0]){
-                    Sounds.currentWeaponTypes[0] = 0
-                }else Sounds.currentWeaponTypes[1] = 0
-            } else {
+            if (gridItem.grid_image.alpha == 1f) {
                 Sounds.equipSound(context, currentItem.soundType)
-                if (Sounds.currentWeaponTypes[0]==0){
-                    Sounds.currentWeaponTypes[0] = currentItem.soundType
-                }else Sounds.currentWeaponTypes[1] = currentItem.soundType
             }
         }
     }
@@ -333,6 +325,7 @@ class ImageAdapter internal constructor(
 
         //remove if already equipped
         if (character.rewards.remove(item.index)) {
+            Sounds.selectSound()
             when (item.index) {
                 Items.adrenalImplantsIndex -> character.adenalImplants = false
                 Items.bardottanShardIndex -> character.bardottanShard = false
@@ -398,6 +391,7 @@ class ImageAdapter internal constructor(
         var character = MainActivity.selectedCharacter!!
 
         if (character.accessories.remove(item.index)) {
+            Sounds.selectSound()
             if (item.subType == Items.helmet) {
                 character.helmet = false
             }
@@ -429,6 +423,7 @@ class ImageAdapter internal constructor(
 
         //remove if already equipped
         if (character.armor.remove(item.index)) {
+            Sounds.selectSound()
             return 0.5f
         }
 
@@ -448,6 +443,7 @@ class ImageAdapter internal constructor(
         if (item.subType == Items.mod) {
             //remove if already equipped
             if (character.mods.remove(item.index)) {
+                Sounds.selectSound()
                 return 0.5f
             }
             //equip if not equipped
@@ -456,6 +452,7 @@ class ImageAdapter internal constructor(
         } else {
             //remove if already equipped
             if (character.weapons.remove(item.index)) {
+                Sounds.selectSound()
                 return 0.5f
             }
             //equip if slot available

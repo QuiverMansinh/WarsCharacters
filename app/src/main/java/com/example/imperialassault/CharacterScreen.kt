@@ -530,6 +530,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onAddStrain(view: View) {
         if (character.strain < character.endurance) {
+            Sounds.strainSound()
             character.strain++
             character.strainTaken++
 
@@ -540,6 +541,7 @@ class CharacterScreen : AppCompatActivity() {
             //add_strain.setText("" + character.strain)
             add_strain.setImageDrawable(getNumber(character.strain))
         } else {
+            Sounds.damagedSound(this,Sounds.impact)
             addDamage()
             if(animateDamage) {
                 hitAnim()
@@ -552,6 +554,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onMinusStrain(view: View) {
         if (character.strain > 0) {
+            Sounds.selectSound()
             character.strain--
             //add_strain.setText("" + character.strain)
             add_strain.setImageDrawable(getNumber(character.strain))
@@ -621,7 +624,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onMinusDamage(view: View) {
         if (character.damage > 0) {
-
+            Sounds.selectSound()
             character.damage--
             character.withdrawn = false
             if (character.damage < character.health) {
@@ -731,6 +734,7 @@ class CharacterScreen : AppCompatActivity() {
     var activated = false
 
     fun onActivate(view: View) {
+        Sounds.selectSound()
         if (!activated) {
             /*
             val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 1f, 0f, 0f, 0f)
@@ -902,13 +906,15 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onAttack(view: View) {
         if (actionsLeft > 0) {
+
+            Sounds.attackSound()
             if (!conditionsActive[stunned]) {
                 removeCondition(focused)
                 removeCondition(hidden)
                 actionCompleted()
 
                 character.attacksMade++
-                Sounds.attackSound(this.applicationContext)
+
             }
         } else {
             showNoActionsLeftToast()
@@ -917,6 +923,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onMove(view: View) {
         if (actionsLeft > 0) {
+            Sounds.movingSound()
             if (!conditionsActive[stunned]) {
                 actionCompleted()
 
@@ -1051,6 +1058,7 @@ class CharacterScreen : AppCompatActivity() {
     //************************************************************************************************************
 
     fun onShowOptions(view: View) {
+        Sounds.selectSound()
         optionsDialog!!.show()
     }
 
@@ -1060,6 +1068,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onBiography(view: View) {
+        Sounds.selectSound()
         optionsDialog!!.dismiss()
         bioDialog!!.bio_title.setText(character.bio_title)
         bioDialog!!.bio_quote.setText(character.bio_quote)
@@ -1068,6 +1077,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onPower(view: View) {
+        Sounds.selectSound()
         optionsDialog!!.dismiss()
         if (!isWounded) {
             showCardDialog!!.card_image.setImageBitmap(character.power)
@@ -1079,6 +1089,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onSave(view: View) {
+        Sounds.selectSound()
         if (character.file_name.equals("autosave")) {
             saveDialog!!.show()
         } else {
@@ -1089,22 +1100,26 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onBackground(view: View) {
+        Sounds.selectSound()
         optionsDialog!!.dismiss()
         backgroundDialog!!.show()
     }
 
     fun onSettings(view: View) {
+        Sounds.selectSound()
         optionsDialog!!.dismiss()
         settingsScreen!!.show()
     }
 
     fun onStatistics(view: View) {
+        Sounds.selectSound()
         optionsDialog!!.dismiss()
         initStatsScreen()
         statsScreen!!.show()
     }
 
     fun onCredits(view: View) {
+        Sounds.selectSound()
         optionsDialog!!.dismiss()
         developersCreditsScreen!!.show()
     }
@@ -1116,24 +1131,28 @@ class CharacterScreen : AppCompatActivity() {
 
     //Backgrounds
     fun onBackgroundSnow(view: View) {
+        Sounds.selectSound()
         character.background = "snow"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_snow.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_snow.png"))
     }
 
     fun onBackgroundJungle(view: View) {
+        Sounds.selectSound()
         character.background = "jungle"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_jungle.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_jungle.png"))
     }
 
     fun onBackgroundDesert(view: View) {
+        Sounds.selectSound()
         character.background = "desert"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_desert.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_desert.png"))
     }
 
     fun onBackgroundInterior(view: View) {
+        Sounds.selectSound()
         character.background = "interior"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_interior.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
@@ -1169,6 +1188,7 @@ fun updateSideBarState(){
     fun onExtendDown(view: View) {
 
         if (sideMenuState > -1) {
+            Sounds.selectSound()
             sideMenuState--
             updateSideBarState()
         }
@@ -1178,6 +1198,7 @@ fun updateSideBarState(){
 
     fun onExtendUp(view: View) {
         if (sideMenuState < 1) {
+            Sounds.selectSound()
             sideMenuState++
             updateSideBarState()
         }
@@ -1185,6 +1206,7 @@ fun updateSideBarState(){
 
     fun onReward(view: View) {
         resetUI()
+        Sounds.selectSound()
         val intent = Intent(this, RewardsScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1196,6 +1218,7 @@ fun updateSideBarState(){
         //intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
         resetUI()
+        Sounds.selectSound()
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent);
 
@@ -1206,6 +1229,7 @@ fun updateSideBarState(){
         //intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
         resetUI()
+        Sounds.selectSound()
         val intent = Intent(this, ArmorScreen::class.java)
         startActivity(intent);
 
@@ -1215,6 +1239,7 @@ fun updateSideBarState(){
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "melee")
         resetUI()
+        Sounds.selectSound()
         val intent = Intent(this, MeleeScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1225,6 +1250,7 @@ fun updateSideBarState(){
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "range")
         resetUI()
+        Sounds.selectSound()
         val intent = Intent(this, RangedScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1233,6 +1259,7 @@ fun updateSideBarState(){
 
     fun onXPScreen(view: View) {
         resetUI()
+        Sounds.selectSound()
         initXPScreen()
         xpSelectScreen!!.show()
 
@@ -1319,6 +1346,7 @@ fun updateSideBarState(){
     }
 
     fun killCountUp(type: Int) {
+        Sounds.selectSound()
         var killCount = Integer.parseInt(killCounts[type].text.toString())
         killCount++
         character.killCount[type] = killCount
@@ -1328,6 +1356,7 @@ fun updateSideBarState(){
     fun killCountDown(type: Int) {
         var killCount = Integer.parseInt(killCounts[type].text.toString())
         if (killCount > 0) {
+            Sounds.selectSound()
             killCount--
             character.killCount[type] = killCount
             killCounts[type].setText("" + killCount)
@@ -1335,6 +1364,7 @@ fun updateSideBarState(){
     }
 
     fun onAssist(view: View) {
+        Sounds.selectSound()
         when (view.tag) {
             villain -> {
                 character.assistCount[villain]++
@@ -1501,46 +1531,59 @@ fun updateSideBarState(){
     }
 
     fun onAddCondition(view: View) {
+        Sounds.selectSound()
         conditionsDialog!!.show()
     }
 
     fun onWeakened(view: View) {
+
         conditionsActive[weakened] = !conditionsActive[weakened]
         if (conditionsActive[weakened]) {
             character.timesWeakened++
+            Sounds.conditionSound(weakened)
         } else {
             //character.timesWeakened--
+            Sounds.selectSound()
         }
         updateConditionIcons()
     }
 
     fun onBleeding(view: View) {
+
         conditionsActive[bleeding] = !conditionsActive[bleeding]
         if (conditionsActive[bleeding]) {
             character.timesBleeding++
+            Sounds.conditionSound(bleeding)
         } else {
             //character.timesBleeding--
+            Sounds.selectSound()
         }
         updateConditionIcons()
     }
 
     fun onStunned(view: View) {
+
         conditionsActive[stunned] = !conditionsActive[stunned]
         if (conditionsActive[stunned]) {
             character.timesStunned++
+            Sounds.conditionSound(stunned)
         } else {
             //character.timesStunned--
+            Sounds.selectSound()
         }
         updateConditionIcons()
     }
 
     fun onHidden(view: View) {
+
         conditionsActive[hidden] = !conditionsActive[hidden]
         if (conditionsActive[hidden]) {
             character.timesHidden++
+            Sounds.conditionSound(hidden)
 
         } else {
             //character.timesHidden--
+            Sounds.selectSound()
 
         }
         updateConditionIcons()
@@ -1554,6 +1597,7 @@ fun updateSideBarState(){
             character.timesFocused++
         } else {
             //character.timesFocused--
+            Sounds.selectSound()
         }
         updateConditionIcons()
     }
@@ -1684,21 +1728,21 @@ fun updateSideBarState(){
         if (animateDamage) {
             val animType = Math.random();
             if (animType < 0.3) {
-                Sounds.damagedSound(this, Sounds.equip_gun)
+                Sounds.damagedSound(this, Sounds.gaster_blaster_master)
                 damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.blastAnim!!.setVisible(true, true)
                 MainActivity.blastAnim!!.start()
 
             } else if (animType < 0.6) {
-                Sounds.damagedSound(this, Sounds.shing)
+                Sounds.damagedSound(this, Sounds.slice)
                 damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.sliceAnim!!.setVisible(true, true)
                 MainActivity.sliceAnim!!.start()
 
             } else {
-                Sounds.damagedSound(this, Sounds.equip_impact)
+                Sounds.damagedSound(this, Sounds.impact)
                 damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
                 damage_animation.visibility = FrameLayout.VISIBLE
                 MainActivity.impactAnim!!.setVisible(true, true)
@@ -2103,6 +2147,7 @@ fun updateSideBarState(){
 
             if (weaponIndex < 0) {
                 mods.alpha = 0f
+
             }
             if (weaponIndex1 < 0) {
                 mods1.alpha = 0f
@@ -2128,8 +2173,11 @@ fun updateSideBarState(){
                     quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
                 }
                 //quickViewDialog!!.weapon_type.visibility = View.GONE
-                quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
+
             }
+            quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
+
+
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.weapon1_type.visibility = View.VISIBLE
 
@@ -2149,9 +2197,8 @@ fun updateSideBarState(){
                     quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
                 }
                 //quickViewDialog!!.weapon1_type.visibility = View.GONE
-                quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
-
             }
+            quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
 
 
             imageId = R.drawable.empty_item_slot
@@ -2562,10 +2609,12 @@ fun updateSideBarState(){
         var xpLeft = character.totalXP - character.xpSpent;
         var cardNo = view.tag as Int
         if (character.xpCardsEquipped[cardNo]) {
+            Sounds.selectSound()
             character.xpCardsEquipped[cardNo] = false
             xpCardImages[cardNo].animate().alpha(0.5f).duration = 50
             character.xpSpent -= character.xpScores[cardNo]
         } else if (character.xpScores[cardNo] <= xpLeft) {
+            Sounds.selectSound()
             character.xpCardsEquipped[cardNo] = true
             xpCardImages[cardNo].animate().alpha(1f).duration = 50
             character.xpSpent += character.xpScores[cardNo]
@@ -2584,6 +2633,7 @@ fun updateSideBarState(){
     }
 
     fun addXP(view: View) {
+        Sounds.selectSound()
         character.totalXP++
         var xpLeft = character.totalXP - character.xpSpent;
         xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
@@ -2592,6 +2642,7 @@ fun updateSideBarState(){
     fun minusXP(view: View) {
         var xpLeft = character.totalXP - character.xpSpent;
         if (xpLeft > 0) {
+            Sounds.selectSound()
             character.totalXP--
         }
         xpLeft = character.totalXP - character.xpSpent;
@@ -2691,8 +2742,7 @@ fun updateSideBarState(){
         quickSave()
         super.onBackPressed()
 
-        Sounds.currentWeaponTypes[0] = 0
-        Sounds.currentWeaponTypes[1] = 0
+
     }
 
     override fun onStop() {

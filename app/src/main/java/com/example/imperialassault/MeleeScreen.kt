@@ -49,12 +49,14 @@ class MeleeScreen : AppCompatActivity() {
 
 
     open fun onToAcc(view:View){
+        Sounds.selectSound()
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent)
         finish()
     }
 
     fun onToArmor(view:View){
+        Sounds.selectSound()
         val intent = Intent(this, ArmorScreen::class.java)
         startActivity(intent)
         finish()
@@ -66,6 +68,7 @@ class MeleeScreen : AppCompatActivity() {
     }
 
     fun onToRanged(view:View){
+        Sounds.selectSound()
         val intent = Intent(this, RangedScreen::class.java)
         startActivity(intent)
         finish()

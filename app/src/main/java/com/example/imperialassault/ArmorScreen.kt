@@ -48,23 +48,27 @@ class ArmorScreen : AppCompatActivity() {
 
 
     fun onToAcc(view:View){
+        Sounds.selectSound()
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent)
         finish()
     }
 
     fun onToArmor(view:View){
+        Sounds.selectSound()
         //val intent = Intent(this, ArmorScreen::class.java)
         //startActivity(intent)
     }
 
     fun onToMelee(view:View){
+        Sounds.selectSound()
         val intent = Intent(this, MeleeScreen::class.java)
         startActivity(intent)
         finish()
     }
 
     fun onToRanged(view:View){
+        Sounds.selectSound()
         val intent = Intent(this, RangedScreen::class.java)
         startActivity(intent)
         finish()

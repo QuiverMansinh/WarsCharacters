@@ -42,5 +42,5 @@ class RewardsScreen : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    fun onToAcc(view: View) {}
+
 }

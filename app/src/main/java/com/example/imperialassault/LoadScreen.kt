@@ -18,6 +18,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.work.*
 import kotlinx.android.synthetic.main.activity_character_view.view.*
@@ -33,7 +34,7 @@ class LoadScreen : AppCompatActivity() {
     var height = 0f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setAnimation()
+
         setContentView(R.layout.activity_load_screen)
 
         val displayMetrics = DisplayMetrics()
@@ -41,10 +42,9 @@ class LoadScreen : AppCompatActivity() {
         height = displayMetrics.heightPixels.toFloat()
         width = displayMetrics.widthPixels.toFloat()
 
-        val database = AppDatabase.getInstance(this)
-        lifecycleScope.launch {
-            MainActivity.data = database!!.getCharacterDAO().getAll()
-        }
+
+
+        loadData()
 
         saveDialog = Dialog(this)
         saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -68,43 +68,21 @@ class LoadScreen : AppCompatActivity() {
             true
         }
 
+
+        println("no save files" + loadedCharacters.size)
+    }
+
+    fun loadData(){
+        val database = AppDatabase.getInstance(this)
+        MainActivity.data = database!!.getCharacterDAO().getAll()
         listSaveFiles(MainActivity.data)
         if(loadedCharacters.size ==0){
             showNoSavesFoundToast()
         }
-        println("no save files" + loadedCharacters.size)
     }
 
-    fun setAnimation(){
-        /*if(Build.VERSION.SDK_INT>20) {
-            val fade = android.transition.Fade()
-            fade.setDuration(100);
-            getWindow().setExitTransition(fade);
-            getWindow().setEnterTransition(fade);
-        }*/
-    }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        if(hasFocus){
-            listView.animate().alpha(1f)
-           for(i in 0..listView.count-1) {
-                try {
-                    val anim = ObjectAnimator.ofFloat(
-                        listView[i], "translationX", -width
-                            .toFloat() * (i + 2), 0f
-                    )
-                    anim.interpolator = DecelerateInterpolator()
-                    anim.duration=(100*(i+2)).toLong()
-                    anim.start()
 
-                }
-                catch (e: Exception){
-                    //println(i)
-                }
-            }
-
-        }
-    }
 
 
     private lateinit var listView:ListView
@@ -115,6 +93,7 @@ class LoadScreen : AppCompatActivity() {
 
     fun listSaveFiles(data: List<CharacterData>?){
         listView = findViewById<ListView>(R.id.load_screen_list)
+        listView.alpha = 1f
         listView.divider = null
         listView.dividerHeight = 0
 
@@ -122,8 +101,6 @@ class LoadScreen : AppCompatActivity() {
 
 
         if( data != null) {
-
-
             for(i in 0..data.size-1){
                 fileNames.add(data[i].fileName)
                 val character = selectCharacter(data[i].characterName)
@@ -131,15 +108,13 @@ class LoadScreen : AppCompatActivity() {
                 loadedCharacters[i].loadPortraitImage(this)
             }
 
-
-
             adapter = LoadFileAdapter(this, fileNames, loadedCharacters, data)
             listView.adapter= adapter
-
 
             listView.isClickable = true
             listView.setOnItemClickListener  { parent, view, position, id ->
                 if(position<listView.count) {
+                    Sounds.selectSound()
 
                     listView.alpha = 0f
 
@@ -301,6 +276,7 @@ class LoadScreen : AppCompatActivity() {
 
     var positionEditing = -1
     fun onApply(view: View){
+        Sounds.selectSound()
         fileNames[positionEditing] =  edit_load_file_name.text.toString()
         adapter!!.notifyDataSetChanged()
         //TODO update database
@@ -310,9 +286,7 @@ class LoadScreen : AppCompatActivity() {
 
 
     fun onDelete(view: View){
-        fileNames.removeAt(positionEditing)
-        loadedCharacters.removeAt(positionEditing)
-        adapter!!.notifyDataSetChanged()
+        Sounds.selectSound()
         saveDialog!!.cancel()
 
 
@@ -320,10 +294,30 @@ class LoadScreen : AppCompatActivity() {
         val data = Data.Builder()
         data.putInt("position", positionEditing)
         deleteWorkRequestBuilder.setInputData(data.build())
+        deleteWorkRequestBuilder.addTag("delete")
+
+        val deleteWorkRequest = deleteWorkRequestBuilder.build()
+
+        WorkManager.getInstance(this).enqueue(deleteWorkRequest)
+        WorkManager.getInstance(this)
+            .getWorkInfosByTagLiveData("delete")
+            .observe(this, Observer<List<WorkInfo>> {
+                    workStatusList ->
+                val currentWorkStatus = workStatusList ?.getOrNull(0)
+                if (currentWorkStatus ?.state ?.isFinished == true)
+                {
+                    WorkManager.getInstance(this)
+                        .getWorkInfosByTagLiveData("delete").removeObservers(this)
+                    println("DELETE FINISHED")
 
 
+                    startActivity(intent)
+                    finish()
 
-        WorkManager.getInstance(this).enqueue(deleteWorkRequestBuilder.build())
+                }
+            })
+
+
 
 
     }
@@ -404,7 +398,10 @@ class LoadScreen : AppCompatActivity() {
     override fun onBackPressed() {
 
 
-            super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        finishAffinity()
+
+        startActivity(intent)
 
 
     }
@@ -450,7 +447,7 @@ class LoadFileAdapter(
                 saveCharacterImage.setImageDrawable(characters[i].portraitImage)
 
                 var level = 5
-                println("spent " + data!![i].xpSpent + "total " + data!![i].totalXP)
+
                 if (data!![i].xpSpent <= 1) {
                     level = 1
                 } else if (data!![i].xpSpent <= 4) {

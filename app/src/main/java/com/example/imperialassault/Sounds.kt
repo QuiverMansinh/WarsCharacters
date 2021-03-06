@@ -4,16 +4,12 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
+import kotlin.math.roundToInt
 
 object Sounds {
 
 
-    var soundplayer: MediaPlayer = MediaPlayer()
-
-
-    var currentWeaponTypes = arrayListOf<Int>(0, 0)
-
-    val default = 0
+    val select = 0
     val lightSaber = 1
     val electric = 2
     val shing = 3
@@ -26,6 +22,8 @@ object Sounds {
     val lightsaber_stabby_stabby = 10
     val gaster_blaster_master = 11
     val impact = 12
+    val strain = 13
+    val moving = 14
 
     var sPBuilder = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_GAME)
@@ -40,9 +38,7 @@ object Sounds {
     var loaded = false
 
     fun sounEPool(context: Context) {
-        println("sdfsdf")
         if(!loaded) {
-            println("sdfsdf LOAD")
             sEPool = arrayListOf(
                 soundPool.load(context, R.raw.select, 1),
                 soundPool.load(context, R.raw.light_saber, 1),
@@ -57,20 +53,25 @@ object Sounds {
                 soundPool.load(context, R.raw.lightsaber_stabby_stabby, 1),
                 soundPool.load(context, R.raw.gaster_blaster_master, 1),
                 soundPool.load(context, R.raw.impact, 1),
+                soundPool.load(context, R.raw.strain, 1),
+                soundPool.load(context, R.raw.moving, 1)
             )
             loaded=true
         }
     }
 
-    fun buttonSound(){
-        soundPool.play(sEPool[default], 1f, 1f, 1, 0, 1f)
+    fun selectSound(){
+        soundPool.play(sEPool[select], 1f, 1f, 1, 0, 1f)
+    }
+    fun strainSound(){
+        soundPool.play(sEPool[strain], 1f, 1f, 1, 0, 1f)
     }
 
     fun equipSound(context: Context, equipSoundType: Int) {
         when (equipSoundType) {
-            default -> {
+            select -> {
                 soundPool.play(
-                    sEPool[default],
+                    sEPool[select],
                 1f, 1f, 1, 0, 1f)
             }
             lightSaber -> {
@@ -116,15 +117,27 @@ object Sounds {
         }
     }
 
-    fun attackSound(context: Context) {
+    fun attackSound() {
+        val character = MainActivity.selectedCharacter!!
         var whichSound = 0
+        if(character.weapons.size>0) {
+            var index = character.weapons[0]
+            if(character.weapons[0]>Items.meleeArray!!.size){
+                index-=Items.meleeArray!!.size
+                whichSound = Items.rangedArray!![index].soundType
+            }
+            else{
+                whichSound = Items.meleeArray!![index].soundType
+            }
 
-        if (currentWeaponTypes[0] == 0) {
-            whichSound = 1
-        } else if (currentWeaponTypes[0] == 0) whichSound = 0
-        else if (currentWeaponTypes[0] != 0 && currentWeaponTypes[1] != 0) whichSound =
-            (Math.random() * 2).toInt()
-        when (currentWeaponTypes[whichSound]) {
+        }
+
+        when (whichSound) {
+            0->{
+                soundPool.play(
+                    sEPool[impact],
+                    1f, 1f, 1, 0, 1f)
+            }
             shing -> {
                 soundPool.play(
                     sEPool[slice],
@@ -153,23 +166,33 @@ object Sounds {
         }
     }
 
-    fun damagedSound(context: Context, whichWeapon: Int) {
-        when (whichWeapon) {
-            shing -> {
+    fun damagedSound(context: Context, damageType: Int) {
+        when (damageType) {
+            slice -> {
                 soundPool.play(
                     sEPool[slice],
                     1f, 1f, 1, 0, 1f)
             }
-            equip_impact -> {
+            impact -> {
                 soundPool.play(
                     sEPool[impact],
                     1f, 1f, 1, 0, 1f)
             }
-            equip_gun -> {
+            gaster_blaster_master -> {
                 soundPool.play(
                     sEPool[gaster_blaster_master],
                     1f, 1f, 1, 0, 1f)
             }
         }
+    }
+
+    fun conditionSound(conditionType:Int){
+
+    }
+
+    fun movingSound(){
+        soundPool.play(
+            sEPool[moving],
+            1f, 1f, 1, 0, 1f)
     }
 }

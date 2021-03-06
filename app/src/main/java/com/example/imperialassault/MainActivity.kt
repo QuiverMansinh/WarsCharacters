@@ -1,19 +1,16 @@
 package com.example.imperialassault
 
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.launch
 import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
@@ -22,14 +19,16 @@ class MainActivity : AppCompatActivity() {
 
 
         setContentView(R.layout.activity_main)
+        Sounds.sounEPool(this)
+
 
         newButton.setOnClickListener {
-            Sounds.buttonSound()
+            Sounds.selectSound()
             val intent = Intent(this, Characters_list::class.java)
                 startActivity(intent)
         }
         loadButton.setOnClickListener {
-            Sounds.buttonSound()
+            Sounds.selectSound()
             val intent = Intent(this, LoadScreen::class.java)
                 startActivity(intent)
         }
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         if(sliceAnim == null) {
             sliceAnim = createAnimation("slice")
         }
-        Sounds.sounEPool(this)
+
     }
 
 
