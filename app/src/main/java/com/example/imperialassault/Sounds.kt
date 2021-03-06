@@ -24,6 +24,7 @@ object Sounds {
     val impact = 12
     val strain = 13
     val moving = 14
+    val negative = 15
 
     var sPBuilder = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_GAME)
@@ -54,7 +55,8 @@ object Sounds {
                 soundPool.load(context, R.raw.gaster_blaster_master, 1),
                 soundPool.load(context, R.raw.impact, 1),
                 soundPool.load(context, R.raw.strain, 1),
-                soundPool.load(context, R.raw.moving, 1)
+                soundPool.load(context, R.raw.moving, 1),
+                soundPool.load(context, R.raw.negative, 1)
             )
             loaded=true
         }
@@ -62,6 +64,9 @@ object Sounds {
 
     fun selectSound(){
         soundPool.play(sEPool[select], 1f, 1f, 1, 0, 1f)
+    }
+    fun negativeSound(){
+        soundPool.play(sEPool[negative], 1f, 1f, 1, 0, 1f)
     }
     fun strainSound(){
         soundPool.play(sEPool[strain], 1f, 1f, 1, 0, 1f)

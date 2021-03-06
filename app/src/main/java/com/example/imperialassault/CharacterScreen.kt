@@ -42,6 +42,7 @@ import kotlinx.android.synthetic.main.grid_item.view.*
 import kotlinx.android.synthetic.main.screen_settings.*
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
+import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -999,6 +1000,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     private fun showNoActionsLeftToast() {
+        Sounds.negativeSound()
         val noActionsLeftToast = Toast(this)
         noActionsLeftToast!!.duration = Toast.LENGTH_SHORT
         noActionsLeftToast!!.view = layoutInflater.inflate(
@@ -2619,6 +2621,9 @@ fun updateSideBarState(){
             xpCardImages[cardNo].animate().alpha(1f).duration = 50
             character.xpSpent += character.xpScores[cardNo]
         }
+        else{
+            showNotEnoughXP()
+        }
         xpLeft = character.totalXP - character.xpSpent
         xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
         character.rewardObtained = character.xpCardsEquipped[8]
@@ -2630,6 +2635,23 @@ fun updateSideBarState(){
         updateImages()
         updateStats()
 
+    }
+
+    private fun showNotEnoughXP() {
+        Sounds.negativeSound()
+        val toast = Toast(this)
+        toast!!.duration = Toast.LENGTH_SHORT
+        val view = this.layoutInflater.inflate(
+            R.layout.toast_no_actions_left,
+            null,
+            false
+        )
+        view.toast_text.setText("NOT ENOUGH XP")
+
+
+        toast!!.view = view
+        toast!!.setGravity(Gravity.CENTER, 0, 0)
+        toast!!.show()
     }
 
     fun addXP(view: View) {
@@ -2644,6 +2666,9 @@ fun updateSideBarState(){
         if (xpLeft > 0) {
             Sounds.selectSound()
             character.totalXP--
+        }
+        else{
+            Sounds.negativeSound()
         }
         xpLeft = character.totalXP - character.xpSpent;
         xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)

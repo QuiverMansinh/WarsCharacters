@@ -14,9 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_character_view.*
 import kotlinx.android.synthetic.main.activity_item__select__screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.grid_item.view.*
+import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class ItemSelectScreen : AppCompatActivity() {
 
@@ -342,6 +344,9 @@ class ImageAdapter internal constructor(
                 character.adenalImplants = true
                 return 1f
             } else {
+                showItemLimitReached(item.type)
+
+                //TODO toast 3 accessory limit reached
                 return 0.5f
             }
         }
@@ -351,6 +356,9 @@ class ImageAdapter internal constructor(
                 character.bardottanShard = true
                 return 1f
             } else {
+                showItemLimitReached(item.type)
+
+                //TODO toast 3 accessory limit reached
                 return 0.5f
             }
         }
@@ -361,6 +369,8 @@ class ImageAdapter internal constructor(
                 character.quickDrawHolster = true
                 return 1f
             } else {
+            showItemLimitReached(item.type)
+            //TODO toast 3 accessory limit reached
                 return 0.5f
             }
         }
@@ -412,6 +422,8 @@ class ImageAdapter internal constructor(
                 return 1f
             }
         }
+        //TODO toast 3 accessory limit reached
+        showItemLimitReached(item.type)
 
         //not equipped
         return 0.5f
@@ -432,6 +444,8 @@ class ImageAdapter internal constructor(
             character.armor.add(item.index)
             return 1f
         }
+        //TODO toast 1 armor limit reached
+        showItemLimitReached(item.type)
 
         //not equipped
         return 0.5f
@@ -461,9 +475,34 @@ class ImageAdapter internal constructor(
                 return 1f
             }
         }
+        //TODO toast 2 weapon limit reached
+        showItemLimitReached(item.type)
 
         //not equipped
         return 0.5f
+    }
+
+
+    private fun showItemLimitReached(itemType : Int) {
+        Sounds.negativeSound()
+        val toast = Toast(context)
+        toast!!.duration = Toast.LENGTH_SHORT
+         val view = context.layoutInflater.inflate(
+            R.layout.toast_no_actions_left,
+            null,
+            false
+        )
+        when(itemType){
+            Items.melee -> view.toast_text.setText("2 weapon limit reached")
+            Items.ranged -> view.toast_text.setText("2 weapon limit reached")
+            Items.armor -> view.toast_text.setText("1 armor limit reached")
+            Items.acc-> view.toast_text.setText("3 accessory limit reached")
+            Items.reward-> view.toast_text.setText("3 accessory limit reached")
+        }
+
+        toast!!.view = view
+        toast!!.setGravity(Gravity.CENTER, 0, 0)
+        toast!!.show()
     }
 }
 
