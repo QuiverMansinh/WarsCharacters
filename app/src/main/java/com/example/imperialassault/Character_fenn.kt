@@ -73,6 +73,7 @@ class Character_fenn : Character {
     //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context: Context){
         super.updateCharacterImages(context)
+
         if(tier == 1) {
             if (Math.random()<0.5) {
                 currentImage = tier1duplicate

@@ -84,20 +84,18 @@ class Character_ct1701 : Character {
     override fun updateCharacterImages(context: Context){
         super.updateCharacterImages(context)
 
-        var ran = Math.random()
-
         if(tier == 1){
-            if(ran<0.5){
+            if(storeRandom<0.5){
                 currentImage = getBitmap(context, "characters/ct1701/images/tier1image_duplicate.png")
             }
         }
         else if(tier == 2){
-            if(ran<0.5){
+            if(storeRandom<0.5){
                 currentImage = getBitmap(context, "characters/ct1701/images/tier2image_duplicate.png")
             }
         }
         else if(tier == 3){
-            if(ran<0.5){
+            if(storeRandom<0.5){
                 currentImage = getBitmap(context, "characters/ct1701/images/tier3image_duplicate.png")
             }
         }

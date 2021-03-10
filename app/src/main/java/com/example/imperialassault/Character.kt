@@ -126,6 +126,10 @@ open class Character {
 
     var withdrawn = false
     var rewardObtained = false
+
+
+    var changeRandom = false
+    var storeRandom = 0.0
     
     //endregion
     //****************************************************************************************************
@@ -269,6 +273,7 @@ open class Character {
                 3->tier3Equipped++
             }
         }
+        var oldTier = tier
         tier = 0
 
         if((xpSpent>=9 && (tier2Equipped >=1|| tier3Equipped >=1))||xpSpent>=11){
@@ -280,6 +285,22 @@ open class Character {
         else if((xpSpent>=3 && tier1Equipped>=1)||xpSpent >= 5) {
             tier = 1
         }
+
+        if(name_short.equals("verena") || name_short.equals("ct1701")){
+            if(tier != oldTier){
+                updateRandom()
+            }
+        }
+
         loadTierImage(context,tier)
+
+        updateRandom()
+    }
+
+    fun updateRandom(){
+        if(changeRandom) {
+            changeRandom = false
+            storeRandom = Math.random()
+        }
     }
 }

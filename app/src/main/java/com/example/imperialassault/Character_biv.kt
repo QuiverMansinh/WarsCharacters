@@ -1,8 +1,6 @@
 package com.example.imperialassault
 
 import android.content.Context
-import android.graphics.Bitmap
-import com.example.imperialassault.Character
 
 class Character_biv : Character {
 
@@ -104,12 +102,18 @@ class Character_biv : Character {
             }
         }
 
-        else if(reinforcedHelmet){
-            if(Math.random()<0.5){
-                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet1_random.png")
-            }
-            else{
-                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet2_random.png")
+        else if(reinforcedHelmet ){
+
+            if (storeRandom < 0.5) {
+                layer2 = getBitmap(
+                    context,
+                    "characters/" + name_short + "/images/helmet1_random.png"
+                )
+            } else {
+                layer2 = getBitmap(
+                    context,
+                    "characters/" + name_short + "/images/helmet2_random.png"
+                )
             }
         }
         else{

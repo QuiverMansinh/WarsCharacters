@@ -414,7 +414,9 @@ class ImageAdapter internal constructor(
                 if (!character.helmet) {
                     character.helmet = true
                     character.accessories.add(item.index)
-
+                    if(character.name_short.equals("biv")) {
+                        character.changeRandom = true
+                    }
                     return 1f
                 }
             } else {

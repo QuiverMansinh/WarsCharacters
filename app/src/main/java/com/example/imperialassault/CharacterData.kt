@@ -2,6 +2,8 @@ package com.example.imperialassault
 
 import androidx.room.*
 
+//TODO storeRandom, settings, customImage
+
 @Entity
 data class CharacterData (
     @ColumnInfo(name = "fileName") val fileName: String?,

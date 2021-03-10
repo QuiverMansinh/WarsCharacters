@@ -81,26 +81,26 @@ class Character_verena : Character {
     override fun updateCharacterImages(context: Context){
         super.updateCharacterImages(context)
 
-        var ran = Math.random()
+
 
         if(tier == 1){
-            if(ran<1f/3){
+            if(storeRandom<1f/3){
                 currentImage = tier1duplicate
             }
-            else if(ran<2f/3){
+            else if(storeRandom<2f/3){
                 currentImage = tier1duplicate2
             }
         }
         else if(tier == 2){
-            if(ran<0.5){
+            if(storeRandom<0.5){
                 currentImage = tier2duplicate
             }
         }
         else if(tier == 3){
-            if(ran<1f/3){
+            if(storeRandom<1f/3){
                 currentImage = tier3duplicate
             }
-            else if(ran<2f/3){
+            else if(storeRandom<2f/3){
                 currentImage = tier3duplicate2
             }
         }
