@@ -364,6 +364,9 @@ object Items {
 //        for (i in 0..rangedArray!!.size - 1) {
 //            rangedArray!!.get(i).index = i + meleeArray!!.size
 //        }
+
+        //Main ITEMS Array
+
         itemsArray = arrayListOf(
             Item(acc, 1, acc, R.drawable.acc_t1_bactapump,""),
             Item(acc, 1, acc, R.drawable.acc_t1_combatvembrace,""),
@@ -486,11 +489,16 @@ object Items {
             Item(rangedMod, 3,ranged, R.drawable.mod_t3_disruptioncell, ""),
             Item(rangedMod, 3,ranged, R.drawable.mod_t3_telescopingsights, ""),
         )
+
+        //indexing of all items at the array
+
         for (i in 0..itemsArray!!.size - 1) {
             itemsArray!!.get(i).index = i
         }
     }
 }
+
+//Main items Class that stores all the values for each individual item
 
 class Item() {
     var resourceId = -1
