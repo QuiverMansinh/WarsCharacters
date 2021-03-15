@@ -195,7 +195,7 @@ class ImageAdapter internal constructor(
                 gridItem.grid_image.alpha = 0.5f
                 var character = MainActivity.selectedCharacter!!
 
-                if (i == 3 && currentItem.type == Items.melee){
+                if (i == 27 ){
                     if(character.startingMeleeWeapon != null) {
                         gridItem.grid_image.setImageBitmap(character.startingMeleeWeapon)
                         setClickables(gridItem, currentItem)
@@ -204,7 +204,7 @@ class ImageAdapter internal constructor(
                         gridItem.grid_image.setImageResource(currentItem.resourceId)
                     }
                 }
-                else if (i == 3 && currentItem.type == Items.ranged) {
+                else if (i == 52) {
                     if (character.startingRangedWeapon != null) {
                         gridItem.grid_image.setImageBitmap(character.startingRangedWeapon)
                         setClickables(gridItem, currentItem)
@@ -236,18 +236,17 @@ class ImageAdapter internal constructor(
                         }
                     }
                     Items.melee -> {
-                        if (character.weapons.contains(currentItem.index) || character.mods.contains(
-                                currentItem.index
-                            )
-                        ) {
+                        if (character.weapons.contains(currentItem.index)) {
                             gridItem.grid_image.alpha = 1f
                         }
                     }
                     Items.ranged -> {
-                        if (character.weapons.contains(currentItem.index) || character.mods.contains(
-                                currentItem.index
-                            )
-                        ) {
+                        if (character.weapons.contains(currentItem.index)) {
+                            gridItem.grid_image.alpha = 1f
+                        }
+                    }
+                    Items.mod -> {
+                        if (character.mods.contains(currentItem.index)) {
                             gridItem.grid_image.alpha = 1f
                         }
                     }
@@ -277,17 +276,19 @@ class ImageAdapter internal constructor(
                 }
                 Items.acc -> {
                     gridItem.grid_image.alpha = equipAcc(currentItem)
-                    println(currentItem.index)
                 }
                 Items.armor -> {
                     gridItem.grid_image.alpha = equipArmor(currentItem)
                 }
                 Items.melee -> {
                     gridItem.grid_image.alpha = equipWeapon(currentItem)
-
                 }
                 Items.ranged -> {
                     gridItem.grid_image.alpha = equipWeapon(currentItem)
+                }
+                Items.mod -> {
+                    gridItem.grid_image.alpha = equipMod(currentItem)
+
                 }
             }
             if (gridItem.grid_image.alpha == 1f) {
@@ -328,89 +329,35 @@ class ImageAdapter internal constructor(
         //remove if already equipped
         if (character.rewards.remove(item.index)) {
             Sounds.selectSound()
-            when (item.index) {
-                Items.adrenalImplantsIndex -> character.adenalImplants = false
-                Items.bardottanShardIndex -> character.bardottanShard = false
-                Items.quickDrawHolsterIndex -> character.quickDrawHolster = false
-            }
             return 0.5f
         }
 
         //equip if not equipped
-
-        if (item.index == Items.adrenalImplantsIndex) {
-            if (character.accessories.size < getMaxAcc()) {
-                character.rewards.add(item.index)
-                character.adenalImplants = true
-                return 1f
-            } else {
-                showItemLimitReached(item.type)
-
-                //TODO toast 3 accessory limit reached
-                return 0.5f
-            }
-        }
-        if (item.index == Items.bardottanShardIndex) {
-            if (character.accessories.size < getMaxAcc()) {
-                character.rewards.add(item.index)
-                character.bardottanShard = true
-                return 1f
-            } else {
-                showItemLimitReached(item.type)
-
-                //TODO toast 3 accessory limit reached
-                return 0.5f
-            }
-        }
-
-        if (item.index == Items.quickDrawHolsterIndex) {
-        if (character.accessories.size < getMaxAcc()) {
-                character.rewards.add(item.index)
-                character.quickDrawHolster = true
-                return 1f
-            } else {
-            showItemLimitReached(item.type)
-            //TODO toast 3 accessory limit reached
-                return 0.5f
-            }
-        }
-
         character.rewards.add(item.index)
         return 1f
     }
 
-
-    // 3 rewards count towards accessory limit (AdrenalImplants, QuickDrawHolster,
-    // BardottanShard)
-    fun getMaxAcc(): Int {
-        var character = MainActivity.selectedCharacter!!
-        var maxAcc = 3
-        if (character.adenalImplants) {
-            maxAcc--
-        }
-        if (character.bardottanShard) {
-            maxAcc--
-        }
-        if (character.quickDrawHolster) {
-            maxAcc--
-        }
-        return maxAcc
-    }
-
     fun equipAcc(item: Item): Float {
         var character = MainActivity.selectedCharacter!!
-
+        println("")
+        println("accessory equip " + character.accessories.size)
+        println("")
         if (character.accessories.remove(item.index)) {
             Sounds.selectSound()
-            if (item.subType == Items.helmet) {
-                character.helmet = false
+
+            //turn off
+            when(item.index){
+
             }
+
+
 
             return 0.5f
         }
         //equip if slot available
-        if (character.accessories.size < getMaxAcc()) {
-            if (item.subType == Items.helmet) {
+        if (character.accessories.size < 3) {
+
+            if (item.index == Items.mandoHelmetIndex || item.index == Items.reinforcedHelmetIndex) {
                 if (!character.helmet) {
                     character.helmet = true
                     character.accessories.add(item.index)
@@ -419,8 +366,15 @@ class ImageAdapter internal constructor(
                     }
                     return 1f
                 }
+                else{
+
+                }
             } else {
                 character.accessories.add(item.index)
+                when(item.index){
+
+                }
+
                 return 1f
             }
         }
@@ -455,33 +409,34 @@ class ImageAdapter internal constructor(
 
     fun equipWeapon(item: Item): Float {
         var character = MainActivity.selectedCharacter!!
-
-        if (item.subType == Items.mod) {
-            //remove if already equipped
-            if (character.mods.remove(item.index)) {
-                Sounds.selectSound()
-                return 0.5f
-            }
-            //equip if not equipped
-            character.mods.add(item.index)
-            return 1f
-        } else {
-            //remove if already equipped
-            if (character.weapons.remove(item.index)) {
-                Sounds.selectSound()
-                return 0.5f
-            }
-            //equip if slot available
-            if (character.weapons.size < 2) {
-                character.weapons.add(item.index)
-                return 1f
-            }
+        //remove if already equipped
+        if (character.weapons.remove(item.index)) {
+            Sounds.selectSound()
+            return 0.5f
         }
+        //equip if slot available
+        if (character.weapons.size < 2) {
+            character.weapons.add(item.index)
+            return 1f
+        }
+
         //TODO toast 2 weapon limit reached
         showItemLimitReached(item.type)
 
         //not equipped
         return 0.5f
+    }
+
+    fun equipMod(item: Item): Float {
+        var character = MainActivity.selectedCharacter!!
+        //remove if already equipped
+        if (character.mods.remove(item.index)) {
+            Sounds.selectSound()
+            return 0.5f
+        }
+        //equip if not equipped
+        character.mods.add(item.index)
+        return 1f
     }
 
 
@@ -500,6 +455,7 @@ class ImageAdapter internal constructor(
             Items.armor -> view.toast_text.setText("1 armor limit reached")
             Items.acc-> view.toast_text.setText("3 accessory limit reached")
             Items.reward-> view.toast_text.setText("3 accessory limit reached")
+
         }
 
         toast!!.view = view

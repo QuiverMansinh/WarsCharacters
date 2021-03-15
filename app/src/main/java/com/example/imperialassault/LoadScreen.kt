@@ -46,6 +46,7 @@ class LoadScreen : AppCompatActivity() {
 
         loadData()
 
+
         saveDialog = Dialog(this)
         saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         saveDialog!!.setCancelable(false)
@@ -82,7 +83,28 @@ class LoadScreen : AppCompatActivity() {
     }
 
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
 
+        if(hasFocus) {
+
+            for (i in 0..listView.adapter.count - 1) {
+                println("ANIMATED LOAD")
+                var saveFileView =  listView.adapter.getView(i,listView,listView)
+                listView.adapter.getView(i,listView,listView).animate().alpha(1f)
+                var anim = ObjectAnimator.ofFloat(
+                    saveFileView,
+                    "translationX", -(i.toFloat()/2 + 1) *saveFileView.width.toFloat(),
+                    0f
+                )
+                anim.duration = ((i.toFloat()/2 + 1)  * 300).toLong()
+
+                println(""+anim.duration + " " + anim.values[0])
+
+                anim.start()
+
+            }
+        }
+    }
 
 
     private lateinit var listView:ListView
@@ -116,7 +138,7 @@ class LoadScreen : AppCompatActivity() {
                 if(position<listView.count) {
                     Sounds.selectSound()
 
-                    listView.alpha = 0f
+
 
                     //println("" + data[position])
                     loadedCharacters[position].file_name = ""+data[position].fileName
@@ -213,7 +235,12 @@ class LoadScreen : AppCompatActivity() {
 
                     MainActivity.selectedCharacter = loadedCharacters[position]
 
-                    listView.animate().alpha(0f)
+                    for (i in 0..listView.adapter.count - 1) {
+
+                        if(i!=position) {
+                            listView.adapter.getView(i, listView, listView).alpha=0f
+                        }
+                    }
                     val intent = Intent(this, CharacterScreen::class.java)
 
                     /*
@@ -431,14 +458,14 @@ class LoadFileAdapter(
 )
     : ArrayAdapter<String>(context, R.layout.save_load_item, fileNames){
 
-    var saveFiles = arrayListOf<View>()
+    open var saveFiles = arrayListOf<View>()
 
     init{
         val inflater = context.layoutInflater
         for(i in 0..fileNames.size-1){
 
             val button = inflater.inflate(R.layout.save_load_item, null, true)
-
+            button.alpha = 0f
                 val saveNameText = button.findViewById(R.id.save_file_name) as TextView
                 saveNameText.text = fileNames[i]
 
@@ -468,6 +495,10 @@ class LoadFileAdapter(
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
 
+        return saveFiles[position]
+    }
+
+    open fun getSaveFile(position : Int):View{
         return saveFiles[position]
     }
 

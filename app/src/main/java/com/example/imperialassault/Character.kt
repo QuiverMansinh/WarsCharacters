@@ -232,13 +232,8 @@ open class Character {
             var index = weapons[i]
             ancientLightSaber = index == Items.ancientLightSaberIndex
             var item:Item
-            if(index > Items.meleeArray!!.size-1){
-                index-=Items.meleeArray!!.size
-                item = Items.rangedArray!![index]
-            }
-            else{
-                item = Items.meleeArray!![index]
-            }
+            item = Items.itemsArray!![index]
+
             when(item.tier){
                 1->tier1Equipped++
                 2->tier2Equipped++
@@ -248,7 +243,7 @@ open class Character {
         for(i in 0..armor.size-1){
             var index = armor[i]
             var item:Item
-            item = Items.armorArray!![index]
+            item = Items.itemsArray!![index]
             when(item.tier){
                 1->tier1Equipped++
                 2->tier2Equipped++
@@ -265,7 +260,7 @@ open class Character {
 
 
             var item:Item
-            item = Items.accArray!![index]
+            item = Items.itemsArray!![index]
 
             when(item.tier){
                 1->tier1Equipped++

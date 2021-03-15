@@ -428,11 +428,11 @@ class CharacterScreen : AppCompatActivity() {
         }
 
         for (i in 0..character.accessories.size - 1) {
-            character.health += Items.accArray!![character.accessories[i]].health
-            character.endurance += Items.accArray!![character.accessories[i]].endurance
+            character.health += Items.itemsArray!![character.accessories[i]].health
+            character.endurance += Items.itemsArray!![character.accessories[i]].endurance
         }
         for (i in 0..character.armor.size - 1) {
-            character.health += Items.armorArray!![character.armor[i]].health
+            character.health += Items.itemsArray!![character.armor[i]].health
             //character.endurance += Items.armorArray!![character.armor[i]].endurance
         }
         for (i in 0..character.rewards.size - 1) {
@@ -2159,55 +2159,57 @@ fun updateSideBarState(){
             var imageId = R.drawable.empty_item_slot
             quickViewDialog!!.weapon_type.visibility = View.VISIBLE
 
-            if (weaponIndex == 3) {
+            if(weaponIndex>0) {
+                 if (  weaponIndex == 27) {
                 quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingMeleeWeapon)
-                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
-            } else if (weaponIndex == 3 + Items.meleeArray!!.size) {
-                quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingRangedWeapon)
-                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
-            } else if (weaponIndex > 0) {
-                if (weaponIndex > Items.meleeArray!!.size) {
-                    weaponIndex -= Items.meleeArray!!.size
-                    imageId = Items.rangedArray!![weaponIndex].resourceId
+
+                }
+                else if(weaponIndex == 52){
+                  quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingRangedWeapon)
+
+                }
+                 else {
+                    imageId = Items.itemsArray!![weaponIndex].resourceId
+                    quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
+                }
+
+                if ((Items.itemsArray!![weaponIndex].type).equals("ranged")) {
                     quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
                 } else {
-                    imageId = Items.meleeArray!![weaponIndex].resourceId
                     quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
                 }
-                //quickViewDialog!!.weapon_type.visibility = View.GONE
-
             }
-            quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
-
 
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.weapon1_type.visibility = View.VISIBLE
-
-            if (weaponIndex1 == 3) {
+            if(weaponIndex1>0){
+            if (  weaponIndex1 == 27) {
                 quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingMeleeWeapon)
-                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
-            } else if (weaponIndex1 == 3 + Items.meleeArray!!.size) {
-                quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingRangedWeapon)
-                quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
-            } else if (weaponIndex1 >= 0) {
-                if (weaponIndex1 > Items.meleeArray!!.size) {
-                    weaponIndex1 -= Items.meleeArray!!.size
-                    imageId = Items.rangedArray!![weaponIndex1].resourceId
-                    quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
-                } else {
-                    imageId = Items.meleeArray!![weaponIndex1].resourceId
-                    quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
-                }
-                //quickViewDialog!!.weapon1_type.visibility = View.GONE
+
             }
-            quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
+            else if(weaponIndex1 == 52){
+                quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingRangedWeapon)
+
+            }
+            else{
+                imageId = Items.itemsArray!![weaponIndex1].resourceId
+                quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
+            }
+
+            if((Items.itemsArray!![weaponIndex1].type).equals("ranged")){
+                quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_ranged)
+            }
+            else {
+                quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
+            }
+            }
 
 
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.armor_type.visibility = View.VISIBLE
             var armorIndex = character.armor.getOrElse(0) { -1 }
             if (armorIndex >= 0) {
-                imageId = Items.armorArray!![armorIndex].resourceId
+                imageId = Items.itemsArray!![armorIndex].resourceId
                 //quickViewDialog!!.armor_type.visibility = View.GONE
             }
             quickViewDialog!!.quick_view_armor.setImageResource(imageId)
@@ -2217,7 +2219,7 @@ fun updateSideBarState(){
             quickViewDialog!!.acc_type.visibility = View.VISIBLE
             var accIndex = character.accessories.getOrElse(0) { -1 }
             if (accIndex >= 0) {
-                imageId = Items.accArray!![accIndex].resourceId
+                imageId = Items.itemsArray!![accIndex].resourceId
                 //quickViewDialog!!.acc_type.visibility = View.GONE
             }
             quickViewDialog!!.quick_view_acc.setImageResource(imageId)
@@ -2227,7 +2229,7 @@ fun updateSideBarState(){
             quickViewDialog!!.acc1_type.visibility = View.VISIBLE
             var accIndex1 = character.accessories.getOrElse(1) { -1 }
             if (accIndex1 >= 0) {
-                imageId = Items.accArray!![accIndex1].resourceId
+                imageId = Items.itemsArray!![accIndex1].resourceId
                 quickViewDialog!!.quick_view_acc1.setImageResource(imageId)
                 //quickViewDialog!!.acc1_type.visibility = View.GONE
             }
@@ -2235,9 +2237,9 @@ fun updateSideBarState(){
 
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.acc2_type.visibility = View.VISIBLE
-            var accIndex2 = character.accessories.getOrElse(1) { -1 }
+            var accIndex2 = character.accessories.getOrElse(2) { -1 }
             if (accIndex2 >= 0) {
-                imageId = Items.accArray!![accIndex2].resourceId
+                imageId = Items.itemsArray!![accIndex2].resourceId
                 //quickViewDialog!!.acc2_type.visibility = View.GONE
             }
             quickViewDialog!!.quick_view_acc2.setImageResource(imageId)
@@ -2891,14 +2893,8 @@ class ModListAdapter internal constructor(
         for (i in 0..modIndices.size - 1) {
             var item = mContext.layoutInflater.inflate(R.layout.grid_item, null, true)
             var modIndex = modIndices[i]
-            if (modIndex > Items.meleeArray!!.size) {
-                modIndex -= Items.meleeArray!!.size
-                println(Items.rangedArray!![modIndex].resourceId)
-                item.grid_image.setImageResource(Items.rangedArray!![modIndex].resourceId)
+            item.grid_image.setImageResource(Items.itemsArray!![modIndex].resourceId)
 
-            } else {
-                item.grid_image.setImageResource(Items.meleeArray!![modIndex].resourceId)
-            }
             item.setOnClickListener {
                 onShowCard(item.grid_image)
             }
