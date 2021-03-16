@@ -1,5 +1,6 @@
 package com.example.imperialassault
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,7 +9,10 @@ import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
+import android.view.Gravity
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_character_view.*
+import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import java.io.InputStream
 
 open class Character {
@@ -41,7 +45,7 @@ open class Character {
     var xpEndurances: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpHealths: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
     var xpSpeeds: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-
+    var xpItems = intArrayOf(-1,-1,-1,-1,-1,-1,-1,-1,-1)
 
     var bio_title = ""
     var bio_quote = ""
@@ -71,13 +75,15 @@ open class Character {
     var bardottanShard = false
 
     var tier = 0
-    //var tierImages = ArrayList<Bitmap?>()
+    var imageSetting = -1 //-1 = auto, 0 = default, 1 = tier1, 2 = tier2, 3 = tier3
 
     var xpCardImages  = ArrayList<Bitmap>()
     var companionCard:Bitmap? = null
     var portraitImage:Drawable? = null
     var portraitRow = 0
     var portraitCol = 0
+
+
 
     //****************************************************************************************************
     //region To Save
@@ -130,7 +136,7 @@ open class Character {
 
     var changeRandom = false
     var storeRandom = 0.0
-    
+
     //endregion
     //****************************************************************************************************
 
@@ -224,6 +230,29 @@ open class Character {
         reinforcedHelmet = false
         astromech = false
 
+
+
+        var oldTier = tier
+
+        if(imageSetting == -1){
+            calculateTier()
+        }
+        else{
+            tier = imageSetting
+        }
+
+        if(name_short.equals("verena") || name_short.equals("ct1701")){
+            if(tier != oldTier){
+                updateRandom()
+            }
+        }
+
+        loadTierImage(context,tier)
+
+        updateRandom()
+    }
+
+    fun calculateTier(){
         var tier1Equipped = 0
         var tier2Equipped = 0
         var tier3Equipped = 0
@@ -268,7 +297,6 @@ open class Character {
                 3->tier3Equipped++
             }
         }
-        var oldTier = tier
         tier = 0
 
         if((xpSpent>=9 && (tier2Equipped >=1|| tier3Equipped >=1))||xpSpent>=11){
@@ -280,16 +308,6 @@ open class Character {
         else if((xpSpent>=3 && tier1Equipped>=1)||xpSpent >= 5) {
             tier = 1
         }
-
-        if(name_short.equals("verena") || name_short.equals("ct1701")){
-            if(tier != oldTier){
-                updateRandom()
-            }
-        }
-
-        loadTierImage(context,tier)
-
-        updateRandom()
     }
 
     fun updateRandom(){
@@ -297,5 +315,105 @@ open class Character {
             changeRandom = false
             storeRandom = Math.random()
         }
+    }
+
+    fun equipXP(cardNo:Int, context: Activity){
+
+        if(xpItems[cardNo]>0){
+            var xpItem = Items.itemsArray!![xpItems[cardNo]]
+            when(xpItem.type){
+                Items.melee->{
+                    if(weapons.size<2){
+                        weapons.add(xpItem.index);
+                        xpCardsEquipped[cardNo] = true
+                        xpSpent += xpScores[cardNo]
+                        Sounds.equipSound(context,xpItem.soundType)
+                    }
+                    else{
+                        showItemLimitReached(xpItem.type,context)
+                    }
+                }
+                Items.ranged->{
+                    if(weapons.size<2){
+                        weapons.add(xpItem.index)
+                        xpCardsEquipped[cardNo] = true
+                        xpSpent += xpScores[cardNo]
+                        Sounds.equipSound(context,xpItem.soundType)
+                    }
+                    else{
+                        showItemLimitReached(xpItem.type,context)
+                    }
+                }
+                Items.armor->{
+                    if(armor.size<1){
+                        armor.add(xpItem.index)
+                        xpCardsEquipped[cardNo] = true
+                        xpSpent += xpScores[cardNo]
+                        Sounds.equipSound(context,xpItem.soundType)
+                    }
+                    else{
+                        showItemLimitReached(xpItem.type,context)
+                    }
+                }
+                Items.acc->{
+                    if(accessories.size<3){
+                        accessories.add(xpItem.index)
+                        xpCardsEquipped[cardNo] = true
+                        xpSpent += xpScores[cardNo]
+                        Sounds.equipSound(context,xpItem.soundType)
+                    }
+                    else{
+                        showItemLimitReached(xpItem.type,context)
+                    }
+                }
+                Items.mod->{
+                    mods.add(xpItem.index)
+                    xpCardsEquipped[cardNo] = true
+                    xpSpent += xpScores[cardNo]
+                }
+            }
+        }
+        else{
+            xpCardsEquipped[cardNo] = true
+            xpSpent += xpScores[cardNo]
+        }
+    }
+    fun unequipXP(cardNo:Int){
+        xpCardsEquipped[cardNo] = false
+        xpSpent -= xpScores[cardNo]
+        if(xpItems[cardNo]>0){
+            var xpItem = Items.itemsArray!![xpItems[cardNo]]
+            when(xpItem.type){
+                Items.melee->{if(weapons.contains(xpItem.index)){weapons.remove(xpItem.index)}}
+                Items.ranged->{if(weapons.contains(xpItem.index)){weapons.remove(xpItem.index)}}
+                Items.armor->{if(armor.contains(xpItem.index)){armor.remove(xpItem.index)}}
+                Items.acc->{if(accessories.contains(xpItem.index)){accessories.remove(xpItem.index)}}
+                Items.mod->{if(mods.contains(xpItem.index)){mods.remove(xpItem.index)}}
+            }
+        }
+    }
+
+
+    private fun showItemLimitReached(itemType : Int,context: Activity) {
+        Sounds.negativeSound()
+        val toast = Toast(context)
+        toast!!.duration = Toast.LENGTH_SHORT
+        val view = context.layoutInflater.inflate(
+            R.layout.toast_no_actions_left,
+            null,
+            false
+        )
+        when(itemType){
+            Items.melee -> view.toast_text.setText("2 weapon limit reached")
+            Items.ranged -> view.toast_text.setText("2 weapon limit reached")
+            Items.armor -> view.toast_text.setText("1 armor limit reached")
+            Items.acc-> view.toast_text.setText("3 accessory limit reached")
+            Items.reward-> view.toast_text.setText("3 accessory limit reached")
+
+        }
+
+        toast!!.view = view
+        toast!!.setGravity(Gravity.CENTER, 0, 0)
+        toast!!.show()
     }
 }

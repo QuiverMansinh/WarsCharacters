@@ -40,6 +40,7 @@ class Character_onar : Character {
         xpEndurances = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
         xpHealths = intArrayOf(0, 0, 0, 2, 0, 0, 3, 0, 0)
         xpSpeeds = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        xpItems = intArrayOf(-1,-1,-1,-1,-1,-1,100,-1,-1)
 
         portraitRow = 3
         portraitCol = 2

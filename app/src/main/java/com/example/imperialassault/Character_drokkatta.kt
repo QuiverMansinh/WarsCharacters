@@ -40,6 +40,7 @@ class Character_drokkatta : Character {
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpHealths = intArrayOf(2,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,95,94,-1,-1,-1,-1)
 
         portraitRow = 4
         portraitCol = 3

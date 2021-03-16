@@ -42,6 +42,7 @@ class Character_shyla : Character {
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,1,0)
         xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,102,103,-1,-1,-1,-1)
 
         portraitRow = 1
         portraitCol = 3

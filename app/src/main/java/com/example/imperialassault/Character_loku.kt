@@ -39,6 +39,7 @@ class Character_loku : Character {
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpHealths = intArrayOf(0,0,0,0,0,2,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,96,-1,-1,-1,-1,-1)
 
         portraitRow = 3
         portraitCol = 1

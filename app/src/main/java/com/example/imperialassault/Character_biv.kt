@@ -38,6 +38,7 @@ class Character_biv : Character {
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpHealths = intArrayOf(0,0,0,0,4,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,-1,89,90,-1,-1,-1)
 
 
 

@@ -195,7 +195,7 @@ class ImageAdapter internal constructor(
                 gridItem.grid_image.alpha = 0.5f
                 var character = MainActivity.selectedCharacter!!
 
-                if (i == 27 ){
+                if (currentItem.index == 27 ){
                     if(character.startingMeleeWeapon != null) {
                         gridItem.grid_image.setImageBitmap(character.startingMeleeWeapon)
                         setClickables(gridItem, currentItem)
@@ -204,7 +204,7 @@ class ImageAdapter internal constructor(
                         gridItem.grid_image.setImageResource(currentItem.resourceId)
                     }
                 }
-                else if (i == 52) {
+                else if (currentItem.index == 52) {
                     if (character.startingRangedWeapon != null) {
                         gridItem.grid_image.setImageBitmap(character.startingRangedWeapon)
                         setClickables(gridItem, currentItem)

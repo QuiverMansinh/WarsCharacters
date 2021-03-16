@@ -40,6 +40,7 @@ class Character_mak : Character {
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpHealths = intArrayOf(0,0,0,2,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,-1,-1,-1,-1,-1,97)
 
         portraitRow = 0
         portraitCol = 2

@@ -16,6 +16,7 @@ object Items {
     const val melee = 3
     const val ranged = 4
     const val mod = 5
+    const val xp = 6
 
 
     const val tier1 = -1
@@ -45,21 +46,22 @@ object Items {
             Item(acc, 1, acc, R.drawable.acc_t1_combatvembrace,""),
             Item(acc, 1, acc, R.drawable.acc_t1_emergancyinjector,""),
             Item(acc, 1, acc, R.drawable.acc_t1_portablemedkit,""),
+            //4
             Item(acc, 1, acc, R.drawable.acc_t1_survivalgear,""),
-            //5
             Item(acc, 2, acc, R.drawable.acc_t2_cyberneticarm,""),
             Item(acc, 2, acc, R.drawable.acc_t2_extraammunition,"blaster"),
             Item(acc, 2, acc, R.drawable.acc_t2_mandalorianhelmet,""),
-            Item(acc, 2, acc, R.drawable.acc_t2_r5_astromech, "astromech"),
+            //8
+            Item(acc, 2, acc, R.drawable.acc_t2_r5_astromech, "droid"),
             Item(acc, 2, acc, R.drawable.acc_t2_slicingtools, "slice"),
-            //10
             Item(acc, 3, acc, R.drawable.acc_t3_combatknife, "slice"),
             Item(acc, 3, acc, R.drawable.acc_t3_combatvisor,""),
+            //12
             Item(acc, 3, acc, R.drawable.acc_t3_concussiongrenades,""),
             Item(acc, 3, acc, R.drawable.acc_t3_hiddenblade, "slice"),
             Item(acc, 3, acc, R.drawable.acc_t3_personalshield,""),
-            //15
             Item(acc, 3, acc, R.drawable.acc_t3_powercharger,""),
+            //16
             Item(acc, 3, acc, R.drawable.acc_t3_reinforcedhelmet,""),
             Item(acc, 3, acc, R.drawable.acc_t3_supplypack,""),
             Item(armor, 1,armor, R.drawable.arm_t1_combatcoat,"clothing"),
@@ -69,21 +71,22 @@ object Items {
             Item(armor, 2,armor, R.drawable.arm_t2_combatcoat,"clothing"),
             Item(armor, 2,armor, R.drawable.arm_t2_environmenthazardsuit,"clothing"),
             Item(armor, 2,armor, R.drawable.arm_t2_laminatearmor,"armor"),
+            //24
             Item(armor, 3,armor, R.drawable.arm_t3_admiralsuniform,"clothing"),
-            //25
             Item(armor, 3,armor, R.drawable.arm_t3_laminatearmor,"armor"),
             Item(armor, 3,armor, R.drawable.arm_t3_plastoidarmor,"armor"),
             Item(melee, 1,melee, R.drawable.gun_t1_heroweapon,"impact"),
+            //28
             Item(melee, 1,melee, R.drawable.mel_t1_armoredgauntlets,"impact"),
             Item(melee, 1,melee, R.drawable.mel_t1_gaffistick,"impact"),
-            //30
             Item(melee, 1,melee, R.drawable.mel_t1_punchdagger,"slice"),
             Item(melee, 1,melee, R.drawable.mel_t1_vibroblade,"slice"),
+            //32
             Item(melee, 1,melee, R.drawable.mel_t1_vibroknife,"slice"),
             Item(melee, 1,melee, R.drawable.mel_t1_vibrosword,"slice"),
             Item(mod, 1,melee, R.drawable.mod_t1_balancedhilt, ""),
-            //35
             Item(mod, 1,melee, R.drawable.mod_t1_extendedhaft, ""),
+            //36
             Item(melee, 2,melee, R.drawable.mel_t2_bd_1vibroax,"impact"),
             Item(melee, 2,melee, R.drawable.mel_t2_doublevibrosword,"slice"),
             Item(melee, 2,melee, R.drawable.mel_t2_polearm,"impact"),
@@ -93,21 +96,22 @@ object Items {
             Item(mod, 2,melee, R.drawable.mod_t2_energizedhilt, ""),
             Item(mod, 2,melee, R.drawable.mod_t2_highimpactguard, ""),
             Item(mod, 2,melee, R.drawable.mod_t2_weightedhead, ""),
+            //44
             Item(mod, 2,melee, R.drawable.mod_t2_focusingbeam, ""),
-            //45
             Item(melee, 3,melee, R.drawable.mel_t3_ancientlightsaber,"lightSaber"),
             Item(melee, 3,melee, R.drawable.mel_t3_borifle,"impact"),
             Item(melee, 3,melee, R.drawable.mel_t3_electrostaff,"electric"),
+            //48
             Item(melee, 3,melee, R.drawable.mel_t3_forcepike,"impact"),
             Item(melee, 3,melee, R.drawable.mel_t3_ryykblades,"slice"),
-            //50
             Item(mod, 3,melee, R.drawable.mod_t3_shockemitter, ""),
             Item(mod, 3,melee, R.drawable.mod_t3_vibrogenerator, ""),
+            //52
             Item(ranged, 1,ranged, R.drawable.gun_t1_heroweapon,"blaster"),
             Item(ranged, 1,ranged, R.drawable.gun_t1_chargedpistol,"blaster"),
             Item(ranged, 1,ranged, R.drawable.gun_t1_ddcdefender,"blaster"),
-            //55
             Item(ranged, 1,ranged, R.drawable.gun_t1_dh17,"blaster"),
+            //56
             Item(ranged, 1,ranged, R.drawable.gun_t1_dl44,"blaster"),
             Item(ranged, 1,ranged, R.drawable.gun_t1_e11,"blaster"),
             Item(ranged, 1,ranged, R.drawable.gun_t1_handcannon,"blaster"),
@@ -117,21 +121,22 @@ object Items {
             Item(mod, 1,ranged, R.drawable.mod_t1_sniperscope, ""),
             Item(mod, 1,ranged, R.drawable.mod_t1_tacticaldisplay, ""),
             Item(mod, 1,ranged, R.drawable.mod_t1_underbarrelhh4, ""),
+            //64
             Item(mod, 1,ranged, R.drawable.mod_t1_chargedammopack, ""),
-            //65
             Item(ranged, 2,ranged, R.drawable.gun_t2_434deathhammer,"blaster"),
             Item(ranged, 2,ranged, R.drawable.gun_t2_a280,"blaster"),
             Item(ranged, 2,ranged, R.drawable.gun_t2_dt12heavyblasterpistol,"blaster"),
+            //68
             Item(ranged, 2,ranged, R.drawable.gun_t2_e11d,"blaster"),
             Item(ranged, 2,ranged, R.drawable.gun_t2_ee3carbine,"blaster"),
-            //70
             Item(ranged, 2,ranged, R.drawable.gun_t2_huntersrifle,"blaster"),
             Item(ranged, 2,ranged, R.drawable.gun_t2_t21,"blaster"),
+            //72
             Item(mod, 2,ranged, R.drawable.mod_t2_boltupgrade, ""),
             Item(mod, 2,ranged, R.drawable.mod_t2_overcharger, ""),
             Item(mod, 2,ranged, R.drawable.mod_t2_plasmacell, ""),
-            //75
             Item(mod, 2,ranged, R.drawable.mod_t2_spreadbarrel, ""),
+            //76
             Item(ranged, 3,ranged, R.drawable.gun_t3_a12sniperrifle,"blaster"),
             Item(ranged, 3,ranged, R.drawable.gun_t3_disruptorpistol,"blaster"),
             Item(ranged, 3,ranged, R.drawable.gun_t3_dlt19,"blaster"),
@@ -141,12 +146,42 @@ object Items {
             Item(ranged, 3,ranged, R.drawable.gun_t3_pulsecannon,"blaster"),
             Item(ranged, 3,ranged, R.drawable.gun_t3_sportingblaster,"blaster"),
             Item(ranged, 3,ranged, R.drawable.gun_t3_valken38carbine,"blaster"),
+            //84
             Item(mod, 3,ranged, R.drawable.mod_t3_disruptioncell, ""),
-            //85
             Item(mod, 3,ranged, R.drawable.mod_t3_telescopingsights, ""),
             Item(acc, 0,reward, R.drawable.reward1_adrenalimplant,""),
             Item(acc, 0,reward, R.drawable.reward4_bardottanshard,""),
+            //88
             Item(acc, 0,reward, R.drawable.reward19_quickdrawholster,""),
+
+            //biv 89,90
+            Item(armor,1,xp, R.drawable.xp_biv_trophyarmor,"armor"),
+            Item(mod,1,xp,R.drawable.xp_biv_vibrobayonet,""),
+            //davith 91,92
+            Item(acc,0,xp,R.drawable.xp_davith_radiantholocron,""),
+            Item(melee,1,xp,R.drawable.xp_davith_shoroudedlightsaber,"lightSaber"),
+            //diala 93
+            Item(melee,0,xp,R.drawable.xp_diala_shuenslightsaber,"lightSaber"),
+            //drokatta 94,95
+            Item(ranged,0,xp,R.drawable.xp_drokatta_repeatercannon,"ranged"),
+            Item(mod,0,xp,R.drawable.xp_drokatta_shrapnelrounds,""),
+            //loku 96
+            Item(acc,0,xp,R.drawable.xp_loku_spectrumscanner,""),
+            //mak 97
+            Item(armor,0,xp,R.drawable.xp_mak_shadowsuit,"clothing"),
+            //murne 98
+            Item(acc,0,xp,R.drawable.xp_mhd19_systemsupgrade,"droid"),
+            //murne 99
+            Item(acc,1,xp,R.drawable.xp_murne_camdroid,"droid"),
+            //onar 100
+            Item(armor,1,xp,R.drawable.xp_onar_blacksunarmor,"armor"),
+            //saska 101
+            Item(acc,0,xp,R.drawable.xp_saska_techgoggles,""),
+            //shyla 102,103
+            Item(acc,0,xp,R.drawable.xp_shyla_remotedetonator,""),
+            Item(acc,0,xp,R.drawable.xp_shyla_smokebombs,""),
+            //vinto 104
+            Item(ranged,1,xp,R.drawable.xp_vinto_offhandblaster,"blaster")
         )
 
         //indexing of all items at the array
@@ -508,7 +543,7 @@ class Item() {
         if (soundType == "impact") this.soundType =  Sounds.equip_impact
         if (soundType == "armor") this.soundType =  Sounds.equip_armor
         if (soundType == "clothing") this.soundType =  Sounds.equip_clothing
-        if (soundType == "astromech") this.soundType =  Sounds.droid
+        if (soundType == "droid") this.soundType =  Sounds.droid
     }
     constructor( type: Int, tier: Int, where: Int, imageID: Int,subType: Int, soundType:
     String) : this
@@ -525,6 +560,6 @@ class Item() {
         if (soundType == "impact") this.soundType =  Sounds.equip_impact
         if (soundType == "armor") this.soundType =  Sounds.equip_armor
         if (soundType == "clothing") this.soundType =  Sounds.equip_clothing
-        if (soundType == "astromech") this.soundType =  Sounds.droid
+        if (soundType == "droid") this.soundType =  Sounds.droid
     }
 }

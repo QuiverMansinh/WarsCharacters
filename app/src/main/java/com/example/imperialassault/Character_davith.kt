@@ -39,6 +39,7 @@ class Character_davith : Character {
         xpEndurances = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
         xpHealths = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
         xpSpeeds = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        xpItems = intArrayOf(-1,-1,-1,-1,-1,92,-1,-1,91)
 
         portraitRow = 1
         portraitCol = 0

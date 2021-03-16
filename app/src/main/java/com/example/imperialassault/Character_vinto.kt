@@ -40,6 +40,7 @@ class Character_vinto : Character {
         xpEndurances = intArrayOf(0,0,1,0,0,0,0,0,0)
         xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,1,0,0,0,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,-1,-1,104,-1,-1,-1)
 
         portraitRow = 3
         portraitCol = 3

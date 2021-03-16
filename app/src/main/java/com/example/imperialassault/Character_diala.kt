@@ -39,6 +39,7 @@ class Character_diala : Character {
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpHealths = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpSpeeds = intArrayOf(0,0,0,0,1,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,-1,-1,-1,-1,-1,93)
 
         portraitRow = 2
         portraitCol = 0

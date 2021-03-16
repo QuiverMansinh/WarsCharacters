@@ -40,6 +40,7 @@ class Character_mhd19 : Character {
         xpEndurances = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpHealths = intArrayOf(0,0,0,0,0,0,0,0,3)
         xpSpeeds = intArrayOf(0,0,0,1,0,0,0,0,0)
+        xpItems = intArrayOf(-1,-1,-1,-1,-1,-1,-1,-1,98)
 
         portraitRow = 1
         portraitCol = 2

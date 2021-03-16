@@ -56,7 +56,7 @@ class CharacterScreen : AppCompatActivity() {
     var character: Character = Character();
     var animateConditions = true
     var animateDamage = true
-    var autoImageChange = true
+
     var actionUsage = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -350,7 +350,7 @@ class CharacterScreen : AppCompatActivity() {
 
     private fun updateImages() {
 
-        if (autoImageChange) {
+
             character.updateCharacterImages(this)
             if (animateConditions) {
                 if (character.currentImage != null) {
@@ -398,7 +398,7 @@ class CharacterScreen : AppCompatActivity() {
 
 
             //quickSave()
-        }
+
     }
 
     fun onShowCompanionCard(view: View) {
@@ -1126,10 +1126,6 @@ class CharacterScreen : AppCompatActivity() {
         developersCreditsScreen!!.show()
     }
 
-    fun onDevCredits(view: View) {
-        optionsDialog!!.dismiss()
-        developersCreditsScreen!!.show()
-    }
 
     //Backgrounds
     fun onBackgroundSnow(view: View) {
@@ -1164,7 +1160,7 @@ class CharacterScreen : AppCompatActivity() {
     //************************************************************************************************************
     //region Side Navigation
     //************************************************************************************************************
-fun updateSideBarState(){
+    fun updateSideBarState(){
         when (sideMenuState) {
             -1 -> {
                 extend_down_button.animate().alpha(0f);
@@ -1913,6 +1909,10 @@ fun updateSideBarState(){
             onBackground(optionsDialog!!.backgroundOption)
             true
         }
+        optionsDialog!!.creditsOption.setOnClickListener {
+            onCredits(optionsDialog!!.backgroundOption)
+            true
+        }
     }
 
     private fun initSaveDialog() {
@@ -2021,11 +2021,6 @@ fun updateSideBarState(){
             updateConditionIcons()
         }
 
-        settingsScreen!!.toggleAutoImageChange.isChecked = autoImageChange
-        settingsScreen!!.toggleAutoImageChange.setOnClickListener {
-            autoImageChange = settingsScreen!!.toggleAutoImageChange.isChecked
-        }
-
         settingsScreen!!.toggleActionUsage.isChecked = actionUsage
         settingsScreen!!.toggleActionUsage.setOnClickListener {
             actionUsage = settingsScreen!!.toggleActionUsage.isChecked
@@ -2038,10 +2033,13 @@ fun updateSideBarState(){
             }
         }
 
-        settingsScreen!!.creditsButton.setOnClickListener {
-            onCredits(settingsScreen!!.creditsButton)
+        //show image, left and right, 
+        settingsScreen!!.imageSettingButton.setOnClickListener{
+
         }
+
     }
+
 
     private fun initBackgroundDialog() {
         backgroundDialog = Dialog(this)
@@ -2160,20 +2158,20 @@ fun updateSideBarState(){
             quickViewDialog!!.weapon_type.visibility = View.VISIBLE
 
             if(weaponIndex>0) {
-                 if (  weaponIndex == 27) {
-                quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingMeleeWeapon)
+                if (  weaponIndex == 27) {
+                    quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingMeleeWeapon)
 
                 }
                 else if(weaponIndex == 52){
-                  quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingRangedWeapon)
+                    quickViewDialog!!.quick_view_weapon.setImageBitmap(character.startingRangedWeapon)
 
                 }
-                 else {
+                else {
                     imageId = Items.itemsArray!![weaponIndex].resourceId
                     quickViewDialog!!.quick_view_weapon.setImageResource(imageId)
                 }
 
-                if ((Items.itemsArray!![weaponIndex].type).equals("ranged")) {
+                if (Items.itemsArray!![weaponIndex].type == Items.ranged) {
                     quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_ranged)
                 } else {
                     quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
@@ -2183,25 +2181,25 @@ fun updateSideBarState(){
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.weapon1_type.visibility = View.VISIBLE
             if(weaponIndex1>0){
-            if (  weaponIndex1 == 27) {
-                quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingMeleeWeapon)
+                if (  weaponIndex1 == 27) {
+                    quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingMeleeWeapon)
 
-            }
-            else if(weaponIndex1 == 52){
-                quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingRangedWeapon)
+                }
+                else if(weaponIndex1 == 52){
+                    quickViewDialog!!.quick_view_weapon1.setImageBitmap(character.startingRangedWeapon)
 
-            }
-            else{
-                imageId = Items.itemsArray!![weaponIndex1].resourceId
-                quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
-            }
+                }
+                else{
+                    imageId = Items.itemsArray!![weaponIndex1].resourceId
+                    quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
+                }
 
-            if((Items.itemsArray!![weaponIndex1].type).equals("ranged")){
-                quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_ranged)
-            }
-            else {
-                quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
-            }
+                if(Items.itemsArray!![weaponIndex1].type == Items.ranged){
+                    quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_ranged)
+                }
+                else {
+                    quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
+                }
             }
 
 
@@ -2614,14 +2612,16 @@ fun updateSideBarState(){
         var cardNo = view.tag as Int
         if (character.xpCardsEquipped[cardNo]) {
             Sounds.selectSound()
-            character.xpCardsEquipped[cardNo] = false
+            character.unequipXP(cardNo)
+
             xpCardImages[cardNo].animate().alpha(0.5f).duration = 50
-            character.xpSpent -= character.xpScores[cardNo]
+
         } else if (character.xpScores[cardNo] <= xpLeft) {
-            Sounds.selectSound()
-            character.xpCardsEquipped[cardNo] = true
-            xpCardImages[cardNo].animate().alpha(1f).duration = 50
-            character.xpSpent += character.xpScores[cardNo]
+            character.equipXP(cardNo,this)
+            if(character.xpCardsEquipped[cardNo]) {
+                xpCardImages[cardNo].animate().alpha(1f).duration = 50
+                Sounds.selectSound()
+            }
         }
         else{
             showNotEnoughXP()
@@ -2680,6 +2680,9 @@ fun updateSideBarState(){
     //************************************************************************************************************
     //region Saving
     //************************************************************************************************************
+
+    //TODO convert to work, save stats, save random, save custom image?
+
     var secondsSinceLastSave = 0
     val autosaveTIme = 600
 
