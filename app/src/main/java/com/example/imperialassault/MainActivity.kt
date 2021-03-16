@@ -12,6 +12,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
+import kotlin.concurrent.thread
+import kotlin.concurrent.timerTask
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         Sounds.sounEPool(this)
-
 
         newButton.setOnClickListener {
             Sounds.selectSound()
