@@ -6,6 +6,7 @@ import androidx.room.*
 
 @Entity
 data class CharacterData (
+
     @ColumnInfo(name = "fileName") val fileName: String?,
     @ColumnInfo(name = "date") val date: Long,
     @ColumnInfo(name = "characterName") val characterName: String?,
@@ -90,7 +91,15 @@ data class CharacterData (
     @ColumnInfo(name = "timesWeakened") val timesWeakened: Int,
     @ColumnInfo(name = "cratesPickedUp") val cratesPickedUp: Int,
     @ColumnInfo(name = "rewardObtained") val rewardObtained: Boolean,
-    @ColumnInfo(name = "withdrawn") val withdrawn: Boolean
+    @ColumnInfo(name = "withdrawn") val withdrawn: Boolean,
+
+    @ColumnInfo(name = "damageSetting") val damageSetting: Boolean,
+    @ColumnInfo(name = "conditionAnimSetting") val conditionAnimSetting: Boolean,
+    @ColumnInfo(name = "actionUsageSetting") val actionUsageSetting: Boolean,
+    @ColumnInfo(name = "soundEffectsSetting") val soundEffectsSetting: Float,
+    @ColumnInfo(name = "imageSetting") val imageSetting: Int,
+
+    @ColumnInfo(name = "deleted") var deleted: Boolean
 )
 {
     @PrimaryKey(autoGenerate = true)

@@ -25,6 +25,9 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
+import androidx.lifecycle.Observer
+import androidx.room.ColumnInfo
+import androidx.work.*
 import kotlinx.android.synthetic.main.activity_character_view.*
 import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*
@@ -351,53 +354,53 @@ class CharacterScreen : AppCompatActivity() {
     private fun updateImages() {
 
 
+        character.updateCharacterImages(this)
+        if (animateConditions) {
+            if (character.currentImage != null) {
+                character.glowImage = Bitmap.createBitmap(character.currentImage!!)
+                val input = Bitmap.createBitmap(character.currentImage!!)
+                val output = Bitmap.createBitmap(character.currentImage!!)
+
+                val rs = RenderScript.create(this)
+                val blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
+                blur.setRadius(25f)
+                val tempIn = Allocation.createFromBitmap(rs, input)
+                val tempOut = Allocation.createFromBitmap(rs, output)
+                blur.setInput(tempIn)
+                blur.forEach(tempOut)
+
+                tempOut.copyTo(character.glowImage)
+
+            }
+            character_image.setGlowBitmap(character.glowImage)
             character.updateCharacterImages(this)
-            if (animateConditions) {
-                if (character.currentImage != null) {
-                    character.glowImage = Bitmap.createBitmap(character.currentImage!!)
-                    val input = Bitmap.createBitmap(character.currentImage!!)
-                    val output = Bitmap.createBitmap(character.currentImage!!)
+        }
+        character_image.setImageBitmap(character.currentImage)
+        character_image.setLayer1Bitmap(character.layer1)
+        character_image.setLayer2Bitmap(character.layer2)
 
-                    val rs = RenderScript.create(this)
-                    val blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
-                    blur.setRadius(25f)
-                    val tempIn = Allocation.createFromBitmap(rs, input)
-                    val tempOut = Allocation.createFromBitmap(rs, output)
-                    blur.setInput(tempIn)
-                    blur.forEach(tempOut)
-
-                    tempOut.copyTo(character.glowImage)
-
-                }
-                character_image.setGlowBitmap(character.glowImage)
-                character.updateCharacterImages(this)
+        if(!character.name_short.equals("jarrod")){
+            if(character.astromech) {
+                character.companionImage = (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
             }
-            character_image.setImageBitmap(character.currentImage)
-            character_image.setLayer1Bitmap(character.layer1)
-            character_image.setLayer2Bitmap(character.layer2)
-
-            if(!character.name_short.equals("jarrod")){
-                if(character.astromech) {
-                    character.companionImage = (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
-                }
-                else{
-                    character.companionImage = null
-                }
+            else{
+                character.companionImage = null
             }
-            println(character.companionImage)
-            if (character.companionImage != null) {
-                if (conditionsActive[hidden] && animateConditions) {
-                    companion_image.visibility = View.INVISIBLE
-                } else {
-                    companion_image.setImageBitmap(character.companionImage)
-                    companion_image.visibility = View.VISIBLE
-                }
+        }
+        println(character.companionImage)
+        if (character.companionImage != null) {
+            if (conditionsActive[hidden] && animateConditions) {
+                companion_image.visibility = View.INVISIBLE
             } else {
-                companion_image.visibility = View.GONE
+                companion_image.setImageBitmap(character.companionImage)
+                companion_image.visibility = View.VISIBLE
             }
+        } else {
+            companion_image.visibility = View.GONE
+        }
 
 
-            //quickSave()
+        //quickSave()
 
     }
 
@@ -1110,7 +1113,28 @@ class CharacterScreen : AppCompatActivity() {
     fun onSettings(view: View) {
         Sounds.selectSound()
         optionsDialog!!.dismiss()
+        settingsScreen!!.imageSetting.visibility = View.INVISIBLE
+        settingsScreen!!.settingsMenu.visibility = View.VISIBLE
+
+            when (character.imageSetting) {
+                -1 -> {
+                    settingsScreen!!.imageSettingButton.text = "AUTO"
+                }
+                0 -> {
+                    settingsScreen!!.imageSettingButton.text = "DEFAULT"
+                }
+                1 -> {
+                    settingsScreen!!.imageSettingButton.text = "TIER 1"
+                }
+                2 -> {
+                    settingsScreen!!.imageSettingButton.text = "TIER 2"
+                }
+                3 -> {
+                    settingsScreen!!.imageSettingButton.text = "TIER 3"
+                }
+            }
         settingsScreen!!.show()
+
     }
 
     fun onStatistics(view: View) {
@@ -2013,17 +2037,20 @@ class CharacterScreen : AppCompatActivity() {
         settingsScreen!!.toggleDamageAnim!!.isChecked = animateDamage
         settingsScreen!!.toggleDamageAnim.setOnClickListener {
             animateDamage = settingsScreen!!.toggleDamageAnim!!.isChecked
+            character.damageAnimSetting = animateDamage
         }
 
         settingsScreen!!.toggleConditionAnim!!.isChecked = animateConditions
         settingsScreen!!.toggleConditionAnim.setOnClickListener {
             animateConditions = settingsScreen!!.toggleConditionAnim!!.isChecked
+            character.conditionAnimSetting = animateConditions
             updateConditionIcons()
         }
 
         settingsScreen!!.toggleActionUsage.isChecked = actionUsage
         settingsScreen!!.toggleActionUsage.setOnClickListener {
             actionUsage = settingsScreen!!.toggleActionUsage.isChecked
+            character.actionUsageSetting = actionUsage
             if (actionUsage) {
                 if (activated) {
                     turnOnActionButtons()
@@ -2032,15 +2059,67 @@ class CharacterScreen : AppCompatActivity() {
                 turnOffActionButtons()
             }
         }
-
-        //show image, left and right, 
-        settingsScreen!!.imageSettingButton.setOnClickListener{
-
+        settingsScreen!!.imageSettingButton.setOnClickListener {
+            settingsScreen!!.imageSetting.visibility = View.VISIBLE
+            setPreviewImage(character.tier)
+            settingsScreen!!.settingsMenu.visibility = View.INVISIBLE
+        }
+        settingsScreen!!.imagePreview.setOnClickListener {
+            settingsScreen!!.imageSetting.visibility = View.INVISIBLE
+            settingsScreen!!.settingsMenu.visibility = View.VISIBLE
+        }
+        settingsScreen!!.imageAuto.setOnClickListener {
+            setPreviewImage(-1)
+        }
+        settingsScreen!!.imageDefault.setOnClickListener {
+            setPreviewImage(0)
+        }
+        settingsScreen!!.imageTier1.setOnClickListener {
+            setPreviewImage(1)
+        }
+        settingsScreen!!.imageTier2.setOnClickListener {
+            setPreviewImage(2)
+        }
+        settingsScreen!!.imageTier3.setOnClickListener {
+            setPreviewImage(3)
         }
 
     }
 
+    private fun setPreviewImage(setting:Int) {
+        character.imageSetting = setting
 
+        character.updateCharacterImages(this)
+        settingsScreen!!.imagePreview.setImageBitmap(character.currentImage)
+        settingsScreen!!.imageAuto.alpha = 0.5f
+        settingsScreen!!.imageDefault.alpha = 0.5f
+        settingsScreen!!.imageTier1.alpha = 0.5f
+        settingsScreen!!.imageTier2.alpha = 0.5f
+        settingsScreen!!.imageTier3.alpha = 0.5f
+
+        when (setting) {
+            -1 -> {
+                settingsScreen!!.imageAuto.alpha = 1f
+                settingsScreen!!.imageSettingButton.text = "AUTO"
+            }
+            0 -> {
+                settingsScreen!!.imageDefault.alpha = 1f
+                settingsScreen!!.imageSettingButton.text = "DEFAULT"
+            }
+            1 -> {
+                settingsScreen!!.imageTier1.alpha = 1f
+                settingsScreen!!.imageSettingButton.text = "TIER 1"
+            }
+            2 -> {
+                settingsScreen!!.imageTier2.alpha = 1f
+                settingsScreen!!.imageSettingButton.text = "TIER 2"
+            }
+            3 -> {
+                settingsScreen!!.imageTier3.alpha = 1f
+                settingsScreen!!.imageSettingButton.text = "TIER 3"
+            }
+        }
+    }
     private fun initBackgroundDialog() {
         backgroundDialog = Dialog(this)
         backgroundDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -2702,25 +2781,30 @@ class CharacterScreen : AppCompatActivity() {
         //if(secondsSinceLastSave > 3) {
         //val character = MainActivity.selectedCharacter
 
+        val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(saveWorker::class.java)
+        val data = Data.Builder()
 
-        var saveFile = getCharacterData(character.file_name)
-        val database = AppDatabase.getInstance(this)
+        saveWorkRequestBuilder.setInputData(data.build())
+        saveWorkRequestBuilder.addTag("save")
+
+        val saveWorkRequest =saveWorkRequestBuilder.build()
+
+        WorkManager.getInstance(this).enqueue(saveWorkRequest)
+        WorkManager.getInstance(this)
+            .getWorkInfosByTagLiveData("save")
+            .observe(this, Observer<List<WorkInfo>> {
+                    workStatusList ->
+                val currentWorkStatus = workStatusList ?.getOrNull(0)
+                if (currentWorkStatus ?.state ?.isFinished == true)
+                {
+                    WorkManager.getInstance(this)
+                        .getWorkInfosByTagLiveData("save").removeObservers(this)
+                    println("Save Finished")
 
 
-        GlobalScope.launch {
-            if (character.id != -1) {
-                saveFile.id = character.id
-                database!!.getCharacterDAO().update(saveFile)
-                println("update save")
-            } else {
-                character.id = saveFile.id
-                database!!.getCharacterDAO().insert(saveFile)
-                println("insert save")
-            }
-            println("QUICK SAVE character " + character + " " + character.id)
+                }
+            })
 
-            secondsSinceLastSave = 0
-        }
     }
 
     fun firstManualSave() {
@@ -2731,7 +2815,6 @@ class CharacterScreen : AppCompatActivity() {
             character.file_name = saveFile.fileName + ""
 
             val database = AppDatabase.getInstance(this)
-            GlobalScope.launch {
 
                 if (character.id != -1) {
                     saveFile.id = character.id
@@ -2741,7 +2824,7 @@ class CharacterScreen : AppCompatActivity() {
                     database!!.getCharacterDAO().insert(saveFile)
                 }
 
-            }
+
         }
         secondsSinceLastSave = 0
     }
@@ -2759,6 +2842,7 @@ class CharacterScreen : AppCompatActivity() {
 
             GlobalScope.launch {
 
+
                 database!!.getCharacterDAO().insert(saveFile)
 
             }
@@ -2767,6 +2851,8 @@ class CharacterScreen : AppCompatActivity() {
         }
         secondsSinceLastSave = 0
     }
+
+
 
     override fun onBackPressed() {
         quickSave()
@@ -2854,7 +2940,15 @@ class CharacterScreen : AppCompatActivity() {
             character.timesWeakened,
             character.cratesPickedUp,
             character.rewardObtained,
-            character.withdrawn
+            character.withdrawn,
+
+                    character.damageAnimSetting,
+            character.conditionAnimSetting,
+            character.actionUsageSetting,
+            character.soundEffectsSetting,
+            character.imageSetting,
+
+            false
         )
 
 
@@ -2929,4 +3023,126 @@ class ModListAdapter internal constructor(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return items.get(position)
     }
+}
+
+
+class saveWorker(val context: Context, params: WorkerParameters): Worker
+    (context,
+    params){
+
+
+
+    override fun doWork(): Result {
+            val database = AppDatabase.getInstance(context)
+            var saveFile = getCharacterData(MainActivity.selectedCharacter!!.file_name)
+                if (MainActivity.selectedCharacter!!.id != -1) {
+                    saveFile.id = MainActivity.selectedCharacter!!.id
+                    database!!.getCharacterDAO().update(saveFile)
+                    println("update save")
+                } else {
+                    MainActivity.selectedCharacter!!.id = saveFile.id
+                    database!!.getCharacterDAO().insert(saveFile)
+                    println("insert save")
+                }
+
+        return Result.success()
+    }
+
+    fun getCharacterData(fileName: String): CharacterData {
+        val character = MainActivity.selectedCharacter!!;
+        var data = CharacterData(
+            fileName,
+            System.currentTimeMillis(),
+            character.name_short,
+            character.damage,
+            character.strain,
+            character.token,
+            character.wounded,
+            character.conditionsActive[0],
+            character.conditionsActive[1],
+            character.conditionsActive[2],
+            character.conditionsActive[3],
+            character.conditionsActive[4],
+            character.totalXP,
+            character.xpSpent,
+            character.xpCardsEquipped[0],
+            character.xpCardsEquipped[1],
+            character.xpCardsEquipped[2],
+            character.xpCardsEquipped[3],
+            character.xpCardsEquipped[4],
+            character.xpCardsEquipped[5],
+            character.xpCardsEquipped[6],
+            character.xpCardsEquipped[7],
+            character.xpCardsEquipped[8],
+            character.weapons.getOrElse(0) { -1 },
+            character.weapons.getOrElse(1) { -1 },
+            character.accessories.getOrElse(0) { -1 },
+            character.accessories.getOrElse(1) { -1 },
+            character.accessories.getOrElse(2) { -1 },
+            character.helmet,
+            character.armor.getOrElse(0) { -1 },
+            convertItemIDToString(character.mods),
+            convertItemIDToString(character.rewards),
+            character.background,
+            character.conditionsActive[0],
+            character.conditionsActive[1],
+            character.conditionsActive[2],
+            character.conditionsActive[3],
+            character.conditionsActive[4],
+            character.killCount[0],
+            character.killCount[1],
+            character.killCount[2],
+            character.killCount[3],
+            character.killCount[4],
+            character.killCount[5],
+            character.killCount[6],
+            character.killCount[7],
+            character.assistCount[0],
+            character.assistCount[1],
+            character.assistCount[2],
+            character.assistCount[3],
+            character.assistCount[4],
+            character.assistCount[5],
+            character.assistCount[6],
+            character.assistCount[7],
+            character.movesTaken,
+            character.attacksMade,
+            character.interactsUsed,
+            character.timesWounded,
+            character.timesRested,
+            character.timesWithdrawn,
+            character.activated,
+            character.damageTaken,
+            character.strainTaken,
+            character.specialActions,
+            character.timesFocused,
+            character.timesHidden,
+            character.timesStunned,
+            character.timesBleeding,
+            character.timesWeakened,
+            character.cratesPickedUp,
+            character.rewardObtained,
+            character.withdrawn,
+
+            character.damageAnimSetting,
+            character.conditionAnimSetting,
+            character.actionUsageSetting,
+            character.soundEffectsSetting,
+            character.imageSetting,
+
+            false
+        )
+
+
+        return data
+    }
+
+    fun convertItemIDToString(itemIds: ArrayList<Int>): String {
+        var itemString = ""
+        for (i in 0..itemIds.size - 1) {
+            itemString += "," + itemIds[i]
+        }
+        return itemString
+    }
+
 }

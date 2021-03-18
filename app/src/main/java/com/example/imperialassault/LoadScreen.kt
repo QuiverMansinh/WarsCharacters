@@ -83,26 +83,30 @@ class LoadScreen : AppCompatActivity() {
     }
 
 
+    fun slideAnimation(){
+
+        for (i in 0..listView.adapter.count - 1) {
+            println("ANIMATED LOAD")
+            var saveFileView =  listView.adapter.getView(i,listView,listView)
+            listView.adapter.getView(i,listView,listView).animate().alpha(1f)
+            var anim = ObjectAnimator.ofFloat(
+                saveFileView,
+                "translationX", -(i.toFloat()/2 + 1) *saveFileView.width.toFloat(),
+                0f
+            )
+            anim.duration = ((i.toFloat()/2 + 1)  * 300).toLong()
+
+            println(""+anim.duration + " " + anim.values[0])
+
+            anim.start()
+
+        }
+    }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
 
         if(hasFocus) {
+            slideAnimation()
 
-            for (i in 0..listView.adapter.count - 1) {
-                println("ANIMATED LOAD")
-                var saveFileView =  listView.adapter.getView(i,listView,listView)
-                listView.adapter.getView(i,listView,listView).animate().alpha(1f)
-                var anim = ObjectAnimator.ofFloat(
-                    saveFileView,
-                    "translationX", -(i.toFloat()/2 + 1) *saveFileView.width.toFloat(),
-                    0f
-                )
-                anim.duration = ((i.toFloat()/2 + 1)  * 300).toLong()
-
-                println(""+anim.duration + " " + anim.values[0])
-
-                anim.start()
-
-            }
         }
     }
 
@@ -123,11 +127,18 @@ class LoadScreen : AppCompatActivity() {
 
 
         if( data != null) {
+
             for(i in 0..data.size-1){
-                fileNames.add(data[i].fileName)
-                val character = selectCharacter(data[i].characterName)
-                loadedCharacters.add(character)
-                loadedCharacters[i].loadPortraitImage(this)
+                if(!data[i].deleted){
+                    fileNames.add(data[i].fileName)
+                    val character = selectCharacter(data[i].characterName)
+                    loadedCharacters.add(character)
+                    loadedCharacters[i].loadPortraitImage(this)
+                }
+                else{
+                    positionEditing = i
+                    onDelete(this.listView)
+                }
             }
 
             adapter = LoadFileAdapter(this, fileNames, loadedCharacters, data)
@@ -306,6 +317,7 @@ class LoadScreen : AppCompatActivity() {
         Sounds.selectSound()
         fileNames[positionEditing] =  edit_load_file_name.text.toString()
         adapter!!.notifyDataSetChanged()
+        slideAnimation()
         //TODO update database
 
 
@@ -314,7 +326,9 @@ class LoadScreen : AppCompatActivity() {
 
     fun onDelete(view: View){
         Sounds.selectSound()
-        saveDialog!!.cancel()
+        if(saveDialog!=null) {
+            saveDialog!!.cancel()
+        }
 
 
         val deleteWorkRequestBuilder = OneTimeWorkRequest.Builder(deleteWorker::class.java)
@@ -326,6 +340,14 @@ class LoadScreen : AppCompatActivity() {
         val deleteWorkRequest = deleteWorkRequestBuilder.build()
 
         WorkManager.getInstance(this).enqueue(deleteWorkRequest)
+
+        fileNames.removeAt(positionEditing)
+        loadedCharacters.removeAt(positionEditing)
+        adapter!!.saveFiles.removeAt(positionEditing)
+        adapter!!.notifyDataSetChanged()
+
+
+
         WorkManager.getInstance(this)
             .getWorkInfosByTagLiveData("delete")
             .observe(this, Observer<List<WorkInfo>> {
@@ -526,6 +548,8 @@ class deleteWorker(val context: Context, params: WorkerParameters): Worker
         var positionEditing = inputData.getInt("position",-1)
         if(positionEditing!=-1) {
             val database = AppDatabase.getInstance(context)
+            MainActivity.data!![positionEditing].deleted = true
+           //database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
             database!!.getCharacterDAO().deleteById(MainActivity.data!![positionEditing].id)
         }
         return Result.success()
