@@ -418,9 +418,9 @@ open class Character {
         toast!!.show()
     }
 
-    var damageAnimSetting = false
-    var conditionAnimSetting = false
-    var actionUsageSetting = false
-   var soundEffectsSetting = 0.5f
+    var damageAnimSetting = true
+    var conditionAnimSetting = true
+    var actionUsageSetting = true
+   var soundEffectsSetting = 1f
 
 }

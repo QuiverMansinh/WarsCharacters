@@ -62,63 +62,35 @@ object Sounds {
         }
     }
 
+    fun play(soundId : Int){
+        var volume = 1f
+        if(MainActivity.selectedCharacter!= null) {
+            volume=MainActivity.selectedCharacter!!.soundEffectsSetting
+        }
+        soundPool.play(soundId, volume, volume, 1, 0, 1f)
+    }
+
     fun selectSound(){
-        soundPool.play(sEPool[select], 1f, 1f, 1, 0, 1f)
+       play(sEPool[select])
     }
     fun negativeSound(){
-        soundPool.play(sEPool[negative], 1f, 1f, 1, 0, 1f)
+        play(sEPool[negative])
     }
     fun strainSound(){
-        soundPool.play(sEPool[strain], 1f, 1f, 1, 0, 1f)
+        play(sEPool[strain])
     }
 
     fun equipSound(context: Context, equipSoundType: Int) {
         when (equipSoundType) {
-            select -> {
-                soundPool.play(
-                    sEPool[select],
-                1f, 1f, 1, 0, 1f)
-            }
-            lightSaber -> {
-                soundPool.play(
-                    sEPool[lightSaber],
-                    1f, 1f, 1, 0, 1f)
-            }
-            electric -> {
-                soundPool.play(
-                    sEPool[electric],
-                    1f, 1f, 1, 0, 1f)
-            }
-            shing -> {
-                soundPool.play(
-                    sEPool[shing],
-                    1f, 1f, 1, 0, 1f)
-            }
-            equip_gun -> {
-                soundPool.play(
-                    sEPool[equip_gun],
-                    1f, 1f, 1, 0, 1f)
-            }
-            equip_impact -> {
-                soundPool.play(
-                    sEPool[equip_impact],
-                    1f, 1f, 1, 0, 1f)
-            }
-            equip_armor -> {
-                soundPool.play(
-                    sEPool[equip_armor],
-                    1f, 1f, 1, 0, 1f)
-            }
-            equip_clothing -> {
-                soundPool.play(
-                    sEPool[equip_clothing],
-                    1f, 1f, 1, 0, 1f)
-            }
-            droid -> {
-                soundPool.play(
-                    sEPool[droid],
-                    1f, 1f, 1, 0, 1f)
-            }
+            select -> { play(sEPool[select]) }
+            lightSaber -> {play(sEPool[lightSaber]) }
+            electric -> { play(sEPool[electric]) }
+            shing -> {play(sEPool[shing]) }
+            equip_gun -> {play(sEPool[equip_gun]) }
+            equip_impact -> { play(sEPool[equip_impact]) }
+            equip_armor -> {  play(sEPool[equip_armor]) }
+            equip_clothing -> { play(sEPool[equip_clothing]) }
+            droid -> {  play(sEPool[droid])}
         }
     }
 
@@ -138,56 +110,20 @@ object Sounds {
         }
 
         when (whichSound) {
-            0->{
-                soundPool.play(
-                    sEPool[impact],
-                    1f, 1f, 1, 0, 1f)
-            }
-            shing -> {
-                soundPool.play(
-                    sEPool[slice],
-                    1f, 1f, 1, 0, 1f)
-            }
-            lightSaber -> {
-                soundPool.play(
-                    sEPool[lightsaber_stabby_stabby],
-                    1f, 1f, 1, 0, 1f)
-            }
-            electric -> {
-                soundPool.play(
-                    sEPool[electric],
-                    1f, 1f, 1, 0, 1f)
-            }
-            equip_gun -> {
-                soundPool.play(
-                    sEPool[gaster_blaster_master],
-                    1f, 1f, 1, 0, 1f)
-            }
-            equip_impact -> {
-                soundPool.play(
-                    sEPool[impact],
-                    1f, 1f, 1, 0, 1f)
-            }
+            0->{play(sEPool[impact])}
+            shing -> {play(sEPool[slice])}
+            lightSaber -> {play(sEPool[lightsaber_stabby_stabby])}
+            electric -> {play(sEPool[electric])}
+            equip_gun -> { play(sEPool[gaster_blaster_master]) }
+            equip_impact -> {play(sEPool[impact])}
         }
     }
 
     fun damagedSound(context: Context, damageType: Int) {
         when (damageType) {
-            slice -> {
-                soundPool.play(
-                    sEPool[slice],
-                    1f, 1f, 1, 0, 1f)
-            }
-            impact -> {
-                soundPool.play(
-                    sEPool[impact],
-                    1f, 1f, 1, 0, 1f)
-            }
-            gaster_blaster_master -> {
-                soundPool.play(
-                    sEPool[gaster_blaster_master],
-                    1f, 1f, 1, 0, 1f)
-            }
+            slice -> {play(sEPool[slice])}
+            impact -> {play(sEPool[impact]) }
+            gaster_blaster_master -> {play(sEPool[gaster_blaster_master])}
         }
     }
 
@@ -196,8 +132,6 @@ object Sounds {
     }
 
     fun movingSound(){
-        soundPool.play(
-            sEPool[moving],
-            1f, 1f, 1, 0, 1f)
+        play(sEPool[moving])
     }
 }
