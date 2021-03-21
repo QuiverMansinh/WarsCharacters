@@ -4,52 +4,42 @@ import android.animation.Animator
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.animation.ValueAnimator.AnimatorUpdateListener
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.renderscript.Allocation
+import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
 import android.widget.ImageView
+import androidx.core.graphics.drawable.toDrawable
+import jp.wasabeef.blurry.Blurry
 import kotlin.concurrent.thread
 
-class GreenHighlight(imageView: ImageView) {
-    var anim = ValueAnimator()
-    var imageView = imageView
-    val colorsVal = arrayListOf<Int>(
-        191,
-        166
-    )
+class GreenHighlight(var imageView: ImageView, var context: Context, var resources: Resources) {
+    var anim = ValueAnimator.ofInt(0,255,0)
+    var bitmap:Bitmap? = null
 
     init {
         anim.duration = 1000
-        anim.setEvaluator(ArgbEvaluator())
-        anim.setIntValues(100, 0, 100)
         anim.repeatCount = Animator.DURATION_INFINITE.toInt()
-        anim.addUpdateListener(ValueAnimator.AnimatorUpdateListener {
-            imageView.setColorFilter(
-                Color.argb(
-                    255,
-                    64 + colorsVal[0] * anim.getAnimatedValue() as Int / 100,
-                    255,
-                    89 + colorsVal[1] * anim.getAnimatedValue() as Int / 100
-                ),
-                PorterDuff.Mode.MULTIPLY
-            )
-        })
     }
 
     fun active() {
+        bitmap = Blurry.with(context)
+            .radius(25)
+            .capture(imageView).get()
+        anim.addUpdateListener(ValueAnimator.AnimatorUpdateListener {
+            imageView.background = BitmapDrawable(resources,bitmap)
+            imageView.background.setColorFilter(Color.argb(anim.getAnimatedValue() as Int, 70, 255, 70), PorterDuff.Mode.MULTIPLY)
+        })
         anim.start()
     }
 
     fun disabled() {
         anim.cancel()
-        imageView.setColorFilter(
-            Color.argb(
-                255,
-                255,
-                255,
-                255
-            ),
-            PorterDuff.Mode.MULTIPLY
-        )
+        imageView.background = null
     }
 }

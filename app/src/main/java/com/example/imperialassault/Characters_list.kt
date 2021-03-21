@@ -1,5 +1,6 @@
 package com.example.imperialassault
 
+import android.animation.ObjectAnimator
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
@@ -74,7 +75,20 @@ class Characters_list : AppCompatActivity() {
                 charactersImage[buffer1++].setImageDrawable(drawable)
             }
         }
-
+//        for (i in 0 until charactersImage.size) {
+//            println("ANIMATED LOAD")
+//            var anim = ObjectAnimator.ofFloat(
+//                charactersImage[i],
+//                "translationX", -(i.toFloat()/2 + 1) *charactersImage[i].width.toFloat(),
+//                0f
+//            )
+//            anim.duration = ((i.toFloat()/2 + 1)  * 300).toLong()
+//
+//            println(""+anim.duration + " " + anim.values[0])
+//
+//            anim.start()
+//
+//        }
         //TODO delete selected character on load
     }
 

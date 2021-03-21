@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         if(sliceAnim == null) {
             sliceAnim = createAnimation("slice")
         }
-
     }
 
 
