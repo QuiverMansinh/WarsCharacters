@@ -243,6 +243,11 @@ class LoadScreen : AppCompatActivity() {
                     loadedCharacters[position].rewardObtained = data[position].rewardObtained
                     loadedCharacters[position].withdrawn = data[position].withdrawn
 
+                    loadedCharacters[position].damageAnimSetting = data[position].damageSetting
+                    loadedCharacters[position].soundEffectsSetting = data[position].soundEffectsSetting
+                    loadedCharacters[position].actionUsageSetting = data[position].actionUsageSetting
+                    loadedCharacters[position].imageSetting = data[position].imageSetting
+                    loadedCharacters[position].conditionAnimSetting = data[position].conditionAnimSetting
 
                     MainActivity.selectedCharacter = loadedCharacters[position]
 

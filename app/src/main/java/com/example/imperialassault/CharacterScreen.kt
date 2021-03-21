@@ -270,6 +270,10 @@ class CharacterScreen : AppCompatActivity() {
         }
         name.setText("" + character.name)
 
+        animateConditions = character.conditionAnimSetting
+        animateDamage =character.damageAnimSetting
+        actionUsage = character.actionUsageSetting
+        settingsScreen!!.soundEffectsVolume.progress = (character.soundEffectsSetting*100).toInt()
 
         when (character.defence_dice) {
             "white" -> defence.setImageDrawable(resources.getDrawable(R.drawable.dice))
@@ -1116,6 +1120,11 @@ class CharacterScreen : AppCompatActivity() {
         settingsScreen!!.imageSetting.visibility = View.INVISIBLE
         settingsScreen!!.settingsMenu.visibility = View.VISIBLE
 
+        settingsScreen!!.toggleDamageAnim!!.isChecked = animateDamage
+        settingsScreen!!.toggleConditionAnim!!.isChecked = animateDamage
+        settingsScreen!!.toggleActionUsage!!.isChecked = animateDamage
+        settingsScreen!!.soundEffectsVolume.progress = (character.soundEffectsSetting*100).toInt()
+
             when (character.imageSetting) {
                 -1 -> {
                     settingsScreen!!.imageSettingButton.text = "AUTO"
@@ -1771,9 +1780,12 @@ class CharacterScreen : AppCompatActivity() {
                 MainActivity.impactAnim!!.start()
 
             }
-            hitAnim();
-        }
 
+        }
+        else{
+            Sounds.damagedSound(this, Sounds.impact)
+        }
+        hitAnim();
     }
 
     fun hitAnim(){
@@ -1970,6 +1982,7 @@ class CharacterScreen : AppCompatActivity() {
         showCardDialog!!.setCanceledOnTouchOutside(true)
         showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         showCardDialog!!.show_card_dialog.setOnClickListener {
+            Sounds.selectSound()
             showCardDialog!!.dismiss()
             true
         }
@@ -2008,6 +2021,7 @@ class CharacterScreen : AppCompatActivity() {
         bioDialog!!.setCanceledOnTouchOutside(true)
         bioDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         bioDialog!!.bio_layout.setOnClickListener {
+            Sounds.selectSound()
             bioDialog!!.dismiss()
             true
         }
@@ -2038,12 +2052,14 @@ class CharacterScreen : AppCompatActivity() {
         settingsScreen!!.toggleDamageAnim.setOnClickListener {
             animateDamage = settingsScreen!!.toggleDamageAnim!!.isChecked
             character.damageAnimSetting = animateDamage
+            Sounds.selectSound()
         }
 
         settingsScreen!!.toggleConditionAnim!!.isChecked = animateConditions
         settingsScreen!!.toggleConditionAnim.setOnClickListener {
             animateConditions = settingsScreen!!.toggleConditionAnim!!.isChecked
             character.conditionAnimSetting = animateConditions
+            Sounds.selectSound()
             updateConditionIcons()
         }
 
@@ -2051,6 +2067,7 @@ class CharacterScreen : AppCompatActivity() {
         settingsScreen!!.toggleActionUsage.setOnClickListener {
             actionUsage = settingsScreen!!.toggleActionUsage.isChecked
             character.actionUsageSetting = actionUsage
+            Sounds.selectSound()
             if (actionUsage) {
                 if (activated) {
                     turnOnActionButtons()
@@ -2061,12 +2078,14 @@ class CharacterScreen : AppCompatActivity() {
         }
         settingsScreen!!.imageSettingButton.setOnClickListener {
             settingsScreen!!.imageSetting.visibility = View.VISIBLE
-            setPreviewImage(character.tier)
+            setPreviewImage(character.imageSetting)
             settingsScreen!!.settingsMenu.visibility = View.INVISIBLE
+
         }
         settingsScreen!!.imagePreview.setOnClickListener {
             settingsScreen!!.imageSetting.visibility = View.INVISIBLE
             settingsScreen!!.settingsMenu.visibility = View.VISIBLE
+            Sounds.selectSound()
         }
         settingsScreen!!.imageAuto.setOnClickListener {
             setPreviewImage(-1)
@@ -2084,9 +2103,29 @@ class CharacterScreen : AppCompatActivity() {
             setPreviewImage(3)
         }
 
+        settingsScreen!!.soundEffectsVolume.progress = (character.soundEffectsSetting*100).toInt()
+        settingsScreen!!.soundEffectsVolume.setOnSeekBarChangeListener(object :SeekBar
+            .OnSeekBarChangeListener{
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                Sounds.selectSound()
+                character.soundEffectsSetting = p1.toFloat()/100
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+
+
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+
+            }
+
+        })
+
     }
 
     private fun setPreviewImage(setting:Int) {
+        Sounds.selectSound()
         character.imageSetting = setting
 
         character.updateCharacterImages(this)
@@ -2942,7 +2981,7 @@ class CharacterScreen : AppCompatActivity() {
             character.rewardObtained,
             character.withdrawn,
 
-                    character.damageAnimSetting,
+            character.damageAnimSetting,
             character.conditionAnimSetting,
             character.actionUsageSetting,
             character.soundEffectsSetting,
