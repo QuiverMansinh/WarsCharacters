@@ -75,21 +75,49 @@ class Characters_list : AppCompatActivity() {
                 charactersImage[buffer1++].setImageDrawable(drawable)
             }
         }
-//        for (i in 0 until charactersImage.size) {
-//            println("ANIMATED LOAD")
-//            var anim = ObjectAnimator.ofFloat(
-//                charactersImage[i],
-//                "translationX", -(i.toFloat()/2 + 1) *charactersImage[i].width.toFloat(),
-//                0f
-//            )
-//            anim.duration = ((i.toFloat()/2 + 1)  * 300).toLong()
-//
-//            println(""+anim.duration + " " + anim.values[0])
-//
-//            anim.start()
-//
-//        }
         //TODO delete selected character on load
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        var sortedCharArray = arrayListOf<ImageView>(
+            findViewById(R.id.imageViewBiv),
+            findViewById(R.id.imageViewDiala),
+            findViewById(R.id.imageViewSaska),
+            findViewById(R.id.imageViewGideon),
+            findViewById(R.id.imageViewJarrod),
+            findViewById(R.id.imageViewVinto),
+            findViewById(R.id.imageViewMak),
+            findViewById(R.id.imageViewLoku),
+            findViewById(R.id.imageViewDrok),
+            findViewById(R.id.imageViewShyla),
+            findViewById(R.id.imageViewJyn),
+            findViewById(R.id.imageViewVerena),
+            findViewById(R.id.imageViewOnar),
+            findViewById(R.id.imageViewDavith),
+            findViewById(R.id.imageViewMHD),
+            findViewById(R.id.imageViewGaar),
+            findViewById(R.id.imageViewFenn),
+            findViewById(R.id.imageViewCT),
+            findViewById(R.id.imageViewKo),
+            findViewById(R.id.imageViewMurne),
+            findViewById(R.id.imageViewTress),
+        )
+        if(hasFocus) {
+            for (i in 0 until sortedCharArray.size) {
+                println("ANIMATED LOAD")
+                var anim = ObjectAnimator.ofFloat(
+                    sortedCharArray[i],
+                    "translationX", -(i.toFloat()/2 + 1) *sortedCharArray[i].width.toFloat(),
+                    0f
+                )
+                anim.duration = ((i.toFloat()/2 + 1)  * 300).toLong()
+
+                println(""+anim.duration + " " + anim.values[0])
+
+                anim.start()
+
+            }
+        }
     }
 
     fun setAnimation(){
