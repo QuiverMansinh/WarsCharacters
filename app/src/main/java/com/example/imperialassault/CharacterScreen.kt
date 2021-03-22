@@ -30,6 +30,8 @@ import androidx.work.*
 import com.example.imperialassault.characters.*
 import com.example.imperialassault.database.AppDatabase
 import com.example.imperialassault.database.CharacterData
+import com.example.imperialassault.effects.GreenHighlight
+import com.example.imperialassault.effects.Sounds
 import com.example.imperialassault.inventory.*
 import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.credits_to_us.*
@@ -50,6 +52,7 @@ import kotlinx.android.synthetic.main.screen_xp_select.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import java.io.InputStream
 import kotlin.random.Random
+
 
 var height = 0f
 var width = 0f
@@ -1713,7 +1716,7 @@ class CharacterScreen : AppCompatActivity() {
 
         if (!conditionsActive[focused]) {
             conditionsDialog!!.focused_select.alpha = 1f
-            character_image.focused = false
+            character_image.focused= false
             strengthGlow!!.disabled()
             techGlow!!.disabled()
             insightGlow!!.disabled()
@@ -1734,11 +1737,11 @@ class CharacterScreen : AppCompatActivity() {
         }
         if (!conditionsActive[bleeding]) {
             conditionsDialog!!.bleeding_select.alpha = 1f
-            character_image.bleeding = false
+           character_image.bleeding = false
             bleeding_add_strain.visibility = View.INVISIBLE
         } else {
             conditionsDialog!!.bleeding_select.alpha = 0.5f
-            character_image.bleeding = true
+            character_image.bleeding= true
             bleeding_add_strain.visibility = View.VISIBLE
         }
         if (!conditionsActive[weakened]) {

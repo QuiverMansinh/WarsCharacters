@@ -499,7 +499,7 @@
         app:layout_constraintStart_toStartOf="@+id/background_image"
         app:layout_constraintTop_toTopOf="@+id/overlay">
 
-        <com.example.imperialassault.effects.CharacterImageView
+        <com.example.imperialassault.CharacterImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

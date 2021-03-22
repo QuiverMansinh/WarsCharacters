@@ -12,6 +12,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.imperialassault.characters.Character
 import com.example.imperialassault.database.CharacterData
+import com.example.imperialassault.effects.Sounds
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
 

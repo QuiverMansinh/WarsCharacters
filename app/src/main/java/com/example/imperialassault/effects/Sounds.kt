@@ -1,10 +1,11 @@
-package com.example.imperialassault
+package com.example.imperialassault.effects
 
 import android.content.Context
 import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.media.SoundPool
-import kotlin.math.roundToInt
+import com.example.imperialassault.Items
+import com.example.imperialassault.MainActivity
+import com.example.imperialassault.R
 
 object Sounds {
 
@@ -58,14 +59,14 @@ object Sounds {
                 soundPool.load(context, R.raw.moving, 1),
                 soundPool.load(context, R.raw.negative, 1)
             )
-            loaded=true
+            loaded =true
         }
     }
 
     fun play(soundId : Int){
         var volume = 1f
-        if(MainActivity.selectedCharacter!= null) {
-            volume=MainActivity.selectedCharacter!!.soundEffectsSetting
+        if(MainActivity.selectedCharacter != null) {
+            volume= MainActivity.selectedCharacter!!.soundEffectsSetting
         }
         soundPool.play(soundId, volume, volume, 1, 0, 1f)
     }
@@ -83,14 +84,18 @@ object Sounds {
     fun equipSound(context: Context, equipSoundType: Int) {
         when (equipSoundType) {
             select -> { play(sEPool[select]) }
-            lightSaber -> {play(sEPool[lightSaber]) }
+            lightSaber -> {
+                play(sEPool[lightSaber]) }
             electric -> { play(sEPool[electric]) }
-            shing -> {play(sEPool[shing]) }
-            equip_gun -> {play(sEPool[equip_gun]) }
+            shing -> {
+                play(sEPool[shing]) }
+            equip_gun -> {
+                play(sEPool[equip_gun]) }
             equip_impact -> { play(sEPool[equip_impact]) }
             equip_armor -> {  play(sEPool[equip_armor]) }
             equip_clothing -> { play(sEPool[equip_clothing]) }
-            droid -> {  play(sEPool[droid])}
+            droid -> {  play(sEPool[droid])
+            }
         }
     }
 
@@ -105,20 +110,35 @@ object Sounds {
         }
 
         when (whichSound) {
-            0->{play(sEPool[impact])}
-            shing -> {play(sEPool[slice])}
-            lightSaber -> {play(sEPool[lightsaber_stabby_stabby])}
-            electric -> {play(sEPool[electric])}
+            0->{
+                play(sEPool[impact])
+            }
+            shing -> {
+                play(sEPool[slice])
+            }
+            lightSaber -> {
+                play(sEPool[lightsaber_stabby_stabby])
+            }
+            electric -> {
+                play(sEPool[electric])
+            }
             equip_gun -> { play(sEPool[gaster_blaster_master]) }
-            equip_impact -> {play(sEPool[impact])}
+            equip_impact -> {
+                play(sEPool[impact])
+            }
         }
     }
 
     fun damagedSound(context: Context, damageType: Int) {
         when (damageType) {
-            slice -> {play(sEPool[slice])}
-            impact -> {play(sEPool[impact]) }
-            gaster_blaster_master -> {play(sEPool[gaster_blaster_master])}
+            slice -> {
+                play(sEPool[slice])
+            }
+            impact -> {
+                play(sEPool[impact]) }
+            gaster_blaster_master -> {
+                play(sEPool[gaster_blaster_master])
+            }
         }
     }
 

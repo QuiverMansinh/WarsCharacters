@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.imperialassault.*
+import com.example.imperialassault.effects.Sounds
 import kotlinx.android.synthetic.main.activity_melee_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*

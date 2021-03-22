@@ -1,21 +1,16 @@
 package com.example.imperialassault
 
 import android.animation.ObjectAnimator
-import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
-import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.imperialassault.effects.Sounds
 import kotlinx.android.synthetic.main.activity_characters_list.*
 
 class Characters_list : AppCompatActivity() {

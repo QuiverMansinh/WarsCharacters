@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.example.imperialassault.Item
 import com.example.imperialassault.Items
 import com.example.imperialassault.R
-import com.example.imperialassault.Sounds
+import com.example.imperialassault.effects.Sounds
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import java.io.InputStream
 

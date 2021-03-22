@@ -1,5 +1,7 @@
 package com.example.imperialassault
 
+import com.example.imperialassault.effects.Sounds
+
 object Items {
     var rewardsArray: Array<Item>? = null
     var accArray: Array<Item>? = null

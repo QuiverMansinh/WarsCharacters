@@ -1,4 +1,4 @@
-package com.example.imperialassault
+package com.example.imperialassault.effects
 
 import android.animation.Animator
 import android.animation.ValueAnimator
