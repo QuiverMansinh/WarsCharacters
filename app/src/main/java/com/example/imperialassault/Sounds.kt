@@ -100,13 +100,8 @@ object Sounds {
         if(character.weapons.size>0) {
             var whichWeapon =(Math.random()*character.weapons.size).toInt()
             var index = character.weapons[whichWeapon]
-            if(character.weapons[whichWeapon]>=Items.meleeArray!!.size){
-                index-=Items.meleeArray!!.size
-                whichSound = Items.rangedArray!![index].soundType
-            }
-            else{
-                whichSound = Items.meleeArray!![index].soundType
-            }
+            whichSound = Items.itemsArray!![index].soundType
+
         }
 
         when (whichSound) {
@@ -128,7 +123,7 @@ object Sounds {
     }
 
     fun conditionSound(conditionType:Int){
-
+        selectSound()
     }
 
     fun movingSound(){

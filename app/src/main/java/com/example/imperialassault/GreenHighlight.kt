@@ -23,23 +23,26 @@ class GreenHighlight(var imageView: ImageView, var context: Context, var resourc
     var bitmap:Bitmap? = null
 
     init {
-        anim.duration = 1000
+        anim.duration = 2000
         anim.repeatCount = Animator.DURATION_INFINITE.toInt()
+        imageView.background.setColorFilter(Color.argb(0, 255,
+            255, 255), PorterDuff.Mode.MULTIPLY)
     }
 
     fun active() {
-        bitmap = Blurry.with(context)
-            .radius(25)
-            .capture(imageView).get()
+        //bitmap = Blurry.with(context).radius(5) .capture(imageView).get()
         anim.addUpdateListener(ValueAnimator.AnimatorUpdateListener {
-            imageView.background = BitmapDrawable(resources,bitmap)
-            imageView.background.setColorFilter(Color.argb(anim.getAnimatedValue() as Int, 70, 255, 70), PorterDuff.Mode.MULTIPLY)
+            //imageView.background = BitmapDrawable(resources,bitmap)
+            imageView.background.setColorFilter(Color.argb(anim.getAnimatedValue() as Int, 255,
+                255, 255), PorterDuff.Mode.MULTIPLY)
         })
         anim.start()
     }
 
     fun disabled() {
         anim.cancel()
-        imageView.background = null
+        //imageView.background = null
+        imageView.background.setColorFilter(Color.argb(0, 255,
+            255, 255), PorterDuff.Mode.MULTIPLY)
     }
 }

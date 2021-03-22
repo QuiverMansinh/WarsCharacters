@@ -21,7 +21,7 @@ import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.work.*
-import kotlinx.android.synthetic.main.activity_character_view.view.*
+import kotlinx.android.synthetic.main.activity_character_screen.view.*
 import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.android.synthetic.main.save_load_item.view.*
 import kotlinx.coroutines.*
@@ -94,7 +94,7 @@ class LoadScreen : AppCompatActivity() {
                 "translationX", -(i.toFloat()/2 + 1) *saveFileView.width.toFloat(),
                 0f
             )
-            anim.duration = ((i.toFloat()/2 + 1)  * 300).toLong()
+            anim.duration = ((i.toFloat()/2 + 1)  * 200).toLong()
 
             println(""+anim.duration + " " + anim.values[0])
 
@@ -119,7 +119,7 @@ class LoadScreen : AppCompatActivity() {
 
     fun listSaveFiles(data: List<CharacterData>?){
         listView = findViewById<ListView>(R.id.load_screen_list)
-        listView.alpha = 1f
+        listView.animate().alpha(1f)
         listView.divider = null
         listView.dividerHeight = 0
 
@@ -276,17 +276,18 @@ class LoadScreen : AppCompatActivity() {
 */
                     intent.putExtra("CharacterName", loadedCharacters[position].name_short)
                     intent.putExtra("Load", true)
-
-                    startActivity(intent);
-                    //adapter!!.finish()
-
                     for(i in 0..data.size-1){
 
                         var portrait = loadedCharacters[i].portraitImage as BitmapDrawable
                         //portrait.bitmap.recycle()
                     }
 
+                    startActivity(intent)
                     finish()
+                    //adapter!!.finish()
+
+
+
                 }
             }
             listView.setOnItemLongClickListener{ parent, view, position, id ->
@@ -320,11 +321,17 @@ class LoadScreen : AppCompatActivity() {
     var positionEditing = -1
     fun onApply(view: View){
         Sounds.selectSound()
-        fileNames[positionEditing] =  edit_load_file_name.text.toString()
-        adapter!!.notifyDataSetChanged()
-        slideAnimation()
+//        fileNames[positionEditing] =  edit_load_file_name.text.toString()
+       // adapter!!.notifyDataSetChanged()
+     //   slideAnimation()
         //TODO update database
+        MainActivity.data!![positionEditing].fileName =  saveDialog!!.edit_load_file_name.text.toString()
+        val database = AppDatabase.getInstance(this)
 
+        database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
+
+        startActivity(intent)
+        finish()
 
     }
 
@@ -345,13 +352,13 @@ class LoadScreen : AppCompatActivity() {
         val deleteWorkRequest = deleteWorkRequestBuilder.build()
 
         WorkManager.getInstance(this).enqueue(deleteWorkRequest)
-
+/*
         fileNames.removeAt(positionEditing)
         loadedCharacters.removeAt(positionEditing)
         adapter!!.saveFiles.removeAt(positionEditing)
         adapter!!.notifyDataSetChanged()
 
-
+*/
 
         WorkManager.getInstance(this)
             .getWorkInfosByTagLiveData("delete")
@@ -453,10 +460,10 @@ class LoadScreen : AppCompatActivity() {
 
 
         val intent = Intent(this, MainActivity::class.java)
-        finishAffinity()
+
 
         startActivity(intent)
-
+        finishAffinity()
 
     }
 

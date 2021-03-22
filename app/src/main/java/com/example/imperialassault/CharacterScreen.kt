@@ -26,9 +26,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
-import androidx.room.ColumnInfo
 import androidx.work.*
-import kotlinx.android.synthetic.main.activity_character_view.*
+import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
@@ -40,15 +39,11 @@ import kotlinx.android.synthetic.main.dialog_quick_view_button.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
-import kotlinx.android.synthetic.main.dialog_show_card.view.*
 import kotlinx.android.synthetic.main.grid_item.view.*
 import kotlinx.android.synthetic.main.screen_settings.*
 import kotlinx.android.synthetic.main.screen_stats.*
 import kotlinx.android.synthetic.main.screen_xp_select.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.io.InputStream
 import kotlin.random.Random
 
@@ -61,15 +56,20 @@ class CharacterScreen : AppCompatActivity() {
     var animateDamage = true
 
     var actionUsage = true
+    var strengthGlow: GreenHighlight? = null
+    var techGlow: GreenHighlight?= null
+    var insightGlow: GreenHighlight?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setAnimation()
-        setContentView(R.layout.activity_character_view)
+        setContentView(R.layout.activity_character_screen)
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
+
+
+
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         height = displayMetrics.heightPixels.toFloat()
@@ -79,27 +79,19 @@ class CharacterScreen : AppCompatActivity() {
         initScreen()
         initAnimations()
         initKillTracker()
-        startSaveTimer()
+
     }
 
-    fun setAnimation() {
-        /*
-        if(Build.VERSION.SDK_INT>20) {
-            val fade = android.transition.Fade()
-            fade.setDuration(200);
-            getWindow().setExitTransition(fade);
-            getWindow().setEnterTransition(fade);
-        }*/
-    }
+
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         println(" CHARACTER" + MainActivity.selectedCharacter)
-        if (hasFocus) {
+
             updateStats()
             updateImages()
             quickSave()
-        }
+
 
         if (hasFocus && !loadAnimated) {
 
@@ -549,7 +541,7 @@ class CharacterScreen : AppCompatActivity() {
             //add_strain.setText("" + character.strain)
             add_strain.setImageDrawable(getNumber(character.strain))
         } else {
-            Sounds.damagedSound(this,Sounds.impact)
+            Sounds.damagedSound(this, Sounds.impact)
             addDamage()
             if(animateDamage) {
                 hitAnim()
@@ -845,7 +837,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onAction(view: View) {
-
+        Sounds.selectSound()
         action_menu.visibility = View.INVISIBLE
         action_menu.alpha = 0f
 
@@ -915,14 +907,17 @@ class CharacterScreen : AppCompatActivity() {
     fun onAttack(view: View) {
         if (actionsLeft > 0) {
 
-            Sounds.attackSound()
+
             if (!conditionsActive[stunned]) {
                 removeCondition(focused)
                 removeCondition(hidden)
                 actionCompleted()
-
+                Sounds.attackSound()
                 character.attacksMade++
 
+            }
+            else{
+                Sounds.negativeSound()
             }
         } else {
             showNoActionsLeftToast()
@@ -937,17 +932,24 @@ class CharacterScreen : AppCompatActivity() {
 
                 character.movesTaken++
             }
+            else{
+                Sounds.negativeSound()
+            }
         } else {
             showNoActionsLeftToast()
         }
     }
 
     fun onSpecial(view: View) {
+
         if (actionsLeft > 0) {
             if (!conditionsActive[stunned]) {
                 actionCompleted()
-
+                Sounds.selectSound()
                 character.specialActions++
+            }
+            else{
+                Sounds.negativeSound()
             }
         } else {
             showNoActionsLeftToast()
@@ -957,7 +959,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onInteract(view: View) {
         if (actionsLeft > 0) {
             actionCompleted()
-
+            Sounds.selectSound()
             character.interactsUsed++
         } else {
             showNoActionsLeftToast()
@@ -989,7 +991,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onRemoveStun(view: View) {
         if (actionsLeft > 0 || !actionUsage) {
             removeCondition(stunned)
-
+            Sounds.selectSound()
             actionCompleted()
         } else {
             showNoActionsLeftToast()
@@ -999,7 +1001,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onRemoveBleeding(view: View) {
         if (actionsLeft > 0 || !actionUsage) {
             removeCondition(bleeding)
-
+            Sounds.selectSound()
             actionCompleted()
         } else {
             showNoActionsLeftToast()
@@ -1102,6 +1104,7 @@ class CharacterScreen : AppCompatActivity() {
         if (character.file_name.equals("autosave")) {
             saveDialog!!.show()
         } else {
+
             quickSave()
         }
         optionsDialog!!.dismiss()
@@ -1121,8 +1124,8 @@ class CharacterScreen : AppCompatActivity() {
         settingsScreen!!.settingsMenu.visibility = View.VISIBLE
 
         settingsScreen!!.toggleDamageAnim!!.isChecked = animateDamage
-        settingsScreen!!.toggleConditionAnim!!.isChecked = animateDamage
-        settingsScreen!!.toggleActionUsage!!.isChecked = animateDamage
+        settingsScreen!!.toggleConditionAnim!!.isChecked = animateConditions
+        settingsScreen!!.toggleActionUsage!!.isChecked = actionUsage
         settingsScreen!!.soundEffectsVolume.progress = (character.soundEffectsSetting*100).toInt()
 
             when (character.imageSetting) {
@@ -1210,7 +1213,7 @@ class CharacterScreen : AppCompatActivity() {
             1 -> {
                 extend_down_button.animate().alpha(1f)
                 extend_up_button.animate().alpha(0f)
-                kill_tracker_bar.animate().translationY(-2*height)
+                kill_tracker_bar.animate().translationY(-2* height)
                 menu_bar.animate().translationY(-height)
             }
         }
@@ -1445,8 +1448,7 @@ class CharacterScreen : AppCompatActivity() {
         vehicle_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(
                 resources.getDrawable(
-                    R.drawable
-                        .icon_vehicle
+                    R.drawable.icon_vehicle
                 )
             )
             assistDialog!!.unwound_button.setTag(vehicle)
@@ -1485,8 +1487,7 @@ class CharacterScreen : AppCompatActivity() {
         trooper_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(
                 resources.getDrawable(
-                    R.drawable
-                        .icon_trooper
+                    R.drawable.icon_trooper
                 )
             )
             assistDialog!!.unwound_button.setTag(trooper)
@@ -1519,6 +1520,9 @@ class CharacterScreen : AppCompatActivity() {
     )
 
     private fun initConditions() {
+        strengthGlow= GreenHighlight(strength_icon,this,this.resources)
+        techGlow = GreenHighlight(tech_icon,this,this.resources)
+        insightGlow = GreenHighlight(insight_icon,this,this.resources)
         conditionsActive = character.conditionsActive
         conditionViews.add(condition1)
         conditionViews.add(condition2)
@@ -1622,10 +1626,12 @@ class CharacterScreen : AppCompatActivity() {
 
     }
 
+
     fun onFocused(view: View) {
         conditionsActive[focused] = !conditionsActive[focused]
         if (conditionsActive[focused]) {
             character.timesFocused++
+            Sounds.conditionSound(focused)
         } else {
             //character.timesFocused--
             Sounds.selectSound()
@@ -1711,12 +1717,19 @@ class CharacterScreen : AppCompatActivity() {
             }
         }
 
+
         if (!conditionsActive[focused]) {
             conditionsDialog!!.focused_select.alpha = 1f
             character_image.focused = false
+            strengthGlow!!.disabled()
+            techGlow!!.disabled()
+            insightGlow!!.disabled()
         } else {
             conditionsDialog!!.focused_select.alpha = 0.5f
             character_image.focused = true
+            strengthGlow!!.active()
+            techGlow!!.active()
+            insightGlow!!.active()
         }
 
         if (!conditionsActive[stunned]) {
@@ -1729,9 +1742,11 @@ class CharacterScreen : AppCompatActivity() {
         if (!conditionsActive[bleeding]) {
             conditionsDialog!!.bleeding_select.alpha = 1f
             character_image.bleeding = false
+            bleeding_add_strain.visibility = View.INVISIBLE
         } else {
             conditionsDialog!!.bleeding_select.alpha = 0.5f
             character_image.bleeding = true
+            bleeding_add_strain.visibility = View.VISIBLE
         }
         if (!conditionsActive[weakened]) {
             conditionsDialog!!.weakened_select.alpha = 1f
@@ -1960,14 +1975,17 @@ class CharacterScreen : AppCompatActivity() {
         saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         saveDialog!!.save_button.setOnClickListener {
             if (character.file_name.equals("autosave")) {
+
                 firstManualSave()
             } else {
-                createNewSave()
+                quickSave()
             }
+            Sounds.selectSound()
             saveDialog!!.dismiss()
             true
         }
         saveDialog!!.cancel_button.setOnClickListener {
+            Sounds.selectSound()
             saveDialog!!.dismiss()
             true
         }
@@ -2804,17 +2822,7 @@ class CharacterScreen : AppCompatActivity() {
     var secondsSinceLastSave = 0
     val autosaveTIme = 600
 
-    fun startSaveTimer() {
-        GlobalScope.launch {
-            while (secondsSinceLastSave < autosaveTIme) {
-                delay(1000)
-                secondsSinceLastSave++
-            }
-            println("TIMED AUTOSAVE")
-            quickSave()
-            startSaveTimer()
-        }
-    }
+
 
     fun quickSave() {
         //if(secondsSinceLastSave > 3) {
@@ -2838,7 +2846,7 @@ class CharacterScreen : AppCompatActivity() {
                 {
                     WorkManager.getInstance(this)
                         .getWorkInfosByTagLiveData("save").removeObservers(this)
-                    println("Save Finished")
+                      println("Save Finished")
 
 
                 }
@@ -2849,55 +2857,24 @@ class CharacterScreen : AppCompatActivity() {
     fun firstManualSave() {
 
         println("FIRST MANUAL SAVE character " + character)
-        if (character != null) {
-            var saveFile = getCharacterData("" + saveDialog!!.save_name.text.toString())
-            character.file_name = saveFile.fileName + ""
-
-            val database = AppDatabase.getInstance(this)
-
-                if (character.id != -1) {
-                    saveFile.id = character.id
-                    database!!.getCharacterDAO().update(saveFile)
-                } else {
-                    character.id = saveFile.id
-                    database!!.getCharacterDAO().insert(saveFile)
-                }
+            MainActivity.selectedCharacter!!.file_name = "" + saveDialog!!.save_name.text.toString()
+          quickSave()
 
 
-        }
-        secondsSinceLastSave = 0
+
     }
 
-    fun createNewSave() {
 
-        //println("character" + character)
-        if (character != null) {
-            var saveFile = getCharacterData("" + saveDialog!!.save_name.text.toString())
-            character.file_name = saveFile.fileName + ""
-            character.id = saveFile.id
-
-            val database = AppDatabase.getInstance(this)
-
-
-            GlobalScope.launch {
-
-
-                database!!.getCharacterDAO().insert(saveFile)
-
-            }
-
-
-        }
-        secondsSinceLastSave = 0
-    }
 
 
 
     override fun onBackPressed() {
         quickSave()
-        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
 
 
+        startActivity(intent)
+        finishAffinity()
     }
 
     override fun onStop() {
@@ -2906,93 +2883,7 @@ class CharacterScreen : AppCompatActivity() {
         super.onStop()
     }
 
-    fun getCharacterData(fileName: String): CharacterData {
-        var data = CharacterData(
-            fileName,
-            System.currentTimeMillis(),
-            character.name_short,
-            character.damage,
-            character.strain,
-            character.token,
-            character.wounded,
-            character.conditionsActive[0],
-            character.conditionsActive[1],
-            character.conditionsActive[2],
-            character.conditionsActive[3],
-            character.conditionsActive[4],
-            character.totalXP,
-            character.xpSpent,
-            character.xpCardsEquipped[0],
-            character.xpCardsEquipped[1],
-            character.xpCardsEquipped[2],
-            character.xpCardsEquipped[3],
-            character.xpCardsEquipped[4],
-            character.xpCardsEquipped[5],
-            character.xpCardsEquipped[6],
-            character.xpCardsEquipped[7],
-            character.xpCardsEquipped[8],
-            character.weapons.getOrElse(0) { -1 },
-            character.weapons.getOrElse(1) { -1 },
-            character.accessories.getOrElse(0) { -1 },
-            character.accessories.getOrElse(1) { -1 },
-            character.accessories.getOrElse(2) { -1 },
-            character.helmet,
-            character.armor.getOrElse(0) { -1 },
-            convertItemIDToString(character.mods),
-            convertItemIDToString(character.rewards),
-            character.background,
-            character.conditionsActive[0],
-            character.conditionsActive[1],
-            character.conditionsActive[2],
-            character.conditionsActive[3],
-            character.conditionsActive[4],
-            character.killCount[0],
-            character.killCount[1],
-            character.killCount[2],
-            character.killCount[3],
-            character.killCount[4],
-            character.killCount[5],
-            character.killCount[6],
-            character.killCount[7],
-            character.assistCount[0],
-            character.assistCount[1],
-            character.assistCount[2],
-            character.assistCount[3],
-            character.assistCount[4],
-            character.assistCount[5],
-            character.assistCount[6],
-            character.assistCount[7],
-            character.movesTaken,
-            character.attacksMade,
-            character.interactsUsed,
-            character.timesWounded,
-            character.timesRested,
-            character.timesWithdrawn,
-            character.activated,
-            character.damageTaken,
-            character.strainTaken,
-            character.specialActions,
-            character.timesFocused,
-            character.timesHidden,
-            character.timesStunned,
-            character.timesBleeding,
-            character.timesWeakened,
-            character.cratesPickedUp,
-            character.rewardObtained,
-            character.withdrawn,
 
-            character.damageAnimSetting,
-            character.conditionAnimSetting,
-            character.actionUsageSetting,
-            character.soundEffectsSetting,
-            character.imageSetting,
-
-            false
-        )
-
-
-        return data
-    }
 
     fun convertItemIDToString(itemIds: ArrayList<Int>): String {
         var itemString = ""
@@ -3067,22 +2958,23 @@ class ModListAdapter internal constructor(
 
 class saveWorker(val context: Context, params: WorkerParameters): Worker
     (context,
-    params){
-
+    params) {
 
 
     override fun doWork(): Result {
-            val database = AppDatabase.getInstance(context)
-            var saveFile = getCharacterData(MainActivity.selectedCharacter!!.file_name)
-                if (MainActivity.selectedCharacter!!.id != -1) {
-                    saveFile.id = MainActivity.selectedCharacter!!.id
-                    database!!.getCharacterDAO().update(saveFile)
-                    println("update save")
-                } else {
-                    MainActivity.selectedCharacter!!.id = saveFile.id
-                    database!!.getCharacterDAO().insert(saveFile)
-                    println("insert save")
-                }
+        val database = AppDatabase.getInstance(context)
+        var saveFile = getCharacterData(MainActivity.selectedCharacter!!.file_name)
+        if (MainActivity.selectedCharacter!!.id != -1) {
+            saveFile.id = MainActivity.selectedCharacter!!.id
+            database!!.getCharacterDAO().update(saveFile)
+            println("update save")
+        } else {
+
+            MainActivity.selectedCharacter!!.id = database!!.getCharacterDAO()
+                .getPrimaryKey(database!!.getCharacterDAO().insert(saveFile))
+            println("insert save")
+
+        }
 
         return Result.success()
     }
@@ -3183,5 +3075,5 @@ class saveWorker(val context: Context, params: WorkerParameters): Worker
         }
         return itemString
     }
-
 }
+

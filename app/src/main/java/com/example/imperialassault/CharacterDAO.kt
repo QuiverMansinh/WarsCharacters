@@ -22,9 +22,14 @@ interface CharacterDAO {
     @Insert
     fun insert(fileName: CharacterData):Long
 
+
     @Query("DELETE FROM characterdata WHERE id LIKE :deleteId")
     fun deleteById(deleteId:Int)
 
     @Update
     fun update(character: CharacterData)
+
+    @Query("SELECT id FROM characterdata WHERE rowid = :rowId")
+    fun getPrimaryKey(rowId:Long):Int
+
 }

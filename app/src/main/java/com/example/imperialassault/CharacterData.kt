@@ -7,7 +7,7 @@ import androidx.room.*
 @Entity
 data class CharacterData (
 
-    @ColumnInfo(name = "fileName") val fileName: String?,
+    @ColumnInfo(name = "fileName") var fileName: String?,
     @ColumnInfo(name = "date") val date: Long,
     @ColumnInfo(name = "characterName") val characterName: String?,
 

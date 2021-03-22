@@ -22,6 +22,65 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bleeding_add_strain"
+            android:layout_width="180dp"
+            android:layout_height="44dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/attack_hidden2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:onClick="onShowHiddenCard"
+                android:padding="5dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/attack_hidden4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/condition_bleeding" />
+
+            <ImageView
+                android:id="@+id/attack_hidden4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:onClick="onShowHiddenCard"
+                android:padding="5dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.45"
+                app:layout_constraintStart_toEndOf="@+id/attack_hidden2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bleeding_strain" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/advent_pro_semibold"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                app:layout_constraintStart_toEndOf="@+id/attack_hidden4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/attack_hidden3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:onClick="onShowHiddenCard"
+                android:visibility="visible"
+                app:layout_constraintStart_toEndOf="@+id/textView8"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/strain" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/action_attack"
             android:layout_width="180dp"
@@ -1161,6 +1220,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="20dp"
+            android:background="@drawable/tech_glow"
             app:layout_constraintStart_toEndOf="@+id/insight_icon"
             app:layout_constraintTop_toTopOf="@+id/insight_icon"
             app:srcCompat="@drawable/tech" />
@@ -1199,6 +1259,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/insight_glow"
             app:layout_constraintEnd_toEndOf="@+id/name"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toBottomOf="@+id/name"
@@ -1238,6 +1299,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="20dp"
+            android:background="@drawable/strength_glow"
             app:layout_constraintEnd_toStartOf="@+id/insight_icon"
             app:layout_constraintTop_toTopOf="@+id/insight_icon"
             app:srcCompat="@drawable/strength" />

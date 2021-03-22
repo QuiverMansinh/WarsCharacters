@@ -12,7 +12,7 @@ import android.renderscript.ScriptIntrinsicBlur
 import android.view.Gravity
 import android.widget.Toast
 import androidx.room.ColumnInfo
-import kotlinx.android.synthetic.main.activity_character_view.*
+import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import java.io.InputStream
 
