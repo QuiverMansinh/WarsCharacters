@@ -10,10 +10,10 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.imperialassault.characters.Character
+import com.example.imperialassault.database.CharacterData
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
-import kotlin.concurrent.thread
-import kotlin.concurrent.timerTask
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object{
-        var selectedCharacter:Character? = null
+        var selectedCharacter: Character? = null
         var blastAnim: AnimationDrawable? = null
         var impactAnim : AnimationDrawable? = null
         var restAnim: AnimationDrawable? = null

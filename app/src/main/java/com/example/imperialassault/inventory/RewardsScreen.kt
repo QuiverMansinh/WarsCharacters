@@ -1,4 +1,4 @@
-package com.example.imperialassault
+package com.example.imperialassault.inventory
 
 import android.app.Dialog
 import android.graphics.Color
@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
+import com.example.imperialassault.*
 import kotlinx.android.synthetic.main.activity_rewards_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
@@ -90,7 +91,7 @@ class RewardsScreen : AppCompatActivity() {
         }
     }
 
-    fun setClickables(gridItem:ImageView, currentItem:Item) {
+    fun setClickables(gridItem:ImageView, currentItem: Item) {
         gridItem.setOnLongClickListener {
             onShowCard(gridItem)
             true
@@ -163,7 +164,7 @@ class RewardsScreen : AppCompatActivity() {
             Items.melee -> view.toast_text.setText("2 weapon limit reached")
             Items.ranged -> view.toast_text.setText("2 weapon limit reached")
             Items.armor -> view.toast_text.setText("1 armor limit reached")
-            Items.acc-> view.toast_text.setText("3 accessory limit reached")
+            Items.acc -> view.toast_text.setText("3 accessory limit reached")
             -1 -> view.toast_text.setText("1 helmet limit reached")
         }
 

@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
         <activity android:name=".CharacterImageMenu"></activity>
-        <activity android:name=".RewardsScreen" />
+        <activity android:name=".inventory.RewardsScreen" />
         <activity android:name=".LoadScreen" />
 
-        <activity android:name=".RangedScreen" />
-        <activity android:name=".MeleeScreen" />
-        <activity android:name=".AccScreen" />
-        <activity android:name=".ArmorScreen" />
+        <activity android:name=".inventory.RangedScreen" />
+        <activity android:name=".inventory.MeleeScreen" />
+        <activity android:name=".inventory.AccScreen" />
+        <activity android:name=".inventory.ArmorScreen" />
         <activity android:name=".CharacterScreen" />
         <activity android:name=".Characters_list" />
         <activity android:name=".MainActivity">

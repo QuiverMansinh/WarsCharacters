@@ -1,8 +1,6 @@
 package com.example.imperialassault.characters
 
 import android.content.Context
-import android.graphics.Bitmap
-import com.example.imperialassault.Character
 import com.example.imperialassault.R
 
 class Character_diala : Character {

@@ -1,4 +1,4 @@
-package com.example.imperialassault
+package com.example.imperialassault.database
 
 import androidx.room.*
 

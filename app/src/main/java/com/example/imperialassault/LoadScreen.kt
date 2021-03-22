@@ -13,16 +13,13 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import androidx.core.view.size
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.work.*
 import com.example.imperialassault.characters.*
-import kotlinx.android.synthetic.main.activity_character_screen.view.*
+import com.example.imperialassault.database.AppDatabase
+import com.example.imperialassault.database.CharacterData
 import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.android.synthetic.main.save_load_item.view.*
 import kotlinx.coroutines.*
@@ -385,7 +382,7 @@ class LoadScreen : AppCompatActivity() {
     }
 
 
-    fun selectCharacter(characterName: String?):Character{
+    fun selectCharacter(characterName: String?): Character {
         var character = Character();
         when (characterName) {
             "biv" -> {

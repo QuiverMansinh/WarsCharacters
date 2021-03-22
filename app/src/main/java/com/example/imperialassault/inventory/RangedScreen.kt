@@ -1,4 +1,4 @@
-package com.example.imperialassault
+package com.example.imperialassault.inventory
 
 import android.app.Dialog
 import android.content.Intent
@@ -11,8 +11,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import com.example.imperialassault.*
 
 import kotlinx.android.synthetic.main.activity_ranged_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
@@ -118,7 +118,7 @@ class RangedScreen : AppCompatActivity() {
         }
     }
 
-    fun setClickables(gridItem:ImageView, currentItem:Item) {
+    fun setClickables(gridItem:ImageView, currentItem: Item) {
         gridItem.setOnLongClickListener {
             onShowCard(gridItem)
             true

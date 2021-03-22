@@ -1,4 +1,4 @@
-package com.example.imperialassault
+package com.example.imperialassault.database
 
 import android.content.Context
 import androidx.room.*
@@ -11,7 +11,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object{
         private var instance: AppDatabase? = null
 
-        fun getInstance(context: Context):AppDatabase? {
+        fun getInstance(context: Context): AppDatabase? {
             if(instance == null) {
                 instance = Room.databaseBuilder(
                     context.applicationContext,

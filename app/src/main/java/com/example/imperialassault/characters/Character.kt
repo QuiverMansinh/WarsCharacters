@@ -1,18 +1,16 @@
-package com.example.imperialassault
+package com.example.imperialassault.characters
 
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
-import android.renderscript.Allocation
-import android.renderscript.Element
-import android.renderscript.RenderScript
-import android.renderscript.ScriptIntrinsicBlur
 import android.view.Gravity
 import android.widget.Toast
-import androidx.room.ColumnInfo
-import kotlinx.android.synthetic.main.activity_character_screen.*
+import com.example.imperialassault.Item
+import com.example.imperialassault.Items
+import com.example.imperialassault.R
+import com.example.imperialassault.Sounds
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import java.io.InputStream
 
@@ -267,7 +265,7 @@ open class Character {
 
         for(i in 0..weapons.size-1){
             var index = weapons[i]
-            var item:Item
+            var item: Item
             item = Items.itemsArray!![index]
 
             when(item.tier){
@@ -278,7 +276,7 @@ open class Character {
         }
         for(i in 0..armor.size-1){
             var index = armor[i]
-            var item:Item
+            var item: Item
             item = Items.itemsArray!![index]
             when(item.tier){
                 1->tier1Equipped++
@@ -290,7 +288,7 @@ open class Character {
             var index = accessories[i]
 
 
-            var item:Item
+            var item: Item
             item = Items.itemsArray!![index]
 
             when(item.tier){
@@ -324,51 +322,51 @@ open class Character {
         if(xpItems[cardNo]>0){
             var xpItem = Items.itemsArray!![xpItems[cardNo]]
             when(xpItem.type){
-                Items.melee->{
+                Items.melee ->{
                     if(weapons.size<2){
                         weapons.add(xpItem.index);
                         xpCardsEquipped[cardNo] = true
                         xpSpent += xpScores[cardNo]
-                        Sounds.equipSound(context,xpItem.soundType)
+                        Sounds.equipSound(context, xpItem.soundType)
                     }
                     else{
                         showItemLimitReached(xpItem.type,context)
                     }
                 }
-                Items.ranged->{
+                Items.ranged ->{
                     if(weapons.size<2){
                         weapons.add(xpItem.index)
                         xpCardsEquipped[cardNo] = true
                         xpSpent += xpScores[cardNo]
-                        Sounds.equipSound(context,xpItem.soundType)
+                        Sounds.equipSound(context, xpItem.soundType)
                     }
                     else{
                         showItemLimitReached(xpItem.type,context)
                     }
                 }
-                Items.armor->{
+                Items.armor ->{
                     if(armor.size<1){
                         armor.add(xpItem.index)
                         xpCardsEquipped[cardNo] = true
                         xpSpent += xpScores[cardNo]
-                        Sounds.equipSound(context,xpItem.soundType)
+                        Sounds.equipSound(context, xpItem.soundType)
                     }
                     else{
                         showItemLimitReached(xpItem.type,context)
                     }
                 }
-                Items.acc->{
+                Items.acc ->{
                     if(accessories.size<3){
                         accessories.add(xpItem.index)
                         xpCardsEquipped[cardNo] = true
                         xpSpent += xpScores[cardNo]
-                        Sounds.equipSound(context,xpItem.soundType)
+                        Sounds.equipSound(context, xpItem.soundType)
                     }
                     else{
                         showItemLimitReached(xpItem.type,context)
                     }
                 }
-                Items.mod->{
+                Items.mod ->{
                     mods.add(xpItem.index)
                     xpCardsEquipped[cardNo] = true
                     xpSpent += xpScores[cardNo]
@@ -386,11 +384,11 @@ open class Character {
         if(xpItems[cardNo]>0){
             var xpItem = Items.itemsArray!![xpItems[cardNo]]
             when(xpItem.type){
-                Items.melee->{if(weapons.contains(xpItem.index)){weapons.remove(xpItem.index)}}
-                Items.ranged->{if(weapons.contains(xpItem.index)){weapons.remove(xpItem.index)}}
-                Items.armor->{if(armor.contains(xpItem.index)){armor.remove(xpItem.index)}}
-                Items.acc->{if(accessories.contains(xpItem.index)){accessories.remove(xpItem.index)}}
-                Items.mod->{if(mods.contains(xpItem.index)){mods.remove(xpItem.index)}}
+                Items.melee ->{if(weapons.contains(xpItem.index)){weapons.remove(xpItem.index)}}
+                Items.ranged ->{if(weapons.contains(xpItem.index)){weapons.remove(xpItem.index)}}
+                Items.armor ->{if(armor.contains(xpItem.index)){armor.remove(xpItem.index)}}
+                Items.acc ->{if(accessories.contains(xpItem.index)){accessories.remove(xpItem.index)}}
+                Items.mod ->{if(mods.contains(xpItem.index)){mods.remove(xpItem.index)}}
             }
         }
     }
@@ -409,8 +407,8 @@ open class Character {
             Items.melee -> view.toast_text.setText("2 weapon limit reached")
             Items.ranged -> view.toast_text.setText("2 weapon limit reached")
             Items.armor -> view.toast_text.setText("1 armor limit reached")
-            Items.acc-> view.toast_text.setText("3 accessory limit reached")
-            Items.reward-> view.toast_text.setText("3 accessory limit reached")
+            Items.acc -> view.toast_text.setText("3 accessory limit reached")
+            Items.reward -> view.toast_text.setText("3 accessory limit reached")
 
         }
 

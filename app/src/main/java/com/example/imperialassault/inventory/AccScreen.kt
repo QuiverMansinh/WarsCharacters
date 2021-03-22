@@ -1,4 +1,4 @@
-package com.example.imperialassault
+package com.example.imperialassault.inventory
 
 import android.app.Dialog
 import android.content.Intent
@@ -12,6 +12,7 @@ import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
+import com.example.imperialassault.*
 
 import kotlinx.android.synthetic.main.activity_acc_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
@@ -85,7 +86,7 @@ class AccScreen : AppCompatActivity() {
         }
     }
 
-    fun setClickables(gridItem:ImageView, currentItem:Item) {
+    fun setClickables(gridItem:ImageView, currentItem: Item) {
         gridItem.setOnLongClickListener {
             onShowCard(gridItem)
             true
@@ -156,7 +157,7 @@ class AccScreen : AppCompatActivity() {
             false
         )
         when(itemType){
-            Items.acc-> view.toast_text.setText("3 accessory limit reached")
+            Items.acc -> view.toast_text.setText("3 accessory limit reached")
             -1 -> view.toast_text.setText("1 helmet limit reached")
         }
 
