@@ -31,6 +31,8 @@ class RangedScreen : AppCompatActivity() {
         val rewardsgrid = this.findViewById<ImageView>(R.id.rewards_grid) as GridView
         rewardsgrid.adapter = ImageAdapter(this, Items.rangedArray!!)
         rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
+        rewardsgrid.isFastScrollEnabled = false
+        //rewardsgrid.setFriction(10f)
 
         showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)

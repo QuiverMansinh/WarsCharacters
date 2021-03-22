@@ -343,6 +343,9 @@ class ImageAdapter internal constructor(
         println("accessory equip " + character.accessories.size)
         println("")
         if (character.accessories.remove(item.index)) {
+            if (item.index == Items.mandoHelmetIndex || item.index == Items.reinforcedHelmetIndex){
+                character.helmet = false
+            }
             Sounds.selectSound()
 
             //turn off
@@ -367,7 +370,8 @@ class ImageAdapter internal constructor(
                     return 1f
                 }
                 else{
-
+                    showItemLimitReached(-1)
+                    return 0.5f
                 }
             } else {
                 character.accessories.add(item.index)
@@ -455,7 +459,7 @@ class ImageAdapter internal constructor(
             Items.armor -> view.toast_text.setText("1 armor limit reached")
             Items.acc-> view.toast_text.setText("3 accessory limit reached")
             Items.reward-> view.toast_text.setText("3 accessory limit reached")
-
+            -1 -> view.toast_text.setText("1 helmet limit reached")
         }
 
         toast!!.view = view

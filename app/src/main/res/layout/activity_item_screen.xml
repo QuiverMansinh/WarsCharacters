@@ -27,30 +27,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView5"
-        android:layout_width="0dp"
+    <GridView
+        android:id="@+id/rewards_grid"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:numColumns="3"
         app:layout_constraintBottom_toTopOf="@+id/cardView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <GridView
-            android:id="@+id/rewards_grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:numColumns="3" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView6"
