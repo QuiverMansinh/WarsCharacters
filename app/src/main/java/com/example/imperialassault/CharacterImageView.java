@@ -51,10 +51,6 @@ public class CharacterImageView extends View implements Runnable{
 
         thread = new Thread(this::run);
         thread.start();
-        //focused = true;
-        //stunned = true;
-        //weakened = true;
-        //hidden = true;
         stunPaint.setAlpha(75);
 
     }

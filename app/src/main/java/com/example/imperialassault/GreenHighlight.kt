@@ -1,22 +1,11 @@
 package com.example.imperialassault
 
 import android.animation.Animator
-import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.renderscript.Allocation
-import android.renderscript.Element
-import android.renderscript.RenderScript
-import android.renderscript.ScriptIntrinsicBlur
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toDrawable
-import jp.wasabeef.blurry.Blurry
-import kotlin.concurrent.thread
 
 class GreenHighlight(var imageView: ImageView, var context: Context, var resources: Resources) {
     var anim = ValueAnimator.ofInt(0,255,0)

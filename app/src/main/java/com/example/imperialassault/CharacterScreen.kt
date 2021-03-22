@@ -2813,13 +2813,6 @@ class CharacterScreen : AppCompatActivity() {
     //region Saving
     //************************************************************************************************************
 
-    //TODO convert to work, save stats, save random, save custom image?
-
-    var secondsSinceLastSave = 0
-    val autosaveTIme = 600
-
-
-
     fun quickSave() {
         //if(secondsSinceLastSave > 3) {
         //val character = MainActivity.selectedCharacter

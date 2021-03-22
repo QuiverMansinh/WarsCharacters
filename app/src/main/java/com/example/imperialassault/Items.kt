@@ -213,12 +213,10 @@ object Items {
 
         //******************************************************************************************
 
-        val titleTier1 = Item(tier1, -1, R.layout.tier1_title)
-        val titleTier2 = Item(tier2, -1, R.layout.tier2_title)
-        val titleTier3 = Item(tier3, -1, R.layout.tier3_title)
-        val modsDivider = Item(mods, -1, R.layout.mods_divider)
+
+
         val emptyItem = Item(empty, -1, R.layout.empty_item)
-        val emptySpace = Item(space, -1, R.layout.empty_space)
+
 
 
         //******************************************************************************************

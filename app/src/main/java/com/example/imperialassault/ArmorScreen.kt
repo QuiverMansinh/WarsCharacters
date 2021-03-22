@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -123,6 +124,14 @@ class ArmorScreen : AppCompatActivity() {
         toast!!.view = view
         toast!!.setGravity(Gravity.CENTER, 0, 0)
         toast!!.show()
+    }
+
+    var showCardDialog: Dialog? = null
+    fun onShowCard(view: ImageView) {
+        var image = ((view).drawable as BitmapDrawable).bitmap
+        println(image)
+        showCardDialog!!.card_image.setImageBitmap(image)
+        showCardDialog!!.show()
     }
 
     fun onToAcc(view:View){
