@@ -7,31 +7,60 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.Window
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_item_screen.*
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_armor_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
+import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class ArmorScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_screen)
-
-        var title = findViewById<TextView>(R.id.item_title)
-        title.setText("ARMOR")
+        setContentView(R.layout.activity_armor_screen)
 
         to_melee.setBackgroundColor(resources.getColor(R.color.shadow))
         to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
         to_acc.setBackgroundColor(resources.getColor(R.color.shadow))
 
 
-        val rewardsgrid = this.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this, Items.armorArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction()/10)
+        var armorViews = ArrayList<ImageView>()
+        armorViews.add(this.armor_image0)
+        armorViews.add(this.armor_image1)
+        armorViews.add(this.armor_image2)
+        armorViews.add(this.armor_image3)
+        armorViews.add(this.armor_image4)
+        armorViews.add(this.armor_image5)
+        armorViews.add(this.armor_image6)
+        armorViews.add(this.armor_image7)
+        armorViews.add(this.armor_image8)
+
+        for(i in 0..Items.armorArray!!.size-1){
+            var currentItem = Items.armorArray!!.get(i)
+            val gridItem = armorViews[i]
+            if(currentItem.type>=0) {
+            gridItem.alpha = 0.5f
+            var character = MainActivity.selectedCharacter!!
+
+                gridItem.setImageResource(currentItem.resourceId)
+                setClickables(gridItem, currentItem)
+
+
+                if (character.weapons.contains(currentItem.index)) {
+                    gridItem.alpha = 1f
+                }
+
+            }
+            else{
+                (gridItem.parent as View).visibility = View.INVISIBLE
+            }
+        }
+
 
         showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -46,6 +75,55 @@ class ArmorScreen : AppCompatActivity() {
         }
     }
 
+    fun setClickables(gridItem:ImageView, currentItem:Item) {
+        gridItem.setOnLongClickListener {
+            onShowCard(gridItem)
+            true
+        }
+
+        gridItem.setOnClickListener {
+            gridItem.alpha = equipArmor(currentItem)
+            if(gridItem.alpha==1f) {
+                Sounds.equipSound(this, currentItem.soundType)
+            }
+        }
+    }
+
+    fun equipArmor(item: Item): Float {
+        var character = MainActivity.selectedCharacter!!
+
+        //remove if already equipped
+        if (character.armor.remove(item.index)) {
+            Sounds.selectSound()
+            return 0.5f
+        }
+
+        //equip if slot available
+        if (character.armor.size < 1) {
+            character.armor.add(item.index)
+            return 1f
+        }
+        //TODO toast 1 armor limit reached
+        showItemLimitReached()
+
+        //not equipped
+        return 0.5f
+    }
+
+    private fun showItemLimitReached() {
+        Sounds.negativeSound()
+        val toast = Toast(this)
+        toast!!.duration = Toast.LENGTH_SHORT
+        val view = this.layoutInflater.inflate(
+            R.layout.toast_no_actions_left,
+            null,
+            false
+        )
+        view.toast_text.setText("1 armor limit reached")
+        toast!!.view = view
+        toast!!.setGravity(Gravity.CENTER, 0, 0)
+        toast!!.show()
+    }
 
     fun onToAcc(view:View){
         Sounds.selectSound()

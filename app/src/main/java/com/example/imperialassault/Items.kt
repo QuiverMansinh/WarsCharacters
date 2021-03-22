@@ -30,14 +30,12 @@ object Items {
 
     //image change items
     const val mandoHelmetIndex = 7
-    const val astromechIndex = 15
+    const val astromechIndex = 8
     const val combatVisorIndex = 11
     const val reinforcedHelmetIndex = 16
     const val ancientLightSaberIndex = 45
 
-    const val adrenalImplantsIndex =86
-    const val bardottanShardIndex =87
-    const val quickDrawHolsterIndex =88
+
 
     init {
         itemsArray = arrayOf(
@@ -273,9 +271,7 @@ object Items {
 //        //ACCESSORIES SCREEN
 
         accArray = arrayOf(
-            emptySpace,
-            titleTier1,
-            emptySpace,
+
 
             itemsArray!![0],
             itemsArray!![1],
@@ -285,9 +281,7 @@ object Items {
             itemsArray!![4],
             emptyItem,
 
-            emptySpace,
-            titleTier2,
-            emptySpace,
+
 
             itemsArray!![5],
             itemsArray!![6],
@@ -297,9 +291,7 @@ object Items {
             itemsArray!![9],
             emptyItem,
 
-            emptySpace,
-            titleTier3,
-            emptySpace,
+
 
             itemsArray!![10],
             itemsArray!![11],
@@ -320,25 +312,16 @@ object Items {
         //ARMORs SCREEN
 
         armorArray = arrayOf(
-            emptySpace,
-            titleTier1,
-            emptySpace,
 
             itemsArray!![18],
             itemsArray!![19],
             itemsArray!![20],
 
-            emptySpace,
-            titleTier2,
-            emptySpace,
 
             itemsArray!![21],
             itemsArray!![22],
             itemsArray!![23],
 
-            emptySpace,
-            titleTier3,
-            emptySpace,
 
             itemsArray!![24],
             itemsArray!![25],
@@ -350,9 +333,6 @@ object Items {
         //MELEE SCREEN
 
         meleeArray = arrayOf(
-            emptySpace,
-            titleTier1,
-            emptySpace,
 
             itemsArray!![27],
             itemsArray!![28],
@@ -366,17 +346,11 @@ object Items {
             emptyItem,
             emptyItem,
 
-            emptySpace,
-            modsDivider,
-            emptySpace,
 
             itemsArray!![34],
             itemsArray!![35],
             emptyItem,
 
-            emptySpace,
-            titleTier2,
-            emptySpace,
 
             itemsArray!![36],
             itemsArray!![37],
@@ -386,9 +360,6 @@ object Items {
             itemsArray!![40],
             emptyItem,
 
-            emptySpace,
-            modsDivider,
-            emptySpace,
 
             itemsArray!![41],
             itemsArray!![42],
@@ -398,9 +369,6 @@ object Items {
             emptyItem,
             emptyItem,
 
-            emptySpace,
-            titleTier3,
-            emptySpace,
 
             itemsArray!![45],
             itemsArray!![46],
@@ -410,9 +378,6 @@ object Items {
             itemsArray!![49],
             emptyItem,
 
-            emptySpace,
-            modsDivider,
-            emptySpace,
 
             itemsArray!![50],
             itemsArray!![51],
@@ -423,9 +388,6 @@ object Items {
         //RANGED SCREEN
 
         rangedArray = arrayOf(
-            emptySpace,
-            titleTier1,
-            emptySpace,
 
             itemsArray!![52],
             itemsArray!![53],
@@ -439,9 +401,6 @@ object Items {
             itemsArray!![59],
             emptyItem,
 
-            emptySpace,
-            modsDivider,
-            emptySpace,
 
             itemsArray!![60],
             itemsArray!![61],
@@ -451,9 +410,6 @@ object Items {
             itemsArray!![64],
             emptyItem,
 
-            emptySpace,
-            titleTier2,
-            emptySpace,
 
             itemsArray!![65],
             itemsArray!![66],
@@ -467,9 +423,6 @@ object Items {
             emptyItem,
             emptyItem,
 
-            emptySpace,
-            modsDivider,
-            emptySpace,
 
             itemsArray!![72],
             itemsArray!![73],
@@ -479,9 +432,6 @@ object Items {
             emptyItem,
             emptyItem,
 
-            emptySpace,
-            titleTier3,
-            emptySpace,
 
             itemsArray!![76],
             itemsArray!![77],
@@ -495,9 +445,6 @@ object Items {
             itemsArray!![83],
             emptyItem,
 
-            emptySpace,
-            modsDivider,
-            emptySpace,
 
             itemsArray!![84],
             itemsArray!![85],

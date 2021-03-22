@@ -378,12 +378,13 @@ class CharacterScreen : AppCompatActivity() {
         if(!character.name_short.equals("jarrod")){
             if(character.astromech) {
                 character.companionImage = (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
+
             }
             else{
                 character.companionImage = null
             }
         }
-        println(character.companionImage)
+        println( "ASTROMECH" +character.companionImage + " " + character.astromech )
         if (character.companionImage != null) {
             if (conditionsActive[hidden] && animateConditions) {
                 companion_image.visibility = View.INVISIBLE
@@ -736,16 +737,16 @@ class CharacterScreen : AppCompatActivity() {
     fun onActivate(view: View) {
         Sounds.selectSound()
         if (!activated) {
-            /*
+
             val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 1f, 0f, 0f, 0f)
-            flipUnactive.setDuration(300)
+            flipUnactive.setDuration(200)
             flipUnactive.start()
 
             val flipActive = ObjectAnimator.ofFloat(active, "scaleX", 0f, 0f, 0f, 1f)
-            flipActive.setDuration(300)
+            flipActive.setDuration(200)
             flipActive.start()
 
-             */
+
             unactive.animate().alpha(0f).duration = 100
 
             if (actionUsage) {
@@ -769,34 +770,27 @@ class CharacterScreen : AppCompatActivity() {
         action_button2.visibility = View.VISIBLE
         action_button2.animate().alpha(1f)
 
-        /*
-        action_button1.visibility = View.VISIBLE
-        val flipAction1 = ObjectAnimator.ofFloat(action_button1, "scaleY", 0f, 1f)
-        flipAction1.setDuration(300)
-        flipAction1.start()
 
-        action_button2.visibility = View.VISIBLE
-        val flipAction2 = ObjectAnimator.ofFloat(action_button2, "scaleY", 0f, 1f)
-        flipAction2.setDuration(300)
-        flipAction2.start()
-        */
+
 
     }
 
     fun onEndActivation(view: View) {
 
-        endActivationDialog!!.dismiss()
-        removeCondition(weakened)
-        /*
+
+
         val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 0f, 0f, 0f, 1f)
-        flipUnactive.setDuration(300)
+        flipUnactive.setDuration(200)
         flipUnactive.start()
 
         val flipActive = ObjectAnimator.ofFloat(active, "scaleX", 1f, 0f, 0f, 0f)
-        flipActive.setDuration(300)
+        flipActive.setDuration(200)
         flipActive.start()
-        */
+
         unactive.animate().alpha(1f).duration = 100
+
+        endActivationDialog!!.dismiss()
+        removeCondition(weakened)
 
         if (actionUsage) {
             turnOffActionButtons()
@@ -814,21 +808,13 @@ class CharacterScreen : AppCompatActivity() {
     fun turnOffActionButtons() {
 
         action_button1.animate().alpha(0f)
-        action_button1.visibility = View.GONE
+        //action_button1.visibility = View.GONE
 
         action_button2.animate().alpha(0f)
-        action_button2.visibility = View.GONE
-
-/*
-        val flipAction1 = ObjectAnimator.ofFloat(action_button1, "scaleY", 1f, 0f)
-        flipAction1.setDuration(300)
-        flipAction1.start()
+        //action_button2.visibility = View.GONE
 
 
-        val flipAction2 = ObjectAnimator.ofFloat(action_button2, "scaleY", 1f, 0f)
-        flipAction2.setDuration(300)
-        flipAction2.start()
-        */
+
 
     }
 
@@ -837,6 +823,9 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onAction(view: View) {
+        if(!activated){
+            return
+        }
         Sounds.selectSound()
         action_menu.visibility = View.INVISIBLE
         action_menu.alpha = 0f
@@ -2276,8 +2265,7 @@ class CharacterScreen : AppCompatActivity() {
         }
 
         quickViewButtonDialog!!.quick_view_button.setOnClickListener {
-            quickViewDialog!!.show()
-            quickViewButtonDialog!!.dismiss()
+
             var weaponIndex = character.weapons.getOrElse(0) { -1 }
             var weaponIndex1 = character.weapons.getOrElse(1) { -1 }
 
@@ -2313,6 +2301,9 @@ class CharacterScreen : AppCompatActivity() {
                     quickViewDialog!!.weapon_type.setImageResource(R.drawable.item_melee)
                 }
             }
+            else{
+                quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
+            }
 
             imageId = R.drawable.empty_item_slot
             quickViewDialog!!.weapon1_type.visibility = View.VISIBLE
@@ -2336,6 +2327,9 @@ class CharacterScreen : AppCompatActivity() {
                 else {
                     quickViewDialog!!.weapon1_type.setImageResource(R.drawable.item_melee)
                 }
+            }
+            else{
+                quickViewDialog!!.quick_view_weapon1.setImageResource(imageId)
             }
 
 
@@ -2385,6 +2379,8 @@ class CharacterScreen : AppCompatActivity() {
 
 
             quickViewDialog!!.mods_grid_view.adapter = ModListAdapter(this,character.mods)
+            quickViewDialog!!.show()
+            quickViewButtonDialog!!.dismiss()
         }
     }
 

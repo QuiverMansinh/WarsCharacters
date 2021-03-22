@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_characters_list.*
 
 class Characters_list : AppCompatActivity() {
     var charactersImage = arrayListOf<ImageView>()
@@ -79,6 +80,7 @@ class Characters_list : AppCompatActivity() {
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
+        characterList.animate().alpha(1f)
         var sortedCharArray = arrayListOf<ImageView>(
             findViewById(R.id.imageViewBiv),
             findViewById(R.id.imageViewDiala),

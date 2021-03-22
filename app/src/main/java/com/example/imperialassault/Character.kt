@@ -71,9 +71,6 @@ open class Character {
     var reinforcedHelmet = false
     var astromech = false
 
-    var adenalImplants = false
-    var quickDrawHolster = false
-    var bardottanShard = false
 
     var tier = 0
     var imageSetting = -1 //-1 = auto, 0 = default, 1 = tier1, 2 = tier2, 3 = tier3
@@ -226,11 +223,21 @@ open class Character {
 
     open fun updateCharacterImages(context:Context){
         ancientLightSaber = false
+        for(i in 0..weapons.size-1){
+            var index = weapons[i]
+            ancientLightSaber = (index == Items.ancientLightSaberIndex)||ancientLightSaber
+        }
         combatVisor= false
         mandoHelmet = false
         reinforcedHelmet = false
         astromech = false
-
+        for(i in 0..accessories.size-1){
+            var index = accessories[i]
+            reinforcedHelmet = (index == Items.reinforcedHelmetIndex)||reinforcedHelmet
+            mandoHelmet = (index == Items.mandoHelmetIndex)||mandoHelmet
+            combatVisor = (index == Items.combatVisorIndex)||combatVisor
+            astromech = (index == Items.astromechIndex)||astromech
+        }
 
 
         var oldTier = tier
@@ -260,7 +267,6 @@ open class Character {
 
         for(i in 0..weapons.size-1){
             var index = weapons[i]
-            ancientLightSaber = index == Items.ancientLightSaberIndex
             var item:Item
             item = Items.itemsArray!![index]
 
@@ -282,11 +288,6 @@ open class Character {
         }
         for(i in 0..accessories.size-1){
             var index = accessories[i]
-            reinforcedHelmet = index == Items.reinforcedHelmetIndex
-            mandoHelmet = index == Items.mandoHelmetIndex
-            combatVisor = index == Items.combatVisorIndex
-            astromech = index == Items.astromechIndex
-
 
 
             var item:Item

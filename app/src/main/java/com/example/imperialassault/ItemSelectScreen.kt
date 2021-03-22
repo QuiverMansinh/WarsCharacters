@@ -15,174 +15,26 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_character_screen.*
-import kotlinx.android.synthetic.main.activity_item__select__screen.*
+
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.grid_item.view.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
-class ItemSelectScreen : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item__select__screen)
-
-        val adapter = MyAdapter(this, supportFragmentManager, tab_layout.tabCount)
-        pager.adapter = adapter
-        pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-
-        //defining Which tab is active
-
-        when (intent.getStringExtra("tab")) {
-            "range" -> {
-                pager.setCurrentItem(3)
-            }
-            "melee" -> {
-                pager.setCurrentItem(2)
-            }
-            "armour" -> {
-                pager.setCurrentItem(1)
-            }
-            "accessory" -> {
-                pager.setCurrentItem(0)
-            }
-        }
-
-        //Dialog that shows up card while long-Pressed
-
-        showCardDialog = Dialog(this)
-        showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-        showCardDialog!!.setContentView(R.layout.dialog_show_card)
-        showCardDialog!!.setCancelable(false)
-        showCardDialog!!.setCanceledOnTouchOutside(true)
-        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        showCardDialog!!.show_card_dialog.setOnClickListener {
-            showCardDialog!!.cancel()
-            true
-        }
-
-        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab != null) {
-                    pager.currentItem = tab.position
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-        })
-    }
-
-    override fun onBackPressed() {
-        finish()
-        super.onBackPressed()
-    }
+class ItemSelectScreen {
 }
 
 //creating CUSTOM Adapter for cards view grid
 
-@Suppress("DEPRECATION")
-internal class MyAdapter(
-    var context: Context,
-    fm: FragmentManager,
-    var totalTabs: Int
-) :
-    FragmentPagerAdapter(fm) {
-    override fun getItem(position: Int): Fragment {
-        return when (position) {
-            0 -> {
-                Accessories()
-            }
-            1 -> {
-                Armor()
-            }
-            2 -> {
-                Melee()
-            }
-            3 -> {
-                Ranged()
-            }
-            else -> getItem(position)
-        }
-    }
-
-    override fun getCount(): Int {
-        return totalTabs
-    }
-}
-
-//Code bellow creates fragments for each section:Accessories,Armor,Melee,Ranged.
-
-class Accessories : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.accArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
-        return rewardsView
-    }
-}
-
-class Armor : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.armorArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
-        return rewardsView
-    }
-}
-
-class Melee : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.meleeArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
-        return rewardsView
-    }
-}
-
-class Ranged : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val rewardsView = inflater.inflate(R.layout.item_fragment, container, false) as View
-        val rewardsgrid = rewardsView.findViewById<ImageView>(R.id.rewards_grid) as GridView
-        rewardsgrid.adapter = ImageAdapter(this.context as Activity, Items.rangedArray!!)
-        rewardsgrid.setFriction(ViewConfiguration.getScrollFriction() / 10)
-        return rewardsView
-    }
-}
 
 //Code bellow creates image adapter for inflating images and layout into gridview.
 
 class ImageAdapter internal constructor(
-    val context: Activity, var itemArray:
+    val context: Activity, val itemArray:
     Array<Item>
 ) :
     BaseAdapter() {
 
-    var gridItems = arrayListOf<View>()
+    val gridItems = arrayListOf<View>()
 
     init {
 
@@ -191,28 +43,27 @@ class ImageAdapter internal constructor(
             var currentItem = itemArray.get(i)
 
             if (currentItem.type >= 0) {
-                gridItem = context.layoutInflater.inflate(R.layout.grid_item, null, true)
+                gridItem = context.layoutInflater.inflate(R.layout.grid_item, null, false)
                 gridItem.grid_image.alpha = 0.5f
                 var character = MainActivity.selectedCharacter!!
 
                 if (currentItem.index == 27 ){
                     if(character.startingMeleeWeapon != null) {
                         gridItem.grid_image.setImageBitmap(character.startingMeleeWeapon)
-                        setClickables(gridItem, currentItem)
                     }
                     else{
                         gridItem.grid_image.setImageResource(currentItem.resourceId)
                     }
+                    setClickables(gridItem, currentItem)
                 }
                 else if (currentItem.index == 52) {
                     if (character.startingRangedWeapon != null) {
                         gridItem.grid_image.setImageBitmap(character.startingRangedWeapon)
-                        setClickables(gridItem, currentItem)
                     }
                     else{
                         gridItem.grid_image.setImageResource(currentItem.resourceId)
                     }
-
+                    setClickables(gridItem, currentItem)
                 }
                 else {
                     gridItem.grid_image.setImageResource(currentItem.resourceId)
@@ -251,25 +102,22 @@ class ImageAdapter internal constructor(
                         }
                     }
                 }
-                //TODO load eqipped items
-
-
-
             } else {
-                gridItem = context.layoutInflater.inflate(currentItem.resourceId, null, true)
+                gridItem = context.layoutInflater.inflate(currentItem.resourceId, null, false)
             }
             gridItems.add(gridItem)
         }
     }
     // References to our images
 
-    fun setClickables(gridItem:View, currentItem:Item){
+    fun setClickables(gridItem:View, currentItem:Item) {
         gridItem.setOnLongClickListener {
             onShowCard(gridItem.grid_image)
             true
         }
 
         gridItem.setOnClickListener {
+            if(gridItem.grid_image!=null) {
             when (currentItem.type) {
                 Items.reward -> {
                     gridItem.grid_image.alpha = equipReward(currentItem)
@@ -290,10 +138,14 @@ class ImageAdapter internal constructor(
                     gridItem.grid_image.alpha = equipMod(currentItem)
 
                 }
+
             }
-            if (gridItem.grid_image.alpha == 1f) {
-                Sounds.equipSound(context, currentItem.soundType)
+
+                if (gridItem.grid_image.alpha == 1f) {
+                    Sounds.equipSound(context, currentItem.soundType)
+                }
             }
+
         }
     }
     override fun getCount(): Int {
@@ -319,6 +171,8 @@ class ImageAdapter internal constructor(
 
     // Create a new ImageView for each item referenced by the Adapter
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+
+        setClickables(gridItems.get(position),itemArray.get(position))
         return gridItems.get(position)
     }
 

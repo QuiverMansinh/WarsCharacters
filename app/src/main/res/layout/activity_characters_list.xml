@@ -19,8 +19,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/characterList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="0"
             android:gravity="center|center_horizontal"
             android:orientation="vertical">
 
