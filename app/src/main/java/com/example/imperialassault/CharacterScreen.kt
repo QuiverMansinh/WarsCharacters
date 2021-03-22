@@ -256,10 +256,10 @@ class CharacterScreen : AppCompatActivity() {
             MainActivity.selectedCharacter = character
 
             if (character.startingRangedWeapon != null) {
-                character.weapons.add(Items.rangedArray!![3].index)
+                character.weapons.add(Items.rangedArray!![0].index)
             }
             if (character.startingMeleeWeapon != null) {
-                character.weapons.add(Items.meleeArray!![3].index)
+                character.weapons.add(Items.meleeArray!![0].index)
             }
         } else {
             character = MainActivity.selectedCharacter!!
