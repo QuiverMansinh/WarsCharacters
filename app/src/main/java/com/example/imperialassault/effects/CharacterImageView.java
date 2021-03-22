@@ -1,4 +1,4 @@
-package com.example.imperialassault;
+package com.example.imperialassault.effects;
 
 import android.content.Context;
 import android.graphics.Bitmap;

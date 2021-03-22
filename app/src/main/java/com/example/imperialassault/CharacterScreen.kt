@@ -28,6 +28,9 @@ import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.work.*
 import com.example.imperialassault.characters.*
+import com.example.imperialassault.database.AppDatabase
+import com.example.imperialassault.database.CharacterData
+import com.example.imperialassault.inventory.*
 import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*
