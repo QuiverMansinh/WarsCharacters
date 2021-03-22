@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.work.*
+import com.example.imperialassault.characters.*
 import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*

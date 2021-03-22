@@ -21,6 +21,7 @@ import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.work.*
+import com.example.imperialassault.characters.*
 import kotlinx.android.synthetic.main.activity_character_screen.view.*
 import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.android.synthetic.main.save_load_item.view.*

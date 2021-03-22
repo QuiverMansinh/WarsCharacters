@@ -1,6 +1,5 @@
-package com.example.imperialassault
+package com.example.imperialassault.inventory
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -10,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.ViewConfiguration
 import android.view.Window
-import android.widget.GridView
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import com.example.imperialassault.*
 import kotlinx.android.synthetic.main.activity_armor_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
@@ -76,7 +73,7 @@ class ArmorScreen : AppCompatActivity() {
         }
     }
 
-    fun setClickables(gridItem:ImageView, currentItem:Item) {
+    fun setClickables(gridItem:ImageView, currentItem: Item) {
         gridItem.setOnLongClickListener {
             onShowCard(gridItem)
             true

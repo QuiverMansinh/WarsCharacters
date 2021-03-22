@@ -1,6 +1,8 @@
-package com.example.imperialassault
+package com.example.imperialassault.characters
 
 import android.content.Context
+import com.example.imperialassault.Character
+import com.example.imperialassault.R
 
 class Character_biv : Character {
 
