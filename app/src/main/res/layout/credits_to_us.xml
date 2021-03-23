@@ -103,6 +103,7 @@
                             app:cardCornerRadius="50dp">
 
                             <ImageView
+                                android:id="@+id/mikeImageLink"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
@@ -234,6 +235,7 @@
                             app:cardCornerRadius="50dp">
 
                             <ImageView
+                                android:id="@+id/mannyImageLink"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
@@ -253,7 +255,7 @@
                             android:gravity="center"
                             android:linksClickable="true"
                             android:text="@string/MannyWeb"
-                            android:textColorLink="#2196F3" />
+                            android:textColorLink="#8AD6FF" />
 
                     </LinearLayout>
 
@@ -286,6 +288,7 @@
                             app:cardCornerRadius="50dp">
 
                             <ImageView
+                                android:id="@+id/HeroXImageLink"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
@@ -301,7 +304,7 @@
                             android:fontFamily="@font/advent_pro_semibold"
                             android:gravity="center"
                             android:text="@string/MatthewTwitter"
-                            android:textColorLink="#2196F3" />
+                            android:textColorLink="#8AD6FF" />
 
                     </LinearLayout>
                 </LinearLayout>
