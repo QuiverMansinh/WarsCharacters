@@ -13,6 +13,7 @@ import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.renderscript.Allocation
 import android.renderscript.Element
@@ -2054,6 +2055,27 @@ class CharacterScreen : AppCompatActivity() {
         developersCreditsScreen!!.textView44.setMovementMethod(LinkMovementMethod.getInstance())
         developersCreditsScreen!!.mannyPortfolio.setMovementMethod(LinkMovementMethod.getInstance())
         developersCreditsScreen!!.davidPortfolio.setMovementMethod(LinkMovementMethod.getInstance())
+        developersCreditsScreen!!.mikeImageLink.setOnClickListener{
+            var linkIntent = Intent()
+                .setAction(Intent.ACTION_VIEW)
+                .addCategory(Intent.CATEGORY_BROWSABLE)
+                .setData(Uri.parse("http://www.mikeglasswell.com/"))
+            startActivity(linkIntent)
+        }
+        developersCreditsScreen!!.mannyImageLink.setOnClickListener{
+            var linkIntent = Intent()
+                .setAction(Intent.ACTION_VIEW)
+                .addCategory(Intent.CATEGORY_BROWSABLE)
+                .setData(Uri.parse("https://mansinh-d25ff.web.app"))
+            startActivity(linkIntent)
+        }
+        developersCreditsScreen!!.HeroXImageLink.setOnClickListener{
+            var linkIntent = Intent()
+                .setAction(Intent.ACTION_VIEW)
+                .addCategory(Intent.CATEGORY_BROWSABLE)
+                .setData(Uri.parse("https://twitter.com/Matthew_Hero_X"))
+            startActivity(linkIntent)
+        }
     }
 
     private fun initSettingsDialog() {

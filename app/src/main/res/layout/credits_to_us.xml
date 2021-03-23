@@ -103,6 +103,7 @@
                             app:cardCornerRadius="50dp">
 
                             <ImageView
+                                android:id="@+id/mikeImageLink"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
@@ -234,6 +235,7 @@
                             app:cardCornerRadius="50dp">
 
                             <ImageView
+                                android:id="@+id/mannyImageLink"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
@@ -286,6 +288,7 @@
                             app:cardCornerRadius="50dp">
 
                             <ImageView
+                                android:id="@+id/HeroXImageLink"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
