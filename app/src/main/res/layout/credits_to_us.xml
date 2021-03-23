@@ -77,7 +77,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
@@ -94,22 +94,20 @@
                             android:textSize="18sp" />
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
-                            android:visibility="gone"
                             app:cardCornerRadius="50dp">
 
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
                                 android:adjustViewBounds="true"
                                 android:background="@drawable/michaelg"
-                                android:scaleType="fitCenter"
-                                android:visibility="gone" />
+                                android:scaleType="fitCenter" />
                         </androidx.cardview.widget.CardView>
 
                         <TextView
@@ -205,15 +203,16 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/textView29"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
@@ -222,18 +221,38 @@
                             android:text="Manny Kwong"
                             android:textColor="#FFEB3B"
                             android:textSize="18sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="50dp">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/manny"
+                                android:scaleType="center" />
+                        </androidx.cardview.widget.CardView>
+
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/textView30"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
                             android:fontFamily="@font/agency_fb"
                             android:gravity="center"
@@ -242,28 +261,26 @@
                             android:textSize="18sp" />
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
-                            android:visibility="gone"
                             app:cardCornerRadius="50dp">
 
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
                                 android:adjustViewBounds="true"
-                                android:background="@drawable/matthewpfp"
-                                android:scaleType="fitCenter"
-                                android:visibility="gone" />
+                                android:background="@drawable/matthewpfp" />
                         </androidx.cardview.widget.CardView>
 
                         <TextView
                             android:id="@+id/textView44"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
                             android:fontFamily="@font/advent_pro_semibold"
                             android:gravity="center"
