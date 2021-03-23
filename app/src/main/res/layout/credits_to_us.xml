@@ -175,8 +175,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
+                            android:clickable="true"
                             android:fontFamily="@font/advent_pro_semibold"
                             android:gravity="center"
+                            android:linksClickable="true"
                             android:text="@string/DavidOgilvie"
                             android:textColorLink="#8AD6FF" />
 
@@ -246,8 +248,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:fontFamily="@font/advent_pro_semibold"
                             android:gravity="center"
+                            android:linksClickable="true"
                             android:text="@string/MannyWeb"
                             android:textColorLink="#2196F3" />
 
