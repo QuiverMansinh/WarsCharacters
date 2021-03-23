@@ -171,7 +171,7 @@
                             android:textSize="18sp" />
 
                         <TextView
-                            android:id="@+id/textView49"
+                            android:id="@+id/davidPortfolio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -243,7 +243,7 @@
                         </androidx.cardview.widget.CardView>
 
                         <TextView
-                            android:id="@+id/textView33"
+                            android:id="@+id/mannyPortfolio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

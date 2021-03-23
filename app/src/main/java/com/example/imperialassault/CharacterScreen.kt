@@ -2052,6 +2052,8 @@ class CharacterScreen : AppCompatActivity() {
         developersCreditsScreen!!.textView41.setMovementMethod(LinkMovementMethod.getInstance())
         developersCreditsScreen!!.textView43.setMovementMethod(LinkMovementMethod.getInstance())
         developersCreditsScreen!!.textView44.setMovementMethod(LinkMovementMethod.getInstance())
+        developersCreditsScreen!!.mannyPortfolio.setMovementMethod(LinkMovementMethod.getInstance())
+        developersCreditsScreen!!.davidPortfolio.setMovementMethod(LinkMovementMethod.getInstance())
     }
 
     private fun initSettingsDialog() {
