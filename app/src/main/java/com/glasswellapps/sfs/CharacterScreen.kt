@@ -111,15 +111,16 @@ class CharacterScreen : AppCompatActivity() {
 
 
             top_panel.animate().alpha(1f)
+            /*
             val animTop = ObjectAnimator.ofFloat(
                 top_panel, "translationY", -top_panel.height
                     .toFloat(), 0f
             )
 
             animTop.duration = (500).toLong()
-            animTop.start()
+            animTop.start()*/
             bottom_panel.animate().alpha(1f)
-
+                /*
                 val animBottom = ObjectAnimator.ofFloat(
                     bottom_panel, "translationY", bottom_panel.height
                         .toFloat(), 0f
@@ -128,7 +129,7 @@ class CharacterScreen : AppCompatActivity() {
                 //animBottom.interpolator = DecelerateInterpolator()
                 animBottom.duration = (500).toLong()
                 animBottom.start()
-
+*/
 
             left_buttons.animate().alpha(1f)
             val animButtons = ObjectAnimator.ofFloat(
@@ -179,7 +180,8 @@ class CharacterScreen : AppCompatActivity() {
 
             updateSideBarState()
             kill_tracker_bar.visibility = View.VISIBLE
-
+            background_image.alpha=0f
+            background_image.animate().alpha(1f)
             loadAnimated = true
         }
     }
@@ -190,6 +192,7 @@ class CharacterScreen : AppCompatActivity() {
         right_buttons.animate().alpha(0f)
         character_images.animate().alpha(0f)
         companion_image.animate().alpha(0f)
+        background_image.alpha = 0f
         loadAnimated = false
     }
 
@@ -1278,7 +1281,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onReward(view: View) {
-        resetUI()
+        //resetUI()
 
         val intent = Intent(this, RewardsScreen::class.java)
         //intent.putExtra("Load",false)
@@ -1290,7 +1293,7 @@ class CharacterScreen : AppCompatActivity() {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
-        resetUI()
+        //resetUI()
 
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent);
@@ -1301,7 +1304,7 @@ class CharacterScreen : AppCompatActivity() {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
-        resetUI()
+        //resetUI()
 
         val intent = Intent(this, ArmorScreen::class.java)
         startActivity(intent);
@@ -1311,7 +1314,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onMelee(view: View) {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "melee")
-        resetUI()
+        //resetUI()
 
         val intent = Intent(this, MeleeScreen::class.java)
         //intent.putExtra("Load",false)
@@ -1322,7 +1325,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onRange(view: View) {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "range")
-        resetUI()
+        //resetUI()
 
         val intent = Intent(this, RangedScreen::class.java)
         //intent.putExtra("Load",false)
@@ -1331,7 +1334,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onXPScreen(view: View) {
-        resetUI()
+        //resetUI()
 
         initXPScreen()
         xpSelectScreen!!.show()
@@ -2326,9 +2329,11 @@ class CharacterScreen : AppCompatActivity() {
         var mods1 = quickViewDialog!!.quickview_mods1
 
         mods!!.setOnClickListener {
+            Sounds.selectSound()
             quickViewDialog!!.show_mods.visibility = View.VISIBLE
         }
         mods1!!.setOnClickListener {
+            Sounds.selectSound()
             quickViewDialog!!.show_mods.visibility = View.VISIBLE
         }
         quickViewDialog!!.show_mods.setOnClickListener{
@@ -2337,16 +2342,18 @@ class CharacterScreen : AppCompatActivity() {
 
         var xp = quickViewDialog!!.quickview_xp
         xp!!.setOnClickListener {
+            Sounds.selectSound()
             onXPScreen(xp)
         }
 
         var reward = quickViewDialog!!.quickview_reward
         reward!!.setOnClickListener {
+            Sounds.selectSound()
             onReward(reward)
         }
 
         quickViewButtonDialog!!.quick_view_button.setOnClickListener {
-
+            Sounds.selectSound()
             var weaponIndex = character.weapons.getOrElse(0) { -1 }
             var weaponIndex1 = character.weapons.getOrElse(1) { -1 }
 

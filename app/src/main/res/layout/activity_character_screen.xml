@@ -5,6 +5,7 @@
     android:id="@+id/character_view_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/character_select_background"
     tools:context=".Character_screen">
 
     <LinearLayout
@@ -461,11 +462,13 @@
         android:id="@+id/background_image"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
+        android:alpha="0"
         android:scaleType="centerCrop"
         android:src="@drawable/character_select_background"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/companion_layer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@color/black" />
