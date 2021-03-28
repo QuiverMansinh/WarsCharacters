@@ -97,9 +97,14 @@ class CharacterScreen : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         println(" CHARACTER" + MainActivity.selectedCharacter)
 
-            updateStats()
-            updateImages()
-            quickSave()
+
+
+        updateStats()
+        addDamage()
+        onMinusDamage(minus_damage)
+
+        updateImages()
+        quickSave()
 
 
         if (hasFocus && !loadAnimated) {
@@ -114,13 +119,16 @@ class CharacterScreen : AppCompatActivity() {
             animTop.duration = (500).toLong()
             animTop.start()
             bottom_panel.animate().alpha(1f)
-            val animBottom = ObjectAnimator.ofFloat(
-                bottom_panel, "translationY", bottom_panel.height
-                    .toFloat(), 0f
-            )
-            //animBottom.interpolator = DecelerateInterpolator()
-            animBottom.duration = (500).toLong()
-            animBottom.start()
+
+                val animBottom = ObjectAnimator.ofFloat(
+                    bottom_panel, "translationY", bottom_panel.height
+                        .toFloat(), 0f
+                )
+
+                //animBottom.interpolator = DecelerateInterpolator()
+                animBottom.duration = (500).toLong()
+                animBottom.start()
+
 
             left_buttons.animate().alpha(1f)
             val animButtons = ObjectAnimator.ofFloat(
@@ -142,14 +150,18 @@ class CharacterScreen : AppCompatActivity() {
             animRightButtons.start()
 
             character_images.animate().alpha(1f)
-            val animChar = ObjectAnimator.ofFloat(
-                character_images, "translationY", character_images.height
-                    .toFloat(), character_images.height.toFloat(), 0f
-            )
-            animChar.interpolator = DecelerateInterpolator()
-            animChar.duration = (800).toLong()
-            animChar.start()
-
+            if(!character.withdrawn) {
+                val animChar = ObjectAnimator.ofFloat(
+                    character_images, "translationY", character_images.height
+                        .toFloat(), character_images.height.toFloat(), 0f
+                )
+                animChar.interpolator = DecelerateInterpolator()
+                animChar.duration = (800).toLong()
+                animChar.start()
+            }
+            else{
+                character_images.animate().translationY(character_image.height.toFloat())
+            }
             companion_image.animate().alpha(1f)
             val animcompanion = ObjectAnimator.ofFloat(
                 companion_image, "translationX",
@@ -656,6 +668,17 @@ class CharacterScreen : AppCompatActivity() {
                 slide.start()
                 quickSave()
             }
+            else{
+                character.damage = character.health * 2
+                character.wounded = character.damage - character.health
+                add_damage.setImageDrawable(getNumber(character.wounded))
+                val slide = ObjectAnimator.ofFloat(
+                    character_images, "translationY", 0f, 0f,
+                    character_image.height.toFloat()
+                )
+                slide.setDuration(1500)
+                slide.start()
+            }
 
         }
         if (character.damage == 0) {
@@ -700,13 +723,13 @@ class CharacterScreen : AppCompatActivity() {
                 wounded.animate().alpha(1f)
 
                 isWounded = true
-                updateStats()
+
                 //println()
                 //println("withdrawn" + character.withdrawn)
                 //println()
                 if (character.withdrawn) {
                     //println("SLIDE DOWN")
-                    wounded.animate().translationY(character_image.height.toFloat())
+                    character_images.animate().translationY(character_image.height.toFloat())
                 }
 
             }
@@ -1253,7 +1276,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onReward(view: View) {
         resetUI()
-        Sounds.selectSound()
+
         val intent = Intent(this, RewardsScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1265,7 +1288,7 @@ class CharacterScreen : AppCompatActivity() {
         //intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
         resetUI()
-        Sounds.selectSound()
+
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent);
 
@@ -1276,7 +1299,7 @@ class CharacterScreen : AppCompatActivity() {
         //intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
         resetUI()
-        Sounds.selectSound()
+
         val intent = Intent(this, ArmorScreen::class.java)
         startActivity(intent);
 
@@ -1286,7 +1309,7 @@ class CharacterScreen : AppCompatActivity() {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "melee")
         resetUI()
-        Sounds.selectSound()
+
         val intent = Intent(this, MeleeScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1297,7 +1320,7 @@ class CharacterScreen : AppCompatActivity() {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "range")
         resetUI()
-        Sounds.selectSound()
+
         val intent = Intent(this, RangedScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1306,7 +1329,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onXPScreen(view: View) {
         resetUI()
-        Sounds.selectSound()
+
         initXPScreen()
         xpSelectScreen!!.show()
 

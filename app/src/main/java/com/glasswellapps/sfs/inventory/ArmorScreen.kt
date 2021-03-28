@@ -51,7 +51,7 @@ class ArmorScreen : AppCompatActivity() {
                 setClickables(gridItem, currentItem)
 
 
-                if (character.weapons.contains(currentItem.index)) {
+                if (character.armor.contains(currentItem.index)) {
                     gridItem.alpha = 1f
                 }
 
