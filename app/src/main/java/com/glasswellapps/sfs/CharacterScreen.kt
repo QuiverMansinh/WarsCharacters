@@ -1288,7 +1288,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onReward(view: View) {
         //resetUI()
-
+        Sounds.selectSound()
         val intent = Intent(this, RewardsScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1300,13 +1300,14 @@ class CharacterScreen : AppCompatActivity() {
         //intent.putExtra("tab", "accessory")
         //intent.putExtra("Load",false)
         //resetUI()
-
+        Sounds.selectSound()
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent);
 
     }
 
     fun onArmour(view: View) {
+        Sounds.selectSound()
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "armour")
         //intent.putExtra("Load",false)
@@ -1321,7 +1322,7 @@ class CharacterScreen : AppCompatActivity() {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "melee")
         //resetUI()
-
+        Sounds.selectSound()
         val intent = Intent(this, MeleeScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1332,7 +1333,7 @@ class CharacterScreen : AppCompatActivity() {
         //val intent = Intent(this, ItemSelectScreen::class.java)
         //intent.putExtra("tab", "range")
         //resetUI()
-
+        Sounds.selectSound()
         val intent = Intent(this, RangedScreen::class.java)
         //intent.putExtra("Load",false)
         startActivity(intent);
@@ -1341,7 +1342,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onXPScreen(view: View) {
         //resetUI()
-
+        Sounds.selectSound()
         initXPScreen()
         xpSelectScreen!!.show()
 
@@ -2952,6 +2953,7 @@ class CharacterScreen : AppCompatActivity() {
 
 
     override fun onBackPressed() {
+        
         quickSave()
         val intent = Intent(this, MainActivity::class.java)
 
