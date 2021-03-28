@@ -100,9 +100,9 @@ class CharacterScreen : AppCompatActivity() {
 
 
         updateStats()
-        addDamage()
-        onMinusDamage(minus_damage)
 
+        onMinusDamage(minus_damage)
+        addDamage()
         updateImages()
         quickSave()
 
@@ -150,7 +150,7 @@ class CharacterScreen : AppCompatActivity() {
             animRightButtons.start()
 
             character_images.animate().alpha(1f)
-            if(!character.withdrawn) {
+            if(character.damage < character.health*2) {
                 val animChar = ObjectAnimator.ofFloat(
                     character_images, "translationY", character_images.height
                         .toFloat(), character_images.height.toFloat(), 0f
@@ -160,7 +160,12 @@ class CharacterScreen : AppCompatActivity() {
                 animChar.start()
             }
             else{
-                character_images.animate().translationY(character_image.height.toFloat())
+                val slide = ObjectAnimator.ofFloat(
+                    character_images, "translationY", character_images.y, character_images.y,
+                    character_image.height.toFloat()
+                )
+                slide.setDuration(1500)
+                slide.start()
             }
             companion_image.animate().alpha(1f)
             val animcompanion = ObjectAnimator.ofFloat(
@@ -630,7 +635,7 @@ class CharacterScreen : AppCompatActivity() {
                 //add_damage.setText("" + character.health)
                 add_damage.setImageDrawable(getNumber(character.health))
                 val slide = ObjectAnimator.ofFloat(
-                    character_images, "translationY", 0f, 0f,
+                    character_images, "translationY", character_images.y, character_images.y,
                     character_image.height.toFloat()
                 )
                 slide.setDuration(1500)
@@ -649,9 +654,10 @@ class CharacterScreen : AppCompatActivity() {
         if (character.damage > 0) {
             Sounds.selectSound()
             character.damage--
-            character.withdrawn = false
+
             if (character.damage < character.health) {
                 //add_damage.setText("" + character.damage)
+                character.withdrawn = false
                 add_damage.setImageDrawable(getNumber(character.damage))
                 if (isWounded) {
                     character.wounded = 0
@@ -660,6 +666,7 @@ class CharacterScreen : AppCompatActivity() {
                     updateStats()
                 }
             } else if (character.damage < character.health * 2) {
+                character.withdrawn = false
                 character.wounded = character.damage - character.health
                 //add_damage.setText("" + character.wounded)
                 add_damage.setImageDrawable(getNumber(character.wounded))
@@ -669,15 +676,11 @@ class CharacterScreen : AppCompatActivity() {
                 quickSave()
             }
             else{
-                character.damage = character.health * 2
+                character.withdrawn = true
+                character.damage = character.health*2
                 character.wounded = character.damage - character.health
                 add_damage.setImageDrawable(getNumber(character.wounded))
-                val slide = ObjectAnimator.ofFloat(
-                    character_images, "translationY", 0f, 0f,
-                    character_image.height.toFloat()
-                )
-                slide.setDuration(1500)
-                slide.start()
+
             }
 
         }
