@@ -182,6 +182,7 @@ class CharacterScreen : AppCompatActivity() {
             kill_tracker_bar.visibility = View.VISIBLE
             background_image.alpha=0f
             background_image.animate().alpha(1f)
+            camouflage.animate().alpha(1f)
             loadAnimated = true
         }
     }
@@ -2953,7 +2954,7 @@ class CharacterScreen : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        
+
         quickSave()
         val intent = Intent(this, MainActivity::class.java)
 
