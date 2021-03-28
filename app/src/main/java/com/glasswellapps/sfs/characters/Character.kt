@@ -179,6 +179,10 @@ open class Character {
         val image = getBitmap(context, "backgrounds/background_"+ background + ".jpg")
         return image;
     }
+    open fun getCamoImage(context: Context): Bitmap? {
+        val image = getBitmap(context, "backgrounds/camo_"+ background + ".png")
+        return image;
+    }
 
     open fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_fenn)

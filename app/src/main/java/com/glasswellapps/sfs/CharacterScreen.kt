@@ -143,8 +143,8 @@ class CharacterScreen : AppCompatActivity() {
 
             character_images.animate().alpha(1f)
             val animChar = ObjectAnimator.ofFloat(
-                character_images, "translationX", -character_images.width
-                    .toFloat(), -character_images.width.toFloat(), 0f
+                character_images, "translationY", character_images.height
+                    .toFloat(), character_images.height.toFloat(), 0f
             )
             animChar.interpolator = DecelerateInterpolator()
             animChar.duration = (800).toLong()
@@ -305,6 +305,7 @@ class CharacterScreen : AppCompatActivity() {
             companion_button.isClickable = false
         }
         background_image.setImageBitmap(character.getBackgroundImage(this))
+        camouflage.setImageBitmap(character.getCamoImage(this))
     }
 
     private fun setDiceColor(dice: ImageView, color: Char) {
@@ -1181,6 +1182,20 @@ class CharacterScreen : AppCompatActivity() {
         character.background = "desert"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_desert.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_desert.png"))
+    }
+
+    fun onBackgroundBespin(view: View) {
+        Sounds.selectSound()
+        character.background = "bespin"
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_bespin.jpg"))
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_bespin.png"))
+    }
+
+    fun onBackgroundCity(view: View) {
+        Sounds.selectSound()
+        character.background = "city"
+        background_image.setImageBitmap(getBitmap(this, "backgrounds/background_city.jpg"))
+        camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_city.png"))
     }
 
     fun onBackgroundInterior(view: View) {
@@ -2219,6 +2234,14 @@ class CharacterScreen : AppCompatActivity() {
         }
         backgroundDialog!!.interior_background.setOnClickListener {
             onBackgroundInterior(backgroundDialog!!.interior_background)
+            //  quickSave()
+        }
+        backgroundDialog!!.city_background.setOnClickListener {
+            onBackgroundCity(backgroundDialog!!.city_background)
+            //  quickSave()
+        }
+        backgroundDialog!!.bespin_background.setOnClickListener {
+            onBackgroundBespin(backgroundDialog!!.bespin_background)
             //  quickSave()
         }
     }

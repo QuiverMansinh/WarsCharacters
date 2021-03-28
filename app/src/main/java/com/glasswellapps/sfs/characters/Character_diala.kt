@@ -82,7 +82,13 @@ class Character_diala : Character {
         }
         if(tier == 3) {
             if (ancientLightSaber) {
-                currentImage = getBitmap(context,"characters/diala/images/tier3image_ancient_light_saber.png")
+                if(xpCardsEquipped[8]){
+                    currentImage = getBitmap(context,
+                        "characters/diala/images/tier3image_ancient_light_saber_card9.png");
+                }
+                else{
+                    currentImage = getBitmap(context,"characters/diala/images/tier3image_ancient_light_saber.png");
+                }
             }
         }
         println(""+ancientLightSaber + " " + tier)

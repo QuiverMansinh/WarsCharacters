@@ -94,7 +94,7 @@ public class CharacterImageView extends View implements Runnable{
                 if (image != null) {
                     imageHeight =(int)((float)image.getHeight()/image.getWidth()*getWidth());
                     image = Bitmap.createScaledBitmap(image, getWidth(), imageHeight, true);
-                    offsetY = Math.max(getHeight()-imageHeight,0);
+                    offsetY = Math.max((getHeight()-imageHeight)/2,0);
                 }
                 imageScaled = true;
             }
