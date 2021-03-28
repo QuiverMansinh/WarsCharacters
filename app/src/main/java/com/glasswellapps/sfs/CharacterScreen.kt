@@ -101,7 +101,7 @@ class CharacterScreen : AppCompatActivity() {
 
         updateStats()
 
-        onMinusDamage(minus_damage)
+        minusDamage()
         addDamage()
         updateImages()
         quickSave()
@@ -598,6 +598,7 @@ class CharacterScreen : AppCompatActivity() {
 
     }
 
+
     fun onAddDamage(view: View) {
         if (addDamage()) {
             playDamageAnim()
@@ -654,8 +655,13 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onMinusDamage(view: View) {
+        Sounds.selectSound()
+        minusDamage()
+    }
+
+    fun minusDamage(){
         if (character.damage > 0) {
-            Sounds.selectSound()
+
             character.damage--
 
             if (character.damage < character.health) {
