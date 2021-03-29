@@ -580,6 +580,9 @@ class CharacterScreen : AppCompatActivity() {
                 hitAnim()
                 playRestAnim()
             }
+            else{
+                Sounds.negativeSound()
+            }
         }
 
 
@@ -605,7 +608,9 @@ class CharacterScreen : AppCompatActivity() {
     fun onAddDamage(view: View) {
         if (addDamage()) {
             playDamageAnim()
-
+        }
+        else{
+            Sounds.negativeSound()
         }
     }
 
