@@ -101,8 +101,44 @@ class CharacterScreen : AppCompatActivity() {
 
         updateStats()
         if(character.damage>0) {
-            minusDamage()
-            addDamage()
+            if (character.damage < character.health) {
+                add_damage.setImageDrawable(getNumber(character.damage))
+                if (isWounded) {
+                    character.wounded = 0
+                    wounded.animate().alpha(0f)
+                    isWounded = false
+                    updateStats()
+                }
+            } else if (character.damage < character.health * 2) {
+                character.wounded = character.damage - character.health
+                //add_damage.setText("" + character.wounded)
+                add_damage.setImageDrawable(getNumber(character.wounded))
+                if (!isWounded) {
+                    wounded.animate().alpha(1f)
+                    character.timesWounded++
+                    isWounded = true
+                    updateStats()
+                }
+                if(character.withdrawn) {
+                    character.withdrawn = false
+                    val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
+                    slide.setDuration(500)
+                    slide.start()
+                }
+            } else {
+                if(!character.withdrawn) {
+                    character.withdrawn = true
+                    character.timesWithdrawn++
+                }
+                //add_damage.setText("" + character.health)
+                add_damage.setImageDrawable(getNumber(character.health))
+                val slide = ObjectAnimator.ofFloat(
+                    character_images, "translationY", character_images.y, character_images.y,
+                    character_image.height.toFloat()
+                )
+                slide.setDuration(1500)
+                slide.start()
+            }
         }
         updateImages()
         quickSave()
