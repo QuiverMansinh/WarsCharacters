@@ -783,9 +783,9 @@ class CharacterScreen : AppCompatActivity() {
     var activated = false
 
     fun onActivate(view: View) {
-        Sounds.selectSound()
-        if (!activated) {
 
+        if (!activated) {
+            Sounds.selectSound()
             val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 1f, 0f, 0f, 0f)
             flipUnactive.setDuration(200)
             flipUnactive.start()
@@ -824,7 +824,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onEndActivation(view: View) {
-
+        Sounds.selectSound()
 
 
         val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 0f, 0f, 0f, 1f)
@@ -867,6 +867,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onEndActivationNo(view: View) {
+        Sounds.selectSound()
         endActivationDialog!!.dismiss()
     }
 
