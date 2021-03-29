@@ -575,8 +575,6 @@ class CharacterScreen : AppCompatActivity() {
             add_strain.setImageDrawable(getNumber(character.strain))
             playRestAnim()
         } else {
-
-
             if(addDamage()) {
                 Sounds.damagedSound(this, Sounds.impact)
                 hitAnim()
@@ -1007,11 +1005,12 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onRest(view: View) {
         if (actionsLeft > 0 || !actionUsage) {
+            Sounds.selectSound()
             character.strain -= character.endurance
 
             if (character.strain < 0) {
                 for (i in 1..-character.strain) {
-                    onMinusDamage(view)
+                    minusDamage()
                 }
                 character.strain = 0;
             }
