@@ -709,6 +709,7 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onUnwound(view: View) {
+        Sounds.strainSound()
         playRestAnim()
         character.damage = 0
         character.wounded = 0
