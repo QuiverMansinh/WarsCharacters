@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/character_select_background"
-    tools:context=".Character_screen">
+    tools:context=".CharacterScreen">
 
     <LinearLayout
         android:id="@+id/action_menu"
@@ -501,7 +501,7 @@
         app:layout_constraintStart_toStartOf="@+id/background_image"
         app:layout_constraintTop_toTopOf="@+id/overlay">
 
-        <com.glasswellapps.sfs.CharacterImageView
+        <com.glasswellapps.iact.CharacterImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -511,7 +511,7 @@
 
     </FrameLayout>
 
-    <com.glasswellapps.sfs.PulsatingImageView
+    <com.glasswellapps.iact.PulsatingImageView
         android:id="@+id/camouflage"
         android:layout_width="0dp"
         android:layout_height="0dp"
