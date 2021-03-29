@@ -578,6 +578,7 @@ class CharacterScreen : AppCompatActivity() {
             if(addDamage()) {
                 Sounds.damagedSound(this, Sounds.impact)
                 hitAnim()
+                character.damageTaken++
                 playRestAnim()
             }
             else{
