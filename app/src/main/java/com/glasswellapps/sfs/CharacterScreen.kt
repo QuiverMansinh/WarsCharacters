@@ -2360,13 +2360,11 @@ class CharacterScreen : AppCompatActivity() {
 
         var xp = quickViewDialog!!.quickview_xp
         xp!!.setOnClickListener {
-            Sounds.selectSound()
             onXPScreen(xp)
         }
 
         var reward = quickViewDialog!!.quickview_reward
         reward!!.setOnClickListener {
-            Sounds.selectSound()
             onReward(reward)
         }
 
