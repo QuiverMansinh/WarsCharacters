@@ -1017,6 +1017,7 @@ class CharacterScreen : AppCompatActivity() {
             }
             //add_strain.setText("" + character.strain)
             add_strain.setImageDrawable(getNumber(character.strain))
+            Sounds.strainSound()
             playRestAnim()
             character.timesRested++
             restDialog!!.dismiss()
