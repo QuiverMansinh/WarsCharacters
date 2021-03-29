@@ -573,16 +573,18 @@ class CharacterScreen : AppCompatActivity() {
 
             //add_strain.setText("" + character.strain)
             add_strain.setImageDrawable(getNumber(character.strain))
+            playRestAnim()
         } else {
 
 
             if(addDamage()) {
                 Sounds.damagedSound(this, Sounds.impact)
                 hitAnim()
+                playRestAnim()
             }
         }
 
-        playRestAnim()
+
 
     }
 
