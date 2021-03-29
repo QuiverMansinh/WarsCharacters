@@ -100,9 +100,10 @@ class CharacterScreen : AppCompatActivity() {
 
 
         updateStats()
-
-        minusDamage()
-        addDamage()
+        if(character.damage>0) {
+            minusDamage()
+            addDamage()
+        }
         updateImages()
         quickSave()
 
