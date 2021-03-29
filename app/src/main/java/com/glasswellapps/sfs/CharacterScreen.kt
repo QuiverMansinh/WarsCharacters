@@ -1005,7 +1005,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onRest(view: View) {
         if (actionsLeft > 0 || !actionUsage) {
-            Sounds.selectSound()
+           
             character.strain -= character.endurance
 
             if (character.strain < 0) {
