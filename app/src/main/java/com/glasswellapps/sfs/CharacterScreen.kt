@@ -608,6 +608,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onAddDamage(view: View) {
         if (addDamage()) {
             playDamageAnim()
+            character.damageTaken++
         }
         else{
             Sounds.negativeSound()
@@ -617,7 +618,7 @@ class CharacterScreen : AppCompatActivity() {
     private fun addDamage(): Boolean {
         if (character.damage < character.health * 2) {
             character.damage++
-            character.damageTaken++
+
 
             if (minus_damage.alpha == 0f) {
                 minus_damage.animate().alpha(1f)
