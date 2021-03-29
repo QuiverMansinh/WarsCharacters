@@ -103,6 +103,12 @@ class CharacterScreen : AppCompatActivity() {
         if(character.damage>0) {
             if (character.damage < character.health) {
                 add_damage.setImageDrawable(getNumber(character.damage))
+                if(character.withdrawn) {
+                    character.withdrawn = false
+                    val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
+                    slide.setDuration(500)
+                    slide.start()
+                }
                 if (isWounded) {
                     character.wounded = 0
                     wounded.animate().alpha(0f)
@@ -129,15 +135,16 @@ class CharacterScreen : AppCompatActivity() {
                 if(!character.withdrawn) {
                     character.withdrawn = true
                     character.timesWithdrawn++
+                    val slide = ObjectAnimator.ofFloat(
+                        character_images, "translationY", character_images.y, character_images.y,
+                        character_image.height.toFloat()
+                    )
+                    slide.setDuration(1500)
+                    slide.start()
                 }
                 //add_damage.setText("" + character.health)
                 add_damage.setImageDrawable(getNumber(character.health))
-                val slide = ObjectAnimator.ofFloat(
-                    character_images, "translationY", character_images.y, character_images.y,
-                    character_image.height.toFloat()
-                )
-                slide.setDuration(1500)
-                slide.start()
+
             }
         }
         updateImages()
@@ -759,7 +766,8 @@ class CharacterScreen : AppCompatActivity() {
         character.withdrawn = false
         val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
         slide.setDuration(500)
-        slide.start()
+        //slide.start()
+        character_images.animate().translationY(0f)
         updateStats()
         quickSave()
 
@@ -1050,7 +1058,7 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onRest(view: View) {
         if (actionsLeft > 0 || !actionUsage) {
-           
+
             character.strain -= character.endurance
 
             if (character.strain < 0) {
