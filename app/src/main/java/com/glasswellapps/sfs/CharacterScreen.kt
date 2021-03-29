@@ -575,8 +575,8 @@ class CharacterScreen : AppCompatActivity() {
             add_strain.setImageDrawable(getNumber(character.strain))
         } else {
             Sounds.damagedSound(this, Sounds.impact)
-            addDamage()
-            if(animateDamage) {
+
+            if(addDamage()) {
                 hitAnim()
             }
         }
