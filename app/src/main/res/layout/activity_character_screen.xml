@@ -27,6 +27,7 @@
             android:id="@+id/bleeding_add_strain"
             android:layout_width="180dp"
             android:layout_height="44dp"
+            android:onClick="onShowBleedingCard"
             android:visibility="gone">
 
             <ImageView
@@ -34,7 +35,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:onClick="onShowHiddenCard"
                 android:padding="5dp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@+id/attack_hidden4"
@@ -46,7 +46,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:onClick="onShowHiddenCard"
                 android:padding="5dp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +74,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:onClick="onShowHiddenCard"
                 android:visibility="visible"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="parent"
