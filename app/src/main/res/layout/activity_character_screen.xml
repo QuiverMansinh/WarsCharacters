@@ -5,7 +5,8 @@
     android:id="@+id/character_view_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Character_screen">
+    android:background="@drawable/character_select_background"
+    tools:context=".CharacterScreen">
 
     <LinearLayout
         android:id="@+id/action_menu"
@@ -461,11 +462,13 @@
         android:id="@+id/background_image"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
+        android:alpha="0"
         android:scaleType="centerCrop"
         android:src="@drawable/character_select_background"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/companion_layer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@color/black" />
@@ -473,11 +476,10 @@
     <FrameLayout
         android:id="@+id/companion_layer"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/overlay"
         app:layout_constraintEnd_toEndOf="@+id/overlay"
-        app:layout_constraintStart_toStartOf="@+id/overlay"
-        app:layout_constraintTop_toTopOf="@+id/overlay">
+        app:layout_constraintStart_toStartOf="@+id/overlay">
 
         <ImageView
             android:id="@+id/companion_image"
@@ -499,7 +501,7 @@
         app:layout_constraintStart_toStartOf="@+id/background_image"
         app:layout_constraintTop_toTopOf="@+id/overlay">
 
-        <com.example.imperialassault.CharacterImageView
+        <com.glasswellapps.iact.CharacterImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -509,11 +511,12 @@
 
     </FrameLayout>
 
-    <com.example.imperialassault.PulsatingImageView
+    <com.glasswellapps.iact.PulsatingImageView
         android:id="@+id/camouflage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
+        android:alpha="0"
         android:scaleType="centerCrop"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/background_image"
@@ -613,7 +616,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/extend_down_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/extend_up_button">
@@ -633,7 +636,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="villainKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="villian"
@@ -670,7 +673,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="leaderKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="leader"
@@ -707,7 +710,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="vehicleKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="vehicle"
@@ -744,7 +747,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="creatureKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="creature"
@@ -781,7 +784,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="guardKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="guard"
@@ -818,7 +821,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="droidKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="droid"
@@ -855,7 +858,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="scumKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="scum"
@@ -881,6 +884,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:dividerPadding="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -892,7 +896,7 @@
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
                     android:onClick="trooperKillDown"
-                    android:padding="0dp"
+                    android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
                     android:tag="trooper"
