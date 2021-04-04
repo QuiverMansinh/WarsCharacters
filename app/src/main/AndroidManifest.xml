@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
 
+        <activity android:name=".CreateScreen"></activity>
+
+
         <activity android:name=".inventory.RewardsScreen" />
         <activity android:name=".LoadScreen" />
-
         <activity android:name=".inventory.RangedScreen" />
         <activity android:name=".inventory.MeleeScreen" />
         <activity android:name=".inventory.AccScreen" />
