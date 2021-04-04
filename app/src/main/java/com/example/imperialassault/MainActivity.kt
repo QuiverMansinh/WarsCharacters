@@ -34,6 +34,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoadScreen::class.java)
                 startActivity(intent)
         }
+
+        createButton.setOnClickListener {
+            Sounds.selectSound()
+            val intent = Intent(this, CreateScreen::class.java)
+            startActivity(intent)
+        }
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
