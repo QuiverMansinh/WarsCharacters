@@ -9,7 +9,7 @@
     tools:context=".CreateScreen">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="300dp"
         app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,8 +19,9 @@
 
         <ImageView
             android:id="@+id/imagePicked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/empty_item_slot" />
     </androidx.cardview.widget.CardView>
 

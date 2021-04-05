@@ -47,7 +47,8 @@ class Characters_list : AppCompatActivity() {
             findViewById(R.id.imageViewJarrod),
             findViewById(R.id.imageViewDrok),
             findViewById(R.id.imageViewCT),
-            findViewById(R.id.imageViewTress),
+            findViewById(R.id.imageViewTress)
+
         )
         var allChSel = BitmapFactory.decodeResource(resources,R.drawable
             .allcharacterselect_21)
@@ -76,7 +77,7 @@ class Characters_list : AppCompatActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         characterList.animate().alpha(1f)
-        var sortedCharArray = arrayListOf<ImageView>(
+        var sortedCharArray = arrayListOf<View>(
             findViewById(R.id.imageViewBiv),
             findViewById(R.id.imageViewDiala),
             findViewById(R.id.imageViewSaska),
@@ -98,6 +99,7 @@ class Characters_list : AppCompatActivity() {
             findViewById(R.id.imageViewKo),
             findViewById(R.id.imageViewMurne),
             findViewById(R.id.imageViewTress),
+            findViewById(R.id.customCharacter)
         )
         if(hasFocus) {
             for (i in 0 until sortedCharArray.size) {
@@ -140,6 +142,25 @@ class Characters_list : AppCompatActivity() {
         }
         val intent = Intent(this, CharacterScreen::class.java)
         intent.putExtra("CharacterName", view.tag.toString())
+        intent.putExtra("Load", false)
+
+
+        startActivity(intent);
+        finish()
+
+    }
+
+    fun onSelectCustom(view: View) {
+        Sounds.selectSound()
+        for(i in 0..charactersImage.count()-1){
+
+                charactersImage[i].alpha = 0f
+        }
+        if(MainActivity.selectedCharacter != null) {
+            wipeSelectedCharacter()
+        }
+        val intent = Intent(this, CharacterScreen::class.java)
+        intent.putExtra("CharacterName", "custom")
         intent.putExtra("Load", false)
 
 

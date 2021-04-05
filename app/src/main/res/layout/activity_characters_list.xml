@@ -211,11 +211,48 @@
                 android:id="@+id/imageViewTress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
                 android:adjustViewBounds="true"
                 android:onClick="onSelect"
                 android:scaleType="fitCenter"
                 android:tag="tress" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/customCharacter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView5"
+                    android:layout_width="70dp"
+                    android:layout_height="68dp"
+                    android:layout_marginStart="12dp"
+                    app:cardCornerRadius="35dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="21dp"
+                    android:background="@drawable/save_file_back_2"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:shadowColor="@color/text_blue"
+                    android:shadowRadius="3"
+                    android:text="Custom Character"
+                    android:textColor="@color/white"
+                    android:textSize="34sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardView5"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
 
-        <activity android:name=".CreateScreen"></activity>
+        <activity android:name=".CreateScreen"/>
 
 
         <activity android:name=".inventory.RewardsScreen" />

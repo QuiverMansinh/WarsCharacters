@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+
 import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.database.CharacterData
 import com.glasswellapps.iact.effects.Sounds

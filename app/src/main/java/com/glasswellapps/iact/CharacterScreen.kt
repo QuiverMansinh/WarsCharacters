@@ -318,6 +318,9 @@ class CharacterScreen : AppCompatActivity() {
                 "tress" -> {
                     character = Character_tress(this)
                 }
+                "custom" -> {
+                    character = CustomCharacter(this)
+                }
             }
             MainActivity.selectedCharacter = character
 
