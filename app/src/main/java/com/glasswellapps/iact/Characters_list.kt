@@ -172,7 +172,7 @@ class Characters_list : AppCompatActivity() {
     fun wipeSelectedCharacter(){
 
         MainActivity.selectedCharacter!!.currentImage!!.recycle()
-        for (i in 0..8) {
+        for (i in 0..MainActivity.selectedCharacter!!.xpCardImages.size-1) {
             if (MainActivity.selectedCharacter!!.xpCardImages[i] != null) {
                 MainActivity.selectedCharacter!!.xpCardImages!![i].recycle()
             }

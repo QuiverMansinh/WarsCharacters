@@ -452,6 +452,9 @@ class LoadScreen : AppCompatActivity() {
             "tress" -> {
                 character = Character_tress(this)
             }
+            else -> {
+                character = CustomCharacter(this)
+            }
         }
         return character
     }

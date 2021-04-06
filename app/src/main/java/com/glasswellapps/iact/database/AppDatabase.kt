@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.*
 import androidx.room.RoomDatabase
 
-@Database(entities = arrayOf(CharacterData::class), version = 1)
+@Database(entities = arrayOf(CharacterData::class,CustomData::class), version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getCharacterDAO(): CharacterDAO
-
+    abstract fun getCustomDAO(): CustomDAO
     companion object{
         private var instance: AppDatabase? = null
 

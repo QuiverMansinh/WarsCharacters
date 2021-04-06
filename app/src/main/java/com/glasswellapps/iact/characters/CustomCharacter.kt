@@ -1,7 +1,12 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.widget.Toast
 import com.glasswellapps.iact.R
+import kotlinx.android.synthetic.main.activity_create_screen.*
+import java.io.File
+import java.io.FileInputStream
+import java.lang.Exception
 
 class CustomCharacter : Character {
 
@@ -55,4 +60,24 @@ class CustomCharacter : Character {
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_biv)
     }
+
+    override fun loadTierImage(context: Context, tier:Int){
+        val file = File(context.filesDir, "/CustomIACharacter/tier"+tier+"image")
+        if(file.exists()) {
+            var inputStream: FileInputStream? = null
+            try{
+                inputStream = FileInputStream(file)
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+            }
+            currentImage = android.graphics.BitmapFactory.decodeStream(inputStream)
+
+        }
+        else{
+            Toast.makeText(context,"tier "+ tier +" image not found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }

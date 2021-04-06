@@ -6,9 +6,14 @@ import androidx.room.*
 
 @Entity
 data class CustomData (
+    @ColumnInfo(name = "fileName") var fileName: String?,
     @ColumnInfo(name = "characterName") val characterName: String?,
 
-    @ColumnInfo(name = "defenceDice") val defenceDice: String,
+    @ColumnInfo(name = "health") val health: Int,
+    @ColumnInfo(name = "endurance") val endurance: Int,
+    @ColumnInfo(name = "speed") val speed: Int,
+    @ColumnInfo(name = "defence") val defence: String,
+
     @ColumnInfo(name = "strength") val strength: String,
     @ColumnInfo(name = "insight") val insight: String,
     @ColumnInfo(name = "tech") val tech: String,
