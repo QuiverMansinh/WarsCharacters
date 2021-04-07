@@ -21,7 +21,7 @@ interface CustomDAO {
     fun insertAll(vararg fileName: CustomData)
 
     @Insert
-    fun insert(fileName: CharacterData):Long
+    fun insert(fileName: CustomData):Long
 
 
     @Query("DELETE FROM customdata WHERE id LIKE :deleteId")

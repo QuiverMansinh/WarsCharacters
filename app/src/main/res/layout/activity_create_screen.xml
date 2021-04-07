@@ -27,7 +27,7 @@
     </androidx.cardview.widget.CardView>
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/customName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -51,7 +51,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2">
+        app:layout_constraintTop_toBottomOf="@+id/customName">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -192,7 +192,7 @@
                 android:background="@drawable/stat_box">
 
                 <ImageView
-                    android:id="@+id/imageView40"
+                    android:id="@+id/customDefence"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -241,7 +241,7 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:id="@+id/imageView42"
+                    android:id="@+id/customStrength1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -249,7 +249,7 @@
                     app:srcCompat="@drawable/dice_green" />
 
                 <ImageView
-                    android:id="@+id/imageView43"
+                    android:id="@+id/customStrength2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -257,7 +257,7 @@
                     app:srcCompat="@drawable/dice_yellow" />
 
                 <ImageView
-                    android:id="@+id/imageView44"
+                    android:id="@+id/customStrength3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -274,7 +274,7 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:id="@+id/imageView42"
+                    android:id="@+id/customStrengthWounded1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -282,7 +282,7 @@
                     app:srcCompat="@drawable/dice_green" />
 
                 <ImageView
-                    android:id="@+id/imageView43"
+                    android:id="@+id/customStrengthWounded2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -290,7 +290,7 @@
                     app:srcCompat="@drawable/dice_red" />
 
                 <ImageView
-                    android:id="@+id/imageView44"
+                    android:id="@+id/customStrengthWounded3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -326,7 +326,7 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:id="@+id/imageView42"
+                    android:id="@+id/customInsight1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -334,7 +334,7 @@
                     app:srcCompat="@drawable/dice_green" />
 
                 <ImageView
-                    android:id="@+id/imageView43"
+                    android:id="@+id/customInsight2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -342,7 +342,7 @@
                     app:srcCompat="@drawable/dice_yellow" />
 
                 <ImageView
-                    android:id="@+id/imageView44"
+                    android:id="@+id/customInsight3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -359,7 +359,7 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:id="@+id/imageView42"
+                    android:id="@+id/customInsightWounded1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -367,7 +367,7 @@
                     app:srcCompat="@drawable/dice_green" />
 
                 <ImageView
-                    android:id="@+id/imageView43"
+                    android:id="@+id/customInsightWounded2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -375,7 +375,7 @@
                     app:srcCompat="@drawable/dice_red" />
 
                 <ImageView
-                    android:id="@+id/imageView44"
+                    android:id="@+id/customInsightWounded3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -412,7 +412,7 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:id="@+id/imageView42"
+                    android:id="@+id/customTech1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -420,7 +420,7 @@
                     app:srcCompat="@drawable/dice_green" />
 
                 <ImageView
-                    android:id="@+id/imageView43"
+                    android:id="@+id/customTech2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -428,7 +428,7 @@
                     app:srcCompat="@drawable/dice_yellow" />
 
                 <ImageView
-                    android:id="@+id/imageView44"
+                    android:id="@+id/customTech3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -445,7 +445,7 @@
                 android:padding="5dp">
 
                 <ImageView
-                    android:id="@+id/imageView42"
+                    android:id="@+id/customTechWounded1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -453,7 +453,7 @@
                     app:srcCompat="@drawable/dice_green" />
 
                 <ImageView
-                    android:id="@+id/imageView43"
+                    android:id="@+id/customTechWounded2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
@@ -461,7 +461,7 @@
                     app:srcCompat="@drawable/dice_red" />
 
                 <ImageView
-                    android:id="@+id/imageView44"
+                    android:id="@+id/customTechWounded3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"

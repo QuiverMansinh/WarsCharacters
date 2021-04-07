@@ -1,4 +1,5 @@
 package com.glasswellapps.iact
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -8,6 +9,14 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.room.ColumnInfo
+import androidx.work.*
+import com.glasswellapps.iact.characters.Character
+import com.glasswellapps.iact.characters.CustomCharacter
+import com.glasswellapps.iact.database.AppDatabase
+import com.glasswellapps.iact.database.CharacterData
+import com.glasswellapps.iact.database.CustomData
 import kotlinx.android.synthetic.main.activity_create_screen.*
 import java.io.File
 import java.io.FileInputStream
@@ -19,10 +28,24 @@ import android.graphics.BitmapFactory as GraphicsBitmapFactory
 class CreateScreen : AppCompatActivity() {
 
     var folder:File? = null;
-
+    companion object{
+        var customCharacter: CustomCharacter? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_screen)
+        customCharacter = CustomCharacter(this)
+        val database = AppDatabase.getInstance(this)
+        val data = database!!.getCustomDAO().getAll()
+        if(data.size>0) {
+            customCharacter!!.name = data[0].characterName!!
+            customCharacter!!.health_default = data[0].health
+            customCharacter!!.endurance_default = data[0].endurance
+            customCharacter!!.speed_default = data[0].speed
+            customCharacter!!.defence_dice = data[0].defence
+        }
+
+
         folder = File(filesDir,"/CustomIACharacter")
         var success = true
         if(!folder!!.exists()){
@@ -35,6 +58,16 @@ class CreateScreen : AppCompatActivity() {
                 Toast.makeText(getApplication(),"Failed to create Directory", Toast.LENGTH_LONG).show();
             }
         }
+
+        customName.hint = customCharacter!!.name
+        customHealth.hint = ""+customCharacter!!.health_default
+        customEndurance.hint = ""+customCharacter!!.health_default
+        customSpeed.hint = ""+customCharacter!!.health_default
+        when(customCharacter!!.defence_dice){
+            "black"->{customDefence.setImageDrawable(resources.getDrawable(R.drawable.dice_black))}
+            "white"->{customDefence.setImageDrawable(resources.getDrawable(R.drawable.dice))}
+        }
+
 
         loadImage()
     }
@@ -94,5 +127,119 @@ class CreateScreen : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed(){
+        customCharacter!!.name = ""+customName.text.toString()
+        if(customHealth.text.toString().isNotEmpty()) {
+            customCharacter!!.health_default = Integer.parseInt(customHealth.text.toString())
+        }
+        if(customEndurance.text.toString().isNotEmpty()) {
+            customCharacter!!.endurance_default = Integer.parseInt(customEndurance.text.toString())
+        }
+        if(customSpeed.text.toString().isNotEmpty()) {
+            customCharacter!!.speed_default = Integer.parseInt(customSpeed.text.toString())
+        }
 
+        save()
+        super.onBackPressed()
+    }
+
+    fun save() {
+        //if(secondsSinceLastSave > 3) {
+        //val character = MainActivity.selectedCharacter
+
+        val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(saveCustomWorker::class.java)
+        val data = Data.Builder()
+
+        saveWorkRequestBuilder.setInputData(data.build())
+        saveWorkRequestBuilder.addTag("save")
+
+        val saveWorkRequest =saveWorkRequestBuilder.build()
+
+        WorkManager.getInstance(this).enqueue(saveWorkRequest)
+        WorkManager.getInstance(this)
+            .getWorkInfosByTagLiveData("save")
+            .observe(this, Observer<List<WorkInfo>> {
+                    workStatusList ->
+                val currentWorkStatus = workStatusList ?.getOrNull(0)
+                if (currentWorkStatus ?.state ?.isFinished == true)
+                {
+                    WorkManager.getInstance(this)
+                        .getWorkInfosByTagLiveData("save").removeObservers(this)
+                    println("Save Finished")
+
+
+                }
+            })
+
+    }
+}
+class saveCustomWorker(val context: Context, params: WorkerParameters): Worker
+    (context,
+    params) {
+
+
+    override fun doWork(): Result {
+        val database = AppDatabase.getInstance(context)
+        var saveFile = getCharacterData(CreateScreen.customCharacter!!.file_name)
+        if (CreateScreen.customCharacter!!.id != -1) {
+            saveFile.id = CreateScreen.customCharacter!!.id
+            database!!.getCustomDAO().update(saveFile)
+            println("update save")
+        } else {
+
+            CreateScreen.customCharacter!!.id = database!!.getCustomDAO().getPrimaryKey(database!!.getCustomDAO().insert(saveFile))
+            println("insert save")
+
+        }
+
+        return Result.success()
+    }
+
+    fun getCharacterData(fileName: String): CustomData {
+        val character = CreateScreen.customCharacter!!;
+        var data = CustomData(
+            fileName,
+            character.name,
+            character.health_default,
+            character.endurance_default,
+            character.speed_default,
+            character.defence_dice,
+            character.strength,
+            character.insight,
+            character.tech,
+            character.strengthWounded,
+            character.insightWounded,
+            character.techWounded,
+            character.xpEndurances[0],
+            character.xpEndurances[1],
+            character.xpEndurances[2],
+            character.xpEndurances[3],
+            character.xpEndurances[4],
+            character.xpEndurances[5],
+            character.xpEndurances[6],
+            character.xpEndurances[7],
+            character.xpHealths[0],
+            character.xpHealths[1],
+            character.xpHealths[2],
+            character.xpHealths[3],
+            character.xpHealths[4],
+            character.xpHealths[5],
+            character.xpHealths[6],
+            character.xpHealths[7],
+            character.xpSpeeds[0],
+            character.xpSpeeds[1],
+            character.xpSpeeds[2],
+            character.xpSpeeds[3],
+            character.xpSpeeds[4],
+            character.xpSpeeds[5],
+            character.xpSpeeds[6],
+            character.xpSpeeds[7],
+            character.bio_title,
+            character.bio_quote,
+            character.bio_text
+        )
+
+
+        return data
+    }
 }

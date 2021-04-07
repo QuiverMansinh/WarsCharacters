@@ -320,6 +320,13 @@ class CharacterScreen : AppCompatActivity() {
                 }
                 "custom" -> {
                     character = CustomCharacter(this)
+                    val database = AppDatabase.getInstance(this)
+                    val data = database!!.getCustomDAO().getAll()
+                    character.name = data[0].characterName!!
+                    character.health_default = data[0].health
+                    character.endurance_default = data[0].endurance
+                    character.speed_default = data[0].speed
+                    character.defence_dice = data[0].defence
                 }
             }
             MainActivity.selectedCharacter = character
