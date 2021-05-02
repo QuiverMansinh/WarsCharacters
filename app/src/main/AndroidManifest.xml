@@ -15,8 +15,6 @@
 
         <activity android:name=".CreateScreen"
             android:screenOrientation="sensorPortrait"/>
-
-
         <activity android:name=".inventory.RewardsScreen"
             android:screenOrientation="sensorPortrait"/>
         <activity android:name=".LoadScreen"
