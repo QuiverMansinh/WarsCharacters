@@ -72,7 +72,13 @@ class Characters_list : AppCompatActivity() {
                 charactersImage[buffer1++].setImageDrawable(drawable)
             }
         }
-        //TODO delete selected character on load
+
+        if(CreateScreen.customCharacter != null){
+            customCharacter.visibility = View.VISIBLE;
+        }
+        else{
+            customCharacter.visibility = View.INVISIBLE;
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -117,6 +123,7 @@ class Characters_list : AppCompatActivity() {
 
             }
         }
+
     }
 
     fun setAnimation(){

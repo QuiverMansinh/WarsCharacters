@@ -74,6 +74,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:onClick="onDefaultImage"
             android:padding="3dp"
             android:shadowColor="@color/black"
             android:shadowRadius="5"
@@ -91,6 +92,7 @@
             android:alpha="0.5"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:onClick="onTier1Image"
             android:padding="3dp"
             android:shadowColor="@color/black"
             android:shadowRadius="5"
@@ -108,6 +110,7 @@
             android:alpha="0.5"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:onClick="onTier2Image"
             android:padding="3dp"
             android:shadowColor="@color/black"
             android:shadowRadius="5"
@@ -125,6 +128,7 @@
             android:alpha="0.5"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:onClick="onTier3Image"
             android:padding="3dp"
             android:shadowColor="@color/black"
             android:shadowRadius="5"
@@ -146,8 +150,30 @@
         app:layout_constraintEnd_toStartOf="@+id/cardView7"
         app:layout_constraintTop_toTopOf="@+id/cardView7">
 
+        <ImageView
+            android:id="@+id/imageMelee"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:onClick="onMeleeImage"
+            android:padding="3dp"
+            app:srcCompat="@drawable/item_melee" />
+
+        <ImageView
+            android:id="@+id/imageRanged"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:onClick="onRangedImage"
+            android:padding="3dp"
+            app:srcCompat="@drawable/item_ranged" />
+
         <TextView
-            android:id="@+id/weapon1Card"
+            android:id="@+id/imagePortrait"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
@@ -155,16 +181,17 @@
             android:alpha="0.5"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:onClick="onPortraitImage"
             android:padding="3dp"
             android:shadowColor="@color/black"
             android:shadowRadius="5"
-            android:text="WEAPON 1"
+            android:text="PORTRAIT"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/weapon2Card"
+            android:id="@+id/imageHelmet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
@@ -172,44 +199,29 @@
             android:alpha="0.5"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
-            android:padding="3dp"
-            android:shadowColor="@color/black"
-            android:shadowRadius="5"
-            android:text="WEAPON 2"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/xpCards"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:alpha="0.5"
-            android:fontFamily="@font/agency_fb"
-            android:gravity="center"
-            android:padding="3dp"
-            android:shadowColor="@color/black"
-            android:shadowRadius="5"
-            android:text="REWARD"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/rewardCard"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:alpha="0.5"
-            android:fontFamily="@font/agency_fb"
-            android:gravity="center"
+            android:onClick="onHelmetImage"
             android:padding="3dp"
             android:shadowColor="@color/black"
             android:shadowRadius="5"
             android:text="HELMET"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/imagePower"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:fontFamily="@font/agency_fb"
+            android:gravity="center"
+            android:onClick="onPowerImage"
+            android:padding="3dp"
+            android:shadowColor="@color/black"
+            android:shadowRadius="5"
+            android:text="POWER"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -226,6 +238,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customName">
+
+        <ImageView
+            android:id="@+id/imageBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/empty_item_slot" />
 
         <ImageView
             android:id="@+id/imagePicked"

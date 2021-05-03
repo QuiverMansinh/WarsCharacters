@@ -163,6 +163,9 @@ open class Character {
             if (image != null) {
                 images.add(image)
             }
+            else{
+                images.add(BitmapFactory.decodeResource(context.resources, R.drawable.empty_item_slot))
+            }
         }
         xpCardImages = images
     }

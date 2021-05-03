@@ -151,23 +151,5 @@ class MainActivity : AppCompatActivity() {
         return bitmap
     }
 
-    fun wipeSelectedCharacter(){
-
-        selectedCharacter!!.currentImage!!.recycle()
-        for (i in 0..8) {
-            if (selectedCharacter!!.xpCardImages[i] != null) {
-                selectedCharacter!!.xpCardImages!![i].recycle()
-            }
-
-        }
-        if (selectedCharacter!!.power != null) {
-            selectedCharacter!!.power!!.recycle()
-            selectedCharacter!!.power_wounded!!.recycle()
-        }
-        if (selectedCharacter!!.portraitImage != null) {
-            selectedCharacter!!.portraitImage = null
-        }
-        selectedCharacter = null
-    }
 
 }

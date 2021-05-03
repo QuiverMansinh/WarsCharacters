@@ -46,18 +46,9 @@ class CreateScreen : AppCompatActivity() {
         }
 
 
-        folder = File(filesDir,"/CustomIACharacter")
-        var success = true
-        if(!folder!!.exists()){
-            Toast.makeText(getApplication(),"Directory does not exist", Toast.LENGTH_LONG).show();
-            success = folder!!.mkdirs()
-            if(success){
-                Toast.makeText(getApplication(),"Directory created", Toast.LENGTH_LONG).show();
-            }
-            else{
-                Toast.makeText(getApplication(),"Failed to create Directory", Toast.LENGTH_LONG).show();
-            }
-        }
+        createFolder("/CustomIACharacter")
+        createFolder("/CustomIACharacter/xpcards")
+
 
         customName.hint = customCharacter!!.name
         customHealth.hint = ""+customCharacter!!.health_default
@@ -71,6 +62,21 @@ class CreateScreen : AppCompatActivity() {
 
         loadImage()
     }
+
+    fun createFolder(folderURL:String){
+        folder = File(filesDir,folderURL )
+        var success = true
+        if(!folder!!.exists()){
+            Toast.makeText(getApplication(),"Directory does not exist", Toast.LENGTH_LONG).show();
+            success = folder!!.mkdirs()
+            if(success){
+                Toast.makeText(getApplication(),"Directory created", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplication(),"Failed to create Directory", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     val PICKFILE_RESULT_CODE = 8778
 
     fun onPickImage(view: View) {
@@ -80,8 +86,10 @@ class CreateScreen : AppCompatActivity() {
         startActivityForResult(chooseImage, PICKFILE_RESULT_CODE)
     }
 
+    var currentImageURL:String = "/CustomIACharacter/tier0image"
+
     fun loadImage(){
-        val file = File(filesDir, "/CustomIACharacter/tier0image")
+        val file = File(filesDir, currentImageURL)
         if(file.exists()) {
             var inputStream:FileInputStream? = null
             try{
@@ -94,7 +102,8 @@ class CreateScreen : AppCompatActivity() {
             imagePicked.setImageBitmap(bitmap)
         }
         else{
-            Toast.makeText(getApplication(),"tier0 image not found", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(),currentImageURL + " not found", Toast.LENGTH_LONG).show();
+            imagePicked.setImageDrawable(resources.getDrawable(R.drawable.empty_item_slot))
         }
     }
 
@@ -107,7 +116,7 @@ class CreateScreen : AppCompatActivity() {
                     var image = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
                     println("image "+imageUri+""+image)
 
-                    var file = File(filesDir, "/CustomIACharacter/tier0image")
+                    var file = File(filesDir, currentImageURL)
                     if(file.exists()){
                         file.delete()
                     }
@@ -172,6 +181,76 @@ class CreateScreen : AppCompatActivity() {
             })
 
     }
+
+    fun deselectImageButtons(){
+        imageDefault.alpha=0.5f;
+        imageTier1.alpha=0.5f;
+        imageTier2.alpha=0.5f;
+        imageTier3.alpha=0.5f;
+
+        imagePower.alpha=0.5f;
+        imageRanged.alpha=0.5f;
+        imageMelee.alpha=0.5f;
+        imagePortrait.alpha=0.5f;
+        imageHelmet.alpha=0.5f;
+    }
+    fun onDefaultImage(view: View) {
+        currentImageURL = "/CustomIACharacter/tier0image"
+        deselectImageButtons()
+        imageDefault.alpha = 1f
+        loadImage()
+    }
+    fun onTier1Image(view: View) {
+        currentImageURL = "/CustomIACharacter/tier1image"
+        deselectImageButtons()
+        imageTier1.alpha = 1f
+        loadImage()
+    }
+    fun onTier2Image(view: View) {
+        currentImageURL = "/CustomIACharacter/tier2image"
+        deselectImageButtons()
+        imageTier2.alpha = 1f
+        loadImage()
+    }
+    fun onTier3Image(view: View) {
+        currentImageURL = "/CustomIACharacter/tier3image"
+        deselectImageButtons()
+        imageTier3.alpha = 1f
+        loadImage()
+    }
+    fun onMeleeImage(view: View) {
+        currentImageURL = "/CustomIACharacter/xpcards/startingWeaponMelee"
+        deselectImageButtons()
+        imageMelee.alpha = 1f
+        loadImage()
+    }
+    fun onRangedImage(view: View) {
+        currentImageURL = "/CustomIACharacter/xpcards/startingWeaponRanged"
+        deselectImageButtons()
+        imageRanged.alpha = 1f
+        loadImage()
+    }
+    fun onPortraitImage(view: View) {
+        currentImageURL = "/CustomIACharacter/portraitImage"
+        deselectImageButtons()
+        imagePortrait.alpha = 1f
+        loadImage()
+    }
+    fun onHelmetImage(view: View) {
+        currentImageURL = "/CustomIACharacter/helmet"
+        deselectImageButtons()
+        imageHelmet.alpha = 1f
+        loadImage()
+    }
+    fun onPowerImage(view: View) {
+        currentImageURL = "/CustomIACharacter/power"
+        deselectImageButtons()
+        imagePower.alpha = 1f
+        loadImage()
+    }
+
+
+
 }
 class saveCustomWorker(val context: Context, params: WorkerParameters): Worker
     (context,

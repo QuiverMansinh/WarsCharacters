@@ -2876,18 +2876,21 @@ class CharacterScreen : AppCompatActivity() {
         xpCardImages.add(xpSelectScreen!!.XPCard8)
         xpCardImages.add(xpSelectScreen!!.XPCard9)
 
-        for (i in 0..character.xpCardImages.size - 1) {
-            xpCardImages[i].setImageBitmap(character.xpCardImages[i])
-            xpCardImages[i].setOnLongClickListener {
-                onShowXPCard(xpCardImages[i])
-                true
-            }
+        for (i in 0..8) {
             if (character.xpCardsEquipped[i]) {
                 xpCardImages[i].alpha = 1f
             } else {
                 xpCardImages[i].alpha = 0.5f
             }
-            xpCardImages[i].setTag(i)
+            if(character.xpCardImages.size > i) {
+                xpCardImages[i].setImageBitmap(character.xpCardImages[i])
+            }
+            xpCardImages[i].setOnLongClickListener {
+                onShowXPCard(xpCardImages[i])
+                true
+            }
+
+
         }
         var xpLeft = character.totalXP - character.xpSpent
         xpSelectScreen!!.xp_text.setText("XP: " + xpLeft)
@@ -2901,7 +2904,8 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onXPCard(view: View) {
         var xpLeft = character.totalXP - character.xpSpent;
-        var cardNo = view.tag as Int
+        println(view.toString() + " XP")
+        var cardNo = Integer.parseInt(view.tag as String)
         if (character.xpCardsEquipped[cardNo]) {
             Sounds.selectSound()
             character.unequipXP(cardNo)

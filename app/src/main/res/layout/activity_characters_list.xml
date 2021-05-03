@@ -222,14 +222,15 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
-                android:onClick="onSelectCustom">
+                android:onClick="onSelectCustom"
+                android:visibility="visible">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView5"
                     android:layout_width="70dp"
                     android:layout_height="68dp"
                     android:layout_marginStart="12dp"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:cardCornerRadius="35dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -250,7 +251,7 @@
                     android:text="Custom Character"
                     android:textColor="@color/white"
                     android:textSize="34sp"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cardView5"
