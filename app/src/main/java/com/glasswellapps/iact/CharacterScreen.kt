@@ -25,6 +25,7 @@ import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.work.*
@@ -164,15 +165,15 @@ class CharacterScreen : AppCompatActivity() {
             animTop.duration = (500).toLong()
             animTop.start()*/
             bottom_panel.animate().alpha(1f)
-                /*
-                val animBottom = ObjectAnimator.ofFloat(
-                    bottom_panel, "translationY", bottom_panel.height
-                        .toFloat(), 0f
-                )
+            /*
+            val animBottom = ObjectAnimator.ofFloat(
+                bottom_panel, "translationY", bottom_panel.height
+                    .toFloat(), 0f
+            )
 
-                //animBottom.interpolator = DecelerateInterpolator()
-                animBottom.duration = (500).toLong()
-                animBottom.start()
+            //animBottom.interpolator = DecelerateInterpolator()
+            animBottom.duration = (500).toLong()
+            animBottom.start()
 */
 
             left_buttons.animate().alpha(1f)
@@ -1240,7 +1241,12 @@ class CharacterScreen : AppCompatActivity() {
             weakened -> onShowWeakenedCard(view)
         }
         showConditionCardDialog!!.remove_button.tag = currentCondition
-        showConditionCardDialog!!.remove_button.visibility = View.VISIBLE
+        if(!action_menu.isVisible) {
+            showConditionCardDialog!!.remove_button.visibility = View.VISIBLE
+        }
+        else{
+            showConditionCardDialog!!.remove_button.visibility = View.GONE
+        }
         if(conditionsActive[currentCondition]) {
             showConditionCardDialog!!.remove_button_text.text = "REMOVE"
         }
@@ -1317,23 +1323,23 @@ class CharacterScreen : AppCompatActivity() {
         settingsScreen!!.toggleActionUsage!!.isChecked = actionUsage
         settingsScreen!!.soundEffectsVolume.progress = (character.soundEffectsSetting*100).toInt()
 
-            when (character.imageSetting) {
-                -1 -> {
-                    settingsScreen!!.imageSettingButton.text = "AUTO"
-                }
-                0 -> {
-                    settingsScreen!!.imageSettingButton.text = "DEFAULT"
-                }
-                1 -> {
-                    settingsScreen!!.imageSettingButton.text = "TIER 1"
-                }
-                2 -> {
-                    settingsScreen!!.imageSettingButton.text = "TIER 2"
-                }
-                3 -> {
-                    settingsScreen!!.imageSettingButton.text = "TIER 3"
-                }
+        when (character.imageSetting) {
+            -1 -> {
+                settingsScreen!!.imageSettingButton.text = "AUTO"
             }
+            0 -> {
+                settingsScreen!!.imageSettingButton.text = "DEFAULT"
+            }
+            1 -> {
+                settingsScreen!!.imageSettingButton.text = "TIER 1"
+            }
+            2 -> {
+                settingsScreen!!.imageSettingButton.text = "TIER 2"
+            }
+            3 -> {
+                settingsScreen!!.imageSettingButton.text = "TIER 3"
+            }
+        }
         settingsScreen!!.show()
 
     }
@@ -1944,10 +1950,10 @@ class CharacterScreen : AppCompatActivity() {
 
         if (!conditionsActive[bleeding]) {
             conditionsDialog!!.bleeding_select.alpha = 0.5f
-           character_image.bleeding = false
+            character_image.bleeding = false
             bleeding_add_strain.visibility = View.INVISIBLE
         } else {
-            conditionsDialog!!.bleeding_select.alpha = 15f
+            conditionsDialog!!.bleeding_select.alpha = 1f
             character_image.bleeding= true
             bleeding_add_strain.visibility = View.VISIBLE
         }
@@ -2382,7 +2388,7 @@ class CharacterScreen : AppCompatActivity() {
 
         settingsScreen!!.soundEffectsVolume.progress = (character.soundEffectsSetting*100).toInt()
         settingsScreen!!.soundEffectsVolume.setOnSeekBarChangeListener(object :SeekBar
-            .OnSeekBarChangeListener{
+        .OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 Sounds.selectSound()
                 character.soundEffectsSetting = p1.toFloat()/100
@@ -3134,7 +3140,7 @@ class CharacterScreen : AppCompatActivity() {
                 {
                     WorkManager.getInstance(this)
                         .getWorkInfosByTagLiveData("save").removeObservers(this)
-                      println("Save Finished")
+                    println("Save Finished")
 
 
                 }
@@ -3145,8 +3151,8 @@ class CharacterScreen : AppCompatActivity() {
     fun firstManualSave() {
 
         println("FIRST MANUAL SAVE character " + character)
-            MainActivity.selectedCharacter!!.file_name = "" + saveDialog!!.save_name.text.toString()
-          quickSave()
+        MainActivity.selectedCharacter!!.file_name = "" + saveDialog!!.save_name.text.toString()
+        quickSave()
 
 
 

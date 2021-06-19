@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/show_condition_card_dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,32 +10,29 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/remove_button"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:onClick="onUnwound"
-        android:visibility="visible"
-        app:cardBackgroundColor="@android:color/transparent"
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_margin="10dp"
+        android:elevation="0dp"
+        android:onClick="remove"
         app:cardCornerRadius="2dp"
         app:cardElevation="10dp"
-        app:cardMaxElevation="10dp"
-        app:cardUseCompatPadding="false"
-        app:contentPadding="0dp"
+        app:cardMaxElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/show_condition_card_view"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintTop_toBottomOf="@+id/show_condition_card_view">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageView12"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+
                 android:background="@drawable/save_file_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,28 +40,32 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+
                 android:id="@+id/remove_button_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:fontFamily="@font/agency_fb"
                 android:gravity="center"
                 android:paddingHorizontal="20dp"
                 android:shadowColor="@color/black"
                 android:shadowRadius="5"
-                android:text="REMOVE"
+                android:text="APPLY"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/show_condition_card_view"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -76,10 +78,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+
             android:id="@+id/condition_card_image"
             android:layout_width="300dp"
             android:layout_height="450dp"
             android:adjustViewBounds="false"
+            android:onClick="onDismissConditionCard"
             android:scaleType="fitXY"
             android:visibility="visible" />
     </androidx.cardview.widget.CardView>
