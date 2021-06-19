@@ -223,7 +223,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:onClick="onSelectCustom"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView5"

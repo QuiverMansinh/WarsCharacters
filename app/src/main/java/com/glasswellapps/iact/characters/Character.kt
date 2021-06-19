@@ -151,6 +151,7 @@ open class Character {
         power = getBitmap(context,"characters/" + name_short + "/power.png")
         power_wounded = getBitmap(context,"characters/" + name_short + "/power_wounded.png")
     }
+
     open fun loadTierImage(context: Context, tier:Int){
         val image = getBitmap(context, "characters/" + name_short + "/images/tier" + tier + "image.png")
         currentImage = image

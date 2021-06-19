@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.dialog_quick_view_button.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
+import kotlinx.android.synthetic.main.dialog_show_condition_card.*
 import kotlinx.android.synthetic.main.grid_item.view.*
 import kotlinx.android.synthetic.main.screen_settings.*
 import kotlinx.android.synthetic.main.screen_stats.*
@@ -609,6 +610,26 @@ class CharacterScreen : AppCompatActivity() {
             18 -> numberImage = R.drawable.number_18
             19 -> numberImage = R.drawable.number_19
             20 -> numberImage = R.drawable.number_20
+            21 -> numberImage = R.drawable.number_21
+            22 -> numberImage = R.drawable.number_22
+            23 -> numberImage = R.drawable.number_23
+            24 -> numberImage = R.drawable.number_24
+            25 -> numberImage = R.drawable.number_25
+            26 -> numberImage = R.drawable.number_26
+            27 -> numberImage = R.drawable.number_27
+            28 -> numberImage = R.drawable.number_28
+            29 -> numberImage = R.drawable.number_29
+            30 -> numberImage = R.drawable.number_30
+            31 -> numberImage = R.drawable.number_31
+            32 -> numberImage = R.drawable.number_32
+            33 -> numberImage = R.drawable.number_33
+            34 -> numberImage = R.drawable.number_34
+            35 -> numberImage = R.drawable.number_35
+            36 -> numberImage = R.drawable.number_36
+            37 -> numberImage = R.drawable.number_37
+            38 -> numberImage = R.drawable.number_38
+            39 -> numberImage = R.drawable.number_39
+            40 -> numberImage = R.drawable.number_40
         }
         return resources.getDrawable(numberImage)
     }
@@ -827,11 +848,8 @@ class CharacterScreen : AppCompatActivity() {
             true
         }
         add_strain.setOnLongClickListener {
-            if (actionsLeft > 0 || !actionUsage) {
-                restDialog!!.show()
-            } else {
-                showNoActionsLeftToast()
-            }
+            restDialog!!.show()
+
             true
         }
     }
@@ -887,16 +905,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onEndActivation(view: View) {
         Sounds.selectSound()
 
-
-        val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 0f, 0f, 0f, 1f)
-        flipUnactive.setDuration(200)
-        flipUnactive.start()
-
-        val flipActive = ObjectAnimator.ofFloat(active, "scaleX", 1f, 0f, 0f, 0f)
-        flipActive.setDuration(200)
-        flipActive.start()
-
-        unactive.animate().alpha(1f).duration = 100
+        deactivationAnim()
 
         endActivationDialog!!.dismiss()
         removeCondition(weakened)
@@ -910,8 +919,21 @@ class CharacterScreen : AppCompatActivity() {
         else{
             character.activated++
         }
+
         activated = false
 
+    }
+
+    fun deactivationAnim(){
+        val flipUnactive = ObjectAnimator.ofFloat(unactive, "scaleX", 0f, 0f, 0f, 1f)
+        flipUnactive.setDuration(200)
+        flipUnactive.start()
+
+        val flipActive = ObjectAnimator.ofFloat(active, "scaleX", 1f, 0f, 0f, 0f)
+        flipActive.setDuration(200)
+        flipActive.start()
+
+        unactive.animate().alpha(1f).duration = 100
     }
 
     fun turnOffActionButtons() {
@@ -1066,27 +1088,32 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onRest(view: View) {
-        if (actionsLeft > 0 || !actionUsage) {
-
-            character.strain -= character.endurance
-
-            if (character.strain < 0) {
-                for (i in 1..-character.strain) {
-                    minusDamage()
-                }
-                character.strain = 0;
-            }
-            //add_strain.setText("" + character.strain)
-            add_strain.setImageDrawable(getNumber(character.strain))
-            Sounds.strainSound()
-            playRestAnim()
-            character.timesRested++
-            restDialog!!.dismiss()
-
+        rest(view)
+        if (actionsLeft > 0 && actionUsage) {
             actionCompleted()
-        } else {
-            showNoActionsLeftToast()
         }
+    }
+
+    fun rest(view:View){
+        character.strain -= character.endurance
+
+
+        if (character.strain < 0) {
+            var healAmount = -character.strain;
+            if(isWounded){
+                healAmount = Math.min(character.wounded,healAmount)
+            }
+            for (i in 1..healAmount) {
+                minusDamage()
+            }
+            character.strain = 0;
+        }
+        //add_strain.setText("" + character.strain)
+        add_strain.setImageDrawable(getNumber(character.strain))
+        Sounds.strainSound()
+        playRestAnim()
+        character.timesRested++
+        restDialog!!.dismiss()
     }
 
     fun onRemoveStun(view: View) {
@@ -1122,43 +1149,103 @@ class CharacterScreen : AppCompatActivity() {
         noActionsLeftToast!!.show()
     }
 
+    fun onNextMission(view: View) {
+        Sounds.selectSound()
+        nextMissionDialog!!.dismiss()
+        if (character.damage > 0) {
+            if (character.withdrawn) {
+                val slide = ObjectAnimator.ofFloat(character_images, "translationY", 0f)
+                slide.setDuration(500)
+                slide.start()
+                character.withdrawn = false
+            }
+            if(isWounded){
+                character.wounded = 0
+                wounded.animate().alpha(0f)
+                isWounded = false
+            }
+
+            character.damage = 0
+            add_damage.setImageDrawable(getNumber(character.damage))
+            minus_damage.animate().alpha(0f)
+        }
+        if (character.strain > 0) {
+            character.strain = 0
+            add_strain.setImageDrawable(getNumber(character.strain))
+            minus_strain.animate().alpha(0f)
+        }
+        conditionsActive[focused] = false
+        conditionsActive[hidden] = false
+        conditionsActive[stunned] = false
+        conditionsActive[bleeding] = false
+        conditionsActive[weakened] = false
+        if(activated) {
+            turnOffActionButtons()
+            deactivationAnim()
+            activated = false
+        }
+        actionsLeft = 0
+        updateConditionIcons()
+        updateStats()
+        quickSave()
+    }
+
+    fun onNextMissionNo(view: View) {
+        Sounds.selectSound()
+        nextMissionDialog!!.dismiss()
+    }
+
     //endregion
     //************************************************************************************************************
-    //region Show Cards
+    //region Show Condition Cards
     //************************************************************************************************************
 
     fun onShowFocusedCard(view: View) {
-        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_focused))
-        showCardDialog!!.show()
+        showConditionCardDialog!!.condition_card_image.setImageDrawable(resources.getDrawable(R.drawable.card_focused))
+        showConditionCardDialog!!.remove_button.visibility = View.GONE
+        showConditionCardDialog!!.show()
     }
 
     fun onShowStunnedCard(view: View) {
-        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_stunned))
-        showCardDialog!!.show()
+        showConditionCardDialog!!.condition_card_image.setImageDrawable(resources.getDrawable(R.drawable.card_stunned))
+        showConditionCardDialog!!.remove_button.visibility = View.GONE
+        showConditionCardDialog!!.show()
     }
 
     fun onShowWeakenedCard(view: View) {
-        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_weakened))
-        showCardDialog!!.show()
+        showConditionCardDialog!!.condition_card_image.setImageDrawable(resources.getDrawable(R.drawable.card_weakened))
+        showConditionCardDialog!!.remove_button.visibility = View.GONE
+        showConditionCardDialog!!.show()
     }
 
     fun onShowBleedingCard(view: View) {
-        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_bleeding))
-        showCardDialog!!.show()
+        showConditionCardDialog!!.condition_card_image.setImageDrawable(resources.getDrawable(R.drawable.card_bleeding))
+        showConditionCardDialog!!.remove_button.visibility = View.GONE
+        showConditionCardDialog!!.show()
     }
 
     fun onShowHiddenCard(view: View) {
-        showCardDialog!!.card_image.setImageDrawable(resources.getDrawable(R.drawable.card_hidden))
-        showCardDialog!!.show()
+        showConditionCardDialog!!.condition_card_image.setImageDrawable(resources.getDrawable(R.drawable.card_hidden))
+        showConditionCardDialog!!.remove_button.visibility = View.GONE
+        showConditionCardDialog!!.show()
     }
 
     fun onShowCard(view: View) {
-        when (view.getTag()) {
+        var currentCondition = Integer.parseInt(view.getTag().toString())
+        when (currentCondition) {
             hidden -> onShowHiddenCard(view)
             focused -> onShowFocusedCard(view)
             stunned -> onShowStunnedCard(view)
             bleeding -> onShowBleedingCard(view)
             weakened -> onShowWeakenedCard(view)
+        }
+        showConditionCardDialog!!.remove_button.tag = currentCondition
+        showConditionCardDialog!!.remove_button.visibility = View.VISIBLE
+        if(conditionsActive[currentCondition]) {
+            showConditionCardDialog!!.remove_button_text.text = "REMOVE"
+        }
+        else{
+            showConditionCardDialog!!.remove_button_text.text = "APPLY"
         }
     }
 
@@ -1191,6 +1278,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onPower(view: View) {
         Sounds.selectSound()
         optionsDialog!!.dismiss()
+
         if (!isWounded) {
             showCardDialog!!.card_image.setImageBitmap(character.power)
         } else {
@@ -1549,14 +1637,14 @@ class CharacterScreen : AppCompatActivity() {
         killCounts.add(villain_count)
         villain_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_villian))
-            assistDialog!!.unwound_button.setTag(villain)
+            assistDialog!!.remove_condition_button.setTag(villain)
             assistDialog!!.show()
             true
         }
         killCounts.add(leader_count)
         leader_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_leader))
-            assistDialog!!.unwound_button.setTag(leader)
+            assistDialog!!.remove_condition_button.setTag(leader)
             assistDialog!!.show()
             true
         }
@@ -1567,35 +1655,35 @@ class CharacterScreen : AppCompatActivity() {
                     R.drawable.icon_vehicle
                 )
             )
-            assistDialog!!.unwound_button.setTag(vehicle)
+            assistDialog!!.remove_condition_button.setTag(vehicle)
             assistDialog!!.show()
             true
         }
         killCounts.add(creature_count)
         creature_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_creature))
-            assistDialog!!.unwound_button.setTag(creature)
+            assistDialog!!.remove_condition_button.setTag(creature)
             assistDialog!!.show()
             true
         }
         killCounts.add(guard_count)
         guard_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_gaurd))
-            assistDialog!!.unwound_button.setTag(guard)
+            assistDialog!!.remove_condition_button.setTag(guard)
             assistDialog!!.show()
             true
         }
         killCounts.add(droid_count)
         droid_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_droid))
-            assistDialog!!.unwound_button.setTag(droid)
+            assistDialog!!.remove_condition_button.setTag(droid)
             assistDialog!!.show()
             true
         }
         killCounts.add(scum_count)
         scum_button.setOnLongClickListener {
             assistDialog!!.assist_icon.setImageDrawable(resources.getDrawable(R.drawable.icon_scum))
-            assistDialog!!.unwound_button.setTag(scum)
+            assistDialog!!.remove_condition_button.setTag(scum)
             assistDialog!!.show()
             true
         }
@@ -1606,7 +1694,7 @@ class CharacterScreen : AppCompatActivity() {
                     R.drawable.icon_trooper
                 )
             )
-            assistDialog!!.unwound_button.setTag(trooper)
+            assistDialog!!.remove_condition_button.setTag(trooper)
             assistDialog!!.show()
             true
         }
@@ -1749,12 +1837,10 @@ class CharacterScreen : AppCompatActivity() {
             character.timesFocused++
             Sounds.conditionSound(focused)
         } else {
-            //character.timesFocused--
             Sounds.selectSound()
         }
         updateConditionIcons()
     }
-
     private fun removeCondition(conditionType: Int) {
 
         if (actionsLeft > 0 || conditionType == hidden || conditionType == focused || conditionType == weakened || !actionUsage) {
@@ -1822,10 +1908,10 @@ class CharacterScreen : AppCompatActivity() {
 
 
         if (!conditionsActive[hidden]) {
-            conditionsDialog!!.hidden_select.alpha = 1f
+            conditionsDialog!!.hidden_select.alpha = 0.5f
             camouflage.visibility = View.GONE
         } else {
-            conditionsDialog!!.hidden_select.alpha = 0.5f
+            conditionsDialog!!.hidden_select.alpha = 1f
             if (animateConditions) {
                 camouflage.visibility = View.VISIBLE
             } else {
@@ -1835,13 +1921,13 @@ class CharacterScreen : AppCompatActivity() {
 
 
         if (!conditionsActive[focused]) {
-            conditionsDialog!!.focused_select.alpha = 1f
+            conditionsDialog!!.focused_select.alpha = 0.5f
             character_image.focused= false
             strengthGlow!!.disabled()
             techGlow!!.disabled()
             insightGlow!!.disabled()
         } else {
-            conditionsDialog!!.focused_select.alpha = 0.5f
+            conditionsDialog!!.focused_select.alpha = 1f
             character_image.focused = true
             strengthGlow!!.active()
             techGlow!!.active()
@@ -1849,26 +1935,27 @@ class CharacterScreen : AppCompatActivity() {
         }
 
         if (!conditionsActive[stunned]) {
-            conditionsDialog!!.stunned_select.alpha = 1f
+            conditionsDialog!!.stunned_select.alpha = 0.5f
             character_image.stunned = false
         } else {
-            conditionsDialog!!.stunned_select.alpha = 0.5f
+            conditionsDialog!!.stunned_select.alpha = 1f
             character_image.stunned = true
         }
+
         if (!conditionsActive[bleeding]) {
-            conditionsDialog!!.bleeding_select.alpha = 1f
+            conditionsDialog!!.bleeding_select.alpha = 0.5f
            character_image.bleeding = false
             bleeding_add_strain.visibility = View.INVISIBLE
         } else {
-            conditionsDialog!!.bleeding_select.alpha = 0.5f
+            conditionsDialog!!.bleeding_select.alpha = 15f
             character_image.bleeding= true
             bleeding_add_strain.visibility = View.VISIBLE
         }
         if (!conditionsActive[weakened]) {
-            conditionsDialog!!.weakened_select.alpha = 1f
+            conditionsDialog!!.weakened_select.alpha = 0.5f
             character_image.weakened = false
         } else {
-            conditionsDialog!!.weakened_select.alpha = 0.5f
+            conditionsDialog!!.weakened_select.alpha = 1f
             character_image.weakened = true
         }
 
@@ -1954,6 +2041,7 @@ class CharacterScreen : AppCompatActivity() {
     var unwoundDialog: Dialog? = null
     var conditionsDialog: Dialog? = null
     var showCardDialog: Dialog? = null
+    var showConditionCardDialog: Dialog? = null
     var endActivationDialog: Dialog? = null
     var assistDialog: Dialog? = null
     var optionsDialog: Dialog? = null
@@ -1966,6 +2054,7 @@ class CharacterScreen : AppCompatActivity() {
     var developersCreditsScreen: Dialog? = null
     var quickViewDialog: Dialog? = null
     var quickViewButtonDialog: Dialog? = null
+    var nextMissionDialog: Dialog? = null
 
     private fun initDialogs() {
         initRestDialog()
@@ -1974,6 +2063,7 @@ class CharacterScreen : AppCompatActivity() {
         initOptionsDialog()
         initSaveDialog()
         initShowCardDialog()
+        initShowConditionCardDialog()
         initEndActivationDialog()
         initAssistDialog()
         initBioDialog()
@@ -1983,7 +2073,7 @@ class CharacterScreen : AppCompatActivity() {
         initCreditsScreenDialog()
         initXpSelectScreenDialog()
         initQuickViewDialog()
-
+        initNextMission()
     }
 
     private fun initRestDialog() {
@@ -1994,7 +2084,7 @@ class CharacterScreen : AppCompatActivity() {
         restDialog!!.setCanceledOnTouchOutside(true)
         restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         restDialog!!.rest_button.setOnClickListener {
-            onRest(restDialog!!.rest_button)
+            rest(restDialog!!.rest_button)
             //TODO
             //quickSave()
             true
@@ -2008,8 +2098,8 @@ class CharacterScreen : AppCompatActivity() {
         unwoundDialog!!.setContentView(R.layout.dialog_unwound)
         unwoundDialog!!.setCanceledOnTouchOutside(true)
         unwoundDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-        unwoundDialog!!.unwound_button.setOnClickListener {
-            onUnwound(unwoundDialog!!.unwound_button)
+        unwoundDialog!!.remove_condition_button.setOnClickListener {
+            onUnwound(unwoundDialog!!.remove_condition_button)
             //TODO
             //quickSave()
             true
@@ -2023,23 +2113,23 @@ class CharacterScreen : AppCompatActivity() {
         conditionsDialog!!.setContentView(R.layout.dialog_conditions)
         conditionsDialog!!.setCanceledOnTouchOutside(true)
         conditionsDialog!!.stunned_select.setOnLongClickListener {
-            onShowStunnedCard(conditionsDialog!!.stunned_select)
+            onShowCard(conditionsDialog!!.stunned_select)
             true
         }
         conditionsDialog!!.bleeding_select.setOnLongClickListener {
-            onShowBleedingCard(conditionsDialog!!.bleeding_select)
+            onShowCard(conditionsDialog!!.bleeding_select)
             true
         }
         conditionsDialog!!.weakened_select.setOnLongClickListener {
-            onShowWeakenedCard(conditionsDialog!!.weakened_select)
+            onShowCard(conditionsDialog!!.weakened_select)
             true
         }
         conditionsDialog!!.focused_select.setOnLongClickListener {
-            onShowFocusedCard(conditionsDialog!!.focused_select)
+            onShowCard(conditionsDialog!!.focused_select)
             true
         }
         conditionsDialog!!.hidden_select.setOnLongClickListener {
-            onShowHiddenCard(conditionsDialog!!.hidden_select)
+            onShowCard(conditionsDialog!!.hidden_select)
             true
         }
         conditionsDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
@@ -2123,6 +2213,36 @@ class CharacterScreen : AppCompatActivity() {
 
     }
 
+
+    private fun initShowConditionCardDialog() {
+        showConditionCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        showConditionCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        showConditionCardDialog!!.setContentView(R.layout.dialog_show_condition_card)
+        showConditionCardDialog!!.setCancelable(false)
+        showConditionCardDialog!!.setCanceledOnTouchOutside(true)
+        showConditionCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+        showConditionCardDialog!!.show_condition_card_dialog.setOnClickListener {
+            Sounds.selectSound()
+            showConditionCardDialog!!.dismiss()
+            true
+        }
+
+        showConditionCardDialog!!.remove_button.setOnClickListener {
+            Sounds.selectSound()
+            var currentCondition = Integer.parseInt(showConditionCardDialog!!.remove_button.tag.toString())
+            when (currentCondition){
+                hidden -> onHidden(showConditionCardDialog!!.condition_card_image)
+                focused -> onFocused(showConditionCardDialog!!.condition_card_image)
+                stunned -> onStunned(showConditionCardDialog!!.condition_card_image)
+                bleeding -> onBleeding(showConditionCardDialog!!.condition_card_image)
+                weakened -> onWeakened(showConditionCardDialog!!.condition_card_image)
+            }
+            showConditionCardDialog!!.dismiss()
+            true
+        }
+    }
+
     private fun initEndActivationDialog() {
         endActivationDialog = Dialog(this)
         endActivationDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -2139,8 +2259,8 @@ class CharacterScreen : AppCompatActivity() {
         assistDialog!!.setContentView(R.layout.dialog_assist)
         assistDialog!!.setCanceledOnTouchOutside(true)
         assistDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
-        assistDialog!!.unwound_button.setOnClickListener {
-            onAssist(assistDialog!!.unwound_button)
+        assistDialog!!.remove_condition_button.setOnClickListener {
+            onAssist(assistDialog!!.remove_condition_button)
             //TODO
             quickSave()
             true
@@ -2278,6 +2398,21 @@ class CharacterScreen : AppCompatActivity() {
             }
 
         })
+
+    }
+
+    private fun initNextMission(){
+        nextMissionDialog = Dialog(this)
+        nextMissionDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        nextMissionDialog!!.setCancelable(false)
+        nextMissionDialog!!.setContentView(R.layout.dialog_next_mission)
+        nextMissionDialog!!.setCanceledOnTouchOutside(true)
+        nextMissionDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
+
+        activationButton.setOnLongClickListener{
+            nextMissionDialog!!.show()
+            true
+        }
 
     }
 
