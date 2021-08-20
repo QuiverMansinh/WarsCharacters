@@ -48,7 +48,6 @@ class Character_jyn : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Alluring Smuggler"
         bio_quote = "\"I don't mean to brag; I just happen to be amazing.\""

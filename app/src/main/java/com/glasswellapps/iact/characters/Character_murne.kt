@@ -49,8 +49,6 @@ class Character_murne : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
-
         bio_title = "Undercover Senator"
         bio_quote = "\"They don't need to be loyal all of the time. Only at the right time.\""
         bio_text ="Murne is not apt in combat, she prefers anonymity in the field and rarely enters a fight unless she must. " +

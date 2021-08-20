@@ -45,8 +45,6 @@ class CustomCharacter : Character {
         xpSpeeds = intArrayOf(0,0,0,0,0,0,0,0,0)
         xpItems = intArrayOf(-1,-1,-1,-1,-1,-1,-1,-1,-1)
 
-        loadImages(context)
-
         bio_title = ""
         bio_quote = "\"\""
         bio_text =""

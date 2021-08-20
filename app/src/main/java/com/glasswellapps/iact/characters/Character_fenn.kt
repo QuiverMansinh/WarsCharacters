@@ -48,7 +48,6 @@ class Character_fenn : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Grizzled Veteran"
         bio_quote = "\"Stick together and don't get in my way.\""

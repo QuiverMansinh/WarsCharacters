@@ -36,11 +36,11 @@ object Sounds {
         .setAudioAttributes(sPBuilder.build())
         .build()
 
-    lateinit var sEPool: ArrayList<Int>
+    var sEPool: ArrayList<Int>? = null
     var loaded = false
 
     fun sounEPool(context: Context) {
-        if(!loaded) {
+
             sEPool = arrayListOf(
                 soundPool.load(context, R.raw.select, 1),
                 soundPool.load(context, R.raw.light_saber, 1),
@@ -59,86 +59,151 @@ object Sounds {
                 soundPool.load(context, R.raw.moving, 1),
                 soundPool.load(context, R.raw.negative, 1)
             )
-            loaded =true
+
+        if(sEPool!=null) {
+            for (i in 0..sEPool!!.size - 1) {
+                System.out.println(sEPool!![i]);
+            }
         }
     }
+
+    fun reset(context: Context){
+        if(sEPool == null) {
+            sounEPool(context);
+        }
+    }
+
+
 
     fun play(soundId : Int){
         var volume = 1f
         if(MainActivity.selectedCharacter != null) {
             volume= MainActivity.selectedCharacter!!.soundEffectsSetting
         }
-        soundPool.play(soundId, volume, volume, 1, 0, 1f)
+        if(sEPool!=null) {
+            soundPool.play(sEPool!![soundId], volume, volume, 1, 0, 1f)
+        }
     }
 
     fun selectSound(){
-       play(sEPool[select])
+        try {
+            play(select)
+        }
+        catch (e:Exception){
+            System.out.println(e)
+
+        }
     }
     fun negativeSound(){
-        play(sEPool[negative])
+        try {
+            play(sEPool!![negative])
+        }
+        catch (e:Exception){
+            System.out.println(e)
+
+        }
     }
     fun strainSound(){
-        play(sEPool[strain])
+        try{
+            play(strain)
+        }
+        catch (e:Exception){
+            System.out.println(e)
+
+        }
     }
 
     fun equipSound(context: Context, equipSoundType: Int) {
-        when (equipSoundType) {
-            select -> { play(sEPool[select]) }
-            lightSaber -> {
-                play(sEPool[lightSaber]) }
-            electric -> { play(sEPool[electric]) }
-            shing -> {
-                play(sEPool[shing]) }
-            equip_gun -> {
-                play(sEPool[equip_gun]) }
-            equip_impact -> { play(sEPool[equip_impact]) }
-            equip_armor -> {  play(sEPool[equip_armor]) }
-            equip_clothing -> { play(sEPool[equip_clothing]) }
-            droid -> {  play(sEPool[droid])
+        try {
+            when (equipSoundType) {
+                select -> {
+                    play(select)
+                }
+                lightSaber -> {
+                    play(lightSaber)
+                }
+                electric -> {
+                    play(electric)
+                }
+                shing -> {
+                    play(shing)
+                }
+                equip_gun -> {
+                    play(equip_gun)
+                }
+                equip_impact -> {
+                    play(equip_impact)
+                }
+                equip_armor -> {
+                    play(equip_armor)
+                }
+                equip_clothing -> {
+                    play(equip_clothing)
+                }
+                droid -> {
+                    play(droid)
+                }
             }
+        }
+        catch (e:Exception){
+            System.out.println(e)
+
         }
     }
 
     fun attackSound() {
-        val character = MainActivity.selectedCharacter!!
-        var whichSound = 0
-        if(character.weapons.size>0) {
-            var whichWeapon =(Math.random()*character.weapons.size).toInt()
-            var index = character.weapons[whichWeapon]
-            whichSound = Items.itemsArray!![index].soundType
+        try{
+            val character = MainActivity.selectedCharacter!!
+            var whichSound = 0
+            if(character.weapons.size>0) {
+                var whichWeapon =(Math.random()*character.weapons.size).toInt()
+                var index = character.weapons[whichWeapon]
+                whichSound = Items.itemsArray!![index].soundType
 
+            }
+
+            when (whichSound) {
+                0->{
+                    play(impact)
+                }
+                shing -> {
+                    play(slice)
+                }
+                lightSaber -> {
+                    play(lightsaber_stabby_stabby)
+                }
+                electric -> {
+                    play(electric)
+                }
+                equip_gun -> { play(gaster_blaster_master) }
+                equip_impact -> {
+                    play(impact)
+                }
+            }
         }
+        catch (e:Exception){
+            System.out.println(e)
 
-        when (whichSound) {
-            0->{
-                play(sEPool[impact])
-            }
-            shing -> {
-                play(sEPool[slice])
-            }
-            lightSaber -> {
-                play(sEPool[lightsaber_stabby_stabby])
-            }
-            electric -> {
-                play(sEPool[electric])
-            }
-            equip_gun -> { play(sEPool[gaster_blaster_master]) }
-            equip_impact -> {
-                play(sEPool[impact])
-            }
         }
     }
 
     fun damagedSound(context: Context, damageType: Int) {
-        when (damageType) {
-            slice -> {
-                play(sEPool[slice])
+        try {
+            when (damageType) {
+                slice -> {
+                    play(slice)
+                }
+                impact -> {
+                    play(impact)
+                }
+                gaster_blaster_master -> {
+                    play(gaster_blaster_master)
+                }
             }
-            impact -> {
-                play(sEPool[impact]) }
-            gaster_blaster_master -> {
-                play(sEPool[gaster_blaster_master])
-            }
+        }
+        catch (e:Exception){
+            System.out.println(e)
+
         }
     }
 
@@ -147,6 +212,13 @@ object Sounds {
     }
 
     fun movingSound(){
-        play(sEPool[moving])
+        try{
+            play(moving)
+        }
+        catch (e:Exception){
+            System.out.println(e)
+
+        }
+
     }
 }

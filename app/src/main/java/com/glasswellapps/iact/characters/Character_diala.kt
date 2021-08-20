@@ -48,7 +48,6 @@ class Character_diala : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Haunted Padawan"
         bio_quote = "\"A master of the Resilience Form is invincible. One who aspires to it, such as myself, is simply very hard to kill.\""

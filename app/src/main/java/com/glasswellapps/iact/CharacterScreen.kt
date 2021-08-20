@@ -80,6 +80,7 @@ class CharacterScreen : AppCompatActivity() {
         );
 
 
+        Sounds.reset(this)
 
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -342,6 +343,7 @@ class CharacterScreen : AppCompatActivity() {
         } else {
             character = MainActivity.selectedCharacter!!
         }
+        character.loadImages(this);
         if (character.portraitImage == null) {
             character.loadPortraitImage(this)
         }

@@ -47,7 +47,6 @@ class Character_gaarkhan : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Resolute Warmaster"
         bio_quote = "\"Underneath that fur is a few hundred pounds of solid muscle and anger.\""

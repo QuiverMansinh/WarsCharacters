@@ -36,6 +36,8 @@ class LoadScreen : AppCompatActivity() {
 
         setContentView(R.layout.activity_load_screen)
 
+        Sounds.reset(this)
+
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         height = displayMetrics.heightPixels.toFloat()
@@ -133,11 +135,11 @@ class LoadScreen : AppCompatActivity() {
                     val character = selectCharacter(data[i].characterName)
                     loadedCharacters.add(character)
                     loadedCharacters[i].loadPortraitImage(this)
-                }
+                }/*
                 else{
                     positionEditing = i
                     onDelete(this.listView)
-                }
+                }*/
             }
 
             adapter = LoadFileAdapter(this, fileNames, loadedCharacters, data)
@@ -145,21 +147,20 @@ class LoadScreen : AppCompatActivity() {
 
             listView.isClickable = true
             listView.setOnItemClickListener  { parent, view, position, id ->
-                if(position<listView.count) {
+                if(position<loadedCharacters.size) {
                     Sounds.selectSound()
+                    var selectedCharacter = loadedCharacters[position];
 
 
+                    selectedCharacter.file_name = ""+data[position].fileName
+                    selectedCharacter.id = data[position].id
 
-                    //println("" + data[position])
-                    loadedCharacters[position].file_name = ""+data[position].fileName
-                    loadedCharacters[position].id = data[position].id
+                    selectedCharacter.damage = data[position].damage
+                    selectedCharacter.strain = data[position].strain
+                    selectedCharacter.token = data[position].token
+                    selectedCharacter.wounded = data[position].wounded
 
-                    loadedCharacters[position].damage = data[position].damage
-                    loadedCharacters[position].strain = data[position].strain
-                    loadedCharacters[position].token = data[position].token
-                    loadedCharacters[position].wounded = data[position].wounded
-
-                    loadedCharacters[position].conditionsActive = booleanArrayOf(
+                    selectedCharacter.conditionsActive = booleanArrayOf(
                         data[position].conditionsActive1,
                         data[position].conditionsActive2,
                         data[position].conditionsActive3,
@@ -167,9 +168,9 @@ class LoadScreen : AppCompatActivity() {
                         data[position].conditionsActive5
                     )
 
-                    loadedCharacters[position].totalXP = data[position].totalXP
-                    loadedCharacters[position].xpSpent = data[position].xpSpent
-                    loadedCharacters[position].xpCardsEquipped = booleanArrayOf(
+                    selectedCharacter.totalXP = data[position].totalXP
+                    selectedCharacter.xpSpent = data[position].xpSpent
+                    selectedCharacter.xpCardsEquipped = booleanArrayOf(
                         data[position].xpCardsEquipped1,
                         data[position].xpCardsEquipped2,
                         data[position].xpCardsEquipped3,
@@ -181,26 +182,24 @@ class LoadScreen : AppCompatActivity() {
                         data[position].xpCardsEquipped9
                     )
 
-                    if(data[position].weapon1!=-1){ loadedCharacters[position].weapons.add(data[position].weapon1)}
-                    if(data[position].weapon2!=-1){ loadedCharacters[position].weapons.add(data[position].weapon2)}
-                    if(data[position].accessory1!=-1){ loadedCharacters[position].accessories.add(data[position].accessory1)}
-                    if(data[position].accessory2!=-1){ loadedCharacters[position].accessories.add(data[position].accessory2)}
-                    if(data[position].accessory3!=-1){ loadedCharacters[position].accessories.add(data[position].accessory3)}
-                    loadedCharacters[position].helmet = data[position].helmet
-                    if(data[position].armour != -1) { loadedCharacters[position].armor.add(data[position].armour) }
+                    if(data[position].weapon1!=-1){  selectedCharacter.weapons.add(data[position].weapon1)}
+                    if(data[position].weapon2!=-1){  selectedCharacter.weapons.add(data[position].weapon2)}
+                    if(data[position].accessory1!=-1){  selectedCharacter.accessories.add(data[position].accessory1)}
+                    if(data[position].accessory2!=-1){  selectedCharacter.accessories.add(data[position].accessory2)}
+                    if(data[position].accessory3!=-1){  selectedCharacter.accessories.add(data[position].accessory3)}
+                    selectedCharacter.helmet = data[position].helmet
+                    if(data[position].armour != -1) {  selectedCharacter.armor.add(data[position].armour) }
 
 
 
                     //TODO rewards and mods
-                    loadedCharacters[position].rewards = convertStringToItemID(""+data[position].rewards)
-                    loadedCharacters[position].mods = convertStringToItemID(""+data[position].mods)
+                    selectedCharacter.rewards = convertStringToItemID(""+data[position].rewards)
+                    selectedCharacter.mods = convertStringToItemID(""+data[position].mods)
 
-                    println("Load Mods "+data[position].mods)
 
-                    println( " "+loadedCharacters[position].mods.size)
-                    loadedCharacters[position].background = data[position].background.toString()
+                    selectedCharacter.background = data[position].background.toString()
 
-                    loadedCharacters[position].killCount = arrayOf(
+                    selectedCharacter.killCount = arrayOf(
                         data[position].killVillian,
                         data[position].killLeader,
                         data[position].killVehicle,
@@ -211,7 +210,7 @@ class LoadScreen : AppCompatActivity() {
                         data[position].killTrooper
                     )
 
-                    loadedCharacters[position].assistCount = arrayOf(
+                    selectedCharacter.assistCount = arrayOf(
                         data[position].assistVillian,
                         data[position].assistLeader,
                         data[position].assistVehicle,
@@ -222,71 +221,55 @@ class LoadScreen : AppCompatActivity() {
                         data[position].assistTrooper
                     )
 
-                    loadedCharacters[position].movesTaken = data[position].moves
-                    loadedCharacters[position].attacksMade = data[position].attacks
-                    loadedCharacters[position].interactsUsed = data[position].interact
-                    loadedCharacters[position].timesWounded = data[position].timesWounded
-                    loadedCharacters[position].timesRested = data[position].rested
-                    loadedCharacters[position].timesWithdrawn = data[position].timesWithdrawn
-                    loadedCharacters[position].activated = data[position].activated
-                    loadedCharacters[position].damageTaken = data[position].damageTaken
-                    loadedCharacters[position].strainTaken = data[position].strainTaken
-                    loadedCharacters[position].specialActions = data[position].special
+                    selectedCharacter.movesTaken = data[position].moves
+                    selectedCharacter.attacksMade = data[position].attacks
+                    selectedCharacter.interactsUsed = data[position].interact
+                    selectedCharacter.timesWounded = data[position].timesWounded
+                    selectedCharacter.timesRested = data[position].rested
+                    selectedCharacter.timesWithdrawn = data[position].timesWithdrawn
+                    selectedCharacter.activated = data[position].activated
+                    selectedCharacter.damageTaken = data[position].damageTaken
+                    selectedCharacter.strainTaken = data[position].strainTaken
+                    selectedCharacter.specialActions = data[position].special
 
-                    loadedCharacters[position].timesFocused = data[position].timesFocused
-                    loadedCharacters[position].timesHidden = data[position].timesHidden
-                    loadedCharacters[position].timesStunned = data[position].timesStunned
-                    loadedCharacters[position].timesBleeding = data[position].timesBleeding
-                    loadedCharacters[position].timesWeakened = data[position].timesWeakened
-                    loadedCharacters[position].cratesPickedUp = data[position].cratesPickedUp
-                    loadedCharacters[position].rewardObtained = data[position].rewardObtained
-                    loadedCharacters[position].withdrawn = data[position].withdrawn
+                    selectedCharacter.timesFocused = data[position].timesFocused
+                    selectedCharacter.timesHidden = data[position].timesHidden
+                    selectedCharacter.timesStunned = data[position].timesStunned
+                    selectedCharacter.timesBleeding = data[position].timesBleeding
+                    selectedCharacter.timesWeakened = data[position].timesWeakened
+                    selectedCharacter.cratesPickedUp = data[position].cratesPickedUp
+                    selectedCharacter.rewardObtained = data[position].rewardObtained
+                    selectedCharacter.withdrawn = data[position].withdrawn
 
-                    loadedCharacters[position].damageAnimSetting = data[position].damageSetting
-                    loadedCharacters[position].soundEffectsSetting = data[position].soundEffectsSetting
-                    loadedCharacters[position].actionUsageSetting = data[position].actionUsageSetting
-                    loadedCharacters[position].imageSetting = data[position].imageSetting
-                    loadedCharacters[position].conditionAnimSetting = data[position].conditionAnimSetting
+                    selectedCharacter.damageAnimSetting = data[position].damageSetting
+                    selectedCharacter.soundEffectsSetting = data[position].soundEffectsSetting
+                    selectedCharacter.actionUsageSetting = data[position].actionUsageSetting
+                    selectedCharacter.imageSetting = data[position].imageSetting
+                    selectedCharacter.conditionAnimSetting = data[position].conditionAnimSetting
 
-                    MainActivity.selectedCharacter = loadedCharacters[position]
+                    MainActivity.selectedCharacter =  selectedCharacter
 
-                    for (i in 0..listView.adapter.count - 1) {
+                    if( MainActivity.selectedCharacter!=null) {
+                        for (i in 0..listView.adapter.count - 1) {
 
-                        if(i!=position) {
-                            listView.adapter.getView(i, listView, listView).alpha=0f
-                        }
-                    }
-                    val intent = Intent(this, CharacterScreen::class.java)
-
-                    /*
-                    for(i in 0..loadedCharacters.size-1){
-                        if(i != position){
-                            if(loadedCharacters[i].portraitImage!=null) {
-                                var image: BitmapDrawable =
-                                    loadedCharacters[i].portraitImage as BitmapDrawable
-                                image.getBitmap().recycle();
+                            if (i != position) {
+                                listView.adapter.getView(i, listView, listView).alpha = 0f
                             }
-                            loadedCharacters[i].portraitImage = null
+                        }
+                        val intent = Intent(this, CharacterScreen::class.java)
+
+                        intent.putExtra("CharacterName", selectedCharacter.name_short)
+                        intent.putExtra("Load", true)
+                        for (i in 0..data.size - 1) {
+
+                            var portrait = loadedCharacters[i].portraitImage as BitmapDrawable
+                            //portrait.bitmap.recycle()
                         }
 
+
+                        startActivity(intent)
+                        finish()
                     }
-
-                    adapter!!.notifyDataSetChanged()
-*/
-                    intent.putExtra("CharacterName", loadedCharacters[position].name_short)
-                    intent.putExtra("Load", true)
-                    for(i in 0..data.size-1){
-
-                        var portrait = loadedCharacters[i].portraitImage as BitmapDrawable
-                        //portrait.bitmap.recycle()
-                    }
-
-                    startActivity(intent)
-                    finish()
-                    //adapter!!.finish()
-
-
-
                 }
             }
             listView.setOnItemLongClickListener{ parent, view, position, id ->

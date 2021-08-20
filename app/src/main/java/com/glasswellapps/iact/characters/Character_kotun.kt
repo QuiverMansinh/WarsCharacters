@@ -47,7 +47,6 @@ class Character_kotun : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Tenacious Quartermaster"
         bio_quote = "\"Any chance to gain advantage must be seized.\""

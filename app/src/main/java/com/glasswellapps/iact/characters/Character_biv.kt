@@ -48,9 +48,6 @@ class Character_biv : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-
-        loadImages(context)
-
         bio_title = "Vicious Vanguard"
         bio_quote = "\"You don't kill as many stormtroopers as I have by playing it safe.\""
         bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and " +

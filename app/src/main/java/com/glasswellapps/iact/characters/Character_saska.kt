@@ -48,7 +48,6 @@ class Character_saska : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Enigmatic Engineer"
         bio_quote = "\"As much as I like putting things together, I also like blowing them apart.\""

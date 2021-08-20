@@ -48,7 +48,6 @@ class Character_onar : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Marauding Mutant"
         bio_quote = "\"I do my best work when I stay in harm's way.\""

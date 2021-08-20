@@ -47,7 +47,6 @@ class Character_gideon : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Commanding Officer"
         bio_quote = "\"Expect nothing. Anticipate everything.\""

@@ -47,7 +47,6 @@ class Character_loku : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Vigilant Marksman"
         bio_quote = "\"His armor is weak at the neck. Aim higher.\""

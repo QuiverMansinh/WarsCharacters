@@ -47,8 +47,6 @@ class Character_davith : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
-
         bio_title = "Exiled Jedi"
         bio_quote = "\"Once discovered, the best defense is an unrelenting assault.\""
         bio_text = "Due to the roving Jedi-Hunters still searching for him and his ilk; " +

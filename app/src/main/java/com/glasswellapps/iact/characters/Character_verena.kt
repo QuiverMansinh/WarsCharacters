@@ -53,7 +53,6 @@ class Character_verena : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Master Combatant"
         bio_quote = "\"The friend of my enemy is my shield.\""

@@ -55,7 +55,6 @@ class Character_ct1701 : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Wildfire"
         bio_quote = "\"Lock and load.\""

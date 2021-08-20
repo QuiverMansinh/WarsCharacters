@@ -50,7 +50,7 @@ class Character_vinto : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
+
 
         bio_title = "Unstoppable Avenger"
         bio_quote = "\"I show the same mercy that has been shown to me.\""

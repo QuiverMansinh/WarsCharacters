@@ -48,7 +48,6 @@ class Character_mhd19 : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Mechanical Medic"
         bio_quote = "Maker: REDACTED\n\nModel: 2-1B_Surgical_Droid\n\nProgramming: Masculine  " +

@@ -48,7 +48,6 @@ class Character_mak : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
 
         bio_title = "Covert Agent"
         bio_quote = "\"The Imperial military police couldn't take me alive, and neither will you!\""

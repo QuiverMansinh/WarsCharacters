@@ -48,7 +48,7 @@ class Character_drokkatta : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
+
 
         bio_title = "Euphoric Demolitionist"
         bio_quote = "\"Bathe in Fire!\""

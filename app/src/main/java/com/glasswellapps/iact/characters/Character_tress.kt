@@ -47,8 +47,6 @@ class Character_tress : Character {
 
         //update strain, update damage, xp, cards, weapons
 
-        loadImages(context)
-
         bio_title = "Cybernetic Brawler"
         bio_quote = "\"Safety in numbers is a bedtime story your commander told you so you can sleep at night.\""
         bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price. " +

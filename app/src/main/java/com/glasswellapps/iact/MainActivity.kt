@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
 
         setContentView(R.layout.activity_main)
-        Sounds.sounEPool(this)
+        Sounds.reset(this)
 
         newButton.setOnClickListener {
             Sounds.selectSound()

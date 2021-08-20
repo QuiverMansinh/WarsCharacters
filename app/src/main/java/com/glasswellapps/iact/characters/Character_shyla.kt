@@ -50,7 +50,7 @@ class Character_shyla : Character {
         //Update images
 
         //update strain, update damage, xp, cards, weapons
-        loadImages(context)
+
 
         bio_title = "Professional Mercenary"
         bio_quote = "\"I come from and ancient warrior tradition. That tradition will dismantle you.\""
