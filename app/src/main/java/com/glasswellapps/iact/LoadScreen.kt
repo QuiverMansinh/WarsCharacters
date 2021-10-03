@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,8 +29,6 @@ import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
-import kotlin.math.round
 
 
 class LoadScreen : AppCompatActivity() {
@@ -58,13 +57,12 @@ class LoadScreen : AppCompatActivity() {
         initSaveDialog()
     }
 
+    var selectedFiles = arrayListOf<Int>()
     fun loadData() {
         val database = AppDatabase.getInstance(this)
-
         MainActivity.data = database!!.getCharacterDAO().getAll()
 
         showNoSavesFoundToast()
-
     }
 
     var currentSaveData = arrayListOf<CharacterData>()
@@ -73,7 +71,7 @@ class LoadScreen : AppCompatActivity() {
     fun initSaveSlots() {
         linearLayoutManager = LinearLayoutManager(this)
         saveSlots_recyclerView.layoutManager = linearLayoutManager
-        adapter = saveSlotAdapter(currentSaveData, this)
+        adapter = saveSlotAdapter(currentSaveData, this, this)
         saveSlots_recyclerView.adapter = adapter
 
     }
@@ -152,7 +150,7 @@ class LoadScreen : AppCompatActivity() {
         saveDialog!!.setCanceledOnTouchOutside(true)
         saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        saveDialog!!.edit_load_file_name.requestFocus()
+        saveDialog!!.edit_file_name.requestFocus()
         saveDialog!!.apply.setOnClickListener {
             onApply(saveDialog!!.apply)
             saveDialog!!.cancel()
@@ -338,7 +336,7 @@ class LoadScreen : AppCompatActivity() {
         //   slideAnimation()
         //TODO update database
         MainActivity.data!![positionEditing].fileName =
-            saveDialog!!.edit_load_file_name.text.toString()
+            saveDialog!!.edit_file_name.text.toString()
         val database = AppDatabase.getInstance(this)
 
         database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
@@ -373,8 +371,8 @@ class LoadScreen : AppCompatActivity() {
                     WorkManager.getInstance(this)
                         .getWorkInfosByTagLiveData("delete").removeObservers(this)
                     println("DELETE FINISHED")
-                    startActivity(intent)
-                    finish()
+                    //startActivity(intent)
+                    //finish()
                 }
             })
     }
@@ -433,9 +431,73 @@ class LoadScreen : AppCompatActivity() {
             }
         }
     }
+
+    var isEditing = false
+    fun onToggleEdit(view: View) {
+        Sounds.selectSound()
+        isEditing = !isEditing
+        if(isEditing){
+            edit_toggle.text = "CANCEL"
+        }
+        else{
+            edit_toggle.text = "EDIT"
+        }
+
+        updateToggleAll()
+        adapter.notifyDataSetChanged()
+    }
+
+
+    fun onToggleAll(view: View) {
+        Sounds.selectSound()
+        if(selectedFiles.size < MainActivity.data!!.size){
+            selectedFiles.clear()
+            for(i in 0..MainActivity.data!!.size-1){
+                selectedFiles.add(i)
+            }
+            all_toggle.text = "NONE"
+        }
+        else{
+            selectedFiles.clear()
+            all_toggle.text = "ALL"
+        }
+        setDeleteButtonVisibility()
+        adapter.notifyDataSetChanged()
+    }
+    fun updateToggleAll(){
+        if(isEditing){
+            all_toggle.visibility = View.VISIBLE
+        }
+        else{
+            all_toggle.visibility = View.GONE
+        }
+        if(selectedFiles.size < MainActivity.data!!.size){
+            all_toggle.text = "ALL"
+        }
+        else{
+            all_toggle.text = "NONE"
+        }
+    }
+
+
+
+    fun setDeleteButtonVisibility(){
+        val deleteButton = findViewById<TextView>(R.id.delete_button)
+        if(selectedFiles.size > 0) {
+            deleteButton.visibility = View.VISIBLE
+            var plural = "S"
+            if(selectedFiles.size == 1){plural = ""}
+            deleteButton.text = "DELETE "+ selectedFiles.size + " FILE" +plural
+        }
+        else{
+            findViewById<View>(R.id.delete_button).visibility = View.GONE
+        }
+    }
 }
 
-class saveSlotAdapter(private val dataSet: List<CharacterData>, val context:Context) : RecyclerView
+class saveSlotAdapter(private val dataSet: List<CharacterData>, val context:Context, val
+loadScreen: LoadScreen) :
+    RecyclerView
 .Adapter<saveSlotAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -444,17 +506,30 @@ class saveSlotAdapter(private val dataSet: List<CharacterData>, val context:Cont
         val level: TextView
         val portrait: ImageView
         val time: TextView
+        val editData: View
+        val loadData: View
+        val deleteToggle: ImageView
+        val editFileName : EditText
         init {
             fileName = view.findViewById(R.id.fileName)
             characterName = view.findViewById(R.id.characterName)
             level = view.findViewById(R.id.level)
             portrait = view.findViewById(R.id.portrait)
             time = view.findViewById(R.id.time)
+
+            editData = view.findViewById(R.id.edit_data)
+            loadData = view.findViewById(R.id.load_data)
+            deleteToggle = view.findViewById(R.id.delete_toggle)
+            editFileName = view.findViewById(R.id.edit_file_name)
+
+
+
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.save_load_item, viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.save_load_item,
+            viewGroup, false)
         return ViewHolder(view)
     }
 
@@ -495,10 +570,52 @@ class saveSlotAdapter(private val dataSet: List<CharacterData>, val context:Cont
             timeAgo = ""+min +" m ago"
         }
         viewHolder.time.text = timeAgo
+
+        if(loadScreen.isEditing){
+            viewHolder.editData.visibility = View.VISIBLE
+            viewHolder.loadData.visibility = View.INVISIBLE
+        }
+        else{
+            viewHolder.editData.visibility = View.INVISIBLE
+            viewHolder.loadData.visibility = View.VISIBLE
+        }
+
+
+        setDeleteToggleVisibility(viewHolder.deleteToggle, position)
+
+        viewHolder.deleteToggle.setOnClickListener {
+            Sounds.selectSound()
+            val saveDataIndex = loadScreen.page*5 + position
+
+            if(loadScreen.selectedFiles.contains(saveDataIndex)){
+                loadScreen.selectedFiles.remove(saveDataIndex)
+            }
+            else{
+                loadScreen.selectedFiles.add(saveDataIndex)
+            }
+
+            setDeleteToggleVisibility(it,position)
+            loadScreen.setDeleteButtonVisibility()
+
+            loadScreen.updateToggleAll()
+            true
+
+        }
+    }
+
+    fun setDeleteToggleVisibility(view:View, position:Int){
+        if(loadScreen.selectedFiles.contains(loadScreen.page*5 + position)){
+            view.alpha = 1f
+        }
+        else{
+            view.alpha = 0.3f
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+
 
     fun getCharacterPortrait(characterName: String?): Drawable? {
         when (characterName) {
