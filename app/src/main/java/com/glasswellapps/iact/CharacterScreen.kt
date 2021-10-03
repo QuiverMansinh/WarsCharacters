@@ -57,7 +57,6 @@ import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import java.io.InputStream
 import kotlin.random.Random
 
-
 var height = 0f
 var width = 0f
 
@@ -65,7 +64,6 @@ class CharacterScreen : AppCompatActivity() {
     var character: com.glasswellapps.iact.characters.Character = Character();
     var animateConditions = true
     var animateDamage = true
-
     var actionUsage = true
     var strengthGlow: GreenHighlight? = null
     var techGlow: GreenHighlight?= null
@@ -77,31 +75,20 @@ class CharacterScreen : AppCompatActivity() {
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
-
-
+        )
         Sounds.reset(this)
-
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         height = displayMetrics.heightPixels.toFloat()
         width = displayMetrics.widthPixels.toFloat()
-
         initDialogs()
         initScreen()
         initAnimations()
         initKillTracker()
-
     }
-
-
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-        println(" CHARACTER" + MainActivity.selectedCharacter)
-
-
-
         updateStats()
         if(character.damage>0) {
             if (character.damage < character.health) {
@@ -151,11 +138,7 @@ class CharacterScreen : AppCompatActivity() {
         }
         updateImages()
         quickSave()
-
-
         if (hasFocus && !loadAnimated) {
-
-
             top_panel.animate().alpha(1f)
             /*
             val animTop = ObjectAnimator.ofFloat(
@@ -347,7 +330,7 @@ class CharacterScreen : AppCompatActivity() {
         if (character.portraitImage == null) {
             character.loadPortraitImage(this)
         }
-        name.setText("" + character.name)
+        fileName.setText("" + character.name)
 
         animateConditions = character.conditionAnimSetting
         animateDamage =character.damageAnimSetting
@@ -3165,11 +3148,8 @@ class CharacterScreen : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-
         quickSave()
         val intent = Intent(this, MainActivity::class.java)
-
-
         startActivity(intent)
         finishAffinity()
     }
@@ -3270,9 +3250,7 @@ class saveWorker(val context: Context, params: WorkerParameters): Worker
             MainActivity.selectedCharacter!!.id = database!!.getCharacterDAO()
                 .getPrimaryKey(database!!.getCharacterDAO().insert(saveFile))
             println("insert save")
-
         }
-
         return Result.success()
     }
 

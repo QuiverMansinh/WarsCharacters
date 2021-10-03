@@ -67,9 +67,6 @@ class Character_davith : Character {
     //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context: Context) {
         super.updateCharacterImages(context)
-
-
-
         //card6 and card9 combined tier images
         if (xpCardsEquipped[5] && xpCardsEquipped[8]) {
             var card69Image = loadCardTierImage(context, tier, "card6_card9")

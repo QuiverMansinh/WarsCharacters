@@ -176,6 +176,8 @@ class Characters_list : AppCompatActivity() {
 
     }
 
+
+
     fun wipeSelectedCharacter(){
 
         MainActivity.selectedCharacter!!.currentImage!!.recycle()

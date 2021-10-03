@@ -1,36 +1,43 @@
 package com.glasswellapps.iact
 
-import android.animation.ObjectAnimator
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
+import com.glasswellapps.iact.characters.*
 import com.glasswellapps.iact.database.AppDatabase
 import com.glasswellapps.iact.database.CharacterData
 import com.glasswellapps.iact.effects.Sounds
-import com.glasswellapps.iact.characters.*
+import kotlinx.android.synthetic.main.activity_load_screen.*
 import kotlinx.android.synthetic.main.dialog_edit_save.*
-import kotlinx.android.synthetic.main.save_load_item.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.w3c.dom.Text
+import kotlin.math.round
 
 
 class LoadScreen : AppCompatActivity() {
 
-    var saveDialog:Dialog? = null
+    var saveDialog: Dialog? = null
     var width = 0f
     var height = 0f
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,8 +53,98 @@ class LoadScreen : AppCompatActivity() {
 
 
         loadData()
+        initSaveSlots()
+        getCurrentSaveData()
+        initSaveDialog()
+    }
+
+    fun loadData() {
+        val database = AppDatabase.getInstance(this)
+
+        MainActivity.data = database!!.getCharacterDAO().getAll()
+
+        showNoSavesFoundToast()
+
+    }
+
+    var currentSaveData = arrayListOf<CharacterData>()
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var adapter:saveSlotAdapter
+    fun initSaveSlots() {
+        linearLayoutManager = LinearLayoutManager(this)
+        saveSlots_recyclerView.layoutManager = linearLayoutManager
+        adapter = saveSlotAdapter(currentSaveData, this)
+        saveSlots_recyclerView.adapter = adapter
+
+    }
+
+    var page = 0
+    val slotsPerPage = 5
+
+    fun getCurrentSaveData() {
+        currentSaveData.clear()
+        getMaxPages()
+        pageNumber.text = ""+(page+1) +" / "+maxPages
+        for(i in 0..slotsPerPage-1) {
+            var dataIndex = page*slotsPerPage+i
+            if(dataIndex < MainActivity.data!!.size) {
+                currentSaveData.add(MainActivity.data!![dataIndex])
+            }
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    fun onPreviousPage(view: View) {
+        Sounds.selectSound()
+        if(page > 0){
+            page--
+        }
+        else{
+            page = maxPages-1
+        }
+        getCurrentSaveData()
+    }
+    fun onNextPage(view: View) {
+        Sounds.selectSound()
+        if(page<maxPages-1){
+            page++
+        }
+        else{
+            page = 0;
+        }
+        getCurrentSaveData()
+    }
+    var maxPages = 1
+    fun getMaxPages(){
+        maxPages = MainActivity.data!!.size/slotsPerPage
+        if(MainActivity.data!!.size%slotsPerPage!=0){
+            maxPages++
+        }
+    }
 
 
+/*
+    fun slideAnimation() {
+
+        for (i in 0..saveSlots.size) {
+            println("ANIMATED LOAD")
+            var saveSlot = saveSlots[i]
+            saveSlot.animate().alpha(1f)
+            var anim = ObjectAnimator.ofFloat(
+                saveSlot,
+                "translationX", -(i.toFloat() / 2 + 1) * saveSlot.width.toFloat(),
+                0f
+            )
+            anim.duration = ((i.toFloat() / 2 + 1) * 200).toLong()
+
+            println("" + anim.duration + " " + anim.values[0])
+
+            anim.start()
+
+        }
+    }*/
+
+    fun initSaveDialog() {
         saveDialog = Dialog(this)
         saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         saveDialog!!.setCancelable(false)
@@ -64,236 +161,169 @@ class LoadScreen : AppCompatActivity() {
         saveDialog!!.delete.setOnClickListener {
             onDelete(saveDialog!!.delete)
 
-            if(loadedCharacters.size == 0) {
-                showNoSavesFoundToast()
-            }
+
+            showNoSavesFoundToast()
+
             true
         }
-
-
-        println("no save files" + loadedCharacters.size)
     }
 
-    fun loadData(){
-        val database = AppDatabase.getInstance(this)
-        MainActivity.data = database!!.getCharacterDAO().getAll()
-        listSaveFiles(MainActivity.data)
-        if(loadedCharacters.size ==0){
-            showNoSavesFoundToast()
-        }
-    }
-
-
-    fun slideAnimation(){
-
-        for (i in 0..listView.adapter.count - 1) {
-            println("ANIMATED LOAD")
-            var saveFileView =  listView.adapter.getView(i,listView,listView)
-            listView.adapter.getView(i,listView,listView).animate().alpha(1f)
-            var anim = ObjectAnimator.ofFloat(
-                saveFileView,
-                "translationX", -(i.toFloat()/2 + 1) *saveFileView.width.toFloat(),
-                0f
-            )
-            anim.duration = ((i.toFloat()/2 + 1)  * 200).toLong()
-
-            println(""+anim.duration + " " + anim.values[0])
-
-            anim.start()
-
-        }
-    }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
 
-        if(hasFocus) {
-            slideAnimation()
+        if (hasFocus) {
+            // slideAnimation()
 
         }
     }
 
 
-    private lateinit var listView:ListView
+    fun onSaveSelected(saveDataIndex:Int) {
 
-    var fileNames = ArrayList<String?>()
-    var loadedCharacters = ArrayList<com.glasswellapps.iact.characters.Character>()
-    var adapter: LoadFileAdapter? = null
+        if (saveDataIndex < currentSaveData.size) {
+            Sounds.selectSound()
+            val saveData = currentSaveData[saveDataIndex];
+            var selectedCharacter = getCharacter(saveData.characterName)
 
-    fun listSaveFiles(data: List<CharacterData>?){
-        listView = findViewById<ListView>(R.id.load_screen_list)
-        listView.animate().alpha(1f)
-        listView.divider = null
-        listView.dividerHeight = 0
+            selectedCharacter.file_name = "" + saveData.fileName
+            selectedCharacter.id = saveData.id
 
+            selectedCharacter.damage = saveData.damage
+            selectedCharacter.strain = saveData.strain
+            selectedCharacter.token = saveData.token
+            selectedCharacter.wounded = saveData.wounded
 
+            selectedCharacter.conditionsActive = booleanArrayOf(
+                saveData.conditionsActive1,
+                saveData.conditionsActive2,
+                saveData.conditionsActive3,
+                saveData.conditionsActive4,
+                saveData.conditionsActive5
+            )
 
+            selectedCharacter.totalXP = saveData.totalXP
+            selectedCharacter.xpSpent = saveData.xpSpent
+            selectedCharacter.xpCardsEquipped = booleanArrayOf(
+                saveData.xpCardsEquipped1,
+                saveData.xpCardsEquipped2,
+                saveData.xpCardsEquipped3,
+                saveData.xpCardsEquipped4,
+                saveData.xpCardsEquipped5,
+                saveData.xpCardsEquipped6,
+                saveData.xpCardsEquipped7,
+                saveData.xpCardsEquipped8,
+                saveData.xpCardsEquipped9
+            )
 
-        if( data != null) {
-
-            for(i in 0..data.size-1){
-                if(!data[i].deleted){
-                    fileNames.add(data[i].fileName)
-                    val character = selectCharacter(data[i].characterName)
-                    loadedCharacters.add(character)
-                    loadedCharacters[i].loadPortraitImage(this)
-                }/*
-                else{
-                    positionEditing = i
-                    onDelete(this.listView)
-                }*/
+            if (saveData.weapon1 != -1) {
+                selectedCharacter.weapons.add(saveData.weapon1)
+            }
+            if (saveData.weapon2 != -1) {
+                selectedCharacter.weapons.add(saveData.weapon2)
+            }
+            if (saveData.accessory1 != -1) {
+                selectedCharacter.accessories.add(saveData.accessory1)
+            }
+            if (saveData.accessory2 != -1) {
+                selectedCharacter.accessories.add(saveData.accessory2)
+            }
+            if (saveData.accessory3 != -1) {
+                selectedCharacter.accessories.add(saveData.accessory3)
+            }
+            selectedCharacter.helmet = saveData.helmet
+            if (saveData.armour != -1) {
+                selectedCharacter.armor.add(saveData.armour)
             }
 
-            adapter = LoadFileAdapter(this, fileNames, loadedCharacters, data)
-            listView.adapter= adapter
 
-            listView.isClickable = true
-            listView.setOnItemClickListener  { parent, view, position, id ->
-                if(position<loadedCharacters.size) {
-                    Sounds.selectSound()
-                    var selectedCharacter = loadedCharacters[position];
+            //TODO rewards and mods
+            selectedCharacter.rewards = convertStringToItemID("" + saveData.rewards)
+            selectedCharacter.mods = convertStringToItemID("" + saveData.mods)
 
 
-                    selectedCharacter.file_name = ""+data[position].fileName
-                    selectedCharacter.id = data[position].id
+            selectedCharacter.background = saveData.background.toString()
 
-                    selectedCharacter.damage = data[position].damage
-                    selectedCharacter.strain = data[position].strain
-                    selectedCharacter.token = data[position].token
-                    selectedCharacter.wounded = data[position].wounded
+            selectedCharacter.killCount = arrayOf(
+                saveData.killVillian,
+                saveData.killLeader,
+                saveData.killVehicle,
+                saveData.killCreature,
+                saveData.killGuard,
+                saveData.killDroid,
+                saveData.killScum,
+                saveData.killTrooper
+            )
 
-                    selectedCharacter.conditionsActive = booleanArrayOf(
-                        data[position].conditionsActive1,
-                        data[position].conditionsActive2,
-                        data[position].conditionsActive3,
-                        data[position].conditionsActive4,
-                        data[position].conditionsActive5
-                    )
+            selectedCharacter.assistCount = arrayOf(
+                saveData.assistVillian,
+                saveData.assistLeader,
+                saveData.assistVehicle,
+                saveData.assistCreature,
+                saveData.assistGuard,
+                saveData.assistDroid,
+                saveData.assistScum,
+                saveData.assistTrooper
+            )
 
-                    selectedCharacter.totalXP = data[position].totalXP
-                    selectedCharacter.xpSpent = data[position].xpSpent
-                    selectedCharacter.xpCardsEquipped = booleanArrayOf(
-                        data[position].xpCardsEquipped1,
-                        data[position].xpCardsEquipped2,
-                        data[position].xpCardsEquipped3,
-                        data[position].xpCardsEquipped4,
-                        data[position].xpCardsEquipped5,
-                        data[position].xpCardsEquipped6,
-                        data[position].xpCardsEquipped7,
-                        data[position].xpCardsEquipped8,
-                        data[position].xpCardsEquipped9
-                    )
+            selectedCharacter.movesTaken = saveData.moves
+            selectedCharacter.attacksMade = saveData.attacks
+            selectedCharacter.interactsUsed = saveData.interact
+            selectedCharacter.timesWounded = saveData.timesWounded
+            selectedCharacter.timesRested = saveData.rested
+            selectedCharacter.timesWithdrawn = saveData.timesWithdrawn
+            selectedCharacter.activated = saveData.activated
+            selectedCharacter.damageTaken = saveData.damageTaken
+            selectedCharacter.strainTaken = saveData.strainTaken
+            selectedCharacter.specialActions = saveData.special
 
-                    if(data[position].weapon1!=-1){  selectedCharacter.weapons.add(data[position].weapon1)}
-                    if(data[position].weapon2!=-1){  selectedCharacter.weapons.add(data[position].weapon2)}
-                    if(data[position].accessory1!=-1){  selectedCharacter.accessories.add(data[position].accessory1)}
-                    if(data[position].accessory2!=-1){  selectedCharacter.accessories.add(data[position].accessory2)}
-                    if(data[position].accessory3!=-1){  selectedCharacter.accessories.add(data[position].accessory3)}
-                    selectedCharacter.helmet = data[position].helmet
-                    if(data[position].armour != -1) {  selectedCharacter.armor.add(data[position].armour) }
+            selectedCharacter.timesFocused = saveData.timesFocused
+            selectedCharacter.timesHidden = saveData.timesHidden
+            selectedCharacter.timesStunned = saveData.timesStunned
+            selectedCharacter.timesBleeding = saveData.timesBleeding
+            selectedCharacter.timesWeakened = saveData.timesWeakened
+            selectedCharacter.cratesPickedUp = saveData.cratesPickedUp
+            selectedCharacter.rewardObtained = saveData.rewardObtained
+            selectedCharacter.withdrawn = saveData.withdrawn
 
+            selectedCharacter.damageAnimSetting = saveData.damageSetting
+            selectedCharacter.soundEffectsSetting = saveData.soundEffectsSetting
+            selectedCharacter.actionUsageSetting = saveData.actionUsageSetting
+            selectedCharacter.imageSetting = saveData.imageSetting
+            selectedCharacter.conditionAnimSetting = saveData.conditionAnimSetting
 
+            MainActivity.selectedCharacter = selectedCharacter
 
-                    //TODO rewards and mods
-                    selectedCharacter.rewards = convertStringToItemID(""+data[position].rewards)
-                    selectedCharacter.mods = convertStringToItemID(""+data[position].mods)
+            if (MainActivity.selectedCharacter != null) {
 
+                val intent = Intent(this, CharacterScreen::class.java)
 
-                    selectedCharacter.background = data[position].background.toString()
-
-                    selectedCharacter.killCount = arrayOf(
-                        data[position].killVillian,
-                        data[position].killLeader,
-                        data[position].killVehicle,
-                        data[position].killCreature,
-                        data[position].killGuard,
-                        data[position].killDroid,
-                        data[position].killScum,
-                        data[position].killTrooper
-                    )
-
-                    selectedCharacter.assistCount = arrayOf(
-                        data[position].assistVillian,
-                        data[position].assistLeader,
-                        data[position].assistVehicle,
-                        data[position].assistCreature,
-                        data[position].assistGuard,
-                        data[position].assistDroid,
-                        data[position].assistScum,
-                        data[position].assistTrooper
-                    )
-
-                    selectedCharacter.movesTaken = data[position].moves
-                    selectedCharacter.attacksMade = data[position].attacks
-                    selectedCharacter.interactsUsed = data[position].interact
-                    selectedCharacter.timesWounded = data[position].timesWounded
-                    selectedCharacter.timesRested = data[position].rested
-                    selectedCharacter.timesWithdrawn = data[position].timesWithdrawn
-                    selectedCharacter.activated = data[position].activated
-                    selectedCharacter.damageTaken = data[position].damageTaken
-                    selectedCharacter.strainTaken = data[position].strainTaken
-                    selectedCharacter.specialActions = data[position].special
-
-                    selectedCharacter.timesFocused = data[position].timesFocused
-                    selectedCharacter.timesHidden = data[position].timesHidden
-                    selectedCharacter.timesStunned = data[position].timesStunned
-                    selectedCharacter.timesBleeding = data[position].timesBleeding
-                    selectedCharacter.timesWeakened = data[position].timesWeakened
-                    selectedCharacter.cratesPickedUp = data[position].cratesPickedUp
-                    selectedCharacter.rewardObtained = data[position].rewardObtained
-                    selectedCharacter.withdrawn = data[position].withdrawn
-
-                    selectedCharacter.damageAnimSetting = data[position].damageSetting
-                    selectedCharacter.soundEffectsSetting = data[position].soundEffectsSetting
-                    selectedCharacter.actionUsageSetting = data[position].actionUsageSetting
-                    selectedCharacter.imageSetting = data[position].imageSetting
-                    selectedCharacter.conditionAnimSetting = data[position].conditionAnimSetting
-
-                    MainActivity.selectedCharacter =  selectedCharacter
-
-                    if( MainActivity.selectedCharacter!=null) {
-                        for (i in 0..listView.adapter.count - 1) {
-
-                            if (i != position) {
-                                listView.adapter.getView(i, listView, listView).alpha = 0f
-                            }
-                        }
-                        val intent = Intent(this, CharacterScreen::class.java)
-
-                        intent.putExtra("CharacterName", selectedCharacter.name_short)
-                        intent.putExtra("Load", true)
-                        for (i in 0..data.size - 1) {
-
-                            var portrait = loadedCharacters[i].portraitImage as BitmapDrawable
-                            //portrait.bitmap.recycle()
-                        }
-
-
-                        startActivity(intent)
-                        finish()
-                    }
-                }
+                intent.putExtra("CharacterName", selectedCharacter.name_short)
+                intent.putExtra("Load", true)
+                startActivity(intent)
+                finish()
             }
-            listView.setOnItemLongClickListener{ parent, view, position, id ->
-                //fileNames.removeAt(position)
-                //loadedCharacters.removeAt(position)
-
-                    positionEditing = position
-                    listView.animate().alpha(0f)
-                    saveDialog!!.show()
-                    saveDialog!!.edit_load_file_name.setText("" + fileNames[position])
-
-                true
-            }
-
         }
-
     }
 
-    fun convertStringToItemID(itemString:String):ArrayList<Int> {
+/*
+    fun onSaveEdit(saveSlotIndex: Int){
+
+        positionEditing = saveSlotIndex + 5*page
+        //saveSlots[saveSlotIndex].animate().alpha(0f)
+        saveDialog!!.show()
+        saveDialog!!.edit_load_file_name.setText("" + currentSaveData[positionEditing])
+
+
+    }
+*/
+
+
+    fun convertStringToItemID(itemString: String): ArrayList<Int> {
         var itemIds = arrayListOf<Int>()
-        var itemStrings = itemString.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        var itemStrings =
+            itemString.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
-        for(itemId in itemStrings){
-            if(itemId.isNotEmpty()){
+        for (itemId in itemStrings) {
+            if (itemId.isNotEmpty()) {
                 itemIds.add(itemId.toInt())
             }
         }
@@ -301,26 +331,26 @@ class LoadScreen : AppCompatActivity() {
     }
 
     var positionEditing = -1
-    fun onApply(view: View){
+    fun onApply(view: View) {
         Sounds.selectSound()
 //        fileNames[positionEditing] =  edit_load_file_name.text.toString()
-       // adapter!!.notifyDataSetChanged()
-     //   slideAnimation()
+        // adapter!!.notifyDataSetChanged()
+        //   slideAnimation()
         //TODO update database
-        MainActivity.data!![positionEditing].fileName =  saveDialog!!.edit_load_file_name.text.toString()
+        MainActivity.data!![positionEditing].fileName =
+            saveDialog!!.edit_load_file_name.text.toString()
         val database = AppDatabase.getInstance(this)
 
         database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
 
         startActivity(intent)
         finish()
-
     }
 
 
-    fun onDelete(view: View){
+    fun onDelete(view: View) {
         Sounds.selectSound()
-        if(saveDialog!=null) {
+        if (saveDialog != null) {
             saveDialog!!.cancel()
         }
 
@@ -334,223 +364,209 @@ class LoadScreen : AppCompatActivity() {
         val deleteWorkRequest = deleteWorkRequestBuilder.build()
 
         WorkManager.getInstance(this).enqueue(deleteWorkRequest)
-/*
-        fileNames.removeAt(positionEditing)
-        loadedCharacters.removeAt(positionEditing)
-        adapter!!.saveFiles.removeAt(positionEditing)
-        adapter!!.notifyDataSetChanged()
-
-*/
 
         WorkManager.getInstance(this)
             .getWorkInfosByTagLiveData("delete")
-            .observe(this, Observer<List<WorkInfo>> {
-                    workStatusList ->
-                val currentWorkStatus = workStatusList ?.getOrNull(0)
-                if (currentWorkStatus ?.state ?.isFinished == true)
-                {
+            .observe(this, Observer<List<WorkInfo>> { workStatusList ->
+                val currentWorkStatus = workStatusList?.getOrNull(0)
+                if (currentWorkStatus?.state?.isFinished == true) {
                     WorkManager.getInstance(this)
                         .getWorkInfosByTagLiveData("delete").removeObservers(this)
                     println("DELETE FINISHED")
-
-
                     startActivity(intent)
                     finish()
-
                 }
             })
-
-
-
-
     }
 
 
-    fun selectCharacter(characterName: String?): com.glasswellapps.iact.characters.Character {
+    fun getCharacter(characterName: String?): com.glasswellapps.iact.characters.Character {
         var character = Character();
         when (characterName) {
-            "biv" -> {
-                character = Character_biv(this)
-            }
-            "davith" -> {
-                character = Character_davith(this)
-            }
-            "diala" -> {
-                character = Character_diala(this)
-            }
-            "drokdatta" -> {
-                character = Character_drokkatta(this)
-            }
-            "fenn" -> {
-                character = Character_fenn(this)
-            }
-            "gaarkhan" -> {
-                character = Character_gaarkhan(this)
-            }
-            "gideon" -> {
-                character = Character_gideon(this)
-            }
-            "jarrod" -> {
-                character = Character_jarrod(this)
-            }
-            "jyn" -> {
-                character = Character_jyn(this)
-            }
-            "loku" -> {
-                character = Character_loku(this)
-            }
-            "kotun" -> {
-                character = Character_kotun(this)
-            }
-            "mak" -> {
-                character = Character_mak(this)
-            }
-            "mhd19" -> {
-                character = Character_mhd19(this)
-            }
-            "murne" -> {
-                character = Character_murne(this)
-            }
-            "onar" -> {
-                character = Character_onar(this)
-            }
-            "saska" -> {
-                character = Character_saska(this)
-            }
-            "shyla" -> {
-                character = Character_shyla(this)
-            }
-            "verena" -> {
-                character = Character_verena(this)
-            }
-            "vinto" -> {
-                character = Character_vinto(this)
-            }
-            "drokkatta" -> {
-                character = Character_drokkatta(this)
-            }
-            "ct1701" -> {
-                character = Character_ct1701(this)
-            }
-            "tress" -> {
-                character = Character_tress(this)
-            }
-            else -> {
-                character = CustomCharacter(this)
-            }
+            "biv" -> { character = Character_biv(this) }
+            "davith" -> { character = Character_davith(this) }
+            "diala" -> { character = Character_diala(this) }
+            "drokkatta" -> { character = Character_drokkatta(this) }
+            "fenn" -> { character = Character_fenn(this) }
+            "gaarkhan" -> { character = Character_gaarkhan(this) }
+            "gideon" -> { character = Character_gideon(this) }
+            "jarrod" -> { character = Character_jarrod(this) }
+            "jyn" -> { character = Character_jyn(this) }
+            "loku" -> { character = Character_loku(this) }
+            "kotun" -> { character = Character_kotun(this) }
+            "mak" -> { character = Character_mak(this) }
+            "mhd19" -> { character = Character_mhd19(this) }
+            "murne" -> { character = Character_murne(this) }
+            "onar" -> { character = Character_onar(this) }
+            "saska" -> { character = Character_saska(this) }
+            "shyla" -> { character = Character_shyla(this) }
+            "verena" -> { character = Character_verena(this) }
+            "vinto" -> { character = Character_vinto(this) }
+            "ct1701" -> { character = Character_ct1701(this) }
+            "tress" -> { character = Character_tress(this) }
+            else -> { character = CustomCharacter(this) }
         }
         return character
     }
+
     override fun onBackPressed() {
-
-
         val intent = Intent(this, MainActivity::class.java)
-
-
         startActivity(intent)
         finishAffinity()
-
     }
 
-    fun showNoSavesFoundToast(){
-        val noSavesFoundToast= Dialog(this)
+    fun showNoSavesFoundToast() {
+        if (MainActivity.data!!.size <= 1) {
+            val noSavesFoundToast = Dialog(this)
 
-        noSavesFoundToast.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        noSavesFoundToast.setCancelable(false)
-        noSavesFoundToast.setContentView(R.layout.dialog_no_savefiles_found)
+            noSavesFoundToast.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            noSavesFoundToast.setCancelable(false)
+            noSavesFoundToast.setContentView(R.layout.dialog_no_savefiles_found)
 
 
-        noSavesFoundToast.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        noSavesFoundToast!!. show()
-        MainScope().launch {
+            noSavesFoundToast.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            noSavesFoundToast!!.show()
+            MainScope().launch {
                 delay(1000)
                 noSavesFoundToast.cancel()
 
             }
-
+        }
     }
 }
 
-class LoadFileAdapter(
-    val context: Activity, val fileNames: ArrayList<String?>, val characters
-    : ArrayList<com.glasswellapps.iact.characters.Character>, val data: List<CharacterData>?
-)
-    : ArrayAdapter<String>(context, R.layout.save_load_item, fileNames){
+class saveSlotAdapter(private val dataSet: List<CharacterData>, val context:Context) : RecyclerView
+.Adapter<saveSlotAdapter.ViewHolder>() {
 
-    open var saveFiles = arrayListOf<View>()
-
-    init{
-        val inflater = context.layoutInflater
-        for(i in 0..fileNames.size-1){
-
-            val button = inflater.inflate(R.layout.save_load_item, null, true)
-            button.alpha = 0f
-                val saveNameText = button.findViewById(R.id.save_file_name) as TextView
-                saveNameText.text = fileNames[i]
-
-                val saveCharacterImage = button.findViewById(R.id.save_file_image) as ImageView
-
-                saveCharacterImage.setImageDrawable(characters[i].portraitImage)
-
-                var level = 5
-
-                if (data!![i].xpSpent <= 1) {
-                    level = 1
-                } else if (data!![i].xpSpent <= 4) {
-                    level = 2
-                } else if (data!![i].xpSpent <= 7) {
-                    level = 3
-                } else if (data!![i].xpSpent <= 10) {
-                    level = 4
-                }
-                button.save_file_level.setText("Lv " + level)
-                button.save_file_character.setText("" + characters[i].name)
-                button.save_file_date.setText("" + data!![i].date)
-
-
-            saveFiles.add(button)
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val fileName: TextView
+        val characterName: TextView
+        val level: TextView
+        val portrait: ImageView
+        val time: TextView
+        init {
+            fileName = view.findViewById(R.id.fileName)
+            characterName = view.findViewById(R.id.characterName)
+            level = view.findViewById(R.id.level)
+            portrait = view.findViewById(R.id.portrait)
+            time = view.findViewById(R.id.time)
         }
     }
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-
-        return saveFiles[position]
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.save_load_item, viewGroup, false)
+        return ViewHolder(view)
     }
 
-    open fun getSaveFile(position : Int):View{
-        return saveFiles[position]
-    }
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        val saveData = dataSet[position]
+        viewHolder.fileName.text = saveData.fileName
+        viewHolder.characterName.text = getFullName(saveData.characterName)
 
-    fun finish(){
-        for(i in 0..saveFiles.size-1){
-            var image = saveFiles[i].save_file_image as ImageView
-            var b = image.drawable as BitmapDrawable
-            b.bitmap.recycle()
-            b = saveFiles[i].save_file_back.background as BitmapDrawable
-            b.bitmap.recycle()
-
+        var level = 5
+        if (saveData.xpSpent <= 1) {
+            level = 1
+        } else if (saveData.xpSpent <= 4) {
+            level = 2
+        } else if (saveData.xpSpent <= 7) {
+            level = 3
+        } else if (saveData.xpSpent <= 10) {
+            level = 4
         }
+        viewHolder.level.text = "Lv " + level
+        var portrait = getCharacterPortrait(saveData.characterName)
+        if(portrait!=null) {
+            viewHolder.portrait.setImageDrawable(portrait)
+        }
+        var timeSinceLastSave =  (System.currentTimeMillis()-saveData.date).toFloat()
+
+        var days = (timeSinceLastSave/86400000).toInt()
+        var hours = ((timeSinceLastSave - days*86400000)/3600000).toInt()
+        var min = ((timeSinceLastSave - days*86400000 - hours*3600000)/60000).toInt()
+
+        var timeAgo = ""
+        if(days > 0){
+            timeAgo = ""+days+" d ago"
+        }
+        else if(hours > 0){
+            timeAgo = ""+hours+" h " +min +" m ago"
+        }
+        else {
+            timeAgo = ""+min +" m ago"
+        }
+        viewHolder.time.text = timeAgo
     }
 
+    // Return the size of your dataset (invoked by the layout manager)
+    override fun getItemCount() = dataSet.size
+
+    fun getCharacterPortrait(characterName: String?): Drawable? {
+        when (characterName) {
+            "biv" -> { return context.resources.getDrawable(R.drawable.portrait_biv) }
+            "davith" -> { return context.resources.getDrawable(R.drawable.portrait_davith) }
+            "diala" -> { return context.resources.getDrawable(R.drawable.portrait_diala) }
+            "drokkatta" -> { return context.resources.getDrawable(R.drawable.portrait_drokkatta) }
+            "fenn" -> { return context.resources.getDrawable(R.drawable.portrait_fenn) }
+            "gaarkhan" -> { return context.resources.getDrawable(R.drawable.portrait_gaarkhan) }
+            "gideon" -> { return context.resources.getDrawable(R.drawable.portrait_gideon) }
+            "jarrod" -> { return context.resources.getDrawable(R.drawable.portrait_jarrod) }
+            "jyn" -> { return context.resources.getDrawable(R.drawable.portrait_jyn) }
+            "loku" -> { return context.resources.getDrawable(R.drawable.portrait_loku) }
+            "kotun" -> { return context.resources.getDrawable(R.drawable.portrait_kotun) }
+            "mak" -> { return context.resources.getDrawable(R.drawable.portrait_mak) }
+            "mhd19" -> { return context.resources.getDrawable(R.drawable.portrait_mhd) }
+            "murne" -> { return context.resources.getDrawable(R.drawable.portrait_murne) }
+            "onar" -> { return context.resources.getDrawable(R.drawable.portrait_onar) }
+            "saska" -> { return context.resources.getDrawable(R.drawable.portrait_saska) }
+            "shyla" -> { return context.resources.getDrawable(R.drawable.portrait_shyla) }
+            "verena" -> { return context.resources.getDrawable(R.drawable.portrait_verena) }
+            "vinto" -> { return context.resources.getDrawable(R.drawable.portrait_vinto) }
+            "ct1701" -> { return context.resources.getDrawable(R.drawable.portrait_ct) }
+            "tress" -> { return context.resources.getDrawable(R.drawable.portrait_tress) }
+        }
+        return null
+    }
+    fun getFullName(characterName: String?): String? {
+        when (characterName) {
+            "biv" -> { return "Biv Bodhrik" }
+            "davith" -> { return "Davith Elso" }
+            "diala" -> { return "Diala Passil" }
+            "drokkatta" -> { return "Drokkatta" }
+            "fenn" -> { return "Fenn Signis" }
+            "gaarkhan" -> { return "Gaarkhan" }
+            "gideon" -> { return "Gideon Argus" }
+            "jarrod" -> { return "Jarrod Kelvin" }
+            "jyn" -> { return "Jyn Odan" }
+            "loku" -> { return "Loku Kanoloa" }
+            "kotun" -> { return "Ko-tun Feralo" }
+            "mak" -> { return "Mak Eshka'rey" }
+            "mhd19" -> { return "MHD-19" }
+            "murne" -> { return "Murne Rin" }
+            "onar" -> { return "Onar Koma" }
+            "saska" -> { return "Saska Teft" }
+            "shyla" -> { return "Shyla Varad" }
+            "verena" -> { return "Verena Talos" }
+            "vinto" -> { return "Vinto Hreeda" }
+            "ct1701" -> { return "CT-1701" }
+            "tress" -> { return "Tress Hacnua" }
+        }
+        return characterName
+    }
 }
 
-//TODO?????????
-class deleteWorker(val context: Context, params: WorkerParameters): Worker
-    (context,
-    params){
 
-
-
+class deleteWorker(val context: Context, params: WorkerParameters) : Worker
+    (context, params) {
     override fun doWork(): Result {
-        var positionEditing = inputData.getInt("position",-1)
-        if(positionEditing!=-1) {
+        var positionEditing = inputData.getInt("position", -1)
+        if (positionEditing != -1) {
             val database = AppDatabase.getInstance(context)
             MainActivity.data!![positionEditing].deleted = true
-           //database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
+            //database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
             database!!.getCharacterDAO().deleteById(MainActivity.data!![positionEditing].id)
         }
         return Result.success()
     }
-
 }
+
 

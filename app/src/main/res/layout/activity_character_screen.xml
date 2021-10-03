@@ -1199,7 +1199,7 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/fileName"
             android:layout_width="170dp"
             android:layout_height="55dp"
             android:background="@drawable/name_back"
@@ -1262,9 +1262,9 @@
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/insight_glow"
-            app:layout_constraintEnd_toEndOf="@+id/name"
-            app:layout_constraintStart_toStartOf="@+id/name"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintEnd_toEndOf="@+id/fileName"
+            app:layout_constraintStart_toStartOf="@+id/fileName"
+            app:layout_constraintTop_toBottomOf="@+id/fileName"
             app:srcCompat="@drawable/insight" />
 
         <ImageView
