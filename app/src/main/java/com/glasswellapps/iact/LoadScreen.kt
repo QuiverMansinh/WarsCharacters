@@ -1,15 +1,18 @@
 package com.glasswellapps.iact
 
+import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Handler
 import android.util.DisplayMetrics
 import android.view.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -55,7 +58,7 @@ class LoadScreen : AppCompatActivity() {
         loadData()
         initSaveSlots()
         getCurrentSaveData()
-
+        showNoSavesFoundToast()
     }
 
     var selectedFiles = arrayListOf<Int>()
@@ -63,7 +66,7 @@ class LoadScreen : AppCompatActivity() {
         val database = AppDatabase.getInstance(this)
         MainActivity.data = database!!.getCharacterDAO().getAll()
 
-        showNoSavesFoundToast()
+
     }
 
     var currentSaveData = arrayListOf<CharacterData>()
@@ -171,7 +174,7 @@ class LoadScreen : AppCompatActivity() {
     }*/
 
 
-    fun onSaveSelected(saveDataIndex:Int) {
+    fun onSaveSelected(saveDataIndex: Int) {
         Sounds.selectSound()
         for(i in 0..adapter.itemCount) {
             if (i != saveDataIndex) {
@@ -332,14 +335,14 @@ class LoadScreen : AppCompatActivity() {
     }
 
 
-    fun onFileNameEdited(editedFileName:String, position:Int) {
+    fun onFileNameEdited(editedFileName: String, position: Int) {
 
         Sounds.selectSound()
 
-        MainActivity.data!![position + page*5].fileName = editedFileName
+        MainActivity.data!![position + page * 5].fileName = editedFileName
         val database = AppDatabase.getInstance(this)
 
-        database!!.getCharacterDAO().update(MainActivity.data!![position + page*5])
+        database!!.getCharacterDAO().update(MainActivity.data!![position + page * 5])
         hideSoftKeyboard()
 
     }
@@ -349,10 +352,35 @@ class LoadScreen : AppCompatActivity() {
         }
     }
 
+    fun startWorkingAnimation(){
+        working_overlay.alpha=0f
+        working_overlay.visibility = View.VISIBLE
+        working_overlay.animate().alpha(1f)
+
+        var rotateAnimation = ObjectAnimator.ofFloat(working_icon, "scaleX", 0f,0.8f, 1f,1f,1f,0.8f,
+        0f)
+
+        rotateAnimation.repeatCount = -1
+        rotateAnimation.duration = 500
+        rotateAnimation.start()
+    }
+    fun stopWorkingAnimation(){
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            working_overlay.visibility = View.GONE
+
+        }, 300)
+
+        working_overlay.animate().alpha(0f)
+
+    }
+
+
 
     fun onDelete(view: View) {
+        startWorkingAnimation()
+
         Sounds.selectSound()
-        selectedFiles
 
 
         val deleteWorkRequestBuilder = OneTimeWorkRequest.Builder(deleteWorker::class.java)
@@ -374,8 +402,16 @@ class LoadScreen : AppCompatActivity() {
                     WorkManager.getInstance(this)
                         .getWorkInfosByTagLiveData("delete").removeObservers(this)
                     println("DELETE FINISHED")
-                    startActivity(intent)
-                    finish()
+                    val handler = Handler()
+                    handler.postDelayed(Runnable {
+                        stopWorkingAnimation()
+                        loadData()
+                        selectedFiles.clear()
+                        setDeleteButtonVisibility()
+                        getCurrentSaveData()
+
+                    }, 500)
+
                 }
             })
     }
@@ -384,27 +420,69 @@ class LoadScreen : AppCompatActivity() {
     fun getCharacter(characterName: String?): com.glasswellapps.iact.characters.Character {
         var character = Character();
         when (characterName) {
-            "biv" -> { character = Character_biv(this) }
-            "davith" -> { character = Character_davith(this) }
-            "diala" -> { character = Character_diala(this) }
-            "drokkatta" -> { character = Character_drokkatta(this) }
-            "fenn" -> { character = Character_fenn(this) }
-            "gaarkhan" -> { character = Character_gaarkhan(this) }
-            "gideon" -> { character = Character_gideon(this) }
-            "jarrod" -> { character = Character_jarrod(this) }
-            "jyn" -> { character = Character_jyn(this) }
-            "loku" -> { character = Character_loku(this) }
-            "kotun" -> { character = Character_kotun(this) }
-            "mak" -> { character = Character_mak(this) }
-            "mhd19" -> { character = Character_mhd19(this) }
-            "murne" -> { character = Character_murne(this) }
-            "onar" -> { character = Character_onar(this) }
-            "saska" -> { character = Character_saska(this) }
-            "shyla" -> { character = Character_shyla(this) }
-            "verena" -> { character = Character_verena(this) }
-            "vinto" -> { character = Character_vinto(this) }
-            "ct1701" -> { character = Character_ct1701(this) }
-            "tress" -> { character = Character_tress(this) }
+            "biv" -> {
+                character = Character_biv(this)
+            }
+            "davith" -> {
+                character = Character_davith(this)
+            }
+            "diala" -> {
+                character = Character_diala(this)
+            }
+            "drokkatta" -> {
+                character = Character_drokkatta(this)
+            }
+            "fenn" -> {
+                character = Character_fenn(this)
+            }
+            "gaarkhan" -> {
+                character = Character_gaarkhan(this)
+            }
+            "gideon" -> {
+                character = Character_gideon(this)
+            }
+            "jarrod" -> {
+                character = Character_jarrod(this)
+            }
+            "jyn" -> {
+                character = Character_jyn(this)
+            }
+            "loku" -> {
+                character = Character_loku(this)
+            }
+            "kotun" -> {
+                character = Character_kotun(this)
+            }
+            "mak" -> {
+                character = Character_mak(this)
+            }
+            "mhd19" -> {
+                character = Character_mhd19(this)
+            }
+            "murne" -> {
+                character = Character_murne(this)
+            }
+            "onar" -> {
+                character = Character_onar(this)
+            }
+            "saska" -> {
+                character = Character_saska(this)
+            }
+            "shyla" -> {
+                character = Character_shyla(this)
+            }
+            "verena" -> {
+                character = Character_verena(this)
+            }
+            "vinto" -> {
+                character = Character_vinto(this)
+            }
+            "ct1701" -> {
+                character = Character_ct1701(this)
+            }
+            "tress" -> {
+                character = Character_tress(this)
+            }
             else -> { character = CustomCharacter(this) }
         }
         return character
@@ -501,8 +579,10 @@ class LoadScreen : AppCompatActivity() {
 
 }
 
-class saveSlotAdapter(private val dataSet: List<CharacterData>, val context:Context, val
-loadScreen: LoadScreen) :
+class saveSlotAdapter(
+    private val dataSet: List<CharacterData>, val context: Context, val
+    loadScreen: LoadScreen
+) :
     RecyclerView
     .Adapter<saveSlotAdapter.ViewHolder>() {
 
@@ -536,8 +616,10 @@ loadScreen: LoadScreen) :
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.save_load_item,
-            viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(
+            R.layout.save_load_item,
+            viewGroup, false
+        )
 
 
         return ViewHolder(view)
@@ -604,11 +686,11 @@ loadScreen: LoadScreen) :
             true
         }
 
-        viewHolder.editFileName.setOnEditorActionListener(object: TextView.OnEditorActionListener{
+        viewHolder.editFileName.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(view: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-                if(actionId == EditorInfo.IME_ACTION_DONE) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (view != null) {
-                        loadScreen.onFileNameEdited(""+view.text,position)
+                        loadScreen.onFileNameEdited("" + view.text, position)
                     }
                 }
                 return false
@@ -616,8 +698,8 @@ loadScreen: LoadScreen) :
         })
     }
 
-    fun setDeleteToggleVisibility(view:View, position:Int){
-        if(loadScreen.selectedFiles.contains(loadScreen.page*5 + position)){
+    fun setDeleteToggleVisibility(view: View, position: Int){
+        if(loadScreen.selectedFiles.contains(loadScreen.page * 5 + position)){
             view.alpha = 1f
         }
         else{
@@ -626,7 +708,7 @@ loadScreen: LoadScreen) :
     }
 
 
-    fun toggleDelete(it:View, position:Int){
+    fun toggleDelete(it: View, position: Int){
         Sounds.selectSound()
         val saveDataIndex = loadScreen.page*5 + position
 
@@ -637,7 +719,7 @@ loadScreen: LoadScreen) :
             loadScreen.selectedFiles.add(saveDataIndex)
         }
 
-        setDeleteToggleVisibility(it,position)
+        setDeleteToggleVisibility(it, position)
         loadScreen.setDeleteButtonVisibility()
 
         loadScreen.updateToggleAll()
@@ -651,53 +733,137 @@ loadScreen: LoadScreen) :
 
     fun getCharacterPortrait(characterName: String?): Drawable? {
         when (characterName) {
-            "biv" -> { return context.resources.getDrawable(R.drawable.portrait_biv) }
-            "davith" -> { return context.resources.getDrawable(R.drawable.portrait_davith) }
-            "diala" -> { return context.resources.getDrawable(R.drawable.portrait_diala) }
-            "drokkatta" -> { return context.resources.getDrawable(R.drawable.portrait_drokkatta) }
-            "fenn" -> { return context.resources.getDrawable(R.drawable.portrait_fenn) }
-            "gaarkhan" -> { return context.resources.getDrawable(R.drawable.portrait_gaarkhan) }
-            "gideon" -> { return context.resources.getDrawable(R.drawable.portrait_gideon) }
-            "jarrod" -> { return context.resources.getDrawable(R.drawable.portrait_jarrod) }
-            "jyn" -> { return context.resources.getDrawable(R.drawable.portrait_jyn) }
-            "loku" -> { return context.resources.getDrawable(R.drawable.portrait_loku) }
-            "kotun" -> { return context.resources.getDrawable(R.drawable.portrait_kotun) }
-            "mak" -> { return context.resources.getDrawable(R.drawable.portrait_mak) }
-            "mhd19" -> { return context.resources.getDrawable(R.drawable.portrait_mhd) }
-            "murne" -> { return context.resources.getDrawable(R.drawable.portrait_murne) }
-            "onar" -> { return context.resources.getDrawable(R.drawable.portrait_onar) }
-            "saska" -> { return context.resources.getDrawable(R.drawable.portrait_saska) }
-            "shyla" -> { return context.resources.getDrawable(R.drawable.portrait_shyla) }
-            "verena" -> { return context.resources.getDrawable(R.drawable.portrait_verena) }
-            "vinto" -> { return context.resources.getDrawable(R.drawable.portrait_vinto) }
-            "ct1701" -> { return context.resources.getDrawable(R.drawable.portrait_ct) }
-            "tress" -> { return context.resources.getDrawable(R.drawable.portrait_tress) }
+            "biv" -> {
+                return context.resources.getDrawable(R.drawable.portrait_biv)
+            }
+            "davith" -> {
+                return context.resources.getDrawable(R.drawable.portrait_davith)
+            }
+            "diala" -> {
+                return context.resources.getDrawable(R.drawable.portrait_diala)
+            }
+            "drokkatta" -> {
+                return context.resources.getDrawable(R.drawable.portrait_drokkatta)
+            }
+            "fenn" -> {
+                return context.resources.getDrawable(R.drawable.portrait_fenn)
+            }
+            "gaarkhan" -> {
+                return context.resources.getDrawable(R.drawable.portrait_gaarkhan)
+            }
+            "gideon" -> {
+                return context.resources.getDrawable(R.drawable.portrait_gideon)
+            }
+            "jarrod" -> {
+                return context.resources.getDrawable(R.drawable.portrait_jarrod)
+            }
+            "jyn" -> {
+                return context.resources.getDrawable(R.drawable.portrait_jyn)
+            }
+            "loku" -> {
+                return context.resources.getDrawable(R.drawable.portrait_loku)
+            }
+            "kotun" -> {
+                return context.resources.getDrawable(R.drawable.portrait_kotun)
+            }
+            "mak" -> {
+                return context.resources.getDrawable(R.drawable.portrait_mak)
+            }
+            "mhd19" -> {
+                return context.resources.getDrawable(R.drawable.portrait_mhd)
+            }
+            "murne" -> {
+                return context.resources.getDrawable(R.drawable.portrait_murne)
+            }
+            "onar" -> {
+                return context.resources.getDrawable(R.drawable.portrait_onar)
+            }
+            "saska" -> {
+                return context.resources.getDrawable(R.drawable.portrait_saska)
+            }
+            "shyla" -> {
+                return context.resources.getDrawable(R.drawable.portrait_shyla)
+            }
+            "verena" -> {
+                return context.resources.getDrawable(R.drawable.portrait_verena)
+            }
+            "vinto" -> {
+                return context.resources.getDrawable(R.drawable.portrait_vinto)
+            }
+            "ct1701" -> {
+                return context.resources.getDrawable(R.drawable.portrait_ct)
+            }
+            "tress" -> {
+                return context.resources.getDrawable(R.drawable.portrait_tress)
+            }
         }
         return null
     }
     fun getFullName(characterName: String?): String? {
         when (characterName) {
-            "biv" -> { return "Biv Bodhrik" }
-            "davith" -> { return "Davith Elso" }
-            "diala" -> { return "Diala Passil" }
-            "drokkatta" -> { return "Drokkatta" }
-            "fenn" -> { return "Fenn Signis" }
-            "gaarkhan" -> { return "Gaarkhan" }
-            "gideon" -> { return "Gideon Argus" }
-            "jarrod" -> { return "Jarrod Kelvin" }
-            "jyn" -> { return "Jyn Odan" }
-            "loku" -> { return "Loku Kanoloa" }
-            "kotun" -> { return "Ko-tun Feralo" }
-            "mak" -> { return "Mak Eshka'rey" }
-            "mhd19" -> { return "MHD-19" }
-            "murne" -> { return "Murne Rin" }
-            "onar" -> { return "Onar Koma" }
-            "saska" -> { return "Saska Teft" }
-            "shyla" -> { return "Shyla Varad" }
-            "verena" -> { return "Verena Talos" }
-            "vinto" -> { return "Vinto Hreeda" }
-            "ct1701" -> { return "CT-1701" }
-            "tress" -> { return "Tress Hacnua" }
+            "biv" -> {
+                return "Biv Bodhrik"
+            }
+            "davith" -> {
+                return "Davith Elso"
+            }
+            "diala" -> {
+                return "Diala Passil"
+            }
+            "drokkatta" -> {
+                return "Drokkatta"
+            }
+            "fenn" -> {
+                return "Fenn Signis"
+            }
+            "gaarkhan" -> {
+                return "Gaarkhan"
+            }
+            "gideon" -> {
+                return "Gideon Argus"
+            }
+            "jarrod" -> {
+                return "Jarrod Kelvin"
+            }
+            "jyn" -> {
+                return "Jyn Odan"
+            }
+            "loku" -> {
+                return "Loku Kanoloa"
+            }
+            "kotun" -> {
+                return "Ko-tun Feralo"
+            }
+            "mak" -> {
+                return "Mak Eshka'rey"
+            }
+            "mhd19" -> {
+                return "MHD-19"
+            }
+            "murne" -> {
+                return "Murne Rin"
+            }
+            "onar" -> {
+                return "Onar Koma"
+            }
+            "saska" -> {
+                return "Saska Teft"
+            }
+            "shyla" -> {
+                return "Shyla Varad"
+            }
+            "verena" -> {
+                return "Verena Talos"
+            }
+            "vinto" -> {
+                return "Vinto Hreeda"
+            }
+            "ct1701" -> {
+                return "CT-1701"
+            }
+            "tress" -> {
+                return "Tress Hacnua"
+            }
         }
         return characterName
     }

@@ -15,6 +15,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
@@ -37,6 +38,7 @@ import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.characters.*
 import com.glasswellapps.iact.inventory.*
 import kotlinx.android.synthetic.main.activity_character_screen.*
+import kotlinx.android.synthetic.main.activity_load_screen.*
 import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
@@ -89,6 +91,7 @@ class CharacterScreen : AppCompatActivity() {
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
+
         updateStats()
         if(character.damage>0) {
             if (character.damage < character.health) {
@@ -137,8 +140,9 @@ class CharacterScreen : AppCompatActivity() {
             }
         }
         updateImages()
-        quickSave()
+
         if (hasFocus && !loadAnimated) {
+            quickSave()
             top_panel.animate().alpha(1f)
             /*
             val animTop = ObjectAnimator.ofFloat(
@@ -214,6 +218,7 @@ class CharacterScreen : AppCompatActivity() {
             camouflage.animate().alpha(1f)
             loadAnimated = true
         }
+        quickSave()
     }
     fun resetUI(){
         top_panel.animate().alpha(0f)
@@ -699,6 +704,7 @@ class CharacterScreen : AppCompatActivity() {
 
                     character.timesWounded++
                     isWounded = true
+                    quickSave()
                     updateStats()
                 }
 
@@ -741,6 +747,7 @@ class CharacterScreen : AppCompatActivity() {
                     character.wounded = 0
                     wounded.animate().alpha(0f)
                     isWounded = false
+                    quickSave()
                     updateStats()
                 }
             } else if (character.damage < character.health * 2) {
@@ -1099,6 +1106,7 @@ class CharacterScreen : AppCompatActivity() {
         Sounds.strainSound()
         playRestAnim()
         character.timesRested++
+        quickSave()
         restDialog!!.dismiss()
     }
 
@@ -1349,6 +1357,7 @@ class CharacterScreen : AppCompatActivity() {
         character.background = "snow"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_snow.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_snow.png"))
+
     }
 
     fun onBackgroundJungle(view: View) {
@@ -1356,6 +1365,7 @@ class CharacterScreen : AppCompatActivity() {
         character.background = "jungle"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_jungle.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_jungle.png"))
+
     }
 
     fun onBackgroundDesert(view: View) {
@@ -1363,6 +1373,7 @@ class CharacterScreen : AppCompatActivity() {
         character.background = "desert"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_desert.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_desert.png"))
+
     }
 
     fun onBackgroundBespin(view: View) {
@@ -1370,6 +1381,7 @@ class CharacterScreen : AppCompatActivity() {
         character.background = "bespin"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_bespin.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_bespin.png"))
+
     }
 
     fun onBackgroundCity(view: View) {
@@ -1377,6 +1389,7 @@ class CharacterScreen : AppCompatActivity() {
         character.background = "city"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_city.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_city.png"))
+
     }
 
     fun onBackgroundInterior(view: View) {
@@ -1384,6 +1397,8 @@ class CharacterScreen : AppCompatActivity() {
         character.background = "interior"
         background_image.setImageBitmap(getBitmap(this, "backgrounds/background_interior.jpg"))
         camouflage.setImageBitmap(getBitmap(this, "backgrounds/camo_interior.png"))
+
+
     }
 
     //endregion
@@ -2092,7 +2107,7 @@ class CharacterScreen : AppCompatActivity() {
         unwoundDialog!!.remove_condition_button.setOnClickListener {
             onUnwound(unwoundDialog!!.remove_condition_button)
             //TODO
-            //quickSave()
+
             true
         }
     }
@@ -3106,7 +3121,7 @@ class CharacterScreen : AppCompatActivity() {
     fun quickSave() {
         //if(secondsSinceLastSave > 3) {
         //val character = MainActivity.selectedCharacter
-
+        startSavingAnimation()
         val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(saveWorker::class.java)
         val data = Data.Builder()
 
@@ -3125,13 +3140,40 @@ class CharacterScreen : AppCompatActivity() {
                 {
                     WorkManager.getInstance(this)
                         .getWorkInfosByTagLiveData("save").removeObservers(this)
-                    println("Save Finished")
+                    stopSavingAnimation()
 
 
                 }
             })
 
     }
+    lateinit var savingAnimation:ObjectAnimator
+    fun startSavingAnimation(){
+        saving_icon.alpha=0f
+
+        saving_icon.animate().alpha(1f)
+
+        savingAnimation = ObjectAnimator.ofFloat(saving_icon, "scaleX", 0f,0.8f, 1f,1f,1f,0.8f,
+            0f)
+
+        savingAnimation.repeatCount = -1
+        savingAnimation.duration = 500
+        savingAnimation.start()
+    }
+
+    fun stopSavingAnimation(){
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            saving_icon.animate().alpha(0f)
+            handler.postDelayed(Runnable {
+                savingAnimation.cancel()
+            }, 1000)
+
+        }, 1000)
+
+
+    }
+
 
     fun firstManualSave() {
 

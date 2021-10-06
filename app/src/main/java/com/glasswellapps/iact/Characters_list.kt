@@ -115,7 +115,7 @@ class Characters_list : AppCompatActivity() {
                     "translationX", -(i.toFloat()/2 + 1) *sortedCharArray[i].width.toFloat(),
                     0f
                 )
-                anim.duration = ((i.toFloat()/2 + 1)  * 200).toLong()
+                anim.duration = ((i.toFloat()/2 + 1)  * 150).toLong()
 
                 println(""+anim.duration + " " + anim.values[0])
 
