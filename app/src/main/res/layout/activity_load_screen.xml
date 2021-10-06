@@ -116,6 +116,7 @@
             android:background="@drawable/save_file_back"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
+            android:onClick="onDelete"
             android:shadowColor="@color/black"
             android:shadowRadius="10"
             android:textColor="@color/white"
