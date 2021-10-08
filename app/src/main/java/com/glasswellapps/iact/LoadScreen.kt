@@ -58,6 +58,7 @@ class LoadScreen : AppCompatActivity() {
         loadData()
         initSaveSlots()
         getCurrentSaveData()
+
         showNoSavesFoundToast()
     }
 
@@ -77,7 +78,7 @@ class LoadScreen : AppCompatActivity() {
         saveSlots_recyclerView.layoutManager = linearLayoutManager
         adapter = saveSlotAdapter(currentSaveData, this, this)
         saveSlots_recyclerView.adapter = adapter
-
+        saveSlots_recyclerView.animate().alpha(1f)
     }
 
     var page = 0
@@ -98,24 +99,45 @@ class LoadScreen : AppCompatActivity() {
 
     fun onPreviousPage(view: View) {
         Sounds.selectSound()
+        saveSlots_recyclerView.animate().translationX(saveSlots_recyclerView.width.toFloat()*2)
+            .duration=100
+
         if(page > 0){
             page--
         }
         else{
             page = maxPages-1
         }
-        getCurrentSaveData()
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            getCurrentSaveData()
+            var slideInAnim = ObjectAnimator.ofFloat(saveSlots_recyclerView, "translationX",
+                -saveSlots_recyclerView.width.toFloat()*2f,0f)
+            slideInAnim.duration = 100
+            slideInAnim.start()
+        }, 100)
     }
+
     fun onNextPage(view: View) {
         Sounds.selectSound()
+        saveSlots_recyclerView.animate().translationX(-saveSlots_recyclerView.width.toFloat()*2)
+            .duration = 100
         if(page<maxPages-1){
             page++
         }
         else{
             page = 0;
         }
-        getCurrentSaveData()
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            getCurrentSaveData()
+            var slideInAnim = ObjectAnimator.ofFloat(saveSlots_recyclerView, "translationX",
+                saveSlots_recyclerView.width.toFloat()*2f,0f)
+            slideInAnim.duration = 100
+            slideInAnim.start()
+        },100)
     }
+
     var maxPages = 1
     fun getMaxPages(){
         maxPages = MainActivity.data!!.size/slotsPerPage
@@ -128,50 +150,6 @@ class LoadScreen : AppCompatActivity() {
     }
 
 
-/*
-    fun slideAnimation() {
-
-        for (i in 0..saveSlots.size) {
-            println("ANIMATED LOAD")
-            var saveSlot = saveSlots[i]
-            saveSlot.animate().alpha(1f)
-            var anim = ObjectAnimator.ofFloat(
-                saveSlot,
-                "translationX", -(i.toFloat() / 2 + 1) * saveSlot.width.toFloat(),
-                0f
-            )
-            anim.duration = ((i.toFloat() / 2 + 1) * 200).toLong()
-
-            println("" + anim.duration + " " + anim.values[0])
-
-            anim.start()
-
-        }
-    }*/
-/*
-    fun initSaveDialog() {
-        saveDialog = Dialog(this)
-        saveDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        saveDialog!!.setCancelable(false)
-        saveDialog!!.setContentView(R.layout.dialog_edit_save)
-        saveDialog!!.setCanceledOnTouchOutside(true)
-        saveDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        saveDialog!!.edit_file_name.requestFocus()
-        saveDialog!!.apply.setOnClickListener {
-            onApply(saveDialog!!.apply)
-            saveDialog!!.cancel()
-            true
-        }
-        saveDialog!!.delete.setOnClickListener {
-            onDelete(saveDialog!!.delete)
-
-
-            showNoSavesFoundToast()
-
-            true
-        }
-    }*/
 
 
     fun onSaveSelected(saveDataIndex: Int) {
@@ -308,17 +286,6 @@ class LoadScreen : AppCompatActivity() {
         }
     }
 
-/*
-    fun onSaveEdit(saveSlotIndex: Int){
-
-        positionEditing = saveSlotIndex + 5*page
-        //saveSlots[saveSlotIndex].animate().alpha(0f)
-        saveDialog!!.show()
-        saveDialog!!.edit_load_file_name.setText("" + currentSaveData[positionEditing])
-
-
-    }
-*/
 
 
     fun convertStringToItemID(itemString: String): ArrayList<Int> {
