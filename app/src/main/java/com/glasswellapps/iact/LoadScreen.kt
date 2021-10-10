@@ -87,6 +87,10 @@ class LoadScreen : AppCompatActivity() {
     fun getCurrentSaveData() {
         currentSaveData.clear()
         getMaxPages()
+        if(page>=maxPages){
+            page = maxPages-1;
+        }
+
         pageNumber.text = ""+(page+1) +" / "+maxPages
         for(i in 0..slotsPerPage-1) {
             var dataIndex = page*slotsPerPage+i
@@ -375,6 +379,7 @@ class LoadScreen : AppCompatActivity() {
                         loadData()
                         selectedFiles.clear()
                         setDeleteButtonVisibility()
+
                         getCurrentSaveData()
 
                     }, 500)

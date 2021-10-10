@@ -142,7 +142,6 @@ class CharacterScreen : AppCompatActivity() {
         updateImages()
 
         if (hasFocus && !loadAnimated) {
-            quickSave()
             top_panel.animate().alpha(1f)
             /*
             val animTop = ObjectAnimator.ofFloat(
@@ -329,7 +328,12 @@ class CharacterScreen : AppCompatActivity() {
                 character.weapons.add(Items.meleeArray!![0].index)
             }
         } else {
-            character = MainActivity.selectedCharacter!!
+            if(MainActivity.selectedCharacter!=null) {
+                character = MainActivity.selectedCharacter!!
+            }
+            else{
+                finish();
+            }
         }
         character.loadImages(this);
         if (character.portraitImage == null) {
