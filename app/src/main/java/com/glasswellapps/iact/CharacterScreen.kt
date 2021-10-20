@@ -458,7 +458,6 @@ class CharacterScreen : AppCompatActivity() {
         if(!character.name_short.equals("jarrod")){
             if(character.astromech) {
                 character.companionImage = (resources.getDrawable(R.drawable.r5_astromech1) as BitmapDrawable).bitmap
-
             }
             else{
                 character.companionImage = null
@@ -475,10 +474,6 @@ class CharacterScreen : AppCompatActivity() {
         } else {
             companion_image.visibility = View.GONE
         }
-
-
-        //quickSave()
-
     }
 
     fun onShowCompanionCard(view: View) {

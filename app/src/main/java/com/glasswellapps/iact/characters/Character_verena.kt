@@ -63,20 +63,6 @@ class Character_verena : Character {
                 "She hopes to return the blade to him in kind some day."    }
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-        tier1duplicate = getBitmap(context, "characters/verena/images/tier1image_duplicate.png")
-        tier1duplicate2 = getBitmap(context, "characters/verena/images/tier1image_duplicate2.png")
-
-        tier2duplicate = getBitmap(context, "characters/verena/images/tier2image_duplicate.png")
-
-        tier3duplicate = getBitmap(context, "characters/verena/images/tier3image_duplicate.png")
-        tier3duplicate2 = getBitmap(context, "characters/verena/images/tier3image_duplicate2.png")
-
-    }
-
-    //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context: Context){
         super.updateCharacterImages(context)
 
@@ -84,23 +70,23 @@ class Character_verena : Character {
 
         if(tier == 1){
             if(storeRandom<1f/3){
-                currentImage = tier1duplicate
+                currentImage = getBitmap(context, "characters/verena/images/tier1image_duplicate.png")
             }
             else if(storeRandom<2f/3){
-                currentImage = tier1duplicate2
+                currentImage = getBitmap(context, "characters/verena/images/tier1image_duplicate2.png")
             }
         }
         else if(tier == 2){
             if(storeRandom<0.5){
-                currentImage = tier2duplicate
+                currentImage = getBitmap(context, "characters/verena/images/tier2image_duplicate.png")
             }
         }
         else if(tier == 3){
             if(storeRandom<1f/3){
-                currentImage = tier3duplicate
+                currentImage = getBitmap(context, "characters/verena/images/tier3image_duplicate.png")
             }
             else if(storeRandom<2f/3){
-                currentImage = tier3duplicate2
+                currentImage = getBitmap(context, "characters/verena/images/tier3image_duplicate2.png")
             }
         }
 
