@@ -1079,6 +1079,16 @@ class CharacterScreen : AppCompatActivity() {
         }
     }
 
+    fun onPickUpCrate(view: View) {
+        if (actionsLeft > 0) {
+            actionCompleted()
+            Sounds.selectSound()
+            character.cratesPickedUp++
+        } else {
+            showNoActionsLeftToast()
+        }
+    }
+
     fun onRest(view: View) {
         rest(view)
         if (actionsLeft > 0 && actionUsage) {
@@ -2568,14 +2578,14 @@ class CharacterScreen : AppCompatActivity() {
             Sounds.selectSound()
             var weaponIndex = character.weapons.getOrElse(0) { -1 }
             var weaponIndex1 = character.weapons.getOrElse(1) { -1 }
-
+            /*
             if (weaponIndex < 0) {
                 mods.alpha = 0f
 
-            }
-            if (weaponIndex1 < 0) {
+            }*/
+            //if (weaponIndex1 < 0) {
                 mods1.alpha = 0f
-            }
+            //}
 
 
             var imageId = R.drawable.empty_item_slot

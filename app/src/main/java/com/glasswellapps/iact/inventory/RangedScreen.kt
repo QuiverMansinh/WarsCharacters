@@ -95,11 +95,9 @@ class RangedScreen : AppCompatActivity() {
                     gridItem.setImageResource(currentItem.resourceId)
                     setClickables(gridItem, currentItem)
                 }
-
-                if (character.weapons.contains(currentItem.index)) {
+                if (character.weapons.contains(currentItem.index) || character.mods.contains(currentItem.index)) {
                     gridItem.alpha = 1f
                 }
-
             }
             else{
                 (gridItem.parent as View).visibility = View.INVISIBLE
