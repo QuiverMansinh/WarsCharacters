@@ -3,7 +3,7 @@
     package="com.glasswellapps.iact">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Character Tracker"

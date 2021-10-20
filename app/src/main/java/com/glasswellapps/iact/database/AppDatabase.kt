@@ -10,29 +10,19 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getCharacterDAO(): CharacterDAO
     abstract fun getCustomDAO(): CustomDAO
-    companion object{
+    companion object {
         private var instance: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase? {
-            if(instance == null) {
-                val MIGRATION_1_2 = object : Migration(1, 2) {
-                    override fun migrate(database: SupportSQLiteDatabase) {
-                    }
-                }
-
+            if (instance == null) {
                 instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "save_files"
-                ).addMigrations(MIGRATION_1_2).allowMainThreadQueries().fallbackToDestructiveMigration()
-                    .build()
+                ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
             }
             return instance
         }
-
-
     }
-
-
 }
 
