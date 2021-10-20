@@ -26,6 +26,8 @@ object Sounds {
     val strain = 13
     val moving = 14
     val negative = 15
+    val special = 16
+    val crate = 17
 
     var sPBuilder = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_GAME)
@@ -57,7 +59,9 @@ object Sounds {
                 soundPool.load(context, R.raw.impact, 1),
                 soundPool.load(context, R.raw.strain, 1),
                 soundPool.load(context, R.raw.moving, 1),
-                soundPool.load(context, R.raw.negative, 1)
+                soundPool.load(context, R.raw.negative, 1),
+                soundPool.load(context, R.raw.special, 1),
+                soundPool.load(context, R.raw.crate, 1)
             )
 
         if(sEPool!=null) {
@@ -217,8 +221,24 @@ object Sounds {
         }
         catch (e:Exception){
             System.out.println(e)
-
         }
+    }
 
+    fun specialSound(){
+        try{
+            play(special)
+        }
+        catch (e:Exception){
+            System.out.println(e)
+        }
+    }
+
+    fun crateSound(){
+        try{
+            play(crate)
+        }
+        catch (e:Exception){
+            System.out.println(e)
+        }
     }
 }

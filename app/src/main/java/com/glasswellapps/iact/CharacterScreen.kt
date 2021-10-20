@@ -1058,7 +1058,7 @@ class CharacterScreen : AppCompatActivity() {
         if (actionsLeft > 0) {
             if (!conditionsActive[stunned]) {
                 actionCompleted()
-                Sounds.selectSound()
+                Sounds.specialSound()
                 character.specialActions++
             }
             else{
@@ -1082,7 +1082,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onPickUpCrate(view: View) {
         if (actionsLeft > 0) {
             actionCompleted()
-            Sounds.selectSound()
+            Sounds.crateSound()
             character.cratesPickedUp++
         } else {
             showNoActionsLeftToast()
