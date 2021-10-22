@@ -1072,7 +1072,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onInteract(view: View) {
         if (actionsLeft > 0) {
             actionCompleted()
-            Sounds.selectSound()
+            Sounds.interactSound()
             character.interactsUsed++
         } else {
             showNoActionsLeftToast()

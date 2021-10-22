@@ -242,43 +242,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/action_PickUpCrate"
-            android:layout_width="180dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onPickUpCrate"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="20dp"
-            app:cardMaxElevation="5dp">
-
-            <ImageView
-                android:id="@+id/imageViewCrate"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
-
-            <TextView
-                android:id="@+id/textViewCrate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/agency_fb"
-                android:gravity="center"
-                android:shadowColor="@color/black"
-                android:shadowRadius="10"
-                android:text="PICK UP CRATE"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/action_interact"
             android:layout_width="180dp"
             android:layout_height="44dp"
@@ -312,6 +275,64 @@
                 android:text="INTERACT"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/action_interactCrate"
+            android:layout_width="180dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onPickUpCrate"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="20dp"
+            app:cardMaxElevation="5dp">
+
+            <ImageView
+                android:id="@+id/imageViewCrate"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:background="@drawable/save_file_back" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView29"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textViewCrate"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_crate" />
+
+                <TextView
+                    android:id="@+id/textViewCrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="10"
+                    android:text="INTERACT"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView29"
+                    app:layout_constraintHorizontal_bias="0.41"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 

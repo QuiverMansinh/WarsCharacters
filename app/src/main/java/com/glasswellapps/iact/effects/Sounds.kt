@@ -8,8 +8,6 @@ import com.glasswellapps.iact.MainActivity
 import com.glasswellapps.iact.R
 
 object Sounds {
-
-
     val select = 0
     val lightSaber = 1
     val electric = 2
@@ -25,9 +23,13 @@ object Sounds {
     val impact = 12
     val strain = 13
     val moving = 14
-    val negative = 15
-    val special = 16
-    val crate = 17
+    val special = 15
+    val crate = 16
+    val door = 17
+    val button = 18
+    val terminal = 19
+    val negative = 20
+
 
     var sPBuilder = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_GAME)
@@ -59,16 +61,14 @@ object Sounds {
                 soundPool.load(context, R.raw.impact, 1),
                 soundPool.load(context, R.raw.strain, 1),
                 soundPool.load(context, R.raw.moving, 1),
-                soundPool.load(context, R.raw.negative, 1),
                 soundPool.load(context, R.raw.special, 1),
-                soundPool.load(context, R.raw.crate, 1)
+                soundPool.load(context, R.raw.crate, 1),
+                soundPool.load(context, R.raw.door, 1),
+                soundPool.load(context, R.raw.button, 1),
+                soundPool.load(context, R.raw.terminal, 1),
+                soundPool.load(context, R.raw.negative, 1),
+                soundPool.load(context, R.raw.negative, 1)
             )
-
-        if(sEPool!=null) {
-            for (i in 0..sEPool!!.size - 1) {
-                System.out.println(sEPool!![i]);
-            }
-        }
     }
 
     fun reset(context: Context){
@@ -85,7 +85,9 @@ object Sounds {
             volume= MainActivity.selectedCharacter!!.soundEffectsSetting
         }
         if(sEPool!=null) {
-            soundPool.play(sEPool!![soundId], volume, volume, 1, 0, 1f)
+            if(sEPool!![soundId] != null) {
+                soundPool.play(sEPool!![soundId], volume, volume, 1, 0, 1f)
+            }
         }
     }
 
@@ -218,6 +220,25 @@ object Sounds {
     fun movingSound(){
         try{
             play(moving)
+        }
+        catch (e:Exception){
+            System.out.println(e)
+        }
+    }
+
+    fun interactSound(){
+        try{
+            var type = Math.random();
+            if(type < 1f/3) {
+                play(door)
+            }
+            else if(type < 2f/3)
+            {
+                play(button)
+            }
+            else {
+                play(terminal)
+            }
         }
         catch (e:Exception){
             System.out.println(e)
