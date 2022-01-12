@@ -20,9 +20,14 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class MeleeScreen : AppCompatActivity() {
+    val character = Loaded.getCharacter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_melee_screen)
+
+        if(character == null){
+            finish()
+        }
 
         to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
         to_armor.setBackgroundColor(resources.getColor(R.color.shadow))
@@ -64,13 +69,12 @@ class MeleeScreen : AppCompatActivity() {
         meleeViews.add(this.melee_image31)
         meleeViews.add(this.melee_image32)
 
-
         for(i in 0..Items.meleeArray!!.size-1){
             var currentItem = Items.meleeArray!!.get(i)
             val gridItem = meleeViews[i]
             if(currentItem.type>=0) {
                 gridItem.alpha = 0.5f
-                var character = MainActivity.selectedCharacter!!
+
 
                 if(i == 0) {
                     if (character.startingMeleeWeapon != null) {
@@ -133,7 +137,6 @@ class MeleeScreen : AppCompatActivity() {
     }
 
     fun equipWeapon(item: Item): Float {
-        var character = MainActivity.selectedCharacter!!
         //remove if already equipped
         if (character.weapons.remove(item.index)) {
             Sounds.selectSound()
@@ -149,7 +152,6 @@ class MeleeScreen : AppCompatActivity() {
     }
 
     fun equipMod(item: Item): Float {
-        var character = MainActivity.selectedCharacter!!
         //remove if already equipped
         if (character.mods.remove(item.index)) {
             Sounds.selectSound()

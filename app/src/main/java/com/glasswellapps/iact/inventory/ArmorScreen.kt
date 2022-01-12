@@ -20,10 +20,15 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class ArmorScreen : AppCompatActivity() {
+    val character = Loaded.getCharacter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_armor_screen)
 
+        if(character == null){
+            finish()
+        }
         to_melee.setBackgroundColor(resources.getColor(R.color.shadow))
         to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
         to_acc.setBackgroundColor(resources.getColor(R.color.shadow))
@@ -44,8 +49,7 @@ class ArmorScreen : AppCompatActivity() {
             var currentItem = Items.armorArray!!.get(i)
             val gridItem = armorViews[i]
             if(currentItem.type>=0) {
-            gridItem.alpha = 0.5f
-            var character = MainActivity.selectedCharacter!!
+                gridItem.alpha = 0.5f
 
                 gridItem.setImageResource(currentItem.resourceId)
                 setClickables(gridItem, currentItem)
@@ -90,8 +94,6 @@ class ArmorScreen : AppCompatActivity() {
     }
 
     fun equipArmor(item: Item): Float {
-        var character = MainActivity.selectedCharacter!!
-
         //remove if already equipped
         if (character.armor.remove(item.index)) {
             Sounds.selectSound()
@@ -141,9 +143,7 @@ class ArmorScreen : AppCompatActivity() {
     }
 
     fun onToArmor(view:View){
-        Sounds.selectSound()
-        //val intent = Intent(this, ArmorScreen::class.java)
-        //startActivity(intent)
+
     }
 
     fun onToMelee(view:View){

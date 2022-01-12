@@ -2,7 +2,6 @@ package com.glasswellapps.iact
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -22,8 +21,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.lang.Exception
-import android.graphics.BitmapFactory as GraphicsBitmapFactory
-
 
 class CreateScreen : AppCompatActivity() {
 
@@ -153,9 +150,6 @@ class CreateScreen : AppCompatActivity() {
     }
 
     fun save() {
-        //if(secondsSinceLastSave > 3) {
-        //val character = MainActivity.selectedCharacter
-
         val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(saveCustomWorker::class.java)
         val data = Data.Builder()
 
@@ -179,7 +173,6 @@ class CreateScreen : AppCompatActivity() {
 
                 }
             })
-
     }
 
     fun deselectImageButtons(){

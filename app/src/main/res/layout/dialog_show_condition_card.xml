@@ -83,7 +83,6 @@
             android:layout_width="300dp"
             android:layout_height="450dp"
             android:adjustViewBounds="false"
-            android:onClick="onDismissConditionCard"
             android:scaleType="fitXY"
             android:visibility="visible" />
     </androidx.cardview.widget.CardView>

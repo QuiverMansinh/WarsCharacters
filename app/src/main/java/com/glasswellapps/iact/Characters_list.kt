@@ -144,7 +144,7 @@ class Characters_list : AppCompatActivity() {
                 charactersImage[i].alpha = 0f
             }
         }
-        if(MainActivity.selectedCharacter != null) {
+        if(Loaded.getCharacter() != null) {
             wipeSelectedCharacter()
         }
         val intent = Intent(this, CharacterScreen::class.java)
@@ -163,7 +163,7 @@ class Characters_list : AppCompatActivity() {
 
                 charactersImage[i].alpha = 0f
         }
-        if(MainActivity.selectedCharacter != null) {
+        if(Loaded.getCharacter() != null) {
             wipeSelectedCharacter()
         }
         val intent = Intent(this, CharacterScreen::class.java)
@@ -180,19 +180,19 @@ class Characters_list : AppCompatActivity() {
 
     fun wipeSelectedCharacter(){
 
-        MainActivity.selectedCharacter!!.currentImage!!.recycle()
-        for (i in 0..MainActivity.selectedCharacter!!.xpCardImages.size-1) {
-            if (MainActivity.selectedCharacter!!.xpCardImages[i] != null) {
-                MainActivity.selectedCharacter!!.xpCardImages!![i].recycle()
+        Loaded.getCharacter().currentImage!!.recycle()
+        for (i in 0..Loaded.getCharacter().xpCardImages.size-1) {
+            if (Loaded.getCharacter().xpCardImages[i] != null) {
+                Loaded.getCharacter().xpCardImages!![i].recycle()
             }
         }
-        if (MainActivity.selectedCharacter!!.power != null) {
-            MainActivity.selectedCharacter!!.power!!.recycle()
-            MainActivity.selectedCharacter!!.power_wounded!!.recycle()
+        if (Loaded.getCharacter().power != null) {
+            Loaded.getCharacter().power!!.recycle()
+            Loaded.getCharacter().power_wounded!!.recycle()
         }
-        if (MainActivity.selectedCharacter!!.portraitImage != null) {
-            MainActivity.selectedCharacter!!.portraitImage = null
+        if (Loaded.getCharacter().portraitImage != null) {
+            Loaded.getCharacter().portraitImage = null
         }
-        MainActivity.selectedCharacter = null
+        Loaded.setCharacter(null)
     }
 }

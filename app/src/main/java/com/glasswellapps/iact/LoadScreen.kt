@@ -65,9 +65,7 @@ class LoadScreen : AppCompatActivity() {
     var selectedFiles = arrayListOf<Int>()
     fun loadData() {
         val database = AppDatabase.getInstance(this)
-        MainActivity.data = database!!.getCharacterDAO().getAll()
-
-
+        Loaded.setData(database!!.getCharacterDAO().getAll());
     }
 
     var currentSaveData = arrayListOf<CharacterData>()
@@ -94,8 +92,8 @@ class LoadScreen : AppCompatActivity() {
         pageNumber.text = ""+(page+1) +" / "+maxPages
         for(i in 0..slotsPerPage-1) {
             var dataIndex = page*slotsPerPage+i
-            if(dataIndex < MainActivity.data!!.size) {
-                currentSaveData.add(MainActivity.data!![dataIndex])
+            if(dataIndex < Loaded.getData().size) {
+                currentSaveData.add(Loaded.getData()[dataIndex])
             }
         }
         adapter.notifyDataSetChanged()
@@ -144,8 +142,8 @@ class LoadScreen : AppCompatActivity() {
 
     var maxPages = 1
     fun getMaxPages(){
-        maxPages = MainActivity.data!!.size/slotsPerPage
-        if(MainActivity.data!!.size%slotsPerPage!=0){
+        maxPages = Loaded.getData().size/slotsPerPage
+        if(Loaded.getData().size%slotsPerPage!=0){
             maxPages++
         }
         if(maxPages <1){
@@ -276,9 +274,9 @@ class LoadScreen : AppCompatActivity() {
         selectedCharacter.imageSetting = saveData.imageSetting
         selectedCharacter.conditionAnimSetting = saveData.conditionAnimSetting
 
-        MainActivity.selectedCharacter = selectedCharacter
+        Loaded.setCharacter(selectedCharacter)
 
-        if (MainActivity.selectedCharacter != null) {
+        if (Loaded.getCharacter() != null) {
 
             val intent = Intent(this, CharacterScreen::class.java)
 
@@ -310,10 +308,10 @@ class LoadScreen : AppCompatActivity() {
 
         Sounds.selectSound()
 
-        MainActivity.data!![position + page * 5].fileName = editedFileName
+        Loaded.getData()[position + page * 5].fileName = editedFileName
         val database = AppDatabase.getInstance(this)
 
-        database!!.getCharacterDAO().update(MainActivity.data!![position + page * 5])
+        database!!.getCharacterDAO().update( Loaded.getData()[position + page * 5])
         hideSoftKeyboard()
 
     }
@@ -350,9 +348,7 @@ class LoadScreen : AppCompatActivity() {
 
     fun onDelete(view: View) {
         startWorkingAnimation()
-
         Sounds.selectSound()
-
 
         val deleteWorkRequestBuilder = OneTimeWorkRequest.Builder(deleteWorker::class.java)
         val data = Data.Builder()
@@ -379,11 +375,8 @@ class LoadScreen : AppCompatActivity() {
                         loadData()
                         selectedFiles.clear()
                         setDeleteButtonVisibility()
-
                         getCurrentSaveData()
-
                     }, 500)
-
                 }
             })
     }
@@ -467,7 +460,7 @@ class LoadScreen : AppCompatActivity() {
     }
 
     fun showNoSavesFoundToast() {
-        if (MainActivity.data!!.isEmpty()) {
+        if (Loaded.getData().isEmpty()) {
             val noSavesFoundToast = Dialog(this)
 
             noSavesFoundToast.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -503,9 +496,9 @@ class LoadScreen : AppCompatActivity() {
 
     fun onToggleAll(view: View) {
         Sounds.selectSound()
-        if(selectedFiles.size < MainActivity.data!!.size){
+        if(selectedFiles.size <  Loaded.getData().size){
             selectedFiles.clear()
-            for(i in 0..MainActivity.data!!.size-1){
+            for(i in 0.. Loaded.getData().size-1){
                 selectedFiles.add(i)
             }
             all_toggle.text = "NONE"
@@ -524,15 +517,13 @@ class LoadScreen : AppCompatActivity() {
         else{
             all_toggle.visibility = View.GONE
         }
-        if(selectedFiles.size < MainActivity.data!!.size){
+        if(selectedFiles.size <  Loaded.getData().size){
             all_toggle.text = "ALL"
         }
         else{
             all_toggle.text = "NONE"
         }
     }
-
-
 
     fun setDeleteButtonVisibility(){
         val deleteButton = findViewById<TextView>(R.id.delete_button)
@@ -546,9 +537,6 @@ class LoadScreen : AppCompatActivity() {
             findViewById<View>(R.id.delete_button).visibility = View.GONE
         }
     }
-
-
-
 }
 
 class saveSlotAdapter(
@@ -579,21 +567,14 @@ class saveSlotAdapter(
             loadData = view.findViewById(R.id.load_data)
             deleteToggle = view.findViewById(R.id.delete_toggle)
             editFileName = view.findViewById(R.id.edit_file_name)
-
-
-
         }
     }
-
-
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(
             R.layout.save_load_item,
             viewGroup, false
         )
-
-
         return ViewHolder(view)
     }
 
@@ -645,10 +626,7 @@ class saveSlotAdapter(
             viewHolder.editData.visibility = View.INVISIBLE
             viewHolder.loadData.visibility = View.VISIBLE
         }
-
-
         setDeleteToggleVisibility(viewHolder.deleteToggle, position)
-
         viewHolder.deleteToggle.setOnClickListener {
             toggleDelete(it, position)
         }
@@ -841,7 +819,6 @@ class saveSlotAdapter(
     }
 }
 
-
 class deleteWorker(val context: Context, params: WorkerParameters) : Worker
     (context, params) {
     override fun doWork(): Result {
@@ -849,9 +826,9 @@ class deleteWorker(val context: Context, params: WorkerParameters) : Worker
         if (selectedFiles != null) {
             for(i in 0..selectedFiles.size) {
                 val database = AppDatabase.getInstance(context)
-                MainActivity.data!![selectedFiles[i]].deleted = true
+                Loaded.getData()[selectedFiles[i]].deleted = true
                 //database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
-                database!!.getCharacterDAO().deleteById(MainActivity.data!![selectedFiles[i]].id)
+                database!!.getCharacterDAO().deleteById( Loaded.getData()[selectedFiles[i]].id)
             }
         }
         return Result.success()

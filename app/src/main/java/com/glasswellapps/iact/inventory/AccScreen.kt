@@ -14,17 +14,22 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
-import com.glasswellapps.iact.MainActivity
-
 import kotlinx.android.synthetic.main.activity_acc_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class AccScreen : AppCompatActivity() {
+    val character = Loaded.getCharacter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acc_screen)
         var accViews = ArrayList<ImageView>()
+
+        if(character == null){
+            finish()
+        }
+
         accViews.add(this.acc_image0)
         accViews.add(this.acc_image1)
         accViews.add(this.acc_image2)
@@ -52,12 +57,8 @@ class AccScreen : AppCompatActivity() {
             val gridItem = accViews[i]
             if(currentItem.type>=0) {
             gridItem.alpha = 0.5f
-            var character = MainActivity.selectedCharacter!!
-
                 gridItem.setImageResource(currentItem.resourceId)
                 setClickables(gridItem, currentItem)
-
-
                 if (character.accessories.contains(currentItem.index)) {
                     gridItem.alpha = 1f
                 }
@@ -104,10 +105,6 @@ class AccScreen : AppCompatActivity() {
     }
 
     fun equipAcc(item: Item): Float {
-        var character = MainActivity.selectedCharacter!!
-        println("")
-        println("accessory equip " + character.accessories.size)
-        println("")
         if (character.accessories.remove(item.index)) {
             if (item.index == Items.mandoHelmetIndex || item.index == Items.reinforcedHelmetIndex){
                 character.helmet = false
@@ -137,14 +134,11 @@ class AccScreen : AppCompatActivity() {
 
             else {
                 character.accessories.add(item.index)
-
-
                 return 1f
             }
         }
         //TODO toast 3 accessory limit reached
         showItemLimitReached(item.type)
-
         //not equipped
         return 0.5f
     }
@@ -177,8 +171,7 @@ class AccScreen : AppCompatActivity() {
     }
 
     fun onToAcc(view:View){
-        //val intent = Intent(this, AccScreen::class.java)
-        //startActivity(intent)
+
     }
 
     fun onToArmor(view:View){

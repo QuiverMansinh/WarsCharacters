@@ -18,10 +18,14 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class RewardsScreen : AppCompatActivity() {
+    val character =Loaded.getCharacter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rewards_screen)
 
+        if(character == null){
+            finish()
+        }
         var rewardsViews = ArrayList<ImageView>()
         rewardsViews.add(this.reward_image0)
         rewardsViews.add(this.reward_image1)
@@ -55,31 +59,25 @@ class RewardsScreen : AppCompatActivity() {
         for(i in 0..Items.rewardsArray!!.size-1){
             var currentItem = Items.rewardsArray!!.get(i)
             val gridItem = rewardsViews[i]
-
             gridItem.alpha = 0.5f
-            var character = MainActivity.selectedCharacter!!
 
-                gridItem.setImageResource(currentItem.resourceId)
-                setClickables(gridItem, currentItem)
+            gridItem.setImageResource(currentItem.resourceId)
+            setClickables(gridItem, currentItem)
 
 
-                when (currentItem.type) {
-                    Items.reward -> {
-                        if (character.rewards.contains(currentItem.index)) {
-                            gridItem.alpha = 1f
-                        }
-                    }
-                    Items.acc -> {
-                        if (character.accessories.contains(currentItem.index)) {
-                            gridItem.alpha = 1f
-                        }
+            when (currentItem.type) {
+                Items.reward -> {
+                    if (character.rewards.contains(currentItem.index)) {
+                        gridItem.alpha = 1f
                     }
                 }
-
-
+                Items.acc -> {
+                    if (character.accessories.contains(currentItem.index)) {
+                        gridItem.alpha = 1f
+                    }
+                }
+            }
         }
-
-
         showCardDialog = Dialog(this)
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -101,14 +99,14 @@ class RewardsScreen : AppCompatActivity() {
 
         gridItem.setOnClickListener {
 
-                when (currentItem.type) {
-                    Items.reward -> {
-                        gridItem.alpha = equipReward(currentItem)
-                    }
-                    Items.acc -> {
-                        gridItem.alpha = equipAcc(currentItem)
-                    }
+            when (currentItem.type) {
+                Items.reward -> {
+                    gridItem.alpha = equipReward(currentItem)
                 }
+                Items.acc -> {
+                    gridItem.alpha = equipAcc(currentItem)
+                }
+            }
 
         }
     }
@@ -118,9 +116,7 @@ class RewardsScreen : AppCompatActivity() {
     }
 
     fun equipReward(item: Item): Float {
-        var character = MainActivity.selectedCharacter!!
-
-        //remove if already equipped
+         //remove if already equipped
         if (character.rewards.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
@@ -132,10 +128,6 @@ class RewardsScreen : AppCompatActivity() {
     }
 
     fun equipAcc(item: Item): Float {
-        var character = MainActivity.selectedCharacter!!
-        println("")
-        println("accessory equip " + character.accessories.size)
-        println("")
         if (character.accessories.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f

@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Color.TRANSPARENT
+import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -23,6 +24,8 @@ import android.renderscript.ScriptIntrinsicBlur
 import android.text.method.LinkMovementMethod
 import android.util.DisplayMetrics
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -63,13 +66,14 @@ var height = 0f
 var width = 0f
 
 class CharacterScreen : AppCompatActivity() {
-    var character: com.glasswellapps.iact.characters.Character = Character();
+    var character: Character = Character();
     var animateConditions = true
     var animateDamage = true
     var actionUsage = true
     var strengthGlow: GreenHighlight? = null
     var techGlow: GreenHighlight?= null
     var insightGlow: GreenHighlight?= null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,26 +147,7 @@ class CharacterScreen : AppCompatActivity() {
 
         if (hasFocus && !loadAnimated) {
             top_panel.animate().alpha(1f)
-            /*
-            val animTop = ObjectAnimator.ofFloat(
-                top_panel, "translationY", -top_panel.height
-                    .toFloat(), 0f
-            )
-
-            animTop.duration = (500).toLong()
-            animTop.start()*/
             bottom_panel.animate().alpha(1f)
-            /*
-            val animBottom = ObjectAnimator.ofFloat(
-                bottom_panel, "translationY", bottom_panel.height
-                    .toFloat(), 0f
-            )
-
-            //animBottom.interpolator = DecelerateInterpolator()
-            animBottom.duration = (500).toLong()
-            animBottom.start()
-*/
-
             left_buttons.animate().alpha(1f)
             val animButtons = ObjectAnimator.ofFloat(
                 left_buttons, "translationX", -left_buttons.width
@@ -319,7 +304,7 @@ class CharacterScreen : AppCompatActivity() {
                     character.defence_dice = data[0].defence
                 }
             }
-            MainActivity.selectedCharacter = character
+            Loaded.setCharacter(character)
 
             if (character.startingRangedWeapon != null) {
                 character.weapons.add(Items.rangedArray!![0].index)
@@ -328,8 +313,8 @@ class CharacterScreen : AppCompatActivity() {
                 character.weapons.add(Items.meleeArray!![0].index)
             }
         } else {
-            if(MainActivity.selectedCharacter!=null) {
-                character = MainActivity.selectedCharacter!!
+            if(Loaded.getCharacter()!=null) {
+                character = Loaded.getCharacter()
             }
             else{
                 finish();
@@ -648,9 +633,6 @@ class CharacterScreen : AppCompatActivity() {
                 Sounds.negativeSound()
             }
         }
-
-
-
     }
 
     fun onMinusStrain(view: View) {
@@ -665,9 +647,7 @@ class CharacterScreen : AppCompatActivity() {
                 minus_strain.animate().alpha(0f)
             }
         }
-
     }
-
 
     fun onAddDamage(view: View) {
         if (addDamage()) {
@@ -720,9 +700,6 @@ class CharacterScreen : AppCompatActivity() {
                 slide.start()
                 quickSave()
             }
-
-
-
             return true
         }
         return false
@@ -888,17 +865,11 @@ class CharacterScreen : AppCompatActivity() {
         action2.visibility = View.VISIBLE
         action_button2.visibility = View.VISIBLE
         action_button2.animate().alpha(1f)
-
-
-
-
     }
 
     fun onEndActivation(view: View) {
         Sounds.selectSound()
-
         deactivationAnim()
-
         endActivationDialog!!.dismiss()
         removeCondition(weakened)
 
@@ -911,9 +882,7 @@ class CharacterScreen : AppCompatActivity() {
         else{
             character.activated++
         }
-
         activated = false
-
     }
 
     fun deactivationAnim(){
@@ -935,10 +904,6 @@ class CharacterScreen : AppCompatActivity() {
 
         action_button2.animate().alpha(0f)
         //action_button2.visibility = View.GONE
-
-
-
-
     }
 
     fun onEndActivationNo(view: View) {
@@ -1098,8 +1063,6 @@ class CharacterScreen : AppCompatActivity() {
 
     fun rest(view:View){
         character.strain -= character.endurance
-
-
         if (character.strain < 0) {
             var healAmount = -character.strain;
             if(isWounded){
@@ -1435,17 +1398,14 @@ class CharacterScreen : AppCompatActivity() {
                 menu_bar.animate().translationY(-height)
             }
         }
-
     }
-    fun onExtendDown(view: View) {
 
+    fun onExtendDown(view: View) {
         if (sideMenuState > -1) {
             Sounds.selectSound()
             sideMenuState--
             updateSideBarState()
         }
-
-
     }
 
     fun onExtendUp(view: View) {
@@ -1466,10 +1426,6 @@ class CharacterScreen : AppCompatActivity() {
     }
 
     fun onAccessory(view: View) {
-        //val intent = Intent(this, ItemSelectScreen::class.java)
-        //intent.putExtra("tab", "accessory")
-        //intent.putExtra("Load",false)
-        //resetUI()
         Sounds.selectSound()
         val intent = Intent(this, AccScreen::class.java)
         startActivity(intent);
@@ -1478,36 +1434,22 @@ class CharacterScreen : AppCompatActivity() {
 
     fun onArmour(view: View) {
         Sounds.selectSound()
-        //val intent = Intent(this, ItemSelectScreen::class.java)
-        //intent.putExtra("tab", "armour")
-        //intent.putExtra("Load",false)
-        //resetUI()
-
         val intent = Intent(this, ArmorScreen::class.java)
         startActivity(intent);
 
     }
 
     fun onMelee(view: View) {
-        //val intent = Intent(this, ItemSelectScreen::class.java)
-        //intent.putExtra("tab", "melee")
-        //resetUI()
         Sounds.selectSound()
         val intent = Intent(this, MeleeScreen::class.java)
-        //intent.putExtra("Load",false)
         startActivity(intent);
 
     }
 
     fun onRange(view: View) {
-        //val intent = Intent(this, ItemSelectScreen::class.java)
-        //intent.putExtra("tab", "range")
-        //resetUI()
         Sounds.selectSound()
         val intent = Intent(this, RangedScreen::class.java)
-        //intent.putExtra("Load",false)
         startActivity(intent);
-
     }
 
     fun onXPScreen(view: View) {
@@ -1515,7 +1457,6 @@ class CharacterScreen : AppCompatActivity() {
         Sounds.selectSound()
         initXPScreen()
         xpSelectScreen!!.show()
-
     }
 
     //endregion
@@ -1982,38 +1923,48 @@ class CharacterScreen : AppCompatActivity() {
     //************************************************************************************************************
     //region Animations
     //************************************************************************************************************
-
+    var blastAnim:AnimationDrawable? = null
+    var impactAnim:AnimationDrawable? = null
+    var sliceAnim:AnimationDrawable? = null
+    var lastAnim:AnimationDrawable? = null
     private fun initAnimations() {
         //rest_animation.setBackgroundDrawable(MainActivity.restAnim)
         //rest_animation.visibility = FrameLayout.INVISIBLE
+        blastAnim = resources.getDrawable(R.drawable.blast) as AnimationDrawable
+        impactAnim = resources.getDrawable(R.drawable.impact) as AnimationDrawable
+        sliceAnim = resources.getDrawable(R.drawable.slice) as AnimationDrawable
     }
 
+    private fun resetAnim() {
+        lastAnim?.stop()
+        lastAnim?.selectDrawable(0)
+    }
+    private fun playAnim(anim:AnimationDrawable){
+        resetAnim()
+        damage_animation.setImageDrawable(anim)
+        anim!!.start()
+        lastAnim = anim
+    }
     private fun playDamageAnim() {
         if (animateDamage) {
+            damage_animation.visibility = View.VISIBLE
             val animType = Math.random();
             if (animType < 0.3) {
                 Sounds.damagedSound(this, Sounds.gaster_blaster_master)
-                damage_animation.setBackgroundDrawable(MainActivity.blastAnim)
-                damage_animation.visibility = FrameLayout.VISIBLE
-                MainActivity.blastAnim!!.setVisible(true, true)
-                MainActivity.blastAnim!!.start()
-
+                if(blastAnim != null) {
+                    playAnim(blastAnim!!)
+                }
             } else if (animType < 0.6) {
                 Sounds.damagedSound(this, Sounds.slice)
-                damage_animation.setBackgroundDrawable(MainActivity.sliceAnim)
-                damage_animation.visibility = FrameLayout.VISIBLE
-                MainActivity.sliceAnim!!.setVisible(true, true)
-                MainActivity.sliceAnim!!.start()
-
+                if(sliceAnim != null) {
+                    playAnim(sliceAnim!!)
+                }
             } else {
                 Sounds.damagedSound(this, Sounds.impact)
-                damage_animation.setBackgroundDrawable(MainActivity.impactAnim)
-                damage_animation.visibility = FrameLayout.VISIBLE
-                MainActivity.impactAnim!!.setVisible(true, true)
-                MainActivity.impactAnim!!.start()
-
+                if(impactAnim != null) {
+                    playAnim(impactAnim!!)
+                }
             }
-
         }
         else{
             Sounds.damagedSound(this, Sounds.impact)
@@ -2099,7 +2050,7 @@ class CharacterScreen : AppCompatActivity() {
         restDialog!!.setCanceledOnTouchOutside(true)
         restDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         restDialog!!.rest_button.setOnClickListener {
-            rest(restDialog!!.rest_button)
+            onRest(restDialog!!.rest_button)
             //TODO
             //quickSave()
             true
@@ -2217,7 +2168,7 @@ class CharacterScreen : AppCompatActivity() {
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         showCardDialog!!.setContentView(R.layout.dialog_show_card)
-        showCardDialog!!.setCancelable(false)
+        showCardDialog!!.setCancelable(true)
         showCardDialog!!.setCanceledOnTouchOutside(true)
         showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         showCardDialog!!.show_card_dialog.setOnClickListener {
@@ -2234,7 +2185,7 @@ class CharacterScreen : AppCompatActivity() {
         showConditionCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         showConditionCardDialog!!.setContentView(R.layout.dialog_show_condition_card)
-        showConditionCardDialog!!.setCancelable(false)
+        showConditionCardDialog!!.setCancelable(true)
         showConditionCardDialog!!.setCanceledOnTouchOutside(true)
         showConditionCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
         showConditionCardDialog!!.show_condition_card_dialog.setOnClickListener {
@@ -2285,7 +2236,7 @@ class CharacterScreen : AppCompatActivity() {
     private fun initBioDialog() {
         bioDialog = Dialog(this)
         bioDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        bioDialog!!.setCancelable(false)
+        bioDialog!!.setCancelable(true)
         bioDialog!!.setContentView(R.layout.dialog_bio)
         bioDialog!!.setCanceledOnTouchOutside(true)
         bioDialog!!.window!!.setBackgroundDrawable(ColorDrawable(TRANSPARENT))
@@ -3150,8 +3101,6 @@ class CharacterScreen : AppCompatActivity() {
                     WorkManager.getInstance(this)
                         .getWorkInfosByTagLiveData("save").removeObservers(this)
                     stopSavingAnimation()
-
-
                 }
             })
 
@@ -3187,16 +3136,9 @@ class CharacterScreen : AppCompatActivity() {
     fun firstManualSave() {
 
         println("FIRST MANUAL SAVE character " + character)
-        MainActivity.selectedCharacter!!.file_name = "" + saveDialog!!.save_name.text.toString()
+        character.file_name = "" + saveDialog!!.save_name.text.toString()
         quickSave()
-
-
-
     }
-
-
-
-
 
     override fun onBackPressed() {
         quickSave()
@@ -3210,8 +3152,6 @@ class CharacterScreen : AppCompatActivity() {
         println("on stop save")
         super.onStop()
     }
-
-
 
     fun convertItemIDToString(itemIds: ArrayList<Int>): String {
         var itemString = ""
@@ -3237,11 +3177,11 @@ class ModListAdapter internal constructor(
         showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         showCardDialog!!.setContentView(R.layout.dialog_show_card)
-        showCardDialog!!.setCancelable(false)
+        showCardDialog!!.setCancelable(true)
         showCardDialog!!.setCanceledOnTouchOutside(true)
         showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         showCardDialog!!.show_card_dialog.setOnClickListener {
-            showCardDialog!!.cancel()
+            showCardDialog!!.dismiss()
             true
         }
 
@@ -3291,14 +3231,13 @@ class saveWorker(val context: Context, params: WorkerParameters): Worker
 
     override fun doWork(): Result {
         val database = AppDatabase.getInstance(context)
-        var saveFile = getCharacterData(MainActivity.selectedCharacter!!.file_name)
-        if (MainActivity.selectedCharacter!!.id != -1) {
-            saveFile.id = MainActivity.selectedCharacter!!.id
+        var saveFile = getCharacterData(Loaded.getCharacter().file_name)
+        if (Loaded.getCharacter().id != -1) {
+            saveFile.id = Loaded.getCharacter().id
             database!!.getCharacterDAO().update(saveFile)
             println("update save")
         } else {
-
-            MainActivity.selectedCharacter!!.id = database!!.getCharacterDAO()
+            Loaded.getCharacter().id = database!!.getCharacterDAO()
                 .getPrimaryKey(database!!.getCharacterDAO().insert(saveFile))
             println("insert save")
         }
@@ -3306,7 +3245,7 @@ class saveWorker(val context: Context, params: WorkerParameters): Worker
     }
 
     fun getCharacterData(fileName: String): CharacterData {
-        val character = MainActivity.selectedCharacter!!;
+        val character = Loaded.getCharacter();
         var data = CharacterData(
             fileName,
             System.currentTimeMillis(),
