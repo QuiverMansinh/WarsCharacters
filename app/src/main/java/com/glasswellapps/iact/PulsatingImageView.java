@@ -54,6 +54,9 @@ public class PulsatingImageView extends View implements Runnable{
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if(canvas==null || image==null){
+            return;
+        }
         if(!scaled) {
             if (image != null) {
                 image = Bitmap.createScaledBitmap(image,

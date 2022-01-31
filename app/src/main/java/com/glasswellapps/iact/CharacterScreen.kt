@@ -1,5 +1,5 @@
 package com.glasswellapps.iact
-
+import ModListAdapter
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
@@ -24,8 +24,6 @@ import android.renderscript.ScriptIntrinsicBlur
 import android.text.method.LinkMovementMethod
 import android.util.DisplayMetrics
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +31,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.work.*
+import com.glasswellapps.iact.bluetooth.BluetoothManager
 import com.glasswellapps.iact.inventory.Items
 import com.glasswellapps.iact.database.AppDatabase
 import com.glasswellapps.iact.database.CharacterData
@@ -41,7 +40,6 @@ import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.characters.*
 import com.glasswellapps.iact.inventory.*
 import kotlinx.android.synthetic.main.activity_character_screen.*
-import kotlinx.android.synthetic.main.activity_load_screen.*
 import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
@@ -73,7 +71,7 @@ class CharacterScreen : AppCompatActivity() {
     var strengthGlow: GreenHighlight? = null
     var techGlow: GreenHighlight?= null
     var insightGlow: GreenHighlight?= null
-
+    var bluetoothManager: BluetoothManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,11 +89,43 @@ class CharacterScreen : AppCompatActivity() {
         initScreen()
         initAnimations()
         initKillTracker()
+
+    }
+
+    fun onBluetoothButton(view:View){
+        if(bluetoothManager == null) {
+            bluetoothManager = BluetoothManager(this, "IATracker", "dd8c0994-aa25-4698-8e30-56f286a98375")
+        }
+        else{
+            bluetoothManager!!.discoverDevices()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == BluetoothManager.REQUEST_ENABLE_DISCOVERY) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(applicationContext, "Discovery not enabled", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(applicationContext, "Discovery enabled", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+        if (requestCode == BluetoothManager.REQUEST_ENABLE_BLUETOOTH) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(applicationContext, "Bluetooth not enabled", Toast.LENGTH_SHORT)
+                    .show()
+                bluetoothManager = null;
+            } else {
+                Toast.makeText(applicationContext, "Bluetooth enabled", Toast.LENGTH_SHORT).show()
+                bluetoothManager!!.discoverDevices()
+            }
+        }
     }
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-
         updateStats()
         if(character.damage>0) {
             if (character.damage < character.health) {
@@ -3082,7 +3112,7 @@ class CharacterScreen : AppCompatActivity() {
         //if(secondsSinceLastSave > 3) {
         //val character = MainActivity.selectedCharacter
         startSavingAnimation()
-        val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(saveWorker::class.java)
+        val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(SaveWorker::class.java)
         val data = Data.Builder()
 
         saveWorkRequestBuilder.setInputData(data.build())
@@ -3152,193 +3182,10 @@ class CharacterScreen : AppCompatActivity() {
         println("on stop save")
         super.onStop()
     }
-
-    fun convertItemIDToString(itemIds: ArrayList<Int>): String {
-        var itemString = ""
-        for (i in 0..itemIds.size - 1) {
-            itemString += "," + itemIds[i]
-        }
-        return itemString
-    }
 //endregion
 }
 
 
-class ModListAdapter internal constructor(
-    val mContext: Activity, var modIndices:
-    ArrayList<Int>
-) :
-    BaseAdapter() {
-
-    var items = arrayListOf<View>()
-    var showCardDialog: Dialog? = null
-    init {
-        showCardDialog = Dialog(mContext)
-        showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-        showCardDialog!!.setContentView(R.layout.dialog_show_card)
-        showCardDialog!!.setCancelable(true)
-        showCardDialog!!.setCanceledOnTouchOutside(true)
-        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        showCardDialog!!.show_card_dialog.setOnClickListener {
-            showCardDialog!!.dismiss()
-            true
-        }
-
-        for (i in 0..modIndices.size - 1) {
-            var item = mContext.layoutInflater.inflate(R.layout.grid_item, null, true)
-            var modIndex = modIndices[i]
-            item.grid_image.setImageResource(Items.itemsArray!![modIndex].resourceId)
-
-            item.setOnClickListener {
-                onShowCard(item.grid_image)
-            }
-            items.add(item)
-        }
-    }
-
-    override fun getCount(): Int {
-        return items.size
-    }
-
-    override fun getItem(position: Int): Any {
-        return position
-    }
-
-    fun onShowCard(view: ImageView) {
-        var image = ((view).drawable as BitmapDrawable).bitmap
-        println(image)
-        showCardDialog!!.card_image.setImageBitmap(image)
-        showCardDialog!!.show()
-    }
 
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    // Create a new ImageView for each item referenced by the Adapter
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        return items.get(position)
-    }
-}
-
-
-class saveWorker(val context: Context, params: WorkerParameters): Worker
-    (context,
-    params) {
-
-
-    override fun doWork(): Result {
-        val database = AppDatabase.getInstance(context)
-        var saveFile = getCharacterData(Loaded.getCharacter().file_name)
-        if (Loaded.getCharacter().id != -1) {
-            saveFile.id = Loaded.getCharacter().id
-            database!!.getCharacterDAO().update(saveFile)
-            println("update save")
-        } else {
-            Loaded.getCharacter().id = database!!.getCharacterDAO()
-                .getPrimaryKey(database!!.getCharacterDAO().insert(saveFile))
-            println("insert save")
-        }
-        return Result.success()
-    }
-
-    fun getCharacterData(fileName: String): CharacterData {
-        val character = Loaded.getCharacter();
-        var data = CharacterData(
-            fileName,
-            System.currentTimeMillis(),
-            character.name_short,
-            character.damage,
-            character.strain,
-            character.token,
-            character.wounded,
-            character.conditionsActive[0],
-            character.conditionsActive[1],
-            character.conditionsActive[2],
-            character.conditionsActive[3],
-            character.conditionsActive[4],
-            character.totalXP,
-            character.xpSpent,
-            character.xpCardsEquipped[0],
-            character.xpCardsEquipped[1],
-            character.xpCardsEquipped[2],
-            character.xpCardsEquipped[3],
-            character.xpCardsEquipped[4],
-            character.xpCardsEquipped[5],
-            character.xpCardsEquipped[6],
-            character.xpCardsEquipped[7],
-            character.xpCardsEquipped[8],
-            character.weapons.getOrElse(0) { -1 },
-            character.weapons.getOrElse(1) { -1 },
-            character.accessories.getOrElse(0) { -1 },
-            character.accessories.getOrElse(1) { -1 },
-            character.accessories.getOrElse(2) { -1 },
-            character.helmet,
-            character.armor.getOrElse(0) { -1 },
-            convertItemIDToString(character.mods),
-            convertItemIDToString(character.rewards),
-            character.background,
-            character.conditionsActive[0],
-            character.conditionsActive[1],
-            character.conditionsActive[2],
-            character.conditionsActive[3],
-            character.conditionsActive[4],
-            character.killCount[0],
-            character.killCount[1],
-            character.killCount[2],
-            character.killCount[3],
-            character.killCount[4],
-            character.killCount[5],
-            character.killCount[6],
-            character.killCount[7],
-            character.assistCount[0],
-            character.assistCount[1],
-            character.assistCount[2],
-            character.assistCount[3],
-            character.assistCount[4],
-            character.assistCount[5],
-            character.assistCount[6],
-            character.assistCount[7],
-            character.movesTaken,
-            character.attacksMade,
-            character.interactsUsed,
-            character.timesWounded,
-            character.timesRested,
-            character.timesWithdrawn,
-            character.activated,
-            character.damageTaken,
-            character.strainTaken,
-            character.specialActions,
-            character.timesFocused,
-            character.timesHidden,
-            character.timesStunned,
-            character.timesBleeding,
-            character.timesWeakened,
-            character.cratesPickedUp,
-            character.rewardObtained,
-            character.withdrawn,
-
-            character.damageAnimSetting,
-            character.conditionAnimSetting,
-            character.actionUsageSetting,
-            character.soundEffectsSetting,
-            character.imageSetting,
-
-            false
-        )
-
-
-        return data
-    }
-
-    fun convertItemIDToString(itemIds: ArrayList<Int>): String {
-        var itemString = ""
-        for (i in 0..itemIds.size - 1) {
-            itemString += "," + itemIds[i]
-        }
-        return itemString
-    }
-}
 

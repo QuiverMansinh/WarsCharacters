@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.glasswellapps.iact">
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="false"
@@ -8,34 +15,48 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Character Tracker"
         android:largeHeap="true"
-        android:screenOrientation="sensorPortrait"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="sensorPortrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
-
-        <activity android:name=".CreateScreen"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".inventory.RewardsScreen"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".LoadScreen"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".inventory.RangedScreen"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".inventory.MeleeScreen"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".inventory.AccScreen"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".inventory.ArmorScreen"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".CharacterScreen"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".Characters_list"
-            android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".ImperialScreen"
+            android:screenOrientation="sensorLandscape"
+            android:exported="true" />
+        <activity
+            android:name=".CreateScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".inventory.RewardsScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".LoadScreen"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".inventory.RangedScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".inventory.MeleeScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".inventory.AccScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".inventory.ArmorScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".CharacterScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".Characters_list"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

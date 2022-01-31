@@ -34,7 +34,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoadScreen::class.java)
                 startActivity(intent)
         }
-
+        imperialButton.setOnClickListener {
+            Sounds.selectSound()
+            val intent = Intent(this, ImperialScreen::class.java)
+            startActivity(intent)
+        }
         createButton.setOnClickListener {
             Sounds.selectSound()
             val intent = Intent(this, CreateScreen::class.java)

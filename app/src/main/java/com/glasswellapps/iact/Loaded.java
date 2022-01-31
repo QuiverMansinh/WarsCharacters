@@ -15,8 +15,7 @@ public class Loaded {
     public static List<CharacterData> getData(){
         return data;
     }
-    public  static void setData( List<CharacterData> d){
+    public static void setData( List<CharacterData> d){
         data = d;
     }
-
 }

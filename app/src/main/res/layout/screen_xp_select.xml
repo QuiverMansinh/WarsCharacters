@@ -358,7 +358,7 @@
         android:id="@+id/imageView31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/screen_background"
+        android:background="@drawable/border_portrait"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
