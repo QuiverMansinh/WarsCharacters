@@ -1,5 +1,6 @@
-package com.glasswellapps.iact
+package com.glasswellapps.iact/*
 
+import ModListAdapter
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
@@ -3160,9 +3161,4 @@ class CharacterScreenRefactored : AppCompatActivity() {
     }
 //endregion
 }
-
-
-
-
-
-
+*/
