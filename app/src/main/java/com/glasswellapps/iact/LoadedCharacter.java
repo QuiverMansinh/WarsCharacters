@@ -3,7 +3,7 @@ import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.database.CharacterData;
 import java.util.List;
 
-public class Loaded {
+public class LoadedCharacter {
     private static Character character;
     private static List<CharacterData> data;
     public static Character getCharacter(){

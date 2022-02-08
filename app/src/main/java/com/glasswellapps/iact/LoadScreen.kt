@@ -11,8 +11,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
 import android.view.*
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -23,13 +21,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
+import com.glasswellapps.iact.character.CharacterScreen
 import com.glasswellapps.iact.characters.*
 import com.glasswellapps.iact.database.AppDatabase
 import com.glasswellapps.iact.database.CharacterData
 import com.glasswellapps.iact.effects.Sounds
-import kotlinx.android.synthetic.main.activity_character_screen.view.*
 import kotlinx.android.synthetic.main.activity_load_screen.*
-import kotlinx.android.synthetic.main.dialog_edit_save.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -65,7 +62,7 @@ class LoadScreen : AppCompatActivity() {
     var selectedFiles = arrayListOf<Int>()
     fun loadData() {
         val database = AppDatabase.getInstance(this)
-        Loaded.setData(database!!.getCharacterDAO().getAll());
+        LoadedCharacter.setData(database!!.getCharacterDAO().getAll());
     }
 
     var currentSaveData = arrayListOf<CharacterData>()
@@ -92,8 +89,8 @@ class LoadScreen : AppCompatActivity() {
         pageNumber.text = ""+(page+1) +" / "+maxPages
         for(i in 0..slotsPerPage-1) {
             var dataIndex = page*slotsPerPage+i
-            if(dataIndex < Loaded.getData().size) {
-                currentSaveData.add(Loaded.getData()[dataIndex])
+            if(dataIndex < LoadedCharacter.getData().size) {
+                currentSaveData.add(LoadedCharacter.getData()[dataIndex])
             }
         }
         adapter.notifyDataSetChanged()
@@ -142,8 +139,8 @@ class LoadScreen : AppCompatActivity() {
 
     var maxPages = 1
     fun getMaxPages(){
-        maxPages = Loaded.getData().size/slotsPerPage
-        if(Loaded.getData().size%slotsPerPage!=0){
+        maxPages = LoadedCharacter.getData().size/slotsPerPage
+        if(LoadedCharacter.getData().size%slotsPerPage!=0){
             maxPages++
         }
         if(maxPages <1){
@@ -274,9 +271,9 @@ class LoadScreen : AppCompatActivity() {
         selectedCharacter.imageSetting = saveData.imageSetting
         selectedCharacter.conditionAnimSetting = saveData.conditionAnimSetting
 
-        Loaded.setCharacter(selectedCharacter)
+        LoadedCharacter.setCharacter(selectedCharacter)
 
-        if (Loaded.getCharacter() != null) {
+        if (LoadedCharacter.getCharacter() != null) {
 
             val intent = Intent(this, CharacterScreen::class.java)
 
@@ -308,10 +305,10 @@ class LoadScreen : AppCompatActivity() {
 
         Sounds.selectSound()
 
-        Loaded.getData()[position + page * 5].fileName = editedFileName
+        LoadedCharacter.getData()[position + page * 5].fileName = editedFileName
         val database = AppDatabase.getInstance(this)
 
-        database!!.getCharacterDAO().update( Loaded.getData()[position + page * 5])
+        database!!.getCharacterDAO().update( LoadedCharacter.getData()[position + page * 5])
         hideSoftKeyboard()
 
     }
@@ -460,7 +457,7 @@ class LoadScreen : AppCompatActivity() {
     }
 
     fun showNoSavesFoundToast() {
-        if (Loaded.getData().isEmpty()) {
+        if (LoadedCharacter.getData().isEmpty()) {
             val noSavesFoundToast = Dialog(this)
 
             noSavesFoundToast.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -496,9 +493,9 @@ class LoadScreen : AppCompatActivity() {
 
     fun onToggleAll(view: View) {
         Sounds.selectSound()
-        if(selectedFiles.size <  Loaded.getData().size){
+        if(selectedFiles.size <  LoadedCharacter.getData().size){
             selectedFiles.clear()
-            for(i in 0.. Loaded.getData().size-1){
+            for(i in 0.. LoadedCharacter.getData().size-1){
                 selectedFiles.add(i)
             }
             all_toggle.text = "NONE"
@@ -517,7 +514,7 @@ class LoadScreen : AppCompatActivity() {
         else{
             all_toggle.visibility = View.GONE
         }
-        if(selectedFiles.size <  Loaded.getData().size){
+        if(selectedFiles.size <  LoadedCharacter.getData().size){
             all_toggle.text = "ALL"
         }
         else{
@@ -826,9 +823,9 @@ class deleteWorker(val context: Context, params: WorkerParameters) : Worker
         if (selectedFiles != null) {
             for(i in 0..selectedFiles.size) {
                 val database = AppDatabase.getInstance(context)
-                Loaded.getData()[selectedFiles[i]].deleted = true
+                LoadedCharacter.getData()[selectedFiles[i]].deleted = true
                 //database!!.getCharacterDAO().update(MainActivity.data!![positionEditing])
-                database!!.getCharacterDAO().deleteById( Loaded.getData()[selectedFiles[i]].id)
+                database!!.getCharacterDAO().deleteById( LoadedCharacter.getData()[selectedFiles[i]].id)
             }
         }
         return Result.success()

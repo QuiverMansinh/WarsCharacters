@@ -4,13 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Documents/AndroidStudioProjects/WarsCharacters/app/src/main/res/layout/credits_to_us.xml" value="0.23641304347826086" />
-        <entry key="..\:/Users/manhk/OneDrive/Desktop/IA/IAandroid/app/src/main/res/layout/activity_character_screen.xml" value="0.264" />
-        <entry key="..\:/Users/manhk/OneDrive/Desktop/IA/IAandroid/app/src/main/res/layout/activity_characters_list.xml" value="0.12708333333333333" />
-        <entry key="..\:/Users/manhk/OneDrive/Desktop/IA/IAandroid/app/src/main/res/layout/activity_create_screen.xml" value="0.12708333333333333" />
-        <entry key="..\:/Users/manhk/OneDrive/Desktop/IA/IAandroid/app/src/main/res/layout/activity_imperial_screen.xml" value="0.2" />
-        <entry key="..\:/Users/manhk/OneDrive/Desktop/IA/IAandroid/app/src/main/res/layout/activity_load_screen.xml" value="0.12708333333333333" />
-        <entry key="..\:/Users/manhk/OneDrive/Desktop/IA/IAandroid/app/src/main/res/layout/activity_main.xml" value="0.152" />
-        <entry key="..\:/Users/manhk/OneDrive/Desktop/IA/IAandroid/app/src/main/res/layout/fragment_bluetooth_character.xml" value="0.536" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_character_screen.xml" value="0.8" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_conditions.xml" value="0.221875" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/screen_xp_select.xml" value="0.234375" />
       </map>
     </option>
   </component>

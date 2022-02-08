@@ -1,5 +1,4 @@
 package com.glasswellapps.iact.inventory
-
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class AccScreen : AppCompatActivity() {
-    val character = Loaded.getCharacter()
+    val character = LoadedCharacter.getCharacter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

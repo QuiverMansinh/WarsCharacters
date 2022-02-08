@@ -1,5 +1,6 @@
-package com.glasswellapps.iact
-import ModListAdapter
+package com.glasswellapps.iact/*
+
+import com.glasswellapps.iact.character.ModListAdapter
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
@@ -31,7 +32,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.work.*
-import com.glasswellapps.iact.bluetooth.BluetoothManager
 import com.glasswellapps.iact.inventory.Items
 import com.glasswellapps.iact.database.AppDatabase
 import com.glasswellapps.iact.database.CharacterData
@@ -40,6 +40,7 @@ import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.characters.*
 import com.glasswellapps.iact.inventory.*
 import kotlinx.android.synthetic.main.activity_character_screen.*
+import kotlinx.android.synthetic.main.activity_load_screen.*
 import kotlinx.android.synthetic.main.credits_to_us.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_background.*
@@ -60,10 +61,9 @@ import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 import java.io.InputStream
 import kotlin.random.Random
 
-var height = 0f
-var width = 0f
 
-class CharacterScreen : AppCompatActivity() {
+
+class CharacterScreenRefactored : AppCompatActivity() {
     var character: Character = Character();
     var animateConditions = true
     var animateDamage = true
@@ -71,7 +71,8 @@ class CharacterScreen : AppCompatActivity() {
     var strengthGlow: GreenHighlight? = null
     var techGlow: GreenHighlight?= null
     var insightGlow: GreenHighlight?= null
-    var bluetoothManager: BluetoothManager? = null
+    var height = 0f
+    var width = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,43 +90,11 @@ class CharacterScreen : AppCompatActivity() {
         initScreen()
         initAnimations()
         initKillTracker()
-
-    }
-
-    fun onBluetoothButton(view:View){
-        if(bluetoothManager == null) {
-            bluetoothManager = BluetoothManager(this, "IATracker", "dd8c0994-aa25-4698-8e30-56f286a98375")
-        }
-        else{
-            bluetoothManager!!.discoverDevices()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == BluetoothManager.REQUEST_ENABLE_DISCOVERY) {
-            if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(applicationContext, "Discovery not enabled", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(applicationContext, "Discovery enabled", Toast.LENGTH_SHORT).show()
-
-            }
-        }
-        if (requestCode == BluetoothManager.REQUEST_ENABLE_BLUETOOTH) {
-            if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(applicationContext, "Bluetooth not enabled", Toast.LENGTH_SHORT)
-                    .show()
-                bluetoothManager = null;
-            } else {
-                Toast.makeText(applicationContext, "Bluetooth enabled", Toast.LENGTH_SHORT).show()
-                bluetoothManager!!.discoverDevices()
-            }
-        }
     }
 
     var loadAnimated = false
     override fun onWindowFocusChanged(hasFocus: Boolean) {
+
         updateStats()
         if(character.damage>0) {
             if (character.damage < character.health) {
@@ -2565,7 +2534,7 @@ class CharacterScreen : AppCompatActivity() {
 
             }*/
             //if (weaponIndex1 < 0) {
-                mods1.alpha = 0f
+            mods1.alpha = 0f
             //}
 
 
@@ -2669,7 +2638,7 @@ class CharacterScreen : AppCompatActivity() {
 
 
 
-            quickViewDialog!!.mods_grid_view.adapter = ModListAdapter(this,character.mods)
+            quickViewDialog!!.mods_grid_view.adapter = com.glasswellapps.iact.character.ModListAdapter(this,character.mods)
             quickViewDialog!!.show()
             quickViewButtonDialog!!.dismiss()
         }
@@ -3112,7 +3081,7 @@ class CharacterScreen : AppCompatActivity() {
         //if(secondsSinceLastSave > 3) {
         //val character = MainActivity.selectedCharacter
         startSavingAnimation()
-        val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(SaveWorker::class.java)
+        val saveWorkRequestBuilder = OneTimeWorkRequest.Builder(saveWorker::class.java)
         val data = Data.Builder()
 
         saveWorkRequestBuilder.setInputData(data.build())
@@ -3182,10 +3151,14 @@ class CharacterScreen : AppCompatActivity() {
         println("on stop save")
         super.onStop()
     }
+
+    fun convertItemIDToString(itemIds: ArrayList<Int>): String {
+        var itemString = ""
+        for (i in 0..itemIds.size - 1) {
+            itemString += "," + itemIds[i]
+        }
+        return itemString
+    }
 //endregion
 }
-
-
-
-
-
+*/

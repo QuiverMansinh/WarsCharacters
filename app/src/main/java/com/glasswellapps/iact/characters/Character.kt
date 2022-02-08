@@ -79,6 +79,10 @@ open class Character {
     var portraitRow = 0
     var portraitCol = 0
 
+    //immediate state
+    var actionsLeft = 0
+    var isActivated = false
+    var isWounded = false;
 
 
     //****************************************************************************************************

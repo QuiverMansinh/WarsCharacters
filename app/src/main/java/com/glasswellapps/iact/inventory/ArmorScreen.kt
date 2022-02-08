@@ -14,13 +14,12 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
-import com.glasswellapps.iact.MainActivity
 import kotlinx.android.synthetic.main.activity_armor_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class ArmorScreen : AppCompatActivity() {
-    val character = Loaded.getCharacter()
+    val character = LoadedCharacter.getCharacter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

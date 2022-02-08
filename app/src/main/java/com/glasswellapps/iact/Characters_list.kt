@@ -10,6 +10,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.glasswellapps.iact.character.CharacterScreen
 import com.glasswellapps.iact.effects.Sounds
 import kotlinx.android.synthetic.main.activity_characters_list.*
 
@@ -144,7 +145,7 @@ class Characters_list : AppCompatActivity() {
                 charactersImage[i].alpha = 0f
             }
         }
-        if(Loaded.getCharacter() != null) {
+        if(LoadedCharacter.getCharacter() != null) {
             wipeSelectedCharacter()
         }
         val intent = Intent(this, CharacterScreen::class.java)
@@ -163,7 +164,7 @@ class Characters_list : AppCompatActivity() {
 
                 charactersImage[i].alpha = 0f
         }
-        if(Loaded.getCharacter() != null) {
+        if(LoadedCharacter.getCharacter() != null) {
             wipeSelectedCharacter()
         }
         val intent = Intent(this, CharacterScreen::class.java)
@@ -180,19 +181,19 @@ class Characters_list : AppCompatActivity() {
 
     fun wipeSelectedCharacter(){
 
-        Loaded.getCharacter().currentImage!!.recycle()
-        for (i in 0..Loaded.getCharacter().xpCardImages.size-1) {
-            if (Loaded.getCharacter().xpCardImages[i] != null) {
-                Loaded.getCharacter().xpCardImages!![i].recycle()
+        LoadedCharacter.getCharacter().currentImage!!.recycle()
+        for (i in 0..LoadedCharacter.getCharacter().xpCardImages.size-1) {
+            if (LoadedCharacter.getCharacter().xpCardImages[i] != null) {
+                LoadedCharacter.getCharacter().xpCardImages!![i].recycle()
             }
         }
-        if (Loaded.getCharacter().power != null) {
-            Loaded.getCharacter().power!!.recycle()
-            Loaded.getCharacter().power_wounded!!.recycle()
+        if (LoadedCharacter.getCharacter().power != null) {
+            LoadedCharacter.getCharacter().power!!.recycle()
+            LoadedCharacter.getCharacter().power_wounded!!.recycle()
         }
-        if (Loaded.getCharacter().portraitImage != null) {
-            Loaded.getCharacter().portraitImage = null
+        if (LoadedCharacter.getCharacter().portraitImage != null) {
+            LoadedCharacter.getCharacter().portraitImage = null
         }
-        Loaded.setCharacter(null)
+        LoadedCharacter.setCharacter(null)
     }
 }

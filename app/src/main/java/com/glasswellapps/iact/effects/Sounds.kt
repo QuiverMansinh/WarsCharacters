@@ -3,9 +3,8 @@ package com.glasswellapps.iact.effects
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
-import com.glasswellapps.iact.Loaded
+import com.glasswellapps.iact.LoadedCharacter
 import com.glasswellapps.iact.inventory.Items
-import com.glasswellapps.iact.MainActivity
 import com.glasswellapps.iact.R
 
 object Sounds {
@@ -82,8 +81,8 @@ object Sounds {
 
     fun play(soundId : Int){
         var volume = 1f
-        if(Loaded.getCharacter() != null) {
-            volume= Loaded.getCharacter() .soundEffectsSetting
+        if(LoadedCharacter.getCharacter() != null) {
+            volume= LoadedCharacter.getCharacter() .soundEffectsSetting
         }
         if(sEPool!=null) {
             if(sEPool!![soundId] != null) {
@@ -160,7 +159,7 @@ object Sounds {
 
     fun attackSound() {
         try{
-            val character = Loaded.getCharacter()
+            val character = LoadedCharacter.getCharacter()
             var whichSound = 0
             if(character.weapons.size>0) {
                 var whichWeapon =(Math.random()*character.weapons.size).toInt()

@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="@+id/background_image"
         app:layout_constraintTop_toTopOf="@+id/overlay">
 
-        <com.glasswellapps.iact.CharacterImageView
+        <com.glasswellapps.iact.character.CharacterImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -63,7 +63,7 @@
 
     </FrameLayout>
 
-    <com.glasswellapps.iact.PulsatingImageView
+    <com.glasswellapps.iact.character.PulsatingImageView
         android:id="@+id/camouflage"
         android:layout_width="0dp"
         android:layout_height="0dp"

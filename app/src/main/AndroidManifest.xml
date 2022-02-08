@@ -46,7 +46,7 @@
             android:name=".inventory.ArmorScreen"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".CharacterScreen"
+            android:name=".character.CharacterScreen"
             android:screenOrientation="sensorPortrait" />
         <activity
             android:name=".Characters_list"

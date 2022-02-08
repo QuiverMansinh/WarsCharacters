@@ -1,4 +1,4 @@
-package com.glasswellapps.iact;
+package com.glasswellapps.iact.character;
 
 import android.content.Context;
 import android.graphics.Bitmap;

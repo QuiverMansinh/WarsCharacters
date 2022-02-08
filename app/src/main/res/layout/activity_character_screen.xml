@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/character_select_background"
-    tools:context=".CharacterScreen">
+    tools:context=".character.CharacterScreen">
 
     <LinearLayout
         android:id="@+id/action_menu"
@@ -27,7 +27,8 @@
             android:id="@+id/bleeding_add_strain"
             android:layout_width="180dp"
             android:layout_height="44dp"
-            android:onClick="onShowBleedingCard"
+            android:onClick="onShowCard"
+            android:tag="3"
             android:visibility="gone">
 
             <ImageView
@@ -130,7 +131,8 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:onClick="onShowHiddenCard"
+                    android:onClick="onShowCard"
+                    android:tag="0"
                     android:visibility="visible"
                     app:srcCompat="@drawable/condition_hidden" />
 
@@ -139,7 +141,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:onClick="onShowFocusedCard"
+                    android:onClick="onShowCard"
+                    android:tag="1"
                     android:visibility="visible"
                     app:srcCompat="@drawable/condition_focused" />
 
@@ -150,8 +153,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/shadow"
-                android:onClick="onShowStunnedCard"
+                android:onClick="onShowCard"
                 android:padding="5dp"
+                android:tag="4"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/condition_stunned" />
 
@@ -197,8 +201,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/shadow"
-                android:onClick="onShowStunnedCard"
+                android:onClick="onShowCard"
                 android:paddingVertical="5dp"
+                android:tag="4"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/condition_stunned" />
 
@@ -376,8 +381,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/shadow"
-                android:onClick="onShowStunnedCard"
+                android:onClick="onShowCard"
                 android:paddingVertical="5dp"
+                android:tag="4"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/condition_stunned" />
 
@@ -441,7 +447,8 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="2dp"
                     android:layout_weight="1"
-                    android:onClick="onShowStunnedCard"
+                    android:onClick="onShowCard"
+                    android:tag="4"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -503,7 +510,8 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="2dp"
                     android:layout_weight="0.5"
-                    android:onClick="onShowBleedingCard"
+                    android:onClick="onShowCard"
+                    android:tag="3"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -558,7 +566,7 @@
         app:layout_constraintStart_toStartOf="@+id/background_image"
         app:layout_constraintTop_toTopOf="@+id/overlay">
 
-        <com.glasswellapps.iact.CharacterImageView
+        <com.glasswellapps.iact.character.CharacterImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -568,7 +576,7 @@
 
     </FrameLayout>
 
-    <com.glasswellapps.iact.PulsatingImageView
+    <com.glasswellapps.iact.character.PulsatingImageView
         android:id="@+id/camouflage"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -692,7 +700,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="villainKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -709,7 +716,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="villainKillUp"
                     android:padding="2dp"
                     android:tag="villian"
                     app:srcCompat="@drawable/icon_villian" />
@@ -729,7 +735,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="leaderKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -746,7 +751,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="leaderKillUp"
                     android:padding="2dp"
                     android:tag="leader"
                     app:srcCompat="@drawable/icon_leader" />
@@ -766,7 +770,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="vehicleKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -783,7 +786,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="vehicleKillUp"
                     android:padding="2dp"
                     android:tag="vehicle"
                     app:srcCompat="@drawable/icon_vehicle" />
@@ -803,7 +805,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="creatureKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -820,7 +821,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="creatureKillUp"
                     android:padding="2dp"
                     android:tag="creature"
                     app:srcCompat="@drawable/icon_creature" />
@@ -840,7 +840,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="guardKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -857,7 +856,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="guardKillUp"
                     android:padding="2dp"
                     android:tag="guard"
                     app:srcCompat="@drawable/icon_gaurd" />
@@ -877,7 +875,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="droidKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -894,7 +891,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="droidKillUp"
                     android:padding="2dp"
                     android:tag="droid"
                     app:srcCompat="@drawable/icon_droid" />
@@ -914,7 +910,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="scumKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -931,7 +926,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="scumKillUp"
                     android:padding="2dp"
                     android:tag="scum"
                     app:srcCompat="@drawable/icon_scum" />
@@ -952,7 +946,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/agency_fb"
                     android:gravity="center"
-                    android:onClick="trooperKillDown"
                     android:padding="2dp"
                     android:shadowColor="@color/black"
                     android:shadowRadius="10"
@@ -969,7 +962,6 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:onClick="trooperKillUp"
                     android:padding="2dp"
                     android:tag="trooper"
                     app:srcCompat="@drawable/icon_trooper" />
@@ -1062,11 +1054,9 @@
             android:id="@+id/find_server_button"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:layout_marginEnd="20dp"
             android:padding="7dp"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="@+id/settings"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settings"
             app:layout_constraintTop_toTopOf="@+id/settings"
             app:srcCompat="@drawable/button_bluetooth" />
@@ -1668,7 +1658,6 @@
             android:background="@drawable/condition"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
-            android:onClick="onAddCondition"
             android:shadowColor="@color/white"
             android:shadowRadius="8"
             android:textColor="@color/black"

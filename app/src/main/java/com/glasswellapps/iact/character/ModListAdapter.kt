@@ -1,3 +1,5 @@
+package com.glasswellapps.iact.character
+
 import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color

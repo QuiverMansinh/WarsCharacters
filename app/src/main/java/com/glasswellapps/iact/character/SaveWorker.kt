@@ -1,8 +1,9 @@
-package com.glasswellapps.iact
+package com.glasswellapps.iact.character
 
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.glasswellapps.iact.LoadedCharacter
 import com.glasswellapps.iact.database.AppDatabase
 import com.glasswellapps.iact.database.CharacterData
 
@@ -11,13 +12,13 @@ class SaveWorker(val context: Context, params: WorkerParameters): Worker
     params) {
     override fun doWork(): Result {
         val database = AppDatabase.getInstance(context)
-        var saveFile = getCharacterData(Loaded.getCharacter().file_name)
-        if (Loaded.getCharacter().id != -1) {
-            saveFile.id = Loaded.getCharacter().id
+        var saveFile = getCharacterData(LoadedCharacter.getCharacter().file_name)
+        if (LoadedCharacter.getCharacter().id != -1) {
+            saveFile.id = LoadedCharacter.getCharacter().id
             database!!.getCharacterDAO().update(saveFile)
             println("update save")
         } else {
-            Loaded.getCharacter().id = database!!.getCharacterDAO()
+            LoadedCharacter.getCharacter().id = database!!.getCharacterDAO()
                 .getPrimaryKey(database!!.getCharacterDAO().insert(saveFile))
             println("insert save")
         }
@@ -25,7 +26,7 @@ class SaveWorker(val context: Context, params: WorkerParameters): Worker
     }
 
     fun getCharacterData(fileName: String): CharacterData {
-        val character = Loaded.getCharacter();
+        val character = LoadedCharacter.getCharacter();
         var data = CharacterData(
             fileName,
             System.currentTimeMillis(),
