@@ -4,56 +4,645 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/character_select_background"
-    tools:context=".ImperialScreen">
+    android:background="@drawable/background_landscape"
+    tools:context=".imperial.ImperialScreen">
 
     <LinearLayout
         android:id="@+id/bt_characters"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center|fill_horizontal|fill_vertical"
+        android:layout_marginEnd="20dp"
+        android:elevation="0dp"
+        android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/advertise_button"
+        app:layout_constraintBottom_toTopOf="@+id/imperial_panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="240dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/empty_item_slot"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="5dp">
+
+            <ImageView
+                android:id="@+id/imageView41"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/imperial_character_blank"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/empty_item_slot_border" />
+
+            <TextView
+                android:id="@+id/rebel_detected_text0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:paddingBottom="50dp"
+                android:shadowColor="@color/white"
+                android:shadowDy="2"
+                android:shadowRadius="8"
+                android:text="REBEL DETECTED"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:id="@+id/player0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="0">
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imperial_player_state0"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|right"
+                android:alpha="0.1"
+                android:elevation="100dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/imperial_icon" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="240dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/empty_item_slot"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="5dp">
+
+            <ImageView
+                android:id="@+id/imageView42"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/imperial_character_blank"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/empty_item_slot_border" />
+
+            <TextView
+                android:id="@+id/rebel_detected_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:paddingBottom="50dp"
+                android:shadowColor="@color/white"
+                android:shadowDy="2"
+                android:shadowRadius="8"
+                android:text="REBEL DETECTED"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:id="@+id/player1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="1">
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imperial_player_state1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|right"
+                android:alpha="0.1"
+                android:elevation="100dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/imperial_icon" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="240dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/empty_item_slot"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="5dp">
+
+            <ImageView
+                android:id="@+id/imageView43"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/imperial_character_blank"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/empty_item_slot_border" />
+
+            <TextView
+                android:id="@+id/rebel_detected_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:paddingBottom="50dp"
+                android:shadowColor="@color/white"
+                android:shadowDy="2"
+                android:shadowRadius="8"
+                android:text="REBEL DETECTED"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:id="@+id/player2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="2">
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imperial_player_state2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|right"
+                android:alpha="0.1"
+                android:elevation="100dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/imperial_icon" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="240dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/empty_item_slot"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="5dp">
+
+            <ImageView
+                android:id="@+id/imageView44"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/imperial_character_blank"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/empty_item_slot_border" />
+
+            <TextView
+                android:id="@+id/rebel_detected_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0"
+                android:fontFamily="@font/agency_fb"
+                android:gravity="center"
+                android:paddingBottom="50dp"
+                android:shadowColor="@color/white"
+                android:shadowDy="2"
+                android:shadowRadius="8"
+                android:text="REBEL DETECTED"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:id="@+id/player3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="3">
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imperial_player_state3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|right"
+                android:alpha="0.1"
+                android:elevation="100dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/imperial_icon" />
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/imperial_panel"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@drawable/imperial_panel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </FrameLayout>
 
     <ImageView
-        android:id="@+id/saving_icon3"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginEnd="10dp"
+        android:id="@+id/imperial_volume_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout4"
+        app:layout_constraintEnd_toStartOf="@+id/show_status"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout4"
+        app:srcCompat="@drawable/icon_volume" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="10dp"
-        android:alpha="0"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/working_icon" />
+        android:background="@drawable/imperial_volume_slider"
+        app:layout_constraintBottom_toBottomOf="@+id/imperial_sound_board"
+        app:layout_constraintEnd_toEndOf="@+id/show_status"
+        app:layout_constraintStart_toStartOf="@+id/show_status"
+        app:layout_constraintTop_toBottomOf="@+id/show_status">
+
+        <SeekBar
+            android:id="@+id/imperial_volume_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:thumb="@drawable/imperial_slider_toggle" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/show_status"
+        android:layout_width="220dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/imperial_status"
+        android:fontFamily="@font/agency_fb"
+        android:gravity="top"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:shadowColor="@color/credits"
+        android:shadowRadius="8"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/bluetooth_button"
+        app:layout_constraintTop_toTopOf="@+id/imperial_sound_board" />
 
     <ImageView
-        android:id="@+id/advertise_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/frameLayout3"
+        android:id="@+id/bluetooth_back"
+        android:layout_width="65dp"
+        android:layout_height="66dp"
+        android:elevation="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/bluetooth_button"
+        app:layout_constraintEnd_toEndOf="@+id/bluetooth_button"
+        app:layout_constraintStart_toStartOf="@+id/bluetooth_button"
+        app:layout_constraintTop_toTopOf="@+id/bluetooth_button"
+        app:srcCompat="@drawable/button_back_dark" />
+
+    <ImageView
+        android:id="@+id/bluetooth_button"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="35dp"
+        android:elevation="10dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/show_status"
         app:srcCompat="@drawable/button_bluetooth" />
 
     <FrameLayout
         android:id="@+id/frameLayout3"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@drawable/border_landscape"
+        android:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/imperial_sound_board"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/show_status"
+        app:layout_constraintTop_toTopOf="@+id/imperial_panel">
+
+        <LinearLayout
+            android:id="@+id/imperial_sound_row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_trooper"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/imperial_button_blue"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_trooper" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_droid"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/imperial_button_blue"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_droid" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_vehicle"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/imperial_button_blue"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_vehicle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_slice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="1"
+                    android:background="@drawable/imperial_button_yellow"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_slice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_impact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/imperial_button_yellow"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_impact" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_blaster"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/imperial_button_yellow"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/item_ranged" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/imperial_sound_row2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:elevation="40dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_lightsaber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/imperial_button_red"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_lightsaber" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_lightsaber_attack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/imperial_button_red"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_lightsaber_attack" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_crate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/imperial_button_white"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_crate" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_door"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="1"
+                    android:background="@drawable/imperial_button_white"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_door" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_terminal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/imperial_button_white"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_terminal" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/imperial_button_frame">
+
+                <ImageView
+                    android:id="@+id/sound_move"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/imperial_button_white"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_move" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imperial_saving_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/imperial_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

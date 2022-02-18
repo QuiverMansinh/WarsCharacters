@@ -12,12 +12,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
+import com.glasswellapps.iact.loading.LoadedCharacter
 import kotlinx.android.synthetic.main.activity_rewards_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class RewardsScreen : AppCompatActivity() {
-    val character = LoadedCharacter.getCharacter()
+    val character = LoadedCharacter.getActiveCharacter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rewards_screen)
@@ -59,11 +60,8 @@ class RewardsScreen : AppCompatActivity() {
             var currentItem = Items.rewardsArray!!.get(i)
             val gridItem = rewardsViews[i]
             gridItem.alpha = 0.5f
-
             gridItem.setImageResource(currentItem.resourceId)
             setClickables(gridItem, currentItem)
-
-
             when (currentItem.type) {
                 Items.reward -> {
                     if (character.rewards.contains(currentItem.index)) {
@@ -115,6 +113,10 @@ class RewardsScreen : AppCompatActivity() {
     }
 
     fun equipReward(item: Item): Float {
+        if(!LoadedCharacter.getIsInteractable()){
+            Sounds.negativeSound()
+            return 0.5f;
+        }
          //remove if already equipped
         if (character.rewards.remove(item.index)) {
             Sounds.selectSound()
@@ -127,6 +129,10 @@ class RewardsScreen : AppCompatActivity() {
     }
 
     fun equipAcc(item: Item): Float {
+        if(!LoadedCharacter.getIsInteractable()){
+            Sounds.negativeSound()
+            return 0.5f;
+        }
         if (character.accessories.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f

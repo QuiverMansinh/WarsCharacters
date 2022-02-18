@@ -10,6 +10,7 @@ class Character_fenn : Character {
         //default values
         name = "Fenn Signis"
         name_short = "fenn"
+        index = 5
         type = "Hero"
         defence_dice = "black"
 

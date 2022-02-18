@@ -9,6 +9,7 @@ class Character_diala : Character {
         //default values
         name = "Diala Passil"
         name_short = "diala"
+        index = 3
         type = "Hero"
         defence_dice = "white"
 

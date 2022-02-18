@@ -67,7 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/empty_item_slot" />
 
                     <ImageView
@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/empty_item_slot" />
 
                     <ImageView
@@ -162,7 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/empty_item_slot" />
 
                     <ImageView
@@ -210,7 +210,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/empty_item_slot" />
 
                     <ImageView
@@ -239,7 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/empty_item_slot" />
 
                     <ImageView
@@ -268,7 +268,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/empty_item_slot" />
 
                     <ImageView

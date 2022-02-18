@@ -317,11 +317,9 @@ object Items {
             itemsArray!![19],
             itemsArray!![20],
 
-
             itemsArray!![21],
             itemsArray!![22],
             itemsArray!![23],
-
 
             itemsArray!![24],
             itemsArray!![25],

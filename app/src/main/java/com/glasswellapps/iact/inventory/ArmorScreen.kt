@@ -14,12 +14,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
+import com.glasswellapps.iact.loading.LoadedCharacter
 import kotlinx.android.synthetic.main.activity_armor_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class ArmorScreen : AppCompatActivity() {
-    val character = LoadedCharacter.getCharacter()
+    val character = LoadedCharacter.getActiveCharacter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +94,10 @@ class ArmorScreen : AppCompatActivity() {
     }
 
     fun equipArmor(item: Item): Float {
+        if(!LoadedCharacter.getIsInteractable()){
+            Sounds.negativeSound()
+            return 0.5f;
+        }
         //remove if already equipped
         if (character.armor.remove(item.index)) {
             Sounds.selectSound()

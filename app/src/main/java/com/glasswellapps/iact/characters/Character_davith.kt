@@ -8,6 +8,7 @@ class Character_davith : Character {
         //default values
         name = "Davith Elso"
         name_short = "davith"
+        index = 2
         type = "Hero"
         defence_dice = "white"
 
@@ -35,8 +36,8 @@ class Character_davith : Character {
         wounded = 0
 
         totalXP = 0
-        xpEndurances = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-        xpHealths = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        xpEndurances = intArrayOf(0, 0, 0, 0, 0, 0, 0, 1, 0)
+        xpHealths = intArrayOf(0, 0, 0, 0, 0, 0, 0, 3, 0)
         xpSpeeds = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
         xpItems = intArrayOf(-1,-1,-1,-1,-1,92,-1,-1,91)
 

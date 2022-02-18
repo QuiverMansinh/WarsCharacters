@@ -17,6 +17,7 @@ import java.io.InputStream
 open class Character {
     var name = ""
     var name_short = ""
+    var index = 0
     var file_name = "autosave"
     var id = -1
 
@@ -83,7 +84,7 @@ open class Character {
     var actionsLeft = 0
     var isActivated = false
     var isWounded = false;
-
+    var lastEffect = 0;
 
     //****************************************************************************************************
     //region To Save
@@ -427,6 +428,25 @@ open class Character {
         toast!!.view = view
         toast!!.setGravity(Gravity.CENTER, 0, 0)
         toast!!.show()
+    }
+
+    fun getLevel(): Int {
+        var level = 5
+        when {
+            xpSpent <= 1 -> {
+                level = 1
+            }
+            xpSpent <= 4 -> {
+                level = 2
+            }
+            xpSpent <= 7 -> {
+                level = 3
+            }
+            xpSpent <= 10 -> {
+                level = 4
+            }
+        }
+        return level
     }
 
     var damageAnimSetting = true

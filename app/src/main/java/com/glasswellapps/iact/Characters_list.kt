@@ -10,8 +10,10 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.glasswellapps.iact.character.CharacterScreen
+import com.glasswellapps.iact.character_screen.CharacterBuilder
+import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.effects.Sounds
+import com.glasswellapps.iact.loading.LoadedCharacter
 import kotlinx.android.synthetic.main.activity_characters_list.*
 
 class Characters_list : AppCompatActivity() {
@@ -24,7 +26,6 @@ class Characters_list : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
-
         //Characters list for List view to choose characters
 
         charactersImage = arrayListOf<ImageView>(
@@ -145,17 +146,23 @@ class Characters_list : AppCompatActivity() {
                 charactersImage[i].alpha = 0f
             }
         }
-        if(LoadedCharacter.getCharacter() != null) {
+        if(LoadedCharacter.getActiveCharacter() != null) {
             wipeSelectedCharacter()
         }
+
+        LoadedCharacter.setActiveCharacter(CharacterBuilder.create(view.tag.toString(),this))
+        var from: String = intent.getStringExtra("from").toString()
+
+        when(from){
+            "imperial"-> onBackPressed()
+            "main"-> toCharacterScreen()
+        }
+    }
+
+    private fun toCharacterScreen(){
         val intent = Intent(this, CharacterScreen::class.java)
-        intent.putExtra("CharacterName", view.tag.toString())
-        intent.putExtra("Load", false)
-
-
         startActivity(intent);
         finish()
-
     }
 
     fun onSelectCustom(view: View) {
@@ -164,7 +171,7 @@ class Characters_list : AppCompatActivity() {
 
                 charactersImage[i].alpha = 0f
         }
-        if(LoadedCharacter.getCharacter() != null) {
+        if(LoadedCharacter.getActiveCharacter() != null) {
             wipeSelectedCharacter()
         }
         val intent = Intent(this, CharacterScreen::class.java)
@@ -181,19 +188,19 @@ class Characters_list : AppCompatActivity() {
 
     fun wipeSelectedCharacter(){
 
-        LoadedCharacter.getCharacter().currentImage!!.recycle()
-        for (i in 0..LoadedCharacter.getCharacter().xpCardImages.size-1) {
-            if (LoadedCharacter.getCharacter().xpCardImages[i] != null) {
-                LoadedCharacter.getCharacter().xpCardImages!![i].recycle()
+        LoadedCharacter.getActiveCharacter().currentImage!!.recycle()
+        for (i in 0..LoadedCharacter.getActiveCharacter().xpCardImages.size-1) {
+            if (LoadedCharacter.getActiveCharacter().xpCardImages[i] != null) {
+                LoadedCharacter.getActiveCharacter().xpCardImages!![i].recycle()
             }
         }
-        if (LoadedCharacter.getCharacter().power != null) {
-            LoadedCharacter.getCharacter().power!!.recycle()
-            LoadedCharacter.getCharacter().power_wounded!!.recycle()
+        if (LoadedCharacter.getActiveCharacter().power != null) {
+            LoadedCharacter.getActiveCharacter().power!!.recycle()
+            LoadedCharacter.getActiveCharacter().power_wounded!!.recycle()
         }
-        if (LoadedCharacter.getCharacter().portraitImage != null) {
-            LoadedCharacter.getCharacter().portraitImage = null
+        if (LoadedCharacter.getActiveCharacter().portraitImage != null) {
+            LoadedCharacter.getActiveCharacter().portraitImage = null
         }
-        LoadedCharacter.setCharacter(null)
+        LoadedCharacter.setActiveCharacter(null)
     }
 }

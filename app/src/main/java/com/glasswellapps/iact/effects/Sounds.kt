@@ -3,7 +3,7 @@ package com.glasswellapps.iact.effects
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
-import com.glasswellapps.iact.LoadedCharacter
+import com.glasswellapps.iact.loading.LoadedCharacter
 import com.glasswellapps.iact.inventory.Items
 import com.glasswellapps.iact.R
 
@@ -28,7 +28,9 @@ object Sounds {
     val door = 17
     val button = 18
     val terminal = 19
-    val negative = 20
+    val scream = 20;
+    val atat = 21;
+    val negative = 22
 
 
     var sPBuilder = AudioAttributes.Builder()
@@ -66,8 +68,11 @@ object Sounds {
                 soundPool.load(context, R.raw.door, 1),
                 soundPool.load(context, R.raw.button, 1),
                 soundPool.load(context, R.raw.terminal, 1),
+                soundPool.load(context, R.raw.wilhelm_scream, 1),
+                soundPool.load(context, R.raw.atat_fire, 1),
                 soundPool.load(context, R.raw.negative, 1),
                 soundPool.load(context, R.raw.negative, 1)
+
             )
     }
 
@@ -77,13 +82,12 @@ object Sounds {
         }
     }
 
-
+    private var volume = 1f;
+    fun setSoundVolume(volume:Float){
+        this.volume = volume;
+    }
 
     fun play(soundId : Int){
-        var volume = 1f
-        if(LoadedCharacter.getCharacter() != null) {
-            volume= LoadedCharacter.getCharacter() .soundEffectsSetting
-        }
         if(sEPool!=null) {
             if(sEPool!![soundId] != null) {
                 soundPool.play(sEPool!![soundId], volume, volume, 1, 0, 1f)
@@ -159,7 +163,7 @@ object Sounds {
 
     fun attackSound() {
         try{
-            val character = LoadedCharacter.getCharacter()
+            val character = LoadedCharacter.getActiveCharacter()
             var whichSound = 0
             if(character.weapons.size>0) {
                 var whichWeapon =(Math.random()*character.weapons.size).toInt()
@@ -226,19 +230,28 @@ object Sounds {
         }
     }
 
-    fun interactSound(){
-        try{
+    fun buttonSound(){
+        try {
+            play(button)
+        }catch (e:Exception){
+            System.out.println(e)
+        }
+    }
+    fun terminalSound(){
+        try {
             var type = Math.random();
-            if(type < 1f/3) {
-                play(door)
-            }
-            else if(type < 2f/3)
-            {
+            if (type < .5) {
                 play(button)
-            }
-            else {
+            } else {
                 play(terminal)
             }
+        }catch (e:Exception){
+                System.out.println(e)
+        }
+    }
+    fun doorSound(){
+        try{
+            play(door)
         }
         catch (e:Exception){
             System.out.println(e)

@@ -106,7 +106,7 @@
                 android:adjustViewBounds="true"
                 android:onClick="onSelect"
                 android:scaleType="fitCenter"
-                android:tag="drokdatta" />
+                android:tag="drokkatta" />
 
             <ImageView
                 android:id="@+id/imageViewShyla"

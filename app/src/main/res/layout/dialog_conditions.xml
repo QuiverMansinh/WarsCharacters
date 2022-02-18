@@ -26,14 +26,16 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/imageView48"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/character_select_background"
+                android:rotation="180"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/character_select_background" />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"

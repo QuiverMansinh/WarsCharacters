@@ -20,9 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImperialAssault">
         <activity
-            android:name=".ImperialScreen"
-            android:screenOrientation="sensorLandscape"
-            android:exported="true" />
+            android:name=".imperial.ImperialScreen"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".CreateScreen"
             android:screenOrientation="sensorPortrait" />
@@ -46,7 +45,10 @@
             android:name=".inventory.ArmorScreen"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".character.CharacterScreen"
+            android:name=".character_screen.XPScreen"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".character_screen.CharacterScreen"
             android:screenOrientation="sensorPortrait" />
         <activity
             android:name=".Characters_list"

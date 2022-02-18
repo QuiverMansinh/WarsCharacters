@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/character_select_background"
-    tools:context=".character.CharacterScreen">
+    tools:context=".character_screen.CharacterScreen">
 
     <LinearLayout
         android:id="@+id/action_menu"
@@ -27,7 +27,7 @@
             android:id="@+id/bleeding_add_strain"
             android:layout_width="180dp"
             android:layout_height="44dp"
-            android:onClick="onShowCard"
+            android:onClick="onShowConditionCard"
             android:tag="3"
             android:visibility="gone">
 
@@ -101,7 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:background="@drawable/save_file_back" />
+                android:background="@drawable/save_file_back"
+                android:foreground="@drawable/button_ripple" />
 
             <LinearLayout
                 android:layout_width="180dp"
@@ -131,7 +132,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:tag="0"
                     android:visibility="visible"
                     app:srcCompat="@drawable/condition_hidden" />
@@ -141,7 +142,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:tag="1"
                     android:visibility="visible"
                     app:srcCompat="@drawable/condition_focused" />
@@ -153,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/shadow"
-                android:onClick="onShowCard"
+                android:onClick="onShowConditionCard"
                 android:padding="5dp"
                 android:tag="4"
                 android:visibility="invisible"
@@ -201,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/shadow"
-                android:onClick="onShowCard"
+                android:onClick="onShowConditionCard"
                 android:paddingVertical="5dp"
                 android:tag="4"
                 android:visibility="invisible"
@@ -247,7 +248,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/action_interact"
+            android:id="@+id/action_interactTerminal"
             android:layout_width="180dp"
             android:layout_height="44dp"
             android:layout_gravity="center"
@@ -256,7 +257,6 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onInteract"
             app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
@@ -268,18 +268,94 @@
                 android:layout_gravity="center"
                 android:background="@drawable/save_file_back" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textViewTerminal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_terminal" />
+
+                <TextView
+                    android:id="@+id/textViewTerminal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="10"
+                    android:text="INTERACT"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.41"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/action_interactDoor"
+            android:layout_width="180dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="20dp"
+            app:cardMaxElevation="5dp">
+
+            <ImageView
+                android:id="@+id/imageViewDoor"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:fontFamily="@font/agency_fb"
-                android:gravity="center"
-                android:shadowColor="@color/black"
-                android:shadowRadius="10"
-                android:text="INTERACT"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:background="@drawable/save_file_back" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView15"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_door" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/agency_fb"
+                    android:gravity="center"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="10"
+                    android:text="INTERACT"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.41"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -293,7 +369,6 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onPickUpCrate"
             app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
@@ -333,7 +408,7 @@
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView29"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.41"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -351,7 +426,6 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onSpecial"
             app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
             app:cardMaxElevation="5dp">
@@ -381,7 +455,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/shadow"
-                android:onClick="onShowCard"
+                android:onClick="onShowConditionCard"
                 android:paddingVertical="5dp"
                 android:tag="4"
                 android:visibility="invisible"
@@ -403,7 +477,6 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onRemoveStun"
             android:visibility="visible"
             app:cardCornerRadius="2dp"
             app:cardElevation="2dp"
@@ -447,7 +520,7 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="2dp"
                     android:layout_weight="1"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:tag="4"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -465,7 +538,6 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onRemoveBleeding"
             android:visibility="visible"
             app:cardCornerRadius="2dp"
             app:cardElevation="20dp"
@@ -510,7 +582,7 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="2dp"
                     android:layout_weight="0.5"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:tag="3"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -560,13 +632,15 @@
         android:id="@+id/character_images"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="78dp"
         android:alpha="0"
-        app:layout_constraintBottom_toBottomOf="@+id/overlay"
-        app:layout_constraintEnd_toEndOf="@+id/background_image"
+        app:layout_constraintBottom_toBottomOf="@+id/wounded"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/background_image"
-        app:layout_constraintTop_toTopOf="@+id/overlay">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.glasswellapps.iact.character.CharacterImageView
+        <com.glasswellapps.iact.character_screen.views.CharacterImageView
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -576,7 +650,7 @@
 
     </FrameLayout>
 
-    <com.glasswellapps.iact.character.PulsatingImageView
+    <com.glasswellapps.iact.character_screen.views.PulsatingImageView
         android:id="@+id/camouflage"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -593,6 +667,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/border_portrait"
+        android:elevation="20dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -659,7 +734,6 @@
             android:layout_width="70dp"
             android:layout_height="44dp"
             android:layout_marginTop="60dp"
-            android:onClick="onExtendUp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/extension_up" />
@@ -669,7 +743,6 @@
             android:layout_width="70dp"
             android:layout_height="44dp"
             android:layout_marginBottom="100dp"
-            android:onClick="onExtendDown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/extension_down" />
@@ -985,7 +1058,6 @@
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onReward"
                 app:srcCompat="@drawable/reward_button" />
 
             <ImageView
@@ -993,7 +1065,6 @@
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onXPScreen"
                 app:srcCompat="@drawable/xpbutton" />
 
             <ImageView
@@ -1001,7 +1072,6 @@
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onAccessory"
                 app:srcCompat="@drawable/item_accessory" />
 
             <ImageView
@@ -1009,7 +1079,6 @@
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onArmour"
                 app:srcCompat="@drawable/item_armour" />
 
             <ImageView
@@ -1017,7 +1086,6 @@
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onMelee"
                 app:srcCompat="@drawable/item_melee" />
 
             <ImageView
@@ -1025,7 +1093,6 @@
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="onRange"
                 app:srcCompat="@drawable/item_ranged" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1033,12 +1100,80 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_panel"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
         android:alpha="0"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/action_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/actions_panel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:id="@+id/action_button2"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:alpha="1"
+                android:visibility="visible"
+                app:layout_constraintStart_toEndOf="@+id/action_button1"
+                app:layout_constraintTop_toTopOf="@+id/action_button1">
+
+                <ImageView
+                    android:id="@+id/action_complete_2"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_complete_icon"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/action2"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_icon"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/action_button1"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:alpha="1"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.29"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/action_complete"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_complete_icon"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/action1"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/action_icon"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible" />
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/imageView7"
@@ -1050,94 +1185,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/find_server_button"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:padding="7dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@+id/settings"
-            app:layout_constraintEnd_toStartOf="@+id/settings"
-            app:layout_constraintTop_toTopOf="@+id/settings"
-            app:srcCompat="@drawable/button_bluetooth" />
+        <FrameLayout
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_bluetooth_character_pressed"
+            app:layout_constraintBottom_toBottomOf="@+id/options_button"
+            app:layout_constraintEnd_toStartOf="@+id/options_button"
+            app:layout_constraintTop_toTopOf="@+id/options_button">
+
+            <ImageView
+                android:id="@+id/find_server_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/button_bluetooth_character" />
+        </FrameLayout>
 
         <ImageButton
-            android:id="@+id/settings"
+            android:id="@+id/options_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="9dp"
-            android:background="@drawable/setting_button"
-            android:onClick="onShowOptions"
+            android:layout_marginTop="7dp"
 
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/setting_button"
             android:src="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.99"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/action_button2"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/action_button1"
-            app:layout_constraintStart_toEndOf="@+id/action_button1"
-            app:layout_constraintTop_toTopOf="@+id/action_button1">
-
-            <ImageView
-                android:id="@+id/action_complete_2"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@drawable/action_complete_icon"
-                android:scaleType="fitCenter"
-                android:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/action2"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@drawable/action_icon"
-                android:onClick="onAction"
-                android:scaleType="fitCenter"
-                android:visibility="visible" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/action_button1"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="10dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/settings"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.31"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/settings">
-
-            <ImageView
-                android:id="@+id/action_complete"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@drawable/action_complete_icon"
-                android:scaleType="fitCenter" />
-
-            <ImageView
-                android:id="@+id/action1"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@drawable/action_icon"
-                android:onClick="onAction"
-                android:scaleType="fitCenter" />
-        </FrameLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/activationButton"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:onClick="onActivate"
+            android:background="@drawable/button_ripple"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -1145,14 +1233,14 @@
                 android:id="@+id/active"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/unactive"
-                app:layout_constraintEnd_toEndOf="@+id/unactive"
-                app:layout_constraintStart_toStartOf="@+id/unactive"
-                app:layout_constraintTop_toTopOf="@+id/unactive"
+                app:layout_constraintBottom_toBottomOf="@+id/inactive"
+                app:layout_constraintEnd_toEndOf="@+id/inactive"
+                app:layout_constraintStart_toStartOf="@+id/inactive"
+                app:layout_constraintTop_toTopOf="@+id/inactive"
                 app:srcCompat="@drawable/missiontoken_green" />
 
             <ImageView
-                android:id="@+id/unactive"
+                android:id="@+id/inactive"
                 android:layout_width="70dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="5dp"
@@ -1167,7 +1255,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="8dp"
         android:alpha="0"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -1186,9 +1275,9 @@
 
         <TextView
             android:id="@+id/speed"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="15dp"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
@@ -1205,9 +1294,9 @@
 
         <TextView
             android:id="@+id/health"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
@@ -1224,9 +1313,9 @@
 
         <TextView
             android:id="@+id/endurance"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="15dp"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/stat_box"
             android:fontFamily="@font/agency_fb"
@@ -1243,9 +1332,9 @@
 
         <FrameLayout
             android:id="@+id/defence_wrapper"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="10dp"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/stat_box"
             app:layout_constraintBottom_toBottomOf="@+id/speed"
             app:layout_constraintStart_toEndOf="@+id/speed"
@@ -1262,8 +1351,9 @@
 
         <TextView
             android:id="@+id/fileName"
-            android:layout_width="170dp"
-            android:layout_height="55dp"
+            android:layout_width="175dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/name_back"
             android:fontFamily="@font/agency_fb"
             android:gravity="center"
@@ -1322,7 +1412,7 @@
             android:id="@+id/insight_icon"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/insight_glow"
             app:layout_constraintEnd_toEndOf="@+id/fileName"
             app:layout_constraintStart_toStartOf="@+id/fileName"
@@ -1406,9 +1496,11 @@
             android:fontFamily="@font/agency_fb"
             android:shadowColor="@color/shadow"
             android:shadowDy="-1"
-            android:shadowRadius="1"
+            android:shadowRadius="2"
             android:text="Health"
-            android:textColor="@color/grey"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="12sp"
+            android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/health"
             app:layout_constraintEnd_toEndOf="@+id/health"
             app:layout_constraintStart_toStartOf="@+id/health" />
@@ -1420,10 +1512,11 @@
             android:fontFamily="@font/agency_fb"
             android:shadowColor="@color/shadow"
             android:shadowDy="-1"
-            android:shadowRadius="1"
+            android:shadowRadius="2"
             android:text="Endurance"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="12sp"
+            android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/health"
             app:layout_constraintEnd_toEndOf="@+id/endurance"
             app:layout_constraintStart_toStartOf="@+id/endurance" />
@@ -1435,10 +1528,11 @@
             android:fontFamily="@font/agency_fb"
             android:shadowColor="@color/shadow"
             android:shadowDy="-1"
-            android:shadowRadius="1"
+            android:shadowRadius="2"
             android:text="Speed"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="12sp"
+            android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/speed"
             app:layout_constraintEnd_toEndOf="@+id/speed"
             app:layout_constraintStart_toStartOf="@+id/speed" />
@@ -1450,10 +1544,11 @@
             android:fontFamily="@font/agency_fb"
             android:shadowColor="@color/shadow"
             android:shadowDy="-1"
-            android:shadowRadius="1"
+            android:shadowRadius="2"
             android:text="Defence"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="12sp"
+            android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/defence_wrapper"
             app:layout_constraintEnd_toEndOf="@+id/defence_wrapper"
             app:layout_constraintStart_toStartOf="@+id/defence_wrapper" />
@@ -1488,7 +1583,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowConditionCard"
             android:tag="0"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
@@ -1501,7 +1596,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowConditionCard"
             android:tag="1"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -1514,7 +1609,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowConditionCard"
             android:tag="2"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1527,7 +1622,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowConditionCard"
             android:tag="3"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1542,7 +1637,7 @@
             android:layout_height="72dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowConditionCard"
             android:tag="4"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1578,12 +1673,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/condition1"
+                    android:id="@+id/bleeding"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:alpha="0.5"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:visibility="gone"
                     app:srcCompat="@drawable/condition_focused" />
 
@@ -1593,7 +1688,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:alpha="0.5"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:visibility="gone"
                     app:srcCompat="@drawable/condition_focused" />
             </LinearLayout>
@@ -1612,7 +1707,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:alpha="0.5"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:visibility="gone"
                     app:srcCompat="@drawable/condition_focused" />
 
@@ -1622,7 +1717,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:alpha="0.5"
-                    android:onClick="onShowCard"
+                    android:onClick="onShowConditionCard"
                     android:visibility="gone"
                     app:srcCompat="@drawable/condition_focused" />
             </LinearLayout>
@@ -1634,7 +1729,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:alpha="0.5"
-            android:onClick="onShowCard"
+            android:onClick="onShowConditionCard"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -1672,7 +1767,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:alpha="0"
-            android:onClick="onMinusStrain"
+            android:background="@drawable/button_ripple"
             android:paddingTop="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
@@ -1686,7 +1781,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/damage"
-            android:onClick="onAddDamage"
             app:layout_constraintBottom_toTopOf="@+id/add_strain"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/number_0" />
@@ -1696,7 +1790,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:alpha="0"
-            android:onClick="onMinusDamage"
+            android:background="@drawable/button_ripple"
             android:paddingTop="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
@@ -1710,7 +1804,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/strain"
-            android:onClick="onAddStrain"
             app:layout_constraintBottom_toTopOf="@+id/add_condition"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/number_0" />
@@ -1721,8 +1814,8 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:alpha="0"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

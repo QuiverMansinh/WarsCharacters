@@ -13,12 +13,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
+import com.glasswellapps.iact.loading.LoadedCharacter
 import kotlinx.android.synthetic.main.activity_acc_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
 
 class AccScreen : AppCompatActivity() {
-    val character = LoadedCharacter.getCharacter()
+    val character = LoadedCharacter.getActiveCharacter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,17 +75,15 @@ class AccScreen : AppCompatActivity() {
         to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
 
 
-
-        showCardDialog = Dialog(this)
-        showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-        showCardDialog!!.setContentView(R.layout.dialog_show_card)
-        showCardDialog!!.setCancelable(false)
-        showCardDialog!!.setCanceledOnTouchOutside(true)
-        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        showCardDialog!!.show_card_dialog.setOnClickListener {
-            showCardDialog!!.cancel()
-            true
+        showCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+        showCardDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        showCardDialog.setContentView(R.layout.dialog_show_card)
+        showCardDialog.setCancelable(true)
+        showCardDialog.setCanceledOnTouchOutside(true)
+        showCardDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        showCardDialog.show_card_dialog.setOnClickListener {
+            Sounds.selectSound()
+            showCardDialog.dismiss()
         }
     }
 
@@ -104,6 +103,10 @@ class AccScreen : AppCompatActivity() {
     }
 
     fun equipAcc(item: Item): Float {
+        if(!LoadedCharacter.getIsInteractable()){
+            Sounds.negativeSound()
+            return 0.5f;
+        }
         if (character.accessories.remove(item.index)) {
             if (item.index == Items.mandoHelmetIndex || item.index == Items.reinforcedHelmetIndex){
                 character.helmet = false
@@ -130,7 +133,6 @@ class AccScreen : AppCompatActivity() {
                     return 0.5f
                 }
             }
-
             else {
                 character.accessories.add(item.index)
                 return 1f
@@ -161,12 +163,11 @@ class AccScreen : AppCompatActivity() {
         toast!!.show()
     }
 
-    var showCardDialog: Dialog? = null
+    lateinit var showCardDialog: Dialog
     fun onShowCard(view: ImageView) {
         var image = ((view).drawable as BitmapDrawable).bitmap
-        println(image)
-        showCardDialog!!.card_image.setImageBitmap(image)
-        showCardDialog!!.show()
+        showCardDialog.card_image.setImageBitmap(image)
+        showCardDialog.show()
     }
 
     fun onToAcc(view:View){
