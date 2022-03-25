@@ -22,7 +22,7 @@ class CreditsController (val characterScreen: CharacterScreen){
         developersCreditsScreen.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         developersCreditsScreen.textView41.movementMethod = LinkMovementMethod.getInstance()
         developersCreditsScreen.textView43.movementMethod = LinkMovementMethod.getInstance()
-        developersCreditsScreen.textView44.movementMethod = LinkMovementMethod.getInstance()
+        developersCreditsScreen.matthew_twitter.movementMethod = LinkMovementMethod.getInstance()
         developersCreditsScreen.mannyPortfolio.movementMethod = LinkMovementMethod.getInstance()
         developersCreditsScreen.davidPortfolio.movementMethod = LinkMovementMethod.getInstance()
         developersCreditsScreen.mikeImageLink.setOnClickListener{
@@ -32,14 +32,14 @@ class CreditsController (val characterScreen: CharacterScreen){
                 .setData(Uri.parse("http://www.mikeglasswell.com/"))
             characterScreen.startActivity(linkIntent)
         }
-        developersCreditsScreen.mannyImageLink.setOnClickListener{
+        developersCreditsScreen.mannyPortfolio.setOnClickListener{
             val linkIntent = Intent()
                 .setAction(Intent.ACTION_VIEW)
                 .addCategory(Intent.CATEGORY_BROWSABLE)
                 .setData(Uri.parse("https://mansinh-d25ff.web.app"))
             characterScreen.startActivity(linkIntent)
         }
-        developersCreditsScreen.HeroXImageLink.setOnClickListener{
+        developersCreditsScreen.matthew_twitter.setOnClickListener{
             val linkIntent = Intent()
                 .setAction(Intent.ACTION_VIEW)
                 .addCategory(Intent.CATEGORY_BROWSABLE)

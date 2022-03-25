@@ -3,7 +3,7 @@ package com.glasswellapps.iact.character_screen
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.glasswellapps.iact.loading.LoadedCharacter
+import com.glasswellapps.iact.loading.CharacterHolder
 import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.database.AppDatabase
 import com.glasswellapps.iact.database.CharacterData
@@ -12,20 +12,26 @@ class SaveWorker(val context: Context, params: WorkerParameters): Worker
     (context,
     params) {
     override fun doWork(): Result {
+        if(CharacterHolder.getParty() == null){
+            return Result.failure()
+        }
         val database = AppDatabase.getInstance(context)
 
-        val characters = LoadedCharacter.getCharactersToSave()
+        val characters = CharacterHolder.getParty()
 
         for (i in 0 until characters.size){
-            val saveFile = getCharacterData(characters[i])
-            if (characters[i].id != -1) {
-                saveFile.id = characters[i].id
-                database!!.getCharacterDAO().update(saveFile)
-                println("update save")
-            } else {
-                characters[i].id = database!!.getCharacterDAO()
-                    .getPrimaryKey(database.getCharacterDAO().insert(saveFile))
-                println("insert save")
+            if(characters[i]!= null) {
+                val saveFile = getCharacterData(characters[i])
+
+                if (characters[i].id != -1) {
+                    saveFile.id = characters[i].id
+                    database!!.getCharacterDAO().update(saveFile)
+                    println("update save")
+                } else {
+                    characters[i].id = database!!.getCharacterDAO()
+                        .getPrimaryKey(database.getCharacterDAO().insert(saveFile))
+                    println("insert save")
+                }
             }
         }
         return Result.success()

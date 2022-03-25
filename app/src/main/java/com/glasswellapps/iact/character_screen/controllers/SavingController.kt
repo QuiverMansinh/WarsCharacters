@@ -1,6 +1,5 @@
 package com.glasswellapps.iact.character_screen.controllers
 
-import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
@@ -18,7 +17,7 @@ import com.glasswellapps.iact.character_screen.SaveWorker
 import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.effects.WorkingAnimations
-import com.glasswellapps.iact.loading.LoadedCharacter
+import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.dialog_save.*
 
 open class SavingController (val context:Activity, protected val saving_icon: View){
@@ -46,12 +45,12 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
             Sounds.selectSound()
             saveDialog.dismiss()
         }
-        LoadedCharacter.clearCharactersToSave()
+        CharacterHolder.clearParty()
 
     }
     fun addCharacterToSave(character: Character){
         if(character==null){return}
-        LoadedCharacter.addCharacterToSave(character)
+        CharacterHolder.addToParty(character)
     }
 
     fun showSaveDialog(){
@@ -84,12 +83,15 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
             })
     }
     protected open fun onSavingFinished(){
-        WorkingAnimations.stopAnimation()
+        stopAnimation()
     }
     protected open fun onSavingStarted(){
         WorkingAnimations.startSpinningAnimation(saving_icon)
     }
 
+    open fun stopAnimation(){
+        WorkingAnimations.stopAnimation()
+    }
 
     private fun firstManualSave() {
         if(character==null){return}
@@ -99,6 +101,6 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
     }
 
     fun clearCharactersToSave() {
-        LoadedCharacter.clearCharactersToSave()
+        CharacterHolder.clearParty()
     }
 }

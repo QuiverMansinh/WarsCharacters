@@ -17,9 +17,6 @@ class NavigationController(val characterScreen: CharacterScreen) {
 
 
     init{
-
-
-
         extendUpButton.setOnClickListener { onExtendUp() }
         extendDownButton.setOnClickListener { onExtendDown() }
         characterScreen.rewards_button.setOnClickListener { onReward() }
@@ -67,38 +64,42 @@ class NavigationController(val characterScreen: CharacterScreen) {
             update()
         }
     }
-    fun onReward() {
+    private fun onNavigate(intent:Intent){
         Sounds.selectSound()
-        val intent = Intent(characterScreen, RewardsScreen::class.java)
+        //characterScreen.turnOffLightSaber()
         characterScreen.startActivity(intent)
+    }
+
+    fun onReward() {
+        val intent = Intent(characterScreen, RewardsScreen::class.java)
+        onNavigate(intent)
     }
     private fun onAccessory() {
-        Sounds.selectSound()
         val intent = Intent(characterScreen, AccScreen::class.java)
-        characterScreen.startActivity(intent)
+        onNavigate(intent)
     }
     private fun onArmour() {
-        Sounds.selectSound()
         val intent = Intent(characterScreen, ArmorScreen::class.java)
-        characterScreen.startActivity(intent)
+        onNavigate(intent)
     }
     private fun onMelee() {
-        Sounds.selectSound()
         val intent = Intent(characterScreen, MeleeScreen::class.java)
-        characterScreen.startActivity(intent)
+        onNavigate(intent)
     }
     private fun onRange() {
-        Sounds.selectSound()
         val intent = Intent(characterScreen, RangedScreen::class.java)
-        characterScreen.startActivity(intent)
+        onNavigate(intent)
     }
     fun onXPScreen() {
-        Sounds.selectSound()
         val intent = Intent(characterScreen, XPScreen::class.java)
-        characterScreen.startActivity(intent)
+        onNavigate(intent)
     }
     private fun onShowOptions() {
         Sounds.selectSound()
         optionsMenu.showDialog()
+    }
+
+    fun onStop() {
+        optionsMenu.onStop()
     }
 }

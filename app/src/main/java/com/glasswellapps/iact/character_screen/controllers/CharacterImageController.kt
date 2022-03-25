@@ -3,6 +3,7 @@ package com.glasswellapps.iact.character_screen.controllers
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.os.CountDownTimer
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
@@ -14,6 +15,7 @@ import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.character_screen.types.ConditionTypes
 import com.glasswellapps.iact.character_screen.views.CharacterImageView
 import com.glasswellapps.iact.characters.Character
+import com.glasswellapps.iact.effects.Sounds
 import kotlinx.android.synthetic.main.activity_character_screen.*
 
 class CharacterImageController (){//val characterScreen: CharacterScreen){
@@ -23,6 +25,29 @@ class CharacterImageController (){//val characterScreen: CharacterScreen){
     //private var companionImage = characterScreen.companion_image
 
     companion object {
+        fun turnOffLightSaber(character_image:CharacterImageView){
+            lightSaberCountdown?.cancel()
+            character_image.turnOffLightSaber()
+        }
+
+        var lightSaberCountdown: CountDownTimer? = null
+        fun turnOnLightSaber(character_image:CharacterImageView,delay:Long){
+            if(character_image.layerLightSaber == null){ return }
+            lightSaberCountdown = object : CountDownTimer(delay, 1000) {
+
+                override fun onTick(millisUntilFinished: Long) {
+                }
+
+                override fun onFinish() {
+                    if (character_image.turnOnLightSaber()) {
+                        Sounds.play(Sounds.lightSaber)
+                        Sounds.play(Sounds.lightsaber_hum)
+
+                    }
+                }
+            }.start()
+        }
+
         fun update(
             character: Character, characterImage: CharacterImageView,
             companionImage: ImageView, context:
@@ -50,6 +75,7 @@ class CharacterImageController (){//val characterScreen: CharacterScreen){
             characterImage.setImageBitmap(character.currentImage)
             characterImage.setLayer1Bitmap(character.layer1)
             characterImage.setLayer2Bitmap(character.layer2)
+            characterImage.setLightSaberBitmap(character.layerLightSaber)
 
             if (character.name_short != "jarrod") {
                 if (character.astromech) {
@@ -76,6 +102,10 @@ class CharacterImageController (){//val characterScreen: CharacterScreen){
             } else {
                 companionImage.visibility = View.GONE
             }
+
+
         }
+
     }
+
 }

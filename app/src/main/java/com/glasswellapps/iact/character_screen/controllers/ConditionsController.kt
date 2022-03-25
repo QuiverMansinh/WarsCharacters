@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.glasswellapps.iact.R
+import com.glasswellapps.iact.ShortToast
 import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.character_screen.types.ConditionTypes
 import com.glasswellapps.iact.effects.GreenHighlight
@@ -43,7 +44,6 @@ class ConditionsController (val characterScreen: CharacterScreen){
         for (i in 0 until conditionViews.size) {
             conditionViews[i].setOnLongClickListener { v ->
                 removeCondition(v.tag as Int)
-                characterScreen.actionCompleted()
                 true
             }
         }
@@ -87,6 +87,7 @@ class ConditionsController (val characterScreen: CharacterScreen){
 
         conditionsDialog.stunned_select.setOnClickListener{
             onStunned()
+            conditionsDialog.dismiss()
         }
         conditionsDialog.stunned_select.setOnLongClickListener {
             onShowCard(conditionsDialog.stunned_select)
@@ -95,6 +96,7 @@ class ConditionsController (val characterScreen: CharacterScreen){
 
         conditionsDialog.bleeding_select.setOnClickListener {
             onBleeding()
+            conditionsDialog.dismiss()
         }
         conditionsDialog.bleeding_select.setOnLongClickListener {
             onShowCard(conditionsDialog.bleeding_select)
@@ -103,6 +105,7 @@ class ConditionsController (val characterScreen: CharacterScreen){
 
         conditionsDialog.weakened_select.setOnClickListener {
             onWeakened()
+            conditionsDialog.dismiss()
         }
         conditionsDialog.weakened_select.setOnLongClickListener {
             onShowCard(conditionsDialog.weakened_select)
@@ -111,6 +114,7 @@ class ConditionsController (val characterScreen: CharacterScreen){
 
         conditionsDialog.focused_select.setOnClickListener {
             onFocused()
+            conditionsDialog.dismiss()
         }
         conditionsDialog.focused_select.setOnLongClickListener {
             onShowCard(conditionsDialog.focused_select)
@@ -119,6 +123,7 @@ class ConditionsController (val characterScreen: CharacterScreen){
 
         conditionsDialog.hidden_select.setOnClickListener {
             onHidden()
+            conditionsDialog.dismiss()
         }
         conditionsDialog.hidden_select.setOnLongClickListener {
             onShowCard(conditionsDialog.hidden_select)
@@ -167,19 +172,19 @@ class ConditionsController (val characterScreen: CharacterScreen){
         val drawable = ResourcesCompat.getDrawable(resources,drawableId,null)
         showConditionCardDialog.condition_card_image.setImageDrawable(drawable)
         showConditionCardDialog.remove_button.tag = currentCondition
-        if(!characterScreen.action_menu.isVisible) {
+        /*if(!characterScreen.action_menu.isVisible) {
             showConditionCardDialog.remove_button.visibility = View.VISIBLE
         }
         else{
             showConditionCardDialog.remove_button.visibility = View.GONE
-        }
+        }*/
         if(character.conditionsActive[currentCondition]) {
             showConditionCardDialog.remove_button_text.text = "REMOVE"
         }
         else{
             showConditionCardDialog.remove_button_text.text = "APPLY"
         }
-        showConditionCardDialog.remove_button.visibility = View.GONE
+        //showConditionCardDialog.remove_button.visibility = View.GONE
         showConditionCardDialog.show()
     }
 
@@ -252,6 +257,9 @@ class ConditionsController (val characterScreen: CharacterScreen){
             !character.actionUsageSetting) {
             character.conditionsActive[conditionType] = false
             update()
+        }
+        else{
+            ShortToast.show(characterScreen,"NO ACTIONS LEFT")
         }
     }
 

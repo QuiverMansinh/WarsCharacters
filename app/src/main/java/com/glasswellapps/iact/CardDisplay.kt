@@ -10,8 +10,7 @@ import com.glasswellapps.iact.effects.Sounds
 import kotlinx.android.synthetic.main.dialog_show_card.*
 
 class CardDisplay (context:Activity){
-    private val showCardDialog =Dialog(context, android.R.style
-    .Theme_Material_Light_NoActionBar_Fullscreen)
+    private val showCardDialog =Dialog(context)
     init{
         showCardDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         showCardDialog.setContentView(R.layout.dialog_show_card)

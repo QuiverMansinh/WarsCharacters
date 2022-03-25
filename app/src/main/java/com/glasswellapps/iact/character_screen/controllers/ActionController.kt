@@ -12,8 +12,8 @@ import com.glasswellapps.iact.R
 import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.character_screen.types.ConditionTypes
 import com.glasswellapps.iact.effects.Sounds
+import com.glasswellapps.iact.inventory.Items
 import kotlinx.android.synthetic.main.activity_character_screen.*
-import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_end_activation.*
 import kotlinx.android.synthetic.main.dialog_next_mission.*
 
@@ -47,7 +47,7 @@ class ActionController (val characterScreen: CharacterScreen){
     init{
         activationButton.setOnClickListener { onActivationButton() }
         activationButton.setOnLongClickListener{
-            nextMissionDialog.show()
+            showNextMission()
             true
         }
 
@@ -92,7 +92,7 @@ class ActionController (val characterScreen: CharacterScreen){
                 characterScreen.onRemoveFocused()
                 characterScreen.onRemoveHidden()
                 actionCompleted()
-                Sounds.attackSound()
+                playAttackSound()
                 character.attacksMade++
             }
             else{
@@ -102,6 +102,23 @@ class ActionController (val characterScreen: CharacterScreen){
             showNoActionsLeftToast()
         }
     }
+
+    private fun playAttackSound(){
+        if(character.layerLightSaber != null){
+            Sounds.play(Sounds.lightsaber_heavy_flurry)
+            return
+        }
+        if(character.weapons.size > 0){
+            val weaponType = Items.itemsArray?.get(character.weapons[0])?.type
+            when(weaponType) {
+                Items.ranged -> Sounds.play(Sounds.blaster_gaster_blaster_master)
+                Items.melee -> Sounds.play(Sounds.melee_impact)
+            }
+        }
+    }
+
+
+
     private fun onMove() {
         if (character.actionsLeft > 0) {
             Sounds.movingSound()
@@ -177,14 +194,12 @@ class ActionController (val characterScreen: CharacterScreen){
         }
     }
 
-
-
     private fun showNoActionsLeftToast() {
         Sounds.negativeSound()
         val noActionsLeftToast = Toast(characterScreen)
         noActionsLeftToast.duration = Toast.LENGTH_SHORT
         noActionsLeftToast.view =  layoutInflater.inflate(
-            R.layout.toast_no_actions_left,
+            R.layout.toast,
             characterViewGroup,
             false
         )
@@ -321,6 +336,11 @@ class ActionController (val characterScreen: CharacterScreen){
             }
         }
     }
+
+    fun showNextMission(){
+        nextMissionDialog.show()
+    }
+
     private fun onNextMission() {
         Sounds.selectSound()
         nextMissionDialog.dismiss()

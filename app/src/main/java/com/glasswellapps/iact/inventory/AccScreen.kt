@@ -13,13 +13,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
-import com.glasswellapps.iact.loading.LoadedCharacter
+import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.activity_acc_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
-import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
+import kotlinx.android.synthetic.main.toast.view.*
 
 class AccScreen : AppCompatActivity() {
-    val character = LoadedCharacter.getActiveCharacter()
+    val character = CharacterHolder.getActiveCharacter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +75,13 @@ class AccScreen : AppCompatActivity() {
         to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
 
 
-        showCardDialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
-        showCardDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        showCardDialog.setContentView(R.layout.dialog_show_card)
-        showCardDialog.setCancelable(true)
-        showCardDialog.setCanceledOnTouchOutside(true)
-        showCardDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        showCardDialog = Dialog(this)
+        showCardDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        showCardDialog!!.setContentView(R.layout.dialog_show_card)
+        showCardDialog!!.setCancelable(false)
+        showCardDialog!!.setCanceledOnTouchOutside(true)
+        showCardDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         showCardDialog.show_card_dialog.setOnClickListener {
             Sounds.selectSound()
             showCardDialog.dismiss()
@@ -103,7 +104,7 @@ class AccScreen : AppCompatActivity() {
     }
 
     fun equipAcc(item: Item): Float {
-        if(!LoadedCharacter.getIsInteractable()){
+        if(!CharacterHolder.getIsInteractable()){
             Sounds.negativeSound()
             return 0.5f;
         }
@@ -149,7 +150,7 @@ class AccScreen : AppCompatActivity() {
         val toast = Toast(this)
         toast!!.duration = Toast.LENGTH_SHORT
         val view = this.layoutInflater.inflate(
-            R.layout.toast_no_actions_left,
+            R.layout.toast,
             null,
             false
         )

@@ -1,4 +1,5 @@
 package com.glasswellapps.iact.character_screen.controllers
+import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,6 +10,7 @@ import com.glasswellapps.iact.character_screen.views.DamageStrainView
 import com.glasswellapps.iact.effects.Sounds
 import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.dialog_assist.*
+import kotlinx.android.synthetic.main.dialog_rest.*
 import kotlin.math.min
 
 class DamageStrainController (val characterScreen: CharacterScreen){
@@ -18,7 +20,7 @@ class DamageStrainController (val characterScreen: CharacterScreen){
     private var addStrain = characterScreen.add_strain
     private var minusDamage = characterScreen.minus_damage
     private var minusStrain = characterScreen.minus_strain
-    private var unwoundDialog: Dialog
+
 
     init{
         addDamage.setOnClickListener { onAddDamage() }
@@ -26,17 +28,9 @@ class DamageStrainController (val characterScreen: CharacterScreen){
         addStrain.setOnClickListener { onAddStrain() }
         minusStrain.setOnClickListener { onMinusStrain() }
 
-        unwoundDialog = Dialog(characterScreen)
-        unwoundDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        unwoundDialog.setCancelable(false)
-        unwoundDialog.setContentView(R.layout.dialog_unwound)
-        unwoundDialog.setCanceledOnTouchOutside(true)
-        unwoundDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        unwoundDialog.remove_condition_button.setOnClickListener { onUnwound() }
-
         addDamage.setOnLongClickListener {
             if (character.damage >= character.health) {
-                unwoundDialog.show()
+                characterScreen.onShowUnwoundDialog()
             }
             true
         }
@@ -161,12 +155,6 @@ class DamageStrainController (val characterScreen: CharacterScreen){
             character.strain--
             view.onMinusStrain(character.strain)
         }
-    }
-    private fun onUnwound() {
-        Sounds.strainSound()
-        unwoundDialog.dismiss()
-        unwound()
-        characterScreen.quickSave()
     }
 
     fun unwound(){

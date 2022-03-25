@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
-import com.glasswellapps.iact.loading.LoadedCharacter
+import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.screen_xp_select.*
-import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
+import kotlinx.android.synthetic.main.toast.view.*
 
 class XPScreen : AppCompatActivity() {
-    private val character = LoadedCharacter.getActiveCharacter()
+    private val character = CharacterHolder.getActiveCharacter()
     private var xpCardImages = arrayListOf<ImageView>()
     private  lateinit var cardDisplay:CardDisplay
 
@@ -67,7 +67,7 @@ class XPScreen : AppCompatActivity() {
     }
 
     private fun onXPCard(cardNo: Int) {
-        if(!LoadedCharacter.getIsInteractable()){
+        if(!CharacterHolder.getIsInteractable()){
             Sounds.negativeSound()
             return;
         }
@@ -83,6 +83,7 @@ class XPScreen : AppCompatActivity() {
             character.equipXP(cardNo, this)
             if (character.xpCardsEquipped[cardNo]) {
                 xpCardImages[cardNo].animate().alpha(1f).duration = 50
+                if(cardNo < 8)
                 Sounds.selectSound()
             }
         } else {
@@ -98,7 +99,7 @@ class XPScreen : AppCompatActivity() {
         val toast = Toast(this)
         toast.duration = Toast.LENGTH_SHORT
         val view = this.layoutInflater.inflate(
-            R.layout.toast_no_actions_left,
+            R.layout.toast,
             null,
             false
         )
@@ -109,7 +110,7 @@ class XPScreen : AppCompatActivity() {
     }
 
     private fun addXP() {
-        if(!LoadedCharacter.getIsInteractable()){
+        if(!CharacterHolder.getIsInteractable()){
             Sounds.negativeSound()
             return;
         }
@@ -120,7 +121,7 @@ class XPScreen : AppCompatActivity() {
     }
 
     private fun minusXP() {
-        if(!LoadedCharacter.getIsInteractable()){
+        if(!CharacterHolder.getIsInteractable()){
             Sounds.negativeSound()
             return;
         }
@@ -133,5 +134,9 @@ class XPScreen : AppCompatActivity() {
         }
         xpLeft = character.totalXP - character.xpSpent
         xp_text.text = "XP: $xpLeft"
+    }
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }

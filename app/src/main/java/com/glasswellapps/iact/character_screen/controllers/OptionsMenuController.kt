@@ -8,10 +8,8 @@ import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.character_screen.views.BioView
 import com.glasswellapps.iact.effects.Sounds
 import kotlinx.android.synthetic.main.activity_character_screen.*
-import kotlinx.android.synthetic.main.dialog_bio.*
 import kotlinx.android.synthetic.main.dialog_options.*
-import kotlinx.android.synthetic.main.fragment_bluetooth_character.*
-import kotlinx.android.synthetic.main.fragment_bluetooth_character.background_image
+
 
 class OptionsMenuController (val characterScreen: CharacterScreen){
     private var optionsMenu: Dialog = Dialog(characterScreen)
@@ -88,11 +86,14 @@ class OptionsMenuController (val characterScreen: CharacterScreen){
         creditsScreen.showDialog()
     }
 
+
     fun showDialog(){
         optionsMenu.show()
     }
 
 
-
+    fun onStop(){
+        backgroundMenu.onStop()
+    }
 
 }

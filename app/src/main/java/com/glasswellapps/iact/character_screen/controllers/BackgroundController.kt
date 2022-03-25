@@ -65,6 +65,10 @@ class BackgroundController (val context: Activity){
 
     }
 
+    fun onStop(){
+        camouflage.onStop()
+    }
+
     fun showDialog(character:Character, backgroundImage:ImageView, camouflage:PulsatingImageView){
         setBackground(character,backgroundImage,camouflage)
         backgroundDialog.show()

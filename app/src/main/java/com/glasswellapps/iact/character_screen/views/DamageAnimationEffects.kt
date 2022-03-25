@@ -8,11 +8,9 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.glasswellapps.iact.R
-import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.character_screen.types.EffectTypes
 import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
-import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlin.random.Random
 
 class DamageAnimationEffects (val context: Context,
@@ -75,21 +73,21 @@ class DamageAnimationEffects (val context: Context,
         character.lastEffect = index
     }
     fun playBlastAnim(){
-        Sounds.damagedSound(context, Sounds.gaster_blaster_master)
+        Sounds.damagedSound(context, Sounds.blaster_gaster_blaster_master)
         if (blastAnim != null) {
             playAnim(blastAnim!!,damageAnimation)
         }
         hitAnim()
     }
     fun playSliceAnim(){
-        Sounds.damagedSound(context, Sounds.slice)
+        Sounds.damagedSound(context, Sounds.melee_slice)
         if (sliceAnim != null) {
             playAnim(sliceAnim!!,damageAnimation)
         }
         hitAnim()
     }
     fun playImpactAnim(){
-        Sounds.damagedSound(context, Sounds.impact)
+        Sounds.damagedSound(context, Sounds.melee_impact)
         if (impactAnim != null) {
             playAnim(impactAnim!!,damageAnimation)
         }
@@ -110,11 +108,11 @@ class DamageAnimationEffects (val context: Context,
     private fun playStrainDamageAnim(character: Character) {
         playStrainAnim(character)
         hitAnim()
-        Sounds.damagedSound(context, Sounds.impact)
+        Sounds.damagedSound(context, Sounds.melee_impact)
     }
     private fun playHit() {
         hitAnim()
-        Sounds.damagedSound(context, Sounds.impact)
+        Sounds.damagedSound(context, Sounds.melee_impact)
     }
 
     fun hitAnim(){

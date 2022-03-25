@@ -79,9 +79,10 @@ public class PulsatingImageView extends View implements Runnable{
     }
 
     int fixedDeltaTime = 1000/60;
+    boolean isRunning = true;
     @Override
     public void run() {
-        while(true) {
+        while(isRunning) {
             time+=fixedDeltaTime;
             //System.out.println("tick");
             update(fixedDeltaTime);
@@ -110,5 +111,17 @@ public class PulsatingImageView extends View implements Runnable{
             }
         }
     }
-
+    public void onStop() throws InterruptedException {
+        recycleBitmap(image);
+        image = null;
+        isRunning = false;
+        thread.join();
+    }
+    private void recycleBitmap(Bitmap bitmap){
+        if(bitmap!=null) {
+            if (!bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
+        }
+    }
 }

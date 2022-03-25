@@ -12,13 +12,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
 import com.glasswellapps.iact.effects.Sounds
-import com.glasswellapps.iact.loading.LoadedCharacter
+import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.activity_rewards_screen.*
 import kotlinx.android.synthetic.main.dialog_show_card.*
-import kotlinx.android.synthetic.main.toast_no_actions_left.view.*
+import kotlinx.android.synthetic.main.toast.view.*
 
 class RewardsScreen : AppCompatActivity() {
-    val character = LoadedCharacter.getActiveCharacter()
+    val character = CharacterHolder.getActiveCharacter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rewards_screen)
@@ -113,7 +113,7 @@ class RewardsScreen : AppCompatActivity() {
     }
 
     fun equipReward(item: Item): Float {
-        if(!LoadedCharacter.getIsInteractable()){
+        if(!CharacterHolder.getIsInteractable()){
             Sounds.negativeSound()
             return 0.5f;
         }
@@ -129,7 +129,7 @@ class RewardsScreen : AppCompatActivity() {
     }
 
     fun equipAcc(item: Item): Float {
-        if(!LoadedCharacter.getIsInteractable()){
+        if(!CharacterHolder.getIsInteractable()){
             Sounds.negativeSound()
             return 0.5f;
         }
@@ -155,7 +155,7 @@ class RewardsScreen : AppCompatActivity() {
         val toast = Toast(this)
         toast!!.duration = Toast.LENGTH_SHORT
         val view = this.layoutInflater.inflate(
-            R.layout.toast_no_actions_left,
+            R.layout.toast,
             null,
             false
         )

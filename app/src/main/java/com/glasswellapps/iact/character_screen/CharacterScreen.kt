@@ -18,34 +18,53 @@ import com.glasswellapps.iact.character_screen.controllers.DamageStrainControlle
 import com.glasswellapps.iact.character_screen.views.StatView
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.characters.*
-import com.glasswellapps.iact.loading.LoadedCharacter
-import com.glasswellapps.iact.imperial.BluetoothController
+import com.glasswellapps.iact.effects.LightSaberMotionController
+import com.glasswellapps.iact.loading.CharacterHolder
+import com.glasswellapps.iact.multiplayer.BluetoothController
 import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.activity_character_screen.background_image
 import kotlinx.android.synthetic.main.activity_character_screen.bottom_panel
 import kotlinx.android.synthetic.main.activity_character_screen.camouflage
+import kotlinx.android.synthetic.main.activity_character_screen.character_image
 import kotlinx.android.synthetic.main.activity_character_screen.character_images
 import kotlinx.android.synthetic.main.activity_character_screen.companion_image
+import kotlinx.android.synthetic.main.activity_character_screen.defence
+import kotlinx.android.synthetic.main.activity_character_screen.endurance
 import kotlinx.android.synthetic.main.activity_character_screen.fileName
+import kotlinx.android.synthetic.main.activity_character_screen.health
+import kotlinx.android.synthetic.main.activity_character_screen.insight1
+import kotlinx.android.synthetic.main.activity_character_screen.insight2
+import kotlinx.android.synthetic.main.activity_character_screen.insight3
+import kotlinx.android.synthetic.main.activity_character_screen.speed
+import kotlinx.android.synthetic.main.activity_character_screen.strength1
+import kotlinx.android.synthetic.main.activity_character_screen.strength2
+import kotlinx.android.synthetic.main.activity_character_screen.strength3
+import kotlinx.android.synthetic.main.activity_character_screen.tech1
+import kotlinx.android.synthetic.main.activity_character_screen.tech2
+import kotlinx.android.synthetic.main.activity_character_screen.tech3
 import kotlinx.android.synthetic.main.activity_character_screen.top_panel
+import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 
 class CharacterScreen : AppCompatActivity() {
     var character: Character = Character()
     var height = 0f
     var width = 0f
-
+    val REQUEST_COARSE_LOCATION = 3
+    val REQUEST_FINE_LOCATION = 4
     lateinit var cardDisplay: CardDisplay
-
     private lateinit var conditionsController: ConditionsController
     private lateinit var damageStrainController: DamageStrainController
     private lateinit var killTrackerController: KillTrackerController
     private lateinit var quickViewController: QuickViewController
     private lateinit var navigationController: NavigationController
     private lateinit var actionController: ActionController
+    private lateinit var gameOverController: GameOverController
     private lateinit var bluetoothController: BluetoothController
     private lateinit var savingController: SavingController
+    private lateinit var lightSaberSoundController: LightSaberMotionController
     private lateinit var restDialog: Dialog
+    private lateinit var unwoundDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +81,10 @@ class CharacterScreen : AppCompatActivity() {
         updateStats()
     }
     private fun initCharacter() {
-        if(LoadedCharacter.getActiveCharacter() == null) {
+        if(CharacterHolder.getActiveCharacter() == null) {
             finish()
         }
-        character = LoadedCharacter.getActiveCharacter()
+        character = CharacterHolder.getActiveCharacter()
 
         character.loadImages(this)
         if (character.portraitImage == null) {
@@ -79,15 +98,17 @@ class CharacterScreen : AppCompatActivity() {
             companion_button.visibility = View.INVISIBLE
             companion_button.isClickable = false
         }
-        LoadedCharacter.setIsInteractable(true)
+        CharacterHolder.setIsInteractable(true)
     }
     private fun initControllers() {
         initShowCardDialog()
         initRestDialog()
+        initUnwoundDialog()
 
         killTrackerController = KillTrackerController(this)
         navigationController = NavigationController(this)
         actionController = ActionController(this)
+        gameOverController = GameOverController(this, actionController);
         damageStrainController = DamageStrainController(this)
         conditionsController = ConditionsController(this)
         quickViewController = QuickViewController(this)
@@ -96,12 +117,25 @@ class CharacterScreen : AppCompatActivity() {
         savingController = SavingController(this, saving_icon)
         savingController.addCharacterToSave(character)
         StatView.setDice(character, defence, resources)
+
+        lightSaberSoundController = LightSaberMotionController(this)
     }
 
     fun actionCompleted(){ actionController.actionCompleted()}
     fun onXPScreen() { navigationController.onXPScreen() }
     fun onReward() { navigationController.onReward() }
     fun onHide(view: View) { view.visibility = View.INVISIBLE }
+
+    //************************************************************************************************************
+    //region Bluetooth
+    //************************************************************************************************************
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        bluetoothController.onResult(requestCode, resultCode, data)
+    }
+
+    //endregion
 
     //************************************************************************************************************
     //region Conditions
@@ -118,9 +152,17 @@ class CharacterScreen : AppCompatActivity() {
     //region Damage and Strain
     //************************************************************************************************************
 
-    fun onAddStrain() { damageStrainController.addStrain() }
-    fun onUnwound() { damageStrainController.unwound() }
-    private fun initRestDialog(){
+    fun initUnwoundDialog(){
+        unwoundDialog = Dialog(this)
+        unwoundDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        unwoundDialog.setCancelable(false)
+        unwoundDialog.setContentView(R.layout.dialog_unwound)
+        unwoundDialog.setCanceledOnTouchOutside(true)
+        unwoundDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        unwoundDialog.remove_condition_button.setOnClickListener { onUnwound() }
+    }
+
+    fun initRestDialog() {
         restDialog = Dialog(this)
         restDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         restDialog.setCancelable(false)
@@ -131,6 +173,13 @@ class CharacterScreen : AppCompatActivity() {
             onRest()
         }
     }
+    fun onAddStrain() { damageStrainController.addStrain() }
+    fun onUnwound() {
+        damageStrainController.unwound()
+        Sounds.strainSound()
+        savingController.quickSave()
+        unwoundDialog.dismiss()
+    }
     fun onRest() {
         damageStrainController.onRest()
         savingController.quickSave()
@@ -139,7 +188,16 @@ class CharacterScreen : AppCompatActivity() {
             actionCompleted()
         }
     }
+    fun onShowUnwoundDialog(){
+        unwoundDialog.show()
+    }
+    fun onShowRestDialog(){
+        restDialog.show()
+    }
 
+    fun onGameOver(){
+        gameOverController.onGameOver()
+    }
     //endregion
     //************************************************************************************************************
     //region Show Cards
@@ -151,9 +209,6 @@ class CharacterScreen : AppCompatActivity() {
         if (character.companionCard != null) {
             cardDisplay.onShowCard(character.companionCard!!)
         }
-    }
-    fun onShowRestDialog(){
-        restDialog.show()
     }
     fun onShowCard(image: Bitmap) {
         cardDisplay.onShowCard(image)
@@ -177,24 +232,25 @@ class CharacterScreen : AppCompatActivity() {
     // show save dialog
     override fun onBackPressed() {
         savingController.quickSave()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finishAffinity()
+        //bluetoothController.onDisconnected()
+        //val intent = Intent(this, MainActivity::class.java)
+        //startActivity(intent)
+        character_image.onStop()
+        navigationController.onStop()
+        CharacterHolder.clearActiveCharacter()
+        CharacterHolder.clearParty()
+        CharacterHolder.clearAllImages()
+        super.onBackPressed()
+        finish()
     }
     override fun onStop() {
         savingController.quickSave()
         println("on stop save")
+        lightSaberTurnOn = true
+        CharacterImageController.turnOffLightSaber(character_image)
+        lightSaberSoundController.stopSound()
+
         super.onStop()
-    }
-
-    //endregion
-    //************************************************************************************************************
-    //region Bluetooth
-    //************************************************************************************************************
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        bluetoothController.onResult(requestCode, resultCode, data);
     }
 
     //endregion
@@ -206,26 +262,44 @@ class CharacterScreen : AppCompatActivity() {
     fun updateStats(){ StatController.Companion.update(character,health,endurance,speed, arrayOf
         (strength1,
         strength2,strength3), arrayOf(insight1,insight2,insight3), arrayOf(tech1,tech2,tech3),
-        resources);
+        resources)
         updateNetwork(false)}
     fun updateImages() { CharacterImageController.update(character,character_image,
-        companion_image,this);
+        companion_image,this)
         updateNetwork(true) }
     fun updateConditions(){ conditionsController.update(); updateNetwork(false)}
 
     private var loadAnimated = false
+    private var lightSaberTurnOn = true
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         if (hasFocus && !loadAnimated) {
             startAnimation()
         }
+        else{
+            savingController.quickSave()
+        }
+
 
         updateStats()
         updateConditions()
         updateActionUsage()
         updateImages()
-        savingController.quickSave()
-    }
 
+        if(character.layerLightSaber!=null){
+            lightSaberSoundController.startSound()
+        }
+
+        if(loadAnimated){
+            if(lightSaberTurnOn) {
+                CharacterImageController.turnOnLightSaber(character_image, 500)
+                lightSaberTurnOn = false
+            }
+        }
+
+
+
+    }
     private fun updateActionUsage(){
         if (character.actionUsageSetting) {
             if (character.isActivated && character.actionsLeft >0) {
@@ -249,9 +323,12 @@ class CharacterScreen : AppCompatActivity() {
         background_image.alpha=0f
         background_image.animate().alpha(1f)
         camouflage.animate().alpha(1f)
+        if(lightSaberTurnOn) {
+            CharacterImageController.turnOnLightSaber(character_image, 1500)
+            lightSaberTurnOn = false
+        }
         loadAnimated = true
     }
-
     private fun slideLeftButtonsIn(){
         left_buttons.animate().alpha(1f)
         val animButtons = ObjectAnimator.ofFloat(
@@ -261,7 +338,6 @@ class CharacterScreen : AppCompatActivity() {
         animButtons.duration = (500).toLong()
         animButtons.start()
     }
-
     private fun slideRightButtonsIn(){
         right_buttons.animate().alpha(1f)
         val animRightButtons = ObjectAnimator.ofFloat(
@@ -270,7 +346,6 @@ class CharacterScreen : AppCompatActivity() {
         animRightButtons.duration = (500).toLong()
         animRightButtons.start()
     }
-
     private fun slideCharacterIn(){
         if(character.damage < character.health*2) {
             val animChar = ObjectAnimator.ofFloat(
@@ -290,7 +365,6 @@ class CharacterScreen : AppCompatActivity() {
             slide.start()
         }
     }
-
     private fun slideCompanionIn(){
         companion_image.animate().alpha(1f)
         val animCompanion = ObjectAnimator.ofFloat(
@@ -300,10 +374,7 @@ class CharacterScreen : AppCompatActivity() {
         animCompanion.interpolator = DecelerateInterpolator()
         animCompanion.duration = (800 * 1.2f).toLong()
         animCompanion.start()
-    }
-
-
-    //endregion
+    } //endregion
 }
 
 

@@ -14,15 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.*
-import com.glasswellapps.iact.character_screen.CharacterBuilder
 import com.glasswellapps.iact.character_screen.CharacterScreen
-import com.glasswellapps.iact.characters.*
 import com.glasswellapps.iact.database.AppDatabase
 import com.glasswellapps.iact.database.CharacterData
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.effects.WorkingAnimations
 import com.glasswellapps.iact.loading.DeleteWorker
-import com.glasswellapps.iact.loading.LoadedCharacter
+import com.glasswellapps.iact.loading.CharacterHolder
 import com.glasswellapps.iact.loading.LoadingController
 import com.glasswellapps.iact.loading.SaveSlotAdapter
 import kotlinx.android.synthetic.main.activity_load_screen.*
@@ -31,9 +29,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoadScreen : AppCompatActivity() {
-    var width = 0f
     var height = 0f
-
+    var slotsPerPage = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +38,11 @@ class LoadScreen : AppCompatActivity() {
         Sounds.reset(this)
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
-        height = displayMetrics.heightPixels.toFloat()
-        width = displayMetrics.widthPixels.toFloat()
+        height = displayMetrics.heightPixels.toFloat()/displayMetrics.density
+
+        slotsPerPage = ((height-130)/70).toInt()
+        System.out.println("SLOTS "+slotsPerPage + " " + height)
+
         LoadingController.loadData(this)
         initSaveSlots()
         getCurrentSaveData()
@@ -63,7 +63,7 @@ class LoadScreen : AppCompatActivity() {
     }
 
     var page = 0
-    val slotsPerPage = 5
+
     private fun getCurrentSaveData() {
         currentSaveData.clear()
         getMaxPages()
@@ -131,9 +131,17 @@ class LoadScreen : AppCompatActivity() {
         }
     }
 
+
     fun onSaveSelected(saveDataIndex: Int) {
+        val saveData = currentSaveData[saveDataIndex];
+        var selectedCharacter = LoadingController.loadCharacter(saveData, this)
+        if(CharacterHolder.isInParty(selectedCharacter.name_short)) {
+            Sounds.negativeSound();
+            ShortToast.show(this, "ALREADY IN PARTY")
+            return
+        }
         Sounds.selectSound()
-        for(i in 0..adapter.itemCount) {
+        for (i in 0..adapter.itemCount) {
             if (i != saveDataIndex) {
                 var saveSlot = saveSlots_recyclerView.findViewHolderForAdapterPosition(i)
 
@@ -142,16 +150,22 @@ class LoadScreen : AppCompatActivity() {
                 }
             }
         }
-        val saveData = currentSaveData[saveDataIndex];
-        var selectedCharacter = LoadingController.loadCharacter(saveData, this)
-        LoadedCharacter.setActiveCharacter(selectedCharacter)
-        if (LoadedCharacter.getActiveCharacter() != null) {
-            val intent = Intent(this, CharacterScreen::class.java)
-            intent.putExtra("CharacterName", selectedCharacter.name_short)
-            intent.putExtra("Load", true)
-            startActivity(intent)
-            finish()
+
+        CharacterHolder.setActiveCharacter(selectedCharacter)
+        if (CharacterHolder.getActiveCharacter() != null) {
+            var from: String = intent.getStringExtra("from").toString()
+
+            when(from){
+                "imperial"-> onBackPressed()
+                "main"-> toCharacterScreen()
+            }
         }
+    }
+    fun toCharacterScreen(){
+        val intent = Intent(this, CharacterScreen::class.java)
+        startActivity(intent)
+        finish()
+
     }
     fun onFileNameEdited(editedFileName: String, position: Int) {
         Sounds.selectSound()
@@ -210,11 +224,7 @@ class LoadScreen : AppCompatActivity() {
                 }
             })
     }
-    override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finishAffinity()
-    }
+
 
     private fun showNoSavesFoundToast() {
         if (LoadingController.loadedData.isEmpty()) {
@@ -239,6 +249,8 @@ class LoadScreen : AppCompatActivity() {
             edit_toggle.text = "CANCEL"
         }
         else{
+            selectedFiles.clear()
+            delete_button_holder.visibility=View.INVISIBLE
             edit_toggle.text = "EDIT"
         }
 
@@ -279,15 +291,15 @@ class LoadScreen : AppCompatActivity() {
     }
 
     fun setDeleteButtonVisibility(){
-        val deleteButton = findViewById<TextView>(R.id.delete_button)
+        val deleteButton = delete_button as TextView
         if(selectedFiles.size > 0) {
-            deleteButton.visibility = View.VISIBLE
+            delete_button_holder.visibility = View.VISIBLE
             var plural = "S"
             if(selectedFiles.size == 1){plural = ""}
             deleteButton.text = "DELETE "+ selectedFiles.size + " FILE" +plural
         }
         else{
-            findViewById<View>(R.id.delete_button).visibility = View.GONE
+            delete_button_holder.visibility = View.INVISIBLE
         }
     }
 }

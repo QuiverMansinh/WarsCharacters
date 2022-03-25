@@ -8,20 +8,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
-
-
 import android.util.AttributeSet;
 import android.view.View;
 
 public class CharacterImageView extends View implements Runnable{
     Thread thread;
 
-    Bitmap image, glowImage,layer1, layer2;
+    public Bitmap image, glowImage,layer1, layer2, layerLightSaber;
 
     public boolean imageScaled = false;
     public boolean glowScaled = false;
     public boolean layer1Scaled = false;
     public boolean layer2Scaled = false;
+    public boolean lightSaberScaled = false;
 
     public boolean focused = false;
     public boolean hidden = false;
@@ -30,6 +29,7 @@ public class CharacterImageView extends View implements Runnable{
     public boolean weakened = false;
 
     public boolean animateConditions = true;
+
 
     public CharacterImageView( Context context) {
         super(context);
@@ -50,6 +50,7 @@ public class CharacterImageView extends View implements Runnable{
         thread = new Thread(this::run);
         thread.start();
         stunPaint.setAlpha(75);
+        turnOffLightSaber();
     }
 
     public void setImageBitmap(Bitmap bitmap){
@@ -72,11 +73,32 @@ public class CharacterImageView extends View implements Runnable{
         layer2Scaled = false;
     }
 
+    public void setLightSaberBitmap(Bitmap bitmap){
+        layerLightSaber = bitmap;
+        lightSaberScaled = false;
+
+    }
+
+    public boolean turnOnLightSaber(){
+        if(layerLightSaber!=null) {
+            lightSaberOn = true;
+        }
+        return lightSaberOn;
+    }
+    public void turnOffLightSaber(){
+        lightSaberAlpha=1;
+        lightSaberPaint.setAlpha(1);
+        lightSaberOn = false;
+        postInvalidate();
+    }
 
     float time = 0;
     Paint paint = new Paint();
     Paint stunPaint = new Paint();
     Paint focusedPaint = new Paint();
+    Paint lightSaberPaint = new Paint();
+    boolean lightSaberOn = false;
+    float lightSaberAlpha = 0;
     float stunX, stunY;
     float moveY;
     int imageHeight = 0;
@@ -86,10 +108,17 @@ public class CharacterImageView extends View implements Runnable{
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if(image == null){
+            return;
+        }
+        if(image.isRecycled()){
+            return;
+        }
         if(image!=null) {
             if (!imageScaled) {
                 if (image != null) {
                     imageHeight =(int)((float)image.getHeight()/image.getWidth()*getWidth());
+
                     image = Bitmap.createScaledBitmap(image, getWidth(), imageHeight, false);
                     offsetY = Math.max(getHeight()-imageHeight,0);
                 }
@@ -118,9 +147,17 @@ public class CharacterImageView extends View implements Runnable{
                     layer2 = Bitmap.createScaledBitmap(layer2, getWidth(),
                             imageHeight,
                             true);
-
                 }
                 layer2Scaled = true;
+            }
+
+            if (!lightSaberScaled) {
+                if (layerLightSaber != null) {
+                    layerLightSaber = Bitmap.createScaledBitmap(layerLightSaber, getWidth(),
+                            imageHeight,
+                            true);
+                }
+                lightSaberScaled = true;
             }
 
             if (focused && glowImage != null && animateConditions) {
@@ -148,6 +185,13 @@ public class CharacterImageView extends View implements Runnable{
                 }
             }
 
+            if(layerLightSaber != null){
+                if (animateConditions) {
+                    canvas.drawBitmap(layerLightSaber, 0, moveY+offsetY, lightSaberPaint);
+                } else {
+                    canvas.drawBitmap(layerLightSaber, 0, offsetY, lightSaberPaint);
+                }
+            }
 
             if (stunned && animateConditions) {
                 canvas.drawBitmap(image, stunX, stunY+offsetY, stunPaint);
@@ -167,7 +211,14 @@ public class CharacterImageView extends View implements Runnable{
 
 
     void update(int deltaTime){
+        if(lightSaberOn && lightSaberAlpha < 255){
+            lightSaberAlpha *=10f;
+            lightSaberAlpha = Math.min(lightSaberAlpha,255);
+            lightSaberPaint.setAlpha((int)lightSaberAlpha);
+        }
         if(imageScaled&&glowScaled) {
+
+
             if(animateConditions) {
                 if (stunned) {
                     stunX = (float) Math.cos(time / 1000 * 4) * image.getWidth() / 20;
@@ -210,9 +261,10 @@ public class CharacterImageView extends View implements Runnable{
 
     int fixedDeltaTime = 1000/60;
 
+    boolean isRunning = true;
     @Override
     public void run() {
-        while(true) {
+        while(isRunning) {
             time+=fixedDeltaTime;
             //System.out.println("tick");
             update(fixedDeltaTime);
@@ -242,4 +294,27 @@ public class CharacterImageView extends View implements Runnable{
         }
     }
 
+    public void onStop() throws InterruptedException {
+        isRunning = false;
+        recycleBitmap(image);
+        recycleBitmap(glowImage);
+        recycleBitmap(layer1);
+        recycleBitmap(layer2);
+        recycleBitmap(layerLightSaber);
+        image = null;
+        glowImage = null;
+        layer1 = null;
+        layer2 = null;
+        layerLightSaber = null;
+        thread.join();
+        //thread.interrupt();
+    }
+
+    private void recycleBitmap(Bitmap bitmap){
+        if(bitmap!=null) {
+            if (!bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
+        }
+    }
 }
