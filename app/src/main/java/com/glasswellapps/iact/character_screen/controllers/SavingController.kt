@@ -22,8 +22,6 @@ import kotlinx.android.synthetic.main.dialog_save.*
 
 open class SavingController (val context:Activity, protected val saving_icon: View){
     private val saveDialog = Dialog(context)
-
-    lateinit var character:Character
     init{
         saveDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         saveDialog.setCancelable(false)
@@ -31,12 +29,8 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
         saveDialog.setCanceledOnTouchOutside(true)
         saveDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         saveDialog.save_button.setOnClickListener {
-            if(character != null) {
-                if (character.file_name == "autosave") {
-                    firstManualSave()
-                } else {
-                    quickSave()
-                }
+            if(CharacterHolder.getActiveCharacter() != null) {
+                manualSave()
             }
             Sounds.selectSound()
             saveDialog.dismiss()
@@ -54,6 +48,7 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
     }
 
     fun showSaveDialog(){
+        saveDialog.save_name.setText(CharacterHolder.getActiveCharacter().file_name)
         saveDialog.show()
     }
     open fun quickSave() {
@@ -93,10 +88,9 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
         WorkingAnimations.stopAnimation()
     }
 
-    private fun firstManualSave() {
-        if(character==null){return}
-        println("FIRST MANUAL SAVE character $character")
-        character.file_name = "" + saveDialog.save_name.text.toString()
+    private fun manualSave() {
+        if(CharacterHolder.getActiveCharacter()==null){return}
+        CharacterHolder.getActiveCharacter().file_name = "" + saveDialog.save_name.text.toString()
         quickSave()
     }
 

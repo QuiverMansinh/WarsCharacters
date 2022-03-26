@@ -58,11 +58,7 @@ class OptionsMenuController (val characterScreen: CharacterScreen){
     }
     private fun onSave() {
         Sounds.selectSound()
-        if (character.file_name == "autosave") {
-            characterScreen.showSaveDialog()
-        } else {
-            characterScreen.quickSave()
-        }
+        characterScreen.showSaveDialog()
         optionsMenu.dismiss()
     }
     private fun onBackground() {

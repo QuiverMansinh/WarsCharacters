@@ -139,15 +139,18 @@ public abstract class MultiplayerScreen extends AppCompatActivity implements Obs
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if(playerToBeAdded != -1){
-            if(CharacterHolder.getActiveCharacter()!=null) {
-                characterSlots[playerToBeAdded].player.loadLocalCharacter(CharacterHolder.getActiveCharacter(),this);
-                characterSlots[playerToBeAdded].onNewPlayerAdded();
-                CharacterHolder.setActiveCharacter(null);
-                playerToBeAdded = -1;
-            }
-
+           onNewPlayerAdded();
         }
         updateViewOnWindowChanged();
+    }
+
+    protected void onNewPlayerAdded(){
+        if(CharacterHolder.getActiveCharacter()!=null) {
+            characterSlots[playerToBeAdded].player.loadLocalCharacter(CharacterHolder.getActiveCharacter(),this);
+            characterSlots[playerToBeAdded].onNewPlayerAdded();
+            CharacterHolder.setActiveCharacter(null);
+            playerToBeAdded = -1;
+        }
     }
     void updateViewOnWindowChanged(){
         if(characterSlots == null){

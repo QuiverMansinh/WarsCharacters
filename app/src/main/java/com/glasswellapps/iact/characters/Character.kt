@@ -466,7 +466,7 @@ open class Character {
             xpSpent <= 7 -> {
                 level = 3
             }
-            xpSpent <= 10 -> {
+            xpSpent <= 9 -> {
                 level = 4
             }
         }

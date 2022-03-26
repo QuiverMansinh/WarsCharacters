@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class RebelScreen extends MultiplayerScreen {
     ImageView[] playerNumberButtons = new ImageView[4];
+    int playerCount = 4;
     View[] playerViews = new View[4];
 
     @Override
@@ -31,13 +32,13 @@ public class RebelScreen extends MultiplayerScreen {
         initPlayerNumberButtons();
 
     }
-    private void handlePlayerCount(int playerCount){
-        handPlayerButtonViews(playerCount);
-        handlePlayerViews(playerCount);
-        applyHandicap(playerCount);
-        showStatus(playerCount);
+    private void handlePlayerCount(){
+        handPlayerButtonViews();
+        handlePlayerViews();
+        applyHandicap();
+        showStatus();
     }
-    private void showStatus(int playerCount){
+    private void showStatus(){
         switch (playerCount){
             case 0: ((TextView) findViewById(R.id.rebel_status_text)).setText(getOnePlayerText());break;
             case 1:((TextView) findViewById(R.id.rebel_status_text)).setText("LEGENDARY");break;
@@ -59,9 +60,13 @@ public class RebelScreen extends MultiplayerScreen {
         return text;
     }
 
+    @Override
+    protected void onNewPlayerAdded() {
+        super.onNewPlayerAdded();
+        handlePlayerCount();
+    }
 
-
-    private  void handPlayerButtonViews(int playerCount){
+    private  void handPlayerButtonViews(){
         for(int i = 0; i < characterSlots.length;i++) {
             if (playerCount == i) {
                 playerNumberButtons[i].animate().alpha(1);
@@ -70,7 +75,7 @@ public class RebelScreen extends MultiplayerScreen {
             }
         }
     }
-    private void handlePlayerViews(int playerCount){
+    private void handlePlayerViews(){
 
         float width = playerViews[0].getWidth();
         float playerPosition =  width*1.5f - playerCount*width*1.5f/3f;
@@ -80,7 +85,7 @@ public class RebelScreen extends MultiplayerScreen {
             characterSlotView.animate().translationX(playerPosition + i*width);
         }
     }
-    private  void applyHandicap(int playerCount){
+    private  void applyHandicap(){
         for(int i = 0; i < characterSlots.length;i++) {
             if(characterSlots[i].player.character == null){
                 continue;
@@ -125,27 +130,26 @@ public class RebelScreen extends MultiplayerScreen {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if(hasFocus && !loaded){
-            int playerNumber = 0;
+            playerCount = 0;
             for(int i = 0; i < 4; i++) {
                 playerViews[i] = characterSlots[i].playerView;
             }
             for(int i = 0; i < 4; i++){
                 if(characterSlots[i].getPlayer().character!=null){
                     System.out.println("sdfsdf");
-                    View emptySlot = playerViews[playerNumber];
-                    playerViews[playerNumber] = playerViews[i];
+                    View emptySlot = playerViews[playerCount];
+                    playerViews[playerCount] = playerViews[i];
                     playerViews[i] = emptySlot;
-                    playerNumber++;
+                    playerCount++;
                 }
             }
-            if(playerNumber!=0){
-                playerNumber--;
+            if(playerCount!=0){
+                playerCount--;
             }
             else{
-                playerNumber = 3;
+                playerCount = 3;
             }
-            Math.min(Math.max(playerNumber,0),3);
-            handlePlayerCount(playerNumber);
+            handlePlayerCount();
             loaded = true;
         }
     }
@@ -162,28 +166,32 @@ public class RebelScreen extends MultiplayerScreen {
             @Override
             public void onClick(View view) {
                 Sounds.INSTANCE.selectSound();
-                handlePlayerCount(0);
+                playerToBeAdded = 0;
+                handlePlayerCount();
             }
         });
         playerNumberButtons[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Sounds.INSTANCE.selectSound();
-                handlePlayerCount(1);
+                playerCount = 1;
+                handlePlayerCount();
             }
         });
         playerNumberButtons[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Sounds.INSTANCE.selectSound();
-                handlePlayerCount(2);
+                playerCount = 2;
+                handlePlayerCount();
             }
         });
         playerNumberButtons[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Sounds.INSTANCE.selectSound();
-                handlePlayerCount(3);
+                playerCount = 3;
+                handlePlayerCount();
             }
         });
     }

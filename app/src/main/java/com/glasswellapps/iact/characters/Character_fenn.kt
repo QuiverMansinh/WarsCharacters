@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import com.glasswellapps.iact.R
 
 class Character_fenn : Character {
-    var tier1duplicate:Bitmap? = null
+
     constructor(context: Context) {
         //default values
         name = "Fenn Signis"
@@ -66,8 +66,6 @@ class Character_fenn : Character {
     //TODO alter for reward, duplicates, tier
     override fun loadImages(context: Context){
         super.loadImages(context)
-        tier1duplicate = getBitmap(context,"characters/fenn/images/tier1image_duplicate" +
-                ".png")
     }
 
     //TODO alter for reward, duplicates, tier
@@ -76,7 +74,8 @@ class Character_fenn : Character {
 
         if(tier == 1) {
             if (Math.random()<0.5) {
-                currentImage = tier1duplicate
+                currentImage?.recycle()
+                currentImage = getBitmap(context,"characters/fenn/images/tier1image_duplicate.png")
             }
         }
         if(mandoHelmet){
