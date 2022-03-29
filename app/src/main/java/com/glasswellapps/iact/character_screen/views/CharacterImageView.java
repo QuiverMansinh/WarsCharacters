@@ -1,5 +1,6 @@
 package com.glasswellapps.iact.character_screen.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 
@@ -10,6 +11,9 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.glasswellapps.iact.ShortToast;
+import com.glasswellapps.iact.effects.Sounds;
 
 public class CharacterImageView extends View implements Runnable{
     Thread thread;
@@ -30,9 +34,10 @@ public class CharacterImageView extends View implements Runnable{
 
     public boolean animateConditions = true;
 
-
-    public CharacterImageView( Context context) {
+    private Activity context;
+    public CharacterImageView(Activity context) {
         super(context);
+        this.context = context;
         init();
     }
 
@@ -79,30 +84,39 @@ public class CharacterImageView extends View implements Runnable{
 
     }
 
-    public boolean turnOnLightSaber(){
-        if(layerLightSaber!=null) {
+    public boolean turnOnLightSaber(int delay){
+        System.out.println("LIGHTSABER: "+
+                lightSaberOn + " " + lightSaberAlpha + " " + layerLightSaber);
+        if(!lightSaberOn) {
             lightSaberOn = true;
+            lightSaberAlpha = 1;
+            lightSaberDelay = delay;
+            update();
+            postInvalidate();
+            return layerLightSaber!=null;
         }
-        return lightSaberOn;
+
+        return false;
     }
     public void turnOffLightSaber(){
+        System.out.println("LIGHTSABER OFF ");
         lightSaberAlpha=1;
-        lightSaberPaint.setAlpha(1);
+        lightSaberPaint.setAlpha(0);
         lightSaberOn = false;
-        postInvalidate();
     }
 
-    float time = 0;
-    Paint paint = new Paint();
-    Paint stunPaint = new Paint();
-    Paint focusedPaint = new Paint();
-    Paint lightSaberPaint = new Paint();
-    boolean lightSaberOn = false;
-    float lightSaberAlpha = 0;
-    float stunX, stunY;
-    float moveY;
-    int imageHeight = 0;
-    int offsetY = 0;
+    private float time = 0;
+    private Paint paint = new Paint();
+    private Paint stunPaint = new Paint();
+    private Paint focusedPaint = new Paint();
+    private Paint lightSaberPaint = new Paint();
+    private boolean lightSaberOn = false;
+    private float lightSaberAlpha = 1;
+    private float lightSaberDelay = 0;
+    private float stunX, stunY;
+    private float moveY;
+    private int imageHeight = 0;
+    private int offsetY = 0;
 
 
     @Override
@@ -111,7 +125,7 @@ public class CharacterImageView extends View implements Runnable{
         if(image == null){
             return;
         }
-        if(image.isRecycled()){
+        if(image.isRecycled() || glowImage.isRecycled() ){
             return;
         }
         if(image!=null) {
@@ -210,15 +224,8 @@ public class CharacterImageView extends View implements Runnable{
     }
 
 
-    void update(int deltaTime){
-        if(lightSaberOn && lightSaberAlpha < 255){
-            lightSaberAlpha *=10f;
-            lightSaberAlpha = Math.min(lightSaberAlpha,255);
-            lightSaberPaint.setAlpha((int)lightSaberAlpha);
-        }
+    void update(){
         if(imageScaled&&glowScaled) {
-
-
             if(animateConditions) {
                 if (stunned) {
                     stunX = (float) Math.cos(time / 1000 * 4) * image.getWidth() / 20;
@@ -257,6 +264,22 @@ public class CharacterImageView extends View implements Runnable{
                 }
             }
         }
+
+        if(lightSaberOn && lightSaberAlpha < 255 && layerLightSaber!=null){
+            if(lightSaberDelay > 0) {
+                lightSaberDelay-=fixedDeltaTime;
+            }
+            else {
+                if(lightSaberAlpha == 1){
+                    Sounds.INSTANCE.play(Sounds.INSTANCE.getLightSaber());
+                    Sounds.INSTANCE.play(Sounds.INSTANCE.getLightsaber_hum());
+                }
+                lightSaberAlpha *= 5f;
+                lightSaberAlpha = Math.min(lightSaberAlpha, 255);
+                lightSaberPaint.setAlpha((int) lightSaberAlpha);
+
+            }
+        }
     }
 
     int fixedDeltaTime = 1000/60;
@@ -267,7 +290,7 @@ public class CharacterImageView extends View implements Runnable{
         while(isRunning) {
             time+=fixedDeltaTime;
             //System.out.println("tick");
-            update(fixedDeltaTime);
+            update();
             float dt = System.currentTimeMillis();
             postInvalidate();
             dt = System.currentTimeMillis()-dt;
@@ -282,7 +305,7 @@ public class CharacterImageView extends View implements Runnable{
             }
             while(lag<0){
                 lag+=fixedDeltaTime;
-                update(fixedDeltaTime);
+                update();
             }
 
             try{
@@ -296,25 +319,7 @@ public class CharacterImageView extends View implements Runnable{
 
     public void onStop() throws InterruptedException {
         isRunning = false;
-        recycleBitmap(image);
-        recycleBitmap(glowImage);
-        recycleBitmap(layer1);
-        recycleBitmap(layer2);
-        recycleBitmap(layerLightSaber);
-        image = null;
-        glowImage = null;
-        layer1 = null;
-        layer2 = null;
-        layerLightSaber = null;
         thread.join();
         //thread.interrupt();
-    }
-
-    private void recycleBitmap(Bitmap bitmap){
-        if(bitmap!=null) {
-            if (!bitmap.isRecycled()) {
-                bitmap.recycle();
-            }
-        }
     }
 }

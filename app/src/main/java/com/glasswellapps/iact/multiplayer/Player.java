@@ -66,7 +66,7 @@ public class Player extends Observable {
         getID(message);
         int characterIndex = message[Codes.CHARACTER];
         character = CharacterBuilder.Companion.create(characterIndex,context);
-        character.loadImages(context);
+        character.loadCardImages(context);
         isLocal = false;
         updateBackground(message,true);
         onNewCharacterAdded();
@@ -341,10 +341,11 @@ public class Player extends Observable {
     public void loadLocalCharacter(Character character, Activity context) {
         this.context = context;
         this.character = character;
-        character.loadImages(context);
+        character.loadCardImages(context);
+        character.loadPortraitImage(context);
         onNewCharacterAdded();
         updateView();
-        playerView.turnOnLightSaber(1500);
+        playerView.turnOnLightSaber(5000);
         updateMinusButtons();
 
         isLocal = true;
@@ -359,7 +360,7 @@ public class Player extends Observable {
     public void updateView() {
         updateDamage(character.getDamage());
         playerView.updateAll(character,isLocal);
-        playerView.turnOnLightSaber(500);
+        playerView.turnOnLightSaber(300);
     }
     boolean getIsNotUpdatable(){
         return character==null || !isLocal;
@@ -367,11 +368,15 @@ public class Player extends Observable {
     public void show() {
         playerView.show();
         //playerView.lightSaberTurnOn = true;
-        //turnOnLightSaber(300);
         updateView();
+        playerView.turnOffLightSaber();
+        playerView.turnOnLightSaber(300);
+
     }
     public void hide(){
-        playerView.hide();
+        if( playerView!=null) {
+            playerView.hide();
+        }
     }
     public void remove(){
         CharacterHolder.removeFromParty(character);
@@ -380,8 +385,8 @@ public class Player extends Observable {
         hide();
     }
     public void onNavigate(){
-        if(getView()!=null) {
-            getView().turnOffLightSaber();
+        if( playerView!=null) {
+            playerView.turnOffLightSaber();
             //onStop();
         }
     }

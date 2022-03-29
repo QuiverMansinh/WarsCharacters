@@ -3,7 +3,6 @@ package com.glasswellapps.iact.characters
 import android.content.Context
 import android.widget.Toast
 import com.glasswellapps.iact.R
-import kotlinx.android.synthetic.main.activity_create_screen.*
 import java.io.File
 import java.io.FileInputStream
 import java.lang.Exception
@@ -51,16 +50,16 @@ class CustomCharacter : Character {
         bio_text =""
     }
 
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-        updateCharacterImages(context)
+    override fun loadCardImages(context: Context){
+        super.loadCardImages(context)
+        //updateCharacterImages(context)
     }
 
     override fun loadPortraitImage(context:Context){
         portraitImage = context.resources.getDrawable(R.drawable.portrait_biv)
     }
 
-    override fun loadTierImage(context: Context, tier:Int){
+    fun loadTierImage(context: Context, tier:Int){
         val file = File(context.filesDir, "/CustomIACharacter/tier"+tier+"image")
         if(file.exists()) {
             var inputStream: FileInputStream? = null

@@ -31,7 +31,8 @@ public class CharacterSlot {
         playerView.findViewById(R.id.mp_options2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onOptions();
+                toCharacterScreen();
+                //onOptions();
             }
         });
         playerView.findViewById(R.id.mp_options).setOnClickListener(new View.OnClickListener() {
@@ -41,6 +42,18 @@ public class CharacterSlot {
             }
         });
         player.addObserver(screen);
+    }
+
+    private void toCharacterScreen(){
+        if(screen.isImperial) {
+            onOptions();
+            return;
+        }
+        if(!isPlayerAdded()){
+            return;
+        }
+        Sounds.INSTANCE.buttonSound();
+        ((RebelScreen)screen).toCharacterScreen(player.character);
     }
 
     private void onOptions(){

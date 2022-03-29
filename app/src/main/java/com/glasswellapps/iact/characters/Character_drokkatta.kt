@@ -1,6 +1,7 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
 import com.glasswellapps.iact.R
 
 class Character_drokkatta : Character {
@@ -60,19 +61,15 @@ class Character_drokkatta : Character {
                 "\n\nDrokkatta works hard for the alliance to restore the Republic, and with " +
                 "their backing, The Wookie will one day return to rescue fellow friends trapped in the labor camps on Geonosis."   }
 
-    //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-    }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view: View){
+        super.updateCharacterImages(context, view)
 
 
         //card6 tier images
         if(xpCardsEquipped[4]){
-            var card5Image = loadCardTierImage(context, tier, "card5")
+            var card5Image = loadCardImage(context, tier, "card5", view)
             if (card5Image != null) {
                 currentImage = card5Image
             }

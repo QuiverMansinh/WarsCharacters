@@ -2,6 +2,8 @@ package com.glasswellapps.iact.characters
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_vinto : Character {
@@ -65,25 +67,20 @@ class Character_vinto : Character {
                 "Vinto has completed hundred of contracts across the galaxy on many varied planets; his resolve and tenacity push him ever further towards his next mission. " +
                 "He plans to fight until there is nothing left of himself to offer the galaxy; luckily Vinto is just getting started."  }
 
-    //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-    }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context,view: View){
+        super.updateCharacterImages(context,view)
 
         //card6 tier images
         if(xpCardsEquipped[5]){
-            var card6Image = loadCardTierImage(context, tier, "card6")
+            var card6Image = loadCardImage(context, tier, "card6",view)
             if (card6Image != null) {
                 currentImage = card6Image
             }
         }
         if(mandoHelmet){
-            layer2 =  getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
+            layer2 =  BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png",view)
         }
         else{
             layer2 = null

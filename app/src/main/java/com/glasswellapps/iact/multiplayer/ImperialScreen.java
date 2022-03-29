@@ -29,8 +29,9 @@ public class ImperialScreen extends MultiplayerScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imperial_screen);
         isImperial = true;
-        init();
         initBluetooth();
+        init();
+
     }
 
     public final String[] PLAYER_INSULTS = new String[]{"rebel scum", "meatbags", "bantha fodder"};

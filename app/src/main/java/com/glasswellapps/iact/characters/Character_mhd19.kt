@@ -1,6 +1,7 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
 import com.glasswellapps.iact.R
 
 class Character_mhd19 : Character {
@@ -72,25 +73,20 @@ class Character_mhd19 : Character {
                 "its team together."
     }
 
-    //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-    }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context,view: View){
+        super.updateCharacterImages(context,view)
         if(tier == 3){
             if(reinforcedHelmet || combatVisor || xpCardsEquipped[8]){
-                var helmetImage = loadCardTierImage(context, tier, "helmet")
+                var helmetImage = loadCardImage(context, tier, "helmet",view)
                 if (helmetImage != null) {
                     currentImage = helmetImage
                 }
             }
         }
         else if(xpCardsEquipped[8]){
-            var card9Image = loadCardTierImage(context, tier, "card9")
+            var card9Image = loadCardImage(context, tier, "card9",view)
             if (card9Image != null) {
                 currentImage = card9Image
             }

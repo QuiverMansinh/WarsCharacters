@@ -1199,8 +1199,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:id="@+id/frameLayout12"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/button_bluetooth_character_pressed"
             app:layout_constraintBottom_toBottomOf="@+id/options_button"
@@ -1623,7 +1624,7 @@
         android:id="@+id/show_all_conditions"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -1794,6 +1795,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"
+        android:elevation="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -1873,5 +1875,82 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/rebel_icon" />
+
+    <LinearLayout
+        android:id="@+id/party_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:alpha="0"
+        android:elevation="100dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/left_buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_panel"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageButton
+            android:id="@+id/party_button1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:alpha="1"
+            android:background="#00FFFFFF"
+            android:scaleType="fitStart"
+            android:visibility="gone"
+            app:srcCompat="@drawable/button_party_mode" />
+
+        <ImageButton
+            android:id="@+id/party_button2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:alpha="1"
+            android:background="#00FFFFFF"
+            android:scaleType="fitStart"
+            android:visibility="gone"
+            app:srcCompat="@drawable/button_party_mode" />
+
+        <ImageButton
+            android:id="@+id/party_button3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:alpha="1"
+            android:background="#00FFFFFF"
+            android:scaleType="fitStart"
+            android:visibility="gone"
+            app:srcCompat="@drawable/button_party_mode" />
+
+        <ImageButton
+            android:id="@+id/party_button4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:alpha="1"
+            android:background="#00FFFFFF"
+            android:scaleType="fitStart"
+            android:visibility="gone"
+            app:srcCompat="@drawable/button_party_mode" />
+
+        <ImageButton
+            android:id="@+id/party_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:alpha="1"
+            android:background="#00FFFFFF"
+            android:scaleType="fitStart"
+            android:visibility="visible"
+            app:srcCompat="@drawable/button_party_mode" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

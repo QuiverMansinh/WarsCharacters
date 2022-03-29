@@ -1,6 +1,8 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_kotun : Character {
@@ -66,18 +68,20 @@ class Character_kotun : Character {
         portraitImage = context.resources.getDrawable(R.drawable.portrait_kotun)
     }
 
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view: View){
+        super.updateCharacterImages(context,view)
 
         if(reinforcedHelmet){
-            layer2 = getBitmap(context, "characters/" + name_short + "/images/reinforced_helmet.png")
+            layer2 = BitmapUtils.getBitmap(context, "characters/" + name_short +
+                    "/images/reinforced_helmet.png",view)
         }
         else{
             layer2 = null
         }
 
         if(combatVisor){
-            layer1 = getBitmap(context, "characters/" + name_short + "/images/combat_visor.png")
+            layer1 = BitmapUtils.getBitmap(context, "characters/" + name_short +
+                    "/images/combat_visor.png",view)
         }
         else{
             layer1 = null

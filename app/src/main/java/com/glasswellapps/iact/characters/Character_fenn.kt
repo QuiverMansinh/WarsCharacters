@@ -1,7 +1,8 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
-import android.graphics.Bitmap
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_fenn : Character {
@@ -64,22 +65,17 @@ class Character_fenn : Character {
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-    }
-
-    //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view :View){
+        super.updateCharacterImages(context, view)
 
         if(tier == 1) {
             if (Math.random()<0.5) {
                 currentImage?.recycle()
-                currentImage = getBitmap(context,"characters/fenn/images/tier1image_duplicate.png")
+                currentImage = BitmapUtils.getBitmap(context,"characters/fenn/images/tier1image_duplicate.png", view)
             }
         }
         if(mandoHelmet){
-            layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
+            layer2 = BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png", view)
         }
         else{
             layer2 = null

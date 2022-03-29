@@ -1,6 +1,8 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_biv : Character {
@@ -63,31 +65,26 @@ class Character_biv : Character {
                 "during his incarceration; luckily his years of imprisonment have taught him patience. Vengeance is only a matter of time..."
     }
 
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-        updateCharacterImages(context)
-    }
 
 
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context:Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context:Context, view:View){
+        super.updateCharacterImages(context, view)
 
         //card5 overlay
         layer1 = null
         if(xpCardsEquipped[4]){
-            var card5Image = loadCardTierImage(context,Math.max(1,tier),"card5")
+            var card5Image = loadCardImage(context,Math.max(1,tier),"card5", view)
             if(card5Image!=null){
                 layer1 = card5Image
             }
         }
-        println( " "+ xpCardsEquipped[4] + " " + layer1 + "BIV")
+
 
         //card6 tier images
         if(xpCardsEquipped[5]){
-            var card6Image = loadCardTierImage(context,tier,"card6")
+            var card6Image = loadCardImage(context,tier,"card6", view)
             if(card6Image!=null){
                 currentImage = card6Image
             }
@@ -95,24 +92,25 @@ class Character_biv : Character {
 
         if(mandoHelmet){
             if(tier == 3) {
-                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando_tier3.png")
+                layer2 = BitmapUtils.getBitmap(context, "characters/" +
+                        name_short+"/images/helmet_mando_tier3.png", view)
             }
             else{
-                layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
+                layer2 = BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png", view)
             }
         }
 
         else if(reinforcedHelmet ){
 
             if (storeRandom < 0.5) {
-                layer2 = getBitmap(
+                layer2 = BitmapUtils.getBitmap(
                     context,
-                    "characters/" + name_short + "/images/helmet1_random.png"
+                    "characters/" + name_short + "/images/helmet1_random.png", view
                 )
             } else {
-                layer2 = getBitmap(
+                layer2 = BitmapUtils.getBitmap(
                     context,
-                    "characters/" + name_short + "/images/helmet2_random.png"
+                    "characters/" + name_short + "/images/helmet2_random.png", view
                 )
             }
         }

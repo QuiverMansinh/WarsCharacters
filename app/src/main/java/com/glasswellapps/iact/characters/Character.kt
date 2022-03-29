@@ -6,7 +6,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.view.Gravity
+import android.view.View
 import android.widget.Toast
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.inventory.Item
 import com.glasswellapps.iact.inventory.Items
 import com.glasswellapps.iact.R
@@ -142,7 +144,7 @@ open class Character {
     //endregion
     //****************************************************************************************************
 
-    open fun loadImages(context: Context){
+    open fun loadCardImages(context: Context){
         //loadTierImages(context)
 
         loadXPCardImages(context)
@@ -154,19 +156,26 @@ open class Character {
     }
 
     open fun loadPowerImages(context: Context) {
-        power = getBitmap(context,"characters/" + name_short + "/power.png")
-        power_wounded = getBitmap(context,"characters/" + name_short + "/power_wounded.png")
+        power = BitmapUtils.getBitmap(context,"characters/" + name_short + "/power.png", power)
+        power_wounded = BitmapUtils.getBitmap(context,"characters/" + name_short +
+                "/power_wounded.png", power_wounded)
     }
 
-    open fun loadTierImage(context: Context, tier:Int){
-        val image = getBitmap(context, "characters/" + name_short + "/images/tier" + tier + "image.png")
+    open fun loadTierImage(context: Context, tier:Int, view:View){
+        val image = BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/tier" +
+                tier + "image.png", view, currentImage)
         currentImage = image
     }
 
     open fun loadXPCardImages(context: Context){
         val images = java.util.ArrayList<Bitmap>()
         for (i in 1..9) {
-            val image = getBitmap(context, "characters/" + name_short + "/xpcards/card" + i + ".jpg")
+            var oldBitmap:Bitmap?= null;
+            if(xpCardImages.size==9){
+                oldBitmap = xpCardImages[i-1]
+            }
+            val image = BitmapUtils.getBitmap(context, "characters/" + name_short +
+                    "/xpcards/card" + i + ".jpg", oldBitmap)
             if (image != null) {
                 images.add(image)
             }
@@ -178,19 +187,21 @@ open class Character {
     }
 
     fun loadStartingWeaponRanged(context: Context):Bitmap?{
-        return getBitmap(context, "characters/" + name_short + "/xpcards/starting_weapon_ranged.jpg")
+        return BitmapUtils.getBitmap(context, "characters/" + name_short +
+                "/xpcards/starting_weapon_ranged.jpg", startingRangedWeapon)
     }
 
     fun loadStartingWeaponMelee(context: Context):Bitmap?{
-        return getBitmap(context, "characters/" + name_short + "/xpcards/starting_weapon_melee.jpg")
+        return BitmapUtils.getBitmap(context, "characters/" + name_short +
+                "/xpcards/starting_weapon_melee.jpg", startingMeleeWeapon)
     }
 
-    open fun getBackgroundImage(context: Context): Bitmap? {
-        val image = getBitmap(context, "backgrounds/background_"+ background + ".jpg")
+    open fun getBackgroundImage(context: Context, view:View): Bitmap? {
+        val image = BitmapUtils.getBitmap(context, "backgrounds/background_"+ background + ".jpg", view)
         return image;
     }
-    open fun getCamoImage(context: Context): Bitmap? {
-        val image = getBitmap(context, "backgrounds/camo_"+ background + ".png")
+    open fun getCamoImage(context: Context, view:View): Bitmap? {
+        val image = BitmapUtils.getBitmap(context, "backgrounds/camo_"+ background + ".png", view)
         return image;
     }
 
@@ -199,36 +210,11 @@ open class Character {
     }
 
 
-    open fun getBitmap(context: Context, path: String): Bitmap? {
-        val assetManager = context.assets
-        var inputStream: InputStream? = null
-        var bitmap:Bitmap? = null
-        val options = BitmapFactory.Options()
-        for(i in 1..32) {
-            try {
-                inputStream = assetManager.open(path)
-                options.inSampleSize = i
-                bitmap = BitmapFactory.decodeStream(inputStream,null,options)
-                break
-            } catch (outOfMemoryError:OutOfMemoryError) {
 
-                //println("next size"+i)
-            } catch (e: Exception) {
-                //e.printStackTrace()
-            }
-        }
 
-        try {
-            inputStream?.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return bitmap
-    }
-
-    open fun loadCardTierImage(context: Context, tier:Int, cards:String):Bitmap?{
-        val image = getBitmap(context, "characters/" + name_short + "/images/tier" + tier +
-                "image_"+cards+".png")
+    open fun loadCardImage(context: Context, tier:Int, cards:String, view:View):Bitmap?{
+        val image = BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/tier" + tier +
+                "image_"+cards+".png", view)
         return image
     }
 
@@ -256,7 +242,7 @@ open class Character {
         startingRangedWeapon=null
     }
 
-    open fun updateCharacterImages(context:Context){
+    open fun updateCharacterImages(context:Context, view:View){
         ancientLightSaber = false
         for(i in 0..weapons.size-1){
             var index = weapons[i]
@@ -290,7 +276,7 @@ open class Character {
             }
         }
 
-        loadTierImage(context,tier)
+        loadTierImage(context,tier, view)
 
         updateRandom()
     }

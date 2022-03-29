@@ -1,6 +1,7 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
 import com.glasswellapps.iact.R
 
 class Character_loku : Character {
@@ -59,21 +60,18 @@ class Character_loku : Character {
                 " the harsh climates found across the galaxy and able to fire while submerged), and prefers to find locations on the field where he can attack from range, to provide direction, or distraction, for his allies. " +
                 "\n\nThough the empire has never witnessed him in direct combat, Loku has made a " +
                 "name for himself throughout Imperial channels as an elite marksman and a highly dangerous threat. " +
-                "Loku takes pride in the fact his enemies fear him, and that they will never see him coming."}
-
-    //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
+                "Loku takes pride in the fact his enemies fear him, and that they will never see him coming."
     }
 
+
+
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context,view: View){
+        super.updateCharacterImages(context,view)
 
         //card6 tier images
         if(xpCardsEquipped[3]){
-            var card4Image = loadCardTierImage(context, tier, "card4")
+            var card4Image = loadCardImage(context, tier, "card4",view)
             if (card4Image != null) {
                 currentImage = card4Image
             }

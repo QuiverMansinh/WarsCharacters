@@ -9,40 +9,17 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.glasswellapps.iact.*
-import com.glasswellapps.iact.R
-import com.glasswellapps.iact.character_screen.controllers.CharacterImageController
 import com.glasswellapps.iact.character_screen.controllers.*
-import com.glasswellapps.iact.character_screen.controllers.DamageStrainController
 import com.glasswellapps.iact.character_screen.views.StatView
-import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.characters.*
 import com.glasswellapps.iact.effects.LightSaberMotionController
+import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
 import com.glasswellapps.iact.multiplayer.BluetoothController
 import kotlinx.android.synthetic.main.activity_character_screen.*
-import kotlinx.android.synthetic.main.activity_character_screen.background_image
-import kotlinx.android.synthetic.main.activity_character_screen.bottom_panel
-import kotlinx.android.synthetic.main.activity_character_screen.camouflage
-import kotlinx.android.synthetic.main.activity_character_screen.character_image
-import kotlinx.android.synthetic.main.activity_character_screen.character_images
-import kotlinx.android.synthetic.main.activity_character_screen.companion_image
-import kotlinx.android.synthetic.main.activity_character_screen.defence
-import kotlinx.android.synthetic.main.activity_character_screen.endurance
-import kotlinx.android.synthetic.main.activity_character_screen.fileName
-import kotlinx.android.synthetic.main.activity_character_screen.health
-import kotlinx.android.synthetic.main.activity_character_screen.insight1
-import kotlinx.android.synthetic.main.activity_character_screen.insight2
-import kotlinx.android.synthetic.main.activity_character_screen.insight3
-import kotlinx.android.synthetic.main.activity_character_screen.speed
-import kotlinx.android.synthetic.main.activity_character_screen.strength1
-import kotlinx.android.synthetic.main.activity_character_screen.strength2
-import kotlinx.android.synthetic.main.activity_character_screen.strength3
-import kotlinx.android.synthetic.main.activity_character_screen.tech1
-import kotlinx.android.synthetic.main.activity_character_screen.tech2
-import kotlinx.android.synthetic.main.activity_character_screen.tech3
-import kotlinx.android.synthetic.main.activity_character_screen.top_panel
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_rest.*
 
@@ -74,11 +51,58 @@ class CharacterScreen : AppCompatActivity() {
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         height = displayMetrics.heightPixels.toFloat()
         width = displayMetrics.widthPixels.toFloat()
+        var from: String = intent.getStringExtra("from").toString()
+
 
         initCharacter()
         initControllers()
         updateImages()
         updateStats()
+        when(from){
+            "party"->initPartyButton()
+        }
+    }
+    private fun initPartyButton(){
+        if(CharacterHolder.getParty() == null) return;
+        party_button.setOnClickListener{ onPartyMode() }
+
+        val partyButtons = arrayListOf<ImageView>()
+        partyButtons.add(party_button1)
+        partyButtons.add(party_button2)
+        partyButtons.add(party_button3)
+        partyButtons.add(party_button4)
+        for(i in 0..partyButtons.size-1){
+            partyButtons[i].visibility = View.GONE
+        }
+        for(i in 0..CharacterHolder.getParty().size-1){
+            val partyCharacter = CharacterHolder.getParty()[i]
+            if(partyCharacter.name_short!=character.name_short) {
+                partyButtons[i].visibility = View.VISIBLE
+                //partyCharacter.loadPortraitImage(this)
+                partyButtons[i].setImageDrawable(partyCharacter.portraitImage)
+                partyButtons[i].tag = i;
+                partyButtons[i].setOnClickListener(View.OnClickListener {
+                    toCharacter(partyButtons[i].tag as Int)
+                })
+            }
+        }
+    }
+    fun onPartyMode() {
+        Sounds.selectSound()
+        super.onBackPressed()
+        character_image.onStop()
+        navigationController.onStop()
+        finish()
+    }
+    fun toCharacter(playerIndex:Int){
+        Sounds.selectSound()
+        val character = CharacterHolder.getParty()[playerIndex]
+        CharacterHolder.setActiveCharacter(character)
+        savingController.quickSave()
+        val intent = Intent(this, CharacterScreen::class.java)
+        intent.putExtra("from", "party")
+        startActivity(intent)
+        finish()
     }
     private fun initCharacter() {
         if(CharacterHolder.getActiveCharacter() == null) {
@@ -86,7 +110,7 @@ class CharacterScreen : AppCompatActivity() {
         }
         character = CharacterHolder.getActiveCharacter()
 
-        character.loadImages(this)
+        character.loadCardImages(this)
         if (character.portraitImage == null) {
             character.loadPortraitImage(this)
         }
@@ -237,10 +261,11 @@ class CharacterScreen : AppCompatActivity() {
         //startActivity(intent)
         character_image.onStop()
         navigationController.onStop()
-        CharacterHolder.clearActiveCharacter()
-        CharacterHolder.clearParty()
-        CharacterHolder.clearAllImages()
-        super.onBackPressed()
+        //CharacterHolder.clearActiveCharacter()
+        //CharacterHolder.clearParty()
+        //CharacterHolder.clearAllImages()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
         finish()
     }
     override fun onStop() {
@@ -288,15 +313,9 @@ class CharacterScreen : AppCompatActivity() {
 
         if(character.layerLightSaber!=null){
             lightSaberSoundController.startSound()
-        }
 
-        if(loadAnimated){
-            if(lightSaberTurnOn) {
-                CharacterImageController.turnOnLightSaber(character_image, 500)
-                lightSaberTurnOn = false
-            }
         }
-
+        CharacterImageController.turnOnLightSaber(character_image, 300)
 
 
     }
@@ -323,20 +342,30 @@ class CharacterScreen : AppCompatActivity() {
         background_image.alpha=0f
         background_image.animate().alpha(1f)
         camouflage.animate().alpha(1f)
-        if(lightSaberTurnOn) {
-            CharacterImageController.turnOnLightSaber(character_image, 1500)
-            lightSaberTurnOn = false
-        }
+        lightSaberTurnOn = true
+        if(character.isActivated){actionController.onActivate()}
+        CharacterImageController.turnOffLightSaber(character_image)
+        CharacterImageController.turnOnLightSaber(character_image, 500)
+
         loadAnimated = true
     }
     private fun slideLeftButtonsIn(){
         left_buttons.animate().alpha(1f)
+
         val animButtons = ObjectAnimator.ofFloat(
             left_buttons, "translationX", -left_buttons.width
                 .toFloat(), 0f
         )
         animButtons.duration = (500).toLong()
         animButtons.start()
+
+        party_buttons.animate().alpha(1f)
+        val partyAnimButtons = ObjectAnimator.ofFloat(
+            party_buttons, "translationX", -left_buttons.width
+                .toFloat(), 0f
+        )
+        partyAnimButtons.duration = (500).toLong()
+        partyAnimButtons.start()
     }
     private fun slideRightButtonsIn(){
         right_buttons.animate().alpha(1f)
@@ -375,6 +404,8 @@ class CharacterScreen : AppCompatActivity() {
         animCompanion.duration = (800 * 1.2f).toLong()
         animCompanion.start()
     } //endregion
+
+
 }
 
 

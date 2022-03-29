@@ -1,6 +1,7 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
 import com.glasswellapps.iact.R
 
 class Character_mak : Character {
@@ -64,18 +65,12 @@ class Character_mak : Character {
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-    }
-
-    //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context,view: View){
+        super.updateCharacterImages(context,view)
 
         //card6 tier images
         if(xpCardsEquipped[8]){
-            var card9Image = loadCardTierImage(context, tier, "card9")
+            var card9Image = loadCardImage(context, tier, "card9", view)
             if (card9Image != null) {
                 currentImage = card9Image
             }

@@ -1,6 +1,8 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_diala : Character {
@@ -61,38 +63,33 @@ class Character_diala : Character {
                 "In battle Diala weathers the storm; then rains down counter blows upon her foolish attackers."
     }
 
-    //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-    }
-
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
-        layerLightSaber = null
+    override fun updateCharacterImages(context: Context, view: View){
+        super.updateCharacterImages(context, view)
+
         //card9 tier images
         if(xpCardsEquipped[8]){
-            var card9Image = loadCardTierImage(context, tier, "card9")
+            var card9Image = loadCardImage(context, tier, "card9", view)
             if (card9Image != null) {
                 currentImage = card9Image
-                layerLightSaber = getBitmap(context,
-                    "characters/diala/images/lightsaber_card9.png");
+                layerLightSaber = BitmapUtils.getBitmap(context,
+                    "characters/diala/images/lightsaber_card9.png", view, layerLightSaber);
             }
         }
         if(tier == 3) {
             if (ancientLightSaber) {
                 if(xpCardsEquipped[8]){
-                    currentImage = getBitmap(context,
-                        "characters/diala/images/tier3image_ancient_light_saber_card9.png");
-                    layerLightSaber = getBitmap(context,
-                        "characters/diala/images/lightsaber_ancient_card9.png");
+                    currentImage = BitmapUtils.getBitmap(context,
+                        "characters/diala/images/tier3image_ancient_light_saber_card9.png", view,
+                        currentImage);
+                    layerLightSaber = BitmapUtils.getBitmap(context,
+                        "characters/diala/images/lightsaber_ancient_card9.png", view, layerLightSaber);
                 }
                 else{
-                    currentImage = getBitmap(context,"characters/diala/images/tier3image_ancient_light_saber.png");
-                    layerLightSaber = getBitmap(context,
-                        "characters/diala/images/lightsaber_ancient.png");
+                    currentImage = BitmapUtils.getBitmap(context,"characters/diala/images/tier3image_ancient_light_saber.png", view);
+                    layerLightSaber = BitmapUtils.getBitmap(context,
+                        "characters/diala/images/lightsaber_ancient.png", view, layerLightSaber);
                 }
             }
         }

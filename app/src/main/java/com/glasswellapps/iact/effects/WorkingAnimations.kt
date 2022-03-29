@@ -16,9 +16,10 @@ class WorkingAnimations {
                 working_icon, "scaleX", 0f, 0.8f, 1f, 1f, 1f, 0.8f,
                 0f
             )
-            animator.repeatCount =  Animation.INFINITE
+            animator.repeatCount =  8
             animator.duration = 500
             animator.start()
+            stopAnimation()
         }
         fun startGearAnimation(working_icon: View){
             working_icon.animate().setDuration(200).alpha(1f)
@@ -30,23 +31,22 @@ class WorkingAnimations {
                 180f,180f,180f,
                 270f,270f,270f,
                 360f, 360f, 360f)
-            animator.repeatCount = Animation.INFINITE
+            animator.repeatCount = 8
             animator.duration = 3000
             animator.start()
+            stopAnimation()
         }
-
+        fun cancelAnimation(){
+            animator.cancel()
+        }
         fun stopAnimation(){
             if(animator == null || working_icon == null){
                 return
             }
             val handler = Handler()
             handler.postDelayed(Runnable {
-                working_icon.animate().setDuration(1000).alpha(0f)
-                handler.postDelayed(Runnable {
-                    animator.cancel()
-                }, 1000)
-
-            }, 100)
+                working_icon.animate().setDuration(500).alpha(0f)
+            }, 2500)
         }
     }
 }

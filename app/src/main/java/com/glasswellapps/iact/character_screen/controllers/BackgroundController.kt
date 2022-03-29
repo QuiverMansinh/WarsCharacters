@@ -60,8 +60,8 @@ class BackgroundController (val context: Activity){
                 )
             )
         camouflage.setImageBitmap(BitmapLoader.getBitmap(context, "backgrounds/camo_"+ character.background +".png"))
-        backgroundImage.setImageBitmap(character.getBackgroundImage(context))
-        camouflage.setImageBitmap(character.getCamoImage(context))
+        backgroundImage.setImageBitmap(character.getBackgroundImage(context,backgroundImage))
+        camouflage.setImageBitmap(character.getCamoImage(context,backgroundImage))
 
     }
 

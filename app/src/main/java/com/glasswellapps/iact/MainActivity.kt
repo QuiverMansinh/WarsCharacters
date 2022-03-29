@@ -59,5 +59,6 @@ class MainActivity : AppCompatActivity(){
         //clear memory of all character data and character images
         CharacterHolder.clearParty()
         CharacterHolder.clearActiveCharacter()
+        //ShortToast.show(this,"Data Cleared")
     }
 }

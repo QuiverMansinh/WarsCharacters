@@ -2,6 +2,8 @@ package com.glasswellapps.iact.characters
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_ct1701 : Character {
@@ -81,35 +83,35 @@ class Character_ct1701 : Character {
 
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view: View){
+        super.updateCharacterImages(context, view)
 
         if(tier == 1){
             if(storeRandom<0.5){
-                currentImage = getBitmap(context, "characters/ct1701/images/tier1image_duplicate.png")
+                currentImage = BitmapUtils.getBitmap(context, "characters/ct1701/images/tier1image_duplicate.png", view)
             }
         }
         else if(tier == 2){
             if(storeRandom<0.5){
-                currentImage = getBitmap(context, "characters/ct1701/images/tier2image_duplicate.png")
+                currentImage = BitmapUtils.getBitmap(context, "characters/ct1701/images/tier2image_duplicate.png", view)
             }
         }
         else if(tier == 3){
             if(storeRandom<0.5){
-                currentImage = getBitmap(context, "characters/ct1701/images/tier3image_duplicate.png")
+                currentImage = BitmapUtils.getBitmap(context, "characters/ct1701/images/tier3image_duplicate.png", view)
             }
         }
 
         //todo helmet
         if(mandoHelmet || reinforcedHelmet || combatVisor){
             if(tier == 3) {
-                layer2 = getBitmap(context, "characters/" + name_short + "/images/tier3_helmet.png")
+                layer2 = BitmapUtils.getBitmap(context, "characters/" + name_short + " /images/tier3_helmet.png", view)
             }
             else if(tier == 2){
-                layer2 = getBitmap(context, "characters/" + name_short + "/images/tier2_helmet.png")
+                layer2 =  BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/tier2_helmet.png", view)
             }
             else {
-                layer2 = getBitmap(context, "characters/" + name_short + "/images/tier1_helmet.png")
+                layer2 =  BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/tier1_helmet.png", view)
             }
         }
         else{

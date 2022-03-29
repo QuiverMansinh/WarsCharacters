@@ -47,7 +47,7 @@ public class IANumbers {
             R.drawable.number_40};
 
     public static Drawable getNumber(Resources resources, int number){
-
+        if(number>=numbers.length) return null;
         return resources.getDrawable(numbers[number]);
     }
 }

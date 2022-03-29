@@ -2,6 +2,8 @@ package com.glasswellapps.iact.multiplayer;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.os.CountDownTimer;
+import android.os.Debug;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -62,7 +64,7 @@ public class PlayerView {
         characterImageViews = view.findViewById(R.id.character_images);
 
         backgroundView = view.findViewById(R.id.background_image);
-        camouflageView = view.findViewById(R.id.bt_camouflage);
+
         woundedView = view.findViewById(R.id.wounded);
         damageAnimView = view.findViewById(R.id.damage_animation);
         restAnimView = view.findViewById(R.id.rest_animation);
@@ -117,13 +119,9 @@ public class PlayerView {
         CharacterImageController.Companion.update(character,characterImageView,companionImageView, context);
     }
     public void turnOnLightSaber(int delay){
-        if(lightSaberTurnOn) {
-            CharacterImageController.Companion.turnOnLightSaber(characterImageView, delay);
-            lightSaberTurnOn = false;
-        }
+        CharacterImageController.Companion.turnOnLightSaber(characterImageView, delay);
     }
     public void turnOffLightSaber(){
-        lightSaberTurnOn = true;
         CharacterImageController.Companion.turnOffLightSaber(characterImageView);
     }
 
@@ -241,7 +239,9 @@ public class PlayerView {
     }
 
     public void onStop(){
-        try {
+        hide();
+        turnOffLightSaber();
+        try{
             characterImageView.onStop();
         } catch (InterruptedException e) {
             e.printStackTrace();

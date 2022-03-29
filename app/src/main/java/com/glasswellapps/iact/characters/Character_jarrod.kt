@@ -2,6 +2,8 @@ package com.glasswellapps.iact.characters
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_jarrod : Character {
@@ -55,8 +57,6 @@ class Character_jarrod : Character {
         //Get Images
         //Update images
 
-        loadImages(context)
-
         bio_title = "Robotic Overlord"
         bio_quote = "\"Jax, plug in. See what you can find for us.\""
         bio_text ="The Rebellion has ties to many smugglers, bandits, thieves, mercenaries, and people of less than stellar reputation. Mysterious figures who are not official Alliance operatives, but who are sympathetic to the Rebel cause and will occasionally do errands or favors for the right price." +
@@ -69,26 +69,27 @@ class Character_jarrod : Character {
                 " Alongside “Jax” he plans to seek justice for his murdered mentor Dr. Graves, and works reclaim the stolen blueprints of his loyal droid. " +
                 "In thanks for his service, the Rebellion has offered to provide shelter to Jarrod’s clan if he works alongside them to defeat the Empire;" +
                 " he gladly accepted the offer."
+        loadCardImages(context)
     }
 
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-        droid = getBitmap(context, "characters/jarrod/images/droid.png")
-        droid_card9 = getBitmap(context, "characters/jarrod/images/droid_card9.png")
+    override fun loadCardImages(context: Context){
+        super.loadCardImages(context)
+        droid = BitmapUtils.getBitmap(context, "characters/jarrod/images/droid.png")
+        droid_card9 = BitmapUtils.getBitmap(context, "characters/jarrod/images/droid_card9.png")
         companionImage = droid
 
-        jaxCard = getBitmap(context, "characters/jarrod/images/jax.png")
-        jaxCard_card6 = getBitmap(context, "characters/jarrod/images/jax_card6.png")
-        jaxCard_card9 = getBitmap(context, "characters/jarrod/images/jax_card9.png")
-        jaxCard_card69 = getBitmap(context, "characters/jarrod/images/jax_card6_card9.png")
+        jaxCard = BitmapUtils.getBitmap(context, "characters/jarrod/images/jax.png")
+        jaxCard_card6 = BitmapUtils.getBitmap(context, "characters/jarrod/images/jax_card6.png")
+        jaxCard_card9 = BitmapUtils.getBitmap(context, "characters/jarrod/images/jax_card9.png")
+        jaxCard_card69 = BitmapUtils.getBitmap(context, "characters/jarrod/images/jax_card6_card9.png")
         companionCard  = jaxCard
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view:View){
+        super.updateCharacterImages(context, view)
 
         //droid images
         companionCard  = jaxCard

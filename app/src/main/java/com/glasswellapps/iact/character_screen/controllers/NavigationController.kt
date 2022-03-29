@@ -1,6 +1,5 @@
 package com.glasswellapps.iact.character_screen.controllers
 import android.content.Intent
-import android.util.DisplayMetrics
 import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.character_screen.XPScreen
 import com.glasswellapps.iact.effects.Sounds
@@ -26,6 +25,7 @@ class NavigationController(val characterScreen: CharacterScreen) {
         characterScreen.item_ranged_button.setOnClickListener{onRange()}
         characterScreen.xp_button.setOnClickListener { onXPScreen() }
         characterScreen.options_button.setOnClickListener { onShowOptions() }
+
     }
 
     fun update() {
@@ -98,6 +98,7 @@ class NavigationController(val characterScreen: CharacterScreen) {
         Sounds.selectSound()
         optionsMenu.showDialog()
     }
+
 
     fun onStop() {
         optionsMenu.onStop()

@@ -1,6 +1,7 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
 import com.glasswellapps.iact.R
 
 class Character_saska : Character {
@@ -63,17 +64,12 @@ class Character_saska : Character {
                 "poorly equipped they are by comparison. Few minds can stand up to hers in the galaxy and the Tech Fields are Saska's domain."}
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-    }
-
-    //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context,view: View){
+        super.updateCharacterImages(context,view)
 
         //card9 tier images
         if(xpCardsEquipped[8] || combatVisor){
-            var card9Image = loadCardTierImage(context, tier, "card9")
+            var card9Image = loadCardImage(context, tier, "card9",view)
             if (card9Image != null) {
                 currentImage = card9Image
             }

@@ -1,6 +1,8 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_gaarkhan : Character {
@@ -59,16 +61,11 @@ class Character_gaarkhan : Character {
                 "right by freeing his people from servitude. The Empire will know the wrath of a true Wookiee warrior. "  }
 
     //TODO alter for reward, duplicates, tier
-    override fun loadPortraitImage(context:Context){
-        portraitImage = context.resources.getDrawable(R.drawable.portrait_gaarkhan)
-    }
-
-    //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view:View){
+        super.updateCharacterImages(context, view)
 
         if(reinforcedHelmet || combatVisor){
-            layer2 = getBitmap(context, "characters/" + name_short + "/images/tier3image_helmet.png")
+            layer2 = BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/tier3image_helmet.png", view)
         }
         else{
             layer2 = null

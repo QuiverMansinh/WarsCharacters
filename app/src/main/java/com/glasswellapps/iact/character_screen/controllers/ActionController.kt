@@ -206,7 +206,7 @@ class ActionController (val characterScreen: CharacterScreen){
         noActionsLeftToast.setGravity(Gravity.CENTER, 0, 0)
         noActionsLeftToast.show()
     }
-    private fun onActivationButton() {
+    fun onActivationButton() {
         if (!character.isActivated) {
             onActivate()
         } else {
@@ -214,7 +214,7 @@ class ActionController (val characterScreen: CharacterScreen){
         }
         characterScreen.updateNetwork(false);
     }
-    private fun onActivate(){
+    fun onActivate(){
 
         if (character.actionUsageSetting) {
             character.actionsLeft = 2
@@ -223,7 +223,7 @@ class ActionController (val characterScreen: CharacterScreen){
         character.isActivated = true
         activationAnim(active,inactive,character.isActivated)
     }
-    private fun onEndActivation() {
+    fun onEndActivation() {
         endActivationDialog.dismiss()
         characterScreen.onRemoveWeakened()
         turnOffActionButtons()

@@ -1,15 +1,21 @@
 package com.glasswellapps.iact.multiplayer;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glasswellapps.iact.R;
+import com.glasswellapps.iact.ShortToast;
+import com.glasswellapps.iact.character_screen.CharacterScreen;
+import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;
 import com.glasswellapps.iact.inventory.Items;
+import com.glasswellapps.iact.loading.CharacterHolder;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,9 +36,9 @@ public class RebelScreen extends MultiplayerScreen {
         isImperial = false;
         super.init();
         initPlayerNumberButtons();
-
     }
     private void handlePlayerCount(){
+
         handPlayerButtonViews();
         handlePlayerViews();
         applyHandicap();
@@ -76,14 +82,16 @@ public class RebelScreen extends MultiplayerScreen {
         }
     }
     private void handlePlayerViews(){
-
+        System.out.println("PLAYER COUNT " + playerCount);
         float width = playerViews[0].getWidth();
         float playerPosition =  width*1.5f - playerCount*width*1.5f/3f;
-        for(int i = 0; i < characterSlots.length;i++){
-            View characterSlotView =  (View)playerViews[i].getParent();
-            characterSlotView.animate().alpha(i<playerCount+1?1:0);
-            characterSlotView.animate().translationX(playerPosition + i*width);
+        for(int i = 0; i < characterSlots.length;i++) {
+            View characterSlotView = (View) playerViews[i].getParent();
+            characterSlotView.animate().alpha(i < playerCount + 1 ? 1 : 0).setDuration(200);
+            characterSlotView.animate().translationX(playerPosition + i * width).setDuration(200);
         }
+
+
     }
     private  void applyHandicap(){
         for(int i = 0; i < characterSlots.length;i++) {
@@ -136,10 +144,10 @@ public class RebelScreen extends MultiplayerScreen {
             }
             for(int i = 0; i < 4; i++){
                 if(characterSlots[i].getPlayer().character!=null){
-                    System.out.println("sdfsdf");
                     View emptySlot = playerViews[playerCount];
                     playerViews[playerCount] = playerViews[i];
                     playerViews[i] = emptySlot;
+
                     playerCount++;
                 }
             }
@@ -149,6 +157,7 @@ public class RebelScreen extends MultiplayerScreen {
             else{
                 playerCount = 3;
             }
+
             handlePlayerCount();
             loaded = true;
         }
@@ -162,11 +171,12 @@ public class RebelScreen extends MultiplayerScreen {
         playerNumberButtons[1] = findViewById(R.id.two_player);
         playerNumberButtons[2] = findViewById(R.id.three_player);
         playerNumberButtons[3] = findViewById(R.id.four_player);
+
         playerNumberButtons[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Sounds.INSTANCE.selectSound();
-                playerToBeAdded = 0;
+                playerCount= 0;
                 handlePlayerCount();
             }
         });
@@ -194,5 +204,24 @@ public class RebelScreen extends MultiplayerScreen {
                 handlePlayerCount();
             }
         });
+    }
+
+    public void toCharacterScreen(Character character){
+        CharacterHolder.setActiveCharacter(character);
+        storeParty();
+        Intent intent = new Intent(this, CharacterScreen.class);
+        intent.putExtra("from", "party");
+        startActivity(intent);
+    }
+
+    public void storeParty(){
+        CharacterHolder.clearParty();
+        for (int i = 0; i < playerList.length; i++) {
+            Player player = playerList[i];
+            if(player.getCharacter()!=null){
+                CharacterHolder.addToParty(player.getCharacter());
+
+            }
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.glasswellapps.iact.characters
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_shyla : Character {
@@ -67,16 +69,16 @@ class Character_shyla : Character {
 
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-        card4Image = getBitmap(context, "characters/shyla/images/card4.png")
-        card5Image = getBitmap(context, "characters/shyla/images/card5.png")
+    override fun loadCardImages(context: Context){
+        super.loadCardImages(context)
+        card4Image = BitmapUtils.getBitmap(context, "characters/shyla/images/card4.png")
+        card5Image = BitmapUtils.getBitmap(context, "characters/shyla/images/card5.png")
         //helmetImages = loadCardTierImages(context,"helmet")
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view: View){
+        super.updateCharacterImages(context,view)
 
         if(xpCardsEquipped[3]){
             layer1 = card4Image
@@ -93,7 +95,7 @@ class Character_shyla : Character {
 
         //todo helmet
         if(mandoHelmet || combatVisor || reinforcedHelmet){
-            var helmetImage = loadCardTierImage(context,tier,"helmet")
+            var helmetImage = loadCardImage(context,tier,"helmet",view)
             if(helmetImage != null) {
                 currentImage = helmetImage
             }

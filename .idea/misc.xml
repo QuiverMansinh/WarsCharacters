@@ -20,7 +20,7 @@
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-land/screen_xp_select.xml" value="0.264" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_acc_screen.xml" value="0.4" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_armor_screen.xml" value="0.264" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_character_screen.xml" value="0.2" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_character_screen.xml" value="0.4" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_characters_list.xml" value="0.25" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_create_screen.xml" value="0.25" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_create_xp_screen.xml" value="0.536" />
@@ -63,7 +63,7 @@
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_victory.xml" value="0.264" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/empty_item.xml" value="0.2391304347826087" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/fragment_bluetooth_character.xml" value="0.536" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/fragment_multiplayer_character.xml" value="0.4" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/fragment_multiplayer_character.xml" value="0.264" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/grid_item.xml" value="0.234375" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/item_device.xml" value="0.4" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/item_fragment.xml" value="0.2391304347826087" />

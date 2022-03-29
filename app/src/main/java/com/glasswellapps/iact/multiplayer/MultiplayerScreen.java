@@ -1,5 +1,6 @@
 package com.glasswellapps.iact.multiplayer;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -10,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.glasswellapps.iact.CardDisplay;
 import com.glasswellapps.iact.R;
 import com.glasswellapps.iact.ShortToast;
+import com.glasswellapps.iact.character_screen.CharacterScreen;
 import com.glasswellapps.iact.character_screen.controllers.ButtonPressedHandler;
+import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;
 import com.glasswellapps.iact.loading.CharacterHolder;
 
@@ -120,14 +123,6 @@ public abstract class MultiplayerScreen extends AppCompatActivity implements Obs
                 ,isImperial);
     }
 
-    public void savePlayers() {
-        savingController.savePlayers();
-    }
-
-    public void showOptions(int playerNumber) {
-        options.onShowDialog(playerList[playerNumber],playerNumber);
-    }
-
     public void showPlayerAdder(int playerNumber) {
         playerAdder.showDialog(playerNumber);
     }
@@ -163,7 +158,7 @@ public abstract class MultiplayerScreen extends AppCompatActivity implements Obs
     public void update(Observable observable, Object o) {
         if(observable instanceof Player){
             checkIsGameOver();
-            savingController.quickSave();
+
         }
     }
 
@@ -203,22 +198,25 @@ public abstract class MultiplayerScreen extends AppCompatActivity implements Obs
     @Override
     public void onBackPressed() {
         savingController.savePlayers();
+        savingController.cancelAnimation();
         soundBoard.onBackPressed();
+        super.onBackPressed();
         for (Player player:playerList) {
             player.onStop();
         }
-        super.onBackPressed();
         finish();
     }
     @Override
     protected void onStop() {
         savingController.savePlayers();
-        super.onStop();
+        savingController.cancelAnimation();
         for( Player player: playerList){
             if(player!=null) {
                 player.onNavigate();
             }
         }
+        super.onStop();
+
         //stopService();
     }
 
@@ -285,4 +283,6 @@ public abstract class MultiplayerScreen extends AppCompatActivity implements Obs
         Sounds.INSTANCE.selectSound();
         nextMissionDialog.dismiss();
     }
+
+
 }

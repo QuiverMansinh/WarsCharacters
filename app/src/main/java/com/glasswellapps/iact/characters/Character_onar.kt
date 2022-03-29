@@ -1,6 +1,8 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_onar : Character {
@@ -66,26 +68,21 @@ class Character_onar : Character {
                 "High Command has determined it is better to keep tabs on Onar and attempt to " +
                 "minimize the chaos. The enemy of my enemy is my friend; at least for now…"
     }
-    //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context){
-        super.loadImages(context)
-
-    }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context,view: View){
+        super.updateCharacterImages(context,view)
 
         //card6 tier images
         if(xpCardsEquipped[6]){
-            var card7Image = loadCardTierImage(context, tier, "card7")
+            var card7Image = loadCardImage(context, tier, "card7",view)
             if (card7Image != null) {
                 currentImage = card7Image
             }
         }
 
         if(mandoHelmet){
-            layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
+            layer2 = BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png",view)
         }
         else{
             layer2 = null

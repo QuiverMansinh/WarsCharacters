@@ -1,6 +1,8 @@
 package com.glasswellapps.iact.characters
 
 import android.content.Context
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_davith : Character {
@@ -61,16 +63,21 @@ class Character_davith : Character {
     }
 
     //TODO alter for reward, duplicates, tier
-    override fun loadImages(context: Context) {
-        super.loadImages(context)
+    override fun updateCharacterImages(context: Context, view:View) {
+        super.updateCharacterImages(context, view)
+        //card6 and card9 combined tier images
+
+        loadLightSabers(context, view)
+
+        if(mandoHelmet){
+            layer2 =  BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png", view)
+        }
+        else{
+            layer2 = null
+        }
     }
 
-    //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context) {
-        super.updateCharacterImages(context)
-        //card6 and card9 combined tier images
-        layerLightSaber = null
-
+    fun loadLightSabers( context:Context, view:View){
         val card6 = xpCardsEquipped[5] && !ancientLightSaber && !xpCardsEquipped[8]
         val card9 = !xpCardsEquipped[5] && !ancientLightSaber && xpCardsEquipped[8]
         val ancient = !xpCardsEquipped[5] && ancientLightSaber && !xpCardsEquipped[8]
@@ -78,73 +85,72 @@ class Character_davith : Character {
         val card6Ancient = xpCardsEquipped[5] && ancientLightSaber && !xpCardsEquipped[8]
         val card9Ancient = !xpCardsEquipped[5] && ancientLightSaber && xpCardsEquipped[8]
         val card6Card9Ancient = xpCardsEquipped[5] && ancientLightSaber && xpCardsEquipped[8]
+
+        if(!(card6 || ancient || card6Card9 || card6Ancient || card9Ancient || card6Card9Ancient)){
+            layerLightSaber = null
+            return
+        }
+
         if (card6Card9) {
-            var card69Image = loadCardTierImage(context, tier, "card6_card9")
+            var card69Image = loadCardImage(context, tier, "card6_card9", view)
             if (card69Image != null) {
                 currentImage = card69Image
-                layerLightSaber = getBitmap(context,
-                    "characters/davith/images/lightsaber_card6.png");
+                layerLightSaber =  BitmapUtils.getBitmap(context,
+                    "characters/davith/images/lightsaber_card6.png", view, layerLightSaber);
             }
         }
         if (card6Card9Ancient) {
-            var card69Image = loadCardTierImage(context, tier, "card6_card9")
+            var card69Image = loadCardImage(context, tier, "card6_card9", view)
             if (card69Image != null) {
                 currentImage = card69Image
-                layerLightSaber = getBitmap(context,
-                    "characters/davith/images/lightsaber_card6.png");
+                layerLightSaber =  BitmapUtils.getBitmap(context,
+                    "characters/davith/images/lightsaber_card6.png", view, layerLightSaber);
             }
         }
         //card6 tier images
         if (card6Ancient) {
 
-            var card6Image = loadCardTierImage(context, tier, "card6_ancient_light_saber")
+            var card6Image = loadCardImage(context, tier, "card6_ancient_light_saber", view)
             if (card6Image != null) {
                 currentImage = card6Image
                 if (!xpCardsEquipped[8])
-                    layerLightSaber = getBitmap(
+                    layerLightSaber =  BitmapUtils.getBitmap(
                         context,
-                        "characters/davith/images/lightsaber_ancient_card6.png"
+                        "characters/davith/images/lightsaber_ancient_card6.png", view, layerLightSaber
                     );
             }
         }
         if (card6) {
-            var card6Image = loadCardTierImage(context, tier, "card6")
+            var card6Image = loadCardImage(context, tier, "card6", view)
             if (card6Image != null) {
                 currentImage = card6Image
-                layerLightSaber = getBitmap(context, "characters/davith/images/lightsaber_card6.png");
+                layerLightSaber =  BitmapUtils.getBitmap(context, "characters/davith/images/lightsaber_card6.png", view, layerLightSaber);
             }
         }
 
         //card9 tier images
         if (card9Ancient) {
-                var card9Image = loadCardTierImage(context, tier, "card9_ancient_light_saber")
-                if (card9Image != null) {
-                    currentImage = card9Image
-                    layerLightSaber = getBitmap(context,
-                        "characters/davith/images/lightsaber_ancient.png");
-                }
+            var card9Image = loadCardImage(context, tier, "card9_ancient_light_saber", view)
+            if (card9Image != null) {
+                currentImage = card9Image
+                layerLightSaber =  BitmapUtils.getBitmap(context,
+                    "characters/davith/images/lightsaber_ancient.png", view, layerLightSaber);
             }
+        }
         if(card9) {
-            var card9Image = loadCardTierImage(context, tier, "card9")
+            var card9Image = loadCardImage(context, tier, "card9", view)
             if (card9Image != null) {
                 currentImage = card9Image
             }
         }
 
         if(ancient){
-            var ancientLightSaberImage = loadCardTierImage(context, tier, "ancient_light_saber")
+            var ancientLightSaberImage = loadCardImage(context, tier, "ancient_light_saber", view)
             if (ancientLightSaberImage != null) {
                 currentImage = ancientLightSaberImage
-                layerLightSaber = getBitmap(context,
-                    "characters/davith/images/lightsaber_ancient.png");
+                layerLightSaber =  BitmapUtils.getBitmap(context,
+                    "characters/davith/images/lightsaber_ancient.png", view, layerLightSaber);
             }
-        }
-
-        if(mandoHelmet){
-            layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
-        }
-        else{
-            layer2 = null
         }
     }
     override fun loadPortraitImage(context:Context){

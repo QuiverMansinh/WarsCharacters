@@ -2,6 +2,8 @@ package com.glasswellapps.iact.characters
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.View
+import com.glasswellapps.iact.BitmapUtils
 import com.glasswellapps.iact.R
 
 class Character_verena : Character {
@@ -64,36 +66,37 @@ class Character_verena : Character {
                 "She hopes to return the blade to him in kind some day."    }
 
     //TODO alter for reward, duplicates, tier
-    override fun updateCharacterImages(context: Context){
-        super.updateCharacterImages(context)
+    override fun updateCharacterImages(context: Context, view: View){
+        super.updateCharacterImages(context,view)
 
 
 
         if(tier == 1){
             if(storeRandom<1f/3){
-                currentImage = getBitmap(context, "characters/verena/images/tier1image_duplicate.png")
+                currentImage = BitmapUtils.getBitmap(context, "characters/verena/images/tier1image_duplicate.png",view)
             }
             else if(storeRandom<2f/3){
-                currentImage = getBitmap(context, "characters/verena/images/tier1image_duplicate2.png")
+                currentImage = BitmapUtils.getBitmap(context, "characters/verena/images/tier1image_duplicate2.png",view)
             }
         }
         else if(tier == 2){
             if(storeRandom<0.5){
-                currentImage = getBitmap(context, "characters/verena/images/tier2image_duplicate.png")
+                currentImage = BitmapUtils.getBitmap(context, "characters/verena/images/tier2image_duplicate.png",view)
             }
         }
         else if(tier == 3){
             if(storeRandom<1f/3){
-                currentImage = getBitmap(context, "characters/verena/images/tier3image_duplicate.png")
+                currentImage = BitmapUtils.getBitmap(context,
+                    "characters/verena/images/tier3image_duplicate.png",view)
             }
             else if(storeRandom<2f/3){
-                currentImage = getBitmap(context, "characters/verena/images/tier3image_duplicate2.png")
+                currentImage = BitmapUtils.getBitmap(context, "characters/verena/images/tier3image_duplicate2.png",view)
             }
         }
 
         //todo helmet
         if(mandoHelmet) {
-            layer2 = getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png")
+            layer2 = BitmapUtils.getBitmap(context, "characters/" + name_short + "/images/helmet_mando.png",view)
         }
         else{
             layer2 = null

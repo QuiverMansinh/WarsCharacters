@@ -39,8 +39,6 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
             Sounds.selectSound()
             saveDialog.dismiss()
         }
-        CharacterHolder.clearParty()
-
     }
     fun addCharacterToSave(character: Character){
         if(character==null){return}
@@ -94,7 +92,9 @@ open class SavingController (val context:Activity, protected val saving_icon: Vi
         quickSave()
     }
 
-    fun clearCharactersToSave() {
-        CharacterHolder.clearParty()
+
+
+    fun cancelAnimation() {
+        WorkingAnimations.cancelAnimation()
     }
 }

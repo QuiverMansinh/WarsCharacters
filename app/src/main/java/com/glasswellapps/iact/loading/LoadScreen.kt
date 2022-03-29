@@ -163,6 +163,7 @@ class LoadScreen : AppCompatActivity() {
     }
     fun toCharacterScreen(){
         val intent = Intent(this, CharacterScreen::class.java)
+        intent.putExtra("from", "main")
         startActivity(intent)
         finish()
 

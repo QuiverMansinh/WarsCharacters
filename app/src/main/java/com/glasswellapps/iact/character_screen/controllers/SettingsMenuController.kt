@@ -91,7 +91,7 @@ class SettingsMenuController (val characterScreen: CharacterScreen){
         Sounds.selectSound()
         character.imageSetting = setting
 
-        character.updateCharacterImages(characterScreen)
+        character.updateCharacterImages(characterScreen,characterScreen.findViewById(R.id.character_image))
         settingsMenu.imagePreview.setImageBitmap(character.currentImage)
         settingsMenu.imageAuto.alpha = 0.5f
         settingsMenu.imageDefault.alpha = 0.5f
