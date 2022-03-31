@@ -67,9 +67,10 @@ class Character_diala : Character {
     //TODO alter for reward, duplicates, tier
     override fun updateCharacterImages(context: Context, view: View){
         super.updateCharacterImages(context, view)
+        var card9 = xpCardsEquipped[8];
 
         //card9 tier images
-        if(xpCardsEquipped[8]){
+        if(card9){
             var card9Image = loadCardImage(context, tier, "card9", view)
             if (card9Image != null) {
                 currentImage = card9Image
@@ -79,7 +80,7 @@ class Character_diala : Character {
         }
         if(tier == 3) {
             if (ancientLightSaber) {
-                if(xpCardsEquipped[8]){
+                if(card9){
                     currentImage = BitmapUtils.getBitmap(context,
                         "characters/diala/images/tier3image_ancient_light_saber_card9.png", view,
                         currentImage);
@@ -92,6 +93,9 @@ class Character_diala : Character {
                         "characters/diala/images/lightsaber_ancient.png", view, layerLightSaber);
                 }
             }
+        }
+        if(!card9 && !ancientLightSaber){
+            layerLightSaber = null;
         }
         println(""+ancientLightSaber + " " + tier)
     }

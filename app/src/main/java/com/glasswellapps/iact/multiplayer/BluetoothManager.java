@@ -6,11 +6,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.glasswellapps.iact.ShortToast;
@@ -20,12 +22,12 @@ import java.util.Observable;
 import java.util.UUID;
 
 public class BluetoothManager extends Observable {
-    public static final int REQUEST_ENABLE_BLUETOOTH=1;
-    public static final int REQUEST_ENABLE_DISCOVERY=2;
+    public static final int REQUEST_ENABLE_BLUETOOTH = 1;
+    public static final int REQUEST_ENABLE_DISCOVERY = 2;
     private BluetoothAdapter bluetoothAdapter;
-    private ArrayList<BluetoothDevice> foundDevices=new ArrayList<BluetoothDevice>();
-    private ArrayList<String> deviceNames=new ArrayList<String>();
-    private ArrayList<String> deviceAddresses=new ArrayList<String>();
+    private ArrayList<BluetoothDevice> foundDevices = new ArrayList<BluetoothDevice>();
+    private ArrayList<String> deviceNames = new ArrayList<String>();
+    private ArrayList<String> deviceAddresses = new ArrayList<String>();
     private ArrayList<Connection> connections = new ArrayList<>();
     private String appName;
     private UUID uuid;
@@ -40,29 +42,31 @@ public class BluetoothManager extends Observable {
     static final int REQUEST_FINE_LOCATION = 4;
     static final int REQUEST_SCAN = 5;
     static final int REQUEST_CONNECT = 6;
+    static final int REQUEST_ADVERTISE = 7;
 
     public BluetoothManager(Activity activity, String appName, String uuid) {
         this.activity = activity;
         this.appName = appName;
         this.uuid = UUID.fromString(uuid);
         //stopService(Codes.DISCONNECT);
-        bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if(bluetoothAdapter == null) {
+        if (bluetoothAdapter == null) {
             ShortToast.show(activity, "BLUETOOTH UNSUPPORTED");
             UpdateState(BluetoothState.UNSUPPORTED);
-        }
-        else if(!bluetoothAdapter.isEnabled()) {
+        } else if (!bluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(enableIntent,REQUEST_ENABLE_BLUETOOTH);
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                requestConnect(activity);
+            }
+            activity.startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
         id = NetworkProtocol.createID();
-        deviceFinder = new DeviceFinder(activity,this);
+        deviceFinder = new DeviceFinder(activity, this);
     }
 
 
-
-    private Handler handler=new Handler(new Handler.Callback() {
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             currentMessage = msg;
@@ -74,35 +78,52 @@ public class BluetoothManager extends Observable {
     public void enableDiscovery() {
         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, DISCOVERY_TIME);
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_ADVERTISE) != PackageManager.PERMISSION_GRANTED) {
+            requestAdvertise(activity);
+        }
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
+            requestDiscovery(activity);
+        }
         activity.startActivityForResult(intent, REQUEST_ENABLE_DISCOVERY);
     }
+
     public void discoverDevices() {
         deviceFinder.discoverDevices();
     }
+
     public void findBondedDevices() {
         deviceFinder.findBondedDevices();
     }
+
     public void clearDevices() {
         deviceNames.clear();
         deviceAddresses.clear();
         foundDevices.clear();
     }
+
     public void addDevice(BluetoothDevice device) {
-        if(foundDevices.contains(device)){
+        if (foundDevices.contains(device)) {
             return;
         }
         foundDevices.add(device);
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            requestConnect(activity);
+        }
         deviceNames.add(device.getName());
         deviceAddresses.add(device.getAddress());
     }
 
     public void startServer() {
-        if(server == null) {
+        if (server == null) {
             server = new Server(this);
             server.start();
         }
     }
+
     public void startClient(int serverDeviceIndex) {
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            requestScan(activity);
+        }
         bluetoothAdapter.cancelDiscovery();
         client = new Client(foundDevices.get(serverDeviceIndex), this);
         client.start();
@@ -180,7 +201,7 @@ public class BluetoothManager extends Observable {
         handler.sendMessage(message);
     }
 
-    public void requestPermissions(Activity context) {
+    void requestConnect(Activity context){
         if (ContextCompat.checkSelfPermission(context,
                 android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -189,6 +210,9 @@ public class BluetoothManager extends Observable {
 
             }
         }
+    }
+
+    void requestScan(Activity context){
         if (ContextCompat.checkSelfPermission(context,
                 Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -197,6 +221,8 @@ public class BluetoothManager extends Observable {
 
             }
         }
+    }
+    void requestCoarseLocation(Activity context){
         if (ContextCompat.checkSelfPermission(
                 context,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -208,6 +234,8 @@ public class BluetoothManager extends Observable {
                         REQUEST_COARSE_LOCATION);
             }
         }
+    }
+    void requestFineLocation(Activity context){
         if (ContextCompat.checkSelfPermission(
                 context,
                 android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -219,6 +247,8 @@ public class BluetoothManager extends Observable {
                         REQUEST_FINE_LOCATION);
             }
         }
+    }
+    void requestDiscovery(Activity context){
         if (ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_ADMIN
@@ -230,6 +260,27 @@ public class BluetoothManager extends Observable {
                         REQUEST_ENABLE_DISCOVERY);
             }
         }
+    }
+    void requestAdvertise(Activity context){
+        if (ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.BLUETOOTH_ADVERTISE
+        ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                context.requestPermissions(
+                        new String[]{Manifest.permission.BLUETOOTH_ADVERTISE},
+                        REQUEST_ADVERTISE);
+            }
+        }
+    }
+    public void requestPermissions(Activity context) {
+       requestConnect(context);
+       requestScan(context);
+       requestCoarseLocation(context);
+       requestFineLocation(context);
+       requestDiscovery(context);
+       requestAdvertise(context);
     }
 }
 

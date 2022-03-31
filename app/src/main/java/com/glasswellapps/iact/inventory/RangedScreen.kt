@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
+import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
 
@@ -21,13 +22,14 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast.view.*
 
 class RangedScreen : AppCompatActivity() {
-    val character = CharacterHolder.getActiveCharacter()
+   var character:Character?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ranged_screen)
 
-        if(character == null) {
-            finish();
+        character = CharacterHolder.getActiveCharacter()
+        if(character == null){
+            finish()
         }
         to_melee.setBackgroundColor(resources.getColor(R.color.shadow))
         to_armor.setBackgroundColor(resources.getColor(R.color.shadow))
@@ -83,8 +85,8 @@ class RangedScreen : AppCompatActivity() {
             if(currentItem.type>=0) {
                 gridItem.alpha = 0.5f
                 if(i == 0) {
-                    if (character.startingRangedWeapon != null) {
-                        gridItem.setImageBitmap(character.startingRangedWeapon)
+                    if (character!!.startingRangedWeapon != null) {
+                        gridItem.setImageBitmap(character!!.startingRangedWeapon)
                         setClickables(gridItem, currentItem)
                     } else {
                         gridItem.setImageResource(currentItem.resourceId)
@@ -95,7 +97,8 @@ class RangedScreen : AppCompatActivity() {
                     gridItem.setImageResource(currentItem.resourceId)
                     setClickables(gridItem, currentItem)
                 }
-                if (character.weapons.contains(currentItem.index) || character.mods.contains(currentItem.index)) {
+                if (character!!.weapons.contains(currentItem.index) || character!!.mods.contains
+                (currentItem.index)) {
                     gridItem.alpha = 1f
                 }
             }
@@ -145,13 +148,13 @@ class RangedScreen : AppCompatActivity() {
             return 0.5f;
         }
         //remove if already equipped
-        if (character.weapons.remove(item.index)) {
+        if (character!!.weapons.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
         }
         //equip if slot available
-        if (character.weapons.size < 2) {
-            character.weapons.add(item.index)
+        if (character!!.weapons.size < 2) {
+            character!!.weapons.add(item.index)
             return 1f
         }
         showItemLimitReached()
@@ -163,12 +166,12 @@ class RangedScreen : AppCompatActivity() {
             return 0.5f;
         }
         //remove if already equipped
-        if (character.mods.remove(item.index)) {
+        if (character!!.mods.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
         }
         //equip if not equipped
-        character.mods.add(item.index)
+        character!!.mods.add(item.index)
         return 1f
     }
 

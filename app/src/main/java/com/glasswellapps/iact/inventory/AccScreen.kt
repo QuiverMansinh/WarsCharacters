@@ -12,6 +12,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
+import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.activity_acc_screen.*
@@ -19,13 +20,14 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast.view.*
 
 class AccScreen : AppCompatActivity() {
-    val character = CharacterHolder.getActiveCharacter()
+    var character: Character? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acc_screen)
         var accViews = ArrayList<ImageView>()
 
+        character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
         }
@@ -59,7 +61,7 @@ class AccScreen : AppCompatActivity() {
             gridItem.alpha = 0.5f
                 gridItem.setImageResource(currentItem.resourceId)
                 setClickables(gridItem, currentItem)
-                if (character.accessories.contains(currentItem.index)) {
+                if (character!!.accessories.contains(currentItem.index)) {
                     gridItem.alpha = 1f
                 }
 
@@ -108,9 +110,9 @@ class AccScreen : AppCompatActivity() {
             Sounds.negativeSound()
             return 0.5f;
         }
-        if (character.accessories.remove(item.index)) {
+        if (character!!.accessories.remove(item.index)) {
             if (item.index == Items.mandoHelmetIndex || item.index == Items.reinforcedHelmetIndex){
-                character.helmet = false
+                character!!.helmet = false
             }
             Sounds.selectSound()
 
@@ -118,14 +120,14 @@ class AccScreen : AppCompatActivity() {
             return 0.5f
         }
         //equip if slot available
-        if (character.accessories.size < 3) {
+        if (character!!.accessories.size < 3) {
 
             if (item.index == Items.mandoHelmetIndex || item.index == Items.reinforcedHelmetIndex) {
-                if (!character.helmet) {
-                    character.helmet = true
-                    character.accessories.add(item.index)
-                    if(character.name_short.equals("biv")) {
-                        character.changeRandom = true
+                if (!character!!.helmet) {
+                    character!!.helmet = true
+                    character!!.accessories.add(item.index)
+                    if(character!!.name_short.equals("biv")) {
+                        character!!.changeRandom = true
                     }
                     return 1f
                 }
@@ -135,7 +137,7 @@ class AccScreen : AppCompatActivity() {
                 }
             }
             else {
-                character.accessories.add(item.index)
+                character!!.accessories.add(item.index)
                 return 1f
             }
         }

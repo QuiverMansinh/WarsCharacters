@@ -11,6 +11,7 @@ import com.glasswellapps.iact.effects.Sounds;
 public class CharacterSlot {
     TextView playerDetected;
     View playerView;
+    View view;
     Player player;
     int playerNumber;
     SavingController savingController;
@@ -26,25 +27,31 @@ public class CharacterSlot {
 
         playerView = screen.getLayoutInflater().inflate(R.layout.fragment_multiplayer_character, container);
         playerView.setAlpha(0);
+        view =  (View)playerView.getParent();
         player = new Player(playerView,screen);
         playerList[playerNumber] = player;
         playerView.findViewById(R.id.mp_options2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toCharacterScreen();
+
+                    toCharacterScreen();
+
                 //onOptions();
             }
         });
         playerView.findViewById(R.id.mp_options).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onOptions();
+
+                    onOptions();
+
             }
         });
         player.addObserver(screen);
     }
 
     private void toCharacterScreen(){
+
         if(screen.isImperial) {
             onOptions();
             return;

@@ -11,6 +11,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
+import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.activity_rewards_screen.*
@@ -18,11 +19,12 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast.view.*
 
 class RewardsScreen : AppCompatActivity() {
-    val character = CharacterHolder.getActiveCharacter()
+    var character:Character? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rewards_screen)
 
+        character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
         }
@@ -64,12 +66,12 @@ class RewardsScreen : AppCompatActivity() {
             setClickables(gridItem, currentItem)
             when (currentItem.type) {
                 Items.reward -> {
-                    if (character.rewards.contains(currentItem.index)) {
+                    if (character!!.rewards.contains(currentItem.index)) {
                         gridItem.alpha = 1f
                     }
                 }
                 Items.acc -> {
-                    if (character.accessories.contains(currentItem.index)) {
+                    if (character!!.accessories.contains(currentItem.index)) {
                         gridItem.alpha = 1f
                     }
                 }
@@ -118,12 +120,12 @@ class RewardsScreen : AppCompatActivity() {
             return 0.5f;
         }
          //remove if already equipped
-        if (character.rewards.remove(item.index)) {
+        if (character!!.rewards.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
         }
 
-        character.rewards.add(item.index)
+        character!!.rewards.add(item.index)
         Sounds.equipSound(this, item.soundType)
         return 1f
     }
@@ -133,13 +135,13 @@ class RewardsScreen : AppCompatActivity() {
             Sounds.negativeSound()
             return 0.5f;
         }
-        if (character.accessories.remove(item.index)) {
+        if (character!!.accessories.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
         }
         //equip if slot available
-        if (character.accessories.size < 3) {
-            character.accessories.add(item.index)
+        if (character!!.accessories.size < 3) {
+            character!!.accessories.add(item.index)
             Sounds.equipSound(this, item.soundType)
             return 1f
         }

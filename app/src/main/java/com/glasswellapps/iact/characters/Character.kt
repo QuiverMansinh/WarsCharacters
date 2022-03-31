@@ -219,7 +219,9 @@ open class Character {
     }
 
     open fun clearImages(){
+        //return
         power?.recycle()
+
         power_wounded?.recycle()
         currentImage?.recycle()
         layer2?.recycle()

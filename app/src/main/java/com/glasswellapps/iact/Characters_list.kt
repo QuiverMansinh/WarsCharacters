@@ -179,9 +179,7 @@ class Characters_list : AppCompatActivity() {
 
                 charactersImage[i].alpha = 0f
         }
-        if(CharacterHolder.getActiveCharacter() != null) {
-            wipeSelectedCharacter()
-        }
+
         val intent = Intent(this, CharacterScreen::class.java)
         intent.putExtra("CharacterName", "custom")
         intent.putExtra("Load", false)
@@ -190,25 +188,5 @@ class Characters_list : AppCompatActivity() {
         startActivity(intent);
         finish()
 
-    }
-
-
-
-    fun wipeSelectedCharacter(){
-
-        CharacterHolder.getActiveCharacter().currentImage!!.recycle()
-        for (i in 0..CharacterHolder.getActiveCharacter().xpCardImages.size-1) {
-            if (CharacterHolder.getActiveCharacter().xpCardImages[i] != null) {
-                CharacterHolder.getActiveCharacter().xpCardImages!![i].recycle()
-            }
-        }
-        if (CharacterHolder.getActiveCharacter().power != null) {
-            CharacterHolder.getActiveCharacter().power!!.recycle()
-            CharacterHolder.getActiveCharacter().power_wounded!!.recycle()
-        }
-        if (CharacterHolder.getActiveCharacter().portraitImage != null) {
-            CharacterHolder.getActiveCharacter().portraitImage = null
-        }
-        CharacterHolder.setActiveCharacter(null)
     }
 }

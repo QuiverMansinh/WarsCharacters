@@ -44,14 +44,10 @@ public class ImperialScreen extends MultiplayerScreen {
     private void initBluetooth() {
         advertise = findViewById(R.id.bluetooth_button);
         showStatus = findViewById(R.id.show_status);
-
         showStatus.setVisibility(View.VISIBLE);
         bluetoothManager = new BluetoothManager(this, "IATracker", "dd8c0994-aa25-4698-8e30-56f286a98375");
         bluetoothManager.addObserver(this);
         bluetoothManager.requestPermissions(this);
-
-
-
         showStatus.setText(IMPERIAL_PROMPT);
         advertise.setOnClickListener(new View.OnClickListener() {
             @Override

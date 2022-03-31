@@ -2,6 +2,7 @@ package com.glasswellapps.iact.loading
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -24,12 +25,16 @@ class SaveSlotAdapter(
 ) :
     RecyclerView
     .Adapter<SaveSlotAdapter.ViewHolder>() {
+    val partyIds = getPartyIDs()
+    val imperialIds = getImperialIDs()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val fileName: TextView
         val characterName: TextView
         val level: TextView
         val portrait: ImageView
+        val inImperial: ImageView
+        val inParty: ImageView
         val time: TextView
         val editData: View
         val loadData: View
@@ -40,6 +45,8 @@ class SaveSlotAdapter(
             characterName = view.findViewById(R.id.characterName)
             level = view.findViewById(R.id.level)
             portrait = view.findViewById(R.id.portrait)
+            inImperial = view.findViewById(R.id.in_imperial)
+            inParty = view.findViewById(R.id.in_party)
             time = view.findViewById(R.id.time)
 
             editData = view.findViewById(R.id.edit_data)
@@ -79,6 +86,10 @@ class SaveSlotAdapter(
         if(portrait!=null) {
             viewHolder.portrait.setImageDrawable(portrait)
         }
+
+       setIsInImperial(saveData, viewHolder)
+        setIsInParty(saveData, viewHolder)
+
         var timeSinceLastSave =  (System.currentTimeMillis()-saveData.date).toFloat()
 
         var days = (timeSinceLastSave/86400000).toInt()
@@ -126,6 +137,46 @@ class SaveSlotAdapter(
             }
         })
     }
+
+    fun setIsInImperial(saveData:CharacterData, viewHolder: ViewHolder){
+        if(partyIds?.contains(saveData.id) == true) {
+            viewHolder.inParty.visibility = View.VISIBLE
+        }
+        else{
+            viewHolder.inParty.visibility = View.INVISIBLE
+        }
+
+    }
+    fun setIsInParty(saveData:CharacterData, viewHolder: ViewHolder){
+        if(imperialIds?.contains(saveData.id) == true) {
+            viewHolder.inImperial.visibility = View.VISIBLE
+        }
+        else{
+            viewHolder.inImperial.visibility = View.INVISIBLE
+        }
+    }
+
+    fun getImperialIDs(): IntArray? {
+        val playerIDs = IntArray(4)
+        for (i in 0..3) {
+            playerIDs[i] = context.getSharedPreferences(
+                "Imperial",
+                Context.MODE_PRIVATE
+            ).getInt("Imperial"+ i, -1)
+        }
+        return playerIDs
+    }
+    fun getPartyIDs(): IntArray? {
+        val playerIDs = IntArray(4)
+        for (i in 0..3) {
+            playerIDs[i] = context.getSharedPreferences(
+                "Party",
+                Context.MODE_PRIVATE
+            ).getInt("Party"+ i, -1)
+        }
+        return playerIDs
+    }
+
 
     fun setDeleteToggleVisibility(view: View, position: Int){
         if(loadScreen.selectedFiles.contains(loadScreen.page * 5 + position)){

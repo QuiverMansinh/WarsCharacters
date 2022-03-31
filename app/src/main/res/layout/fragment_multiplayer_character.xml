@@ -28,6 +28,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/character_select_background" />
 
+    <com.glasswellapps.iact.character_screen.views.PulsatingImageView
+        android:id="@+id/camouflage2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:alpha="0"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/background_image"
+        app:layout_constraintEnd_toEndOf="@+id/background_image"
+        app:layout_constraintStart_toStartOf="@+id/background_image"
+        app:layout_constraintTop_toTopOf="@+id/background_image" />
+
     <FrameLayout
         android:id="@+id/companion_layer"
         android:layout_width="0dp"

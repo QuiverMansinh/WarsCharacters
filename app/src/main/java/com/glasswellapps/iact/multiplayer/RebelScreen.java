@@ -87,11 +87,13 @@ public class RebelScreen extends MultiplayerScreen {
         float playerPosition =  width*1.5f - playerCount*width*1.5f/3f;
         for(int i = 0; i < characterSlots.length;i++) {
             View characterSlotView = (View) playerViews[i].getParent();
-            characterSlotView.animate().alpha(i < playerCount + 1 ? 1 : 0).setDuration(200);
-            characterSlotView.animate().translationX(playerPosition + i * width).setDuration(200);
+            characterSlotView.animate().alpha(i <= playerCount? 1 : 0).setDuration(200);
+            float slideTo = playerPosition + i * width;
+            if(i > playerCount){
+                slideTo*=2;
+            }
+            characterSlotView.animate().translationX(slideTo).setDuration(200);
         }
-
-
     }
     private  void applyHandicap(){
         for(int i = 0; i < characterSlots.length;i++) {

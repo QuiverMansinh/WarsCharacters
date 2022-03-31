@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
+import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.activity_armor_screen.*
@@ -20,12 +21,13 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast.view.*
 
 class ArmorScreen : AppCompatActivity() {
-    val character = CharacterHolder.getActiveCharacter()
+    var character: Character? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_armor_screen)
 
+        character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
         }
@@ -55,7 +57,7 @@ class ArmorScreen : AppCompatActivity() {
                 setClickables(gridItem, currentItem)
 
 
-                if (character.armor.contains(currentItem.index)) {
+                if (character!!.armor.contains(currentItem.index)) {
                     gridItem.alpha = 1f
                 }
 
@@ -99,14 +101,14 @@ class ArmorScreen : AppCompatActivity() {
             return 0.5f;
         }
         //remove if already equipped
-        if (character.armor.remove(item.index)) {
+        if (character!!.armor.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
         }
 
         //equip if slot available
-        if (character.armor.size < 1) {
-            character.armor.add(item.index)
+        if (character!!.armor.size < 1) {
+            character!!.armor.add(item.index)
             return 1f
         }
         //TODO toast 1 armor limit reached

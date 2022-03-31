@@ -56,7 +56,8 @@ class MainActivity : AppCompatActivity(){
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        //clear memory of all character data and character images
+        //clear memory of all character data and character image
+        CharacterHolder.clearAllImages()
         CharacterHolder.clearParty()
         CharacterHolder.clearActiveCharacter()
         //ShortToast.show(this,"Data Cleared")

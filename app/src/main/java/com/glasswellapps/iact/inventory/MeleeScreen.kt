@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import com.glasswellapps.iact.*
+import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
 import kotlinx.android.synthetic.main.activity_melee_screen.*
@@ -20,11 +21,11 @@ import kotlinx.android.synthetic.main.dialog_show_card.*
 import kotlinx.android.synthetic.main.toast.view.*
 
 class MeleeScreen : AppCompatActivity() {
-    val character = CharacterHolder.getActiveCharacter()
+    var character:Character? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_melee_screen)
-
+        character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
         }
@@ -34,7 +35,7 @@ class MeleeScreen : AppCompatActivity() {
         to_acc.setBackgroundColor(resources.getColor(R.color.shadow))
 
 
-  var meleeViews = ArrayList<ImageView>()
+        var meleeViews = ArrayList<ImageView>()
         meleeViews.add(this.melee_image0)
         meleeViews.add(this.melee_image1)
         meleeViews.add(this.melee_image2)
@@ -77,8 +78,8 @@ class MeleeScreen : AppCompatActivity() {
 
 
                 if(i == 0) {
-                    if (character.startingMeleeWeapon != null) {
-                        gridItem.setImageBitmap(character.startingMeleeWeapon)
+                    if (character!!.startingMeleeWeapon != null) {
+                        gridItem.setImageBitmap(character?.startingMeleeWeapon)
                         setClickables(gridItem, currentItem)
                     } else {
                         gridItem.setImageResource(currentItem.resourceId)
@@ -89,7 +90,8 @@ class MeleeScreen : AppCompatActivity() {
                     gridItem.setImageResource(currentItem.resourceId)
                     setClickables(gridItem, currentItem)
                 }
-                if (character.weapons.contains(currentItem.index) || character.mods.contains(currentItem.index)) {
+                if (character!!.weapons.contains(currentItem.index) || character!!.mods.contains
+                        (currentItem.index)) {
                     gridItem.alpha = 1f
                 }
             }
@@ -142,13 +144,13 @@ class MeleeScreen : AppCompatActivity() {
             return 0.5f;
         }
         //remove if already equipped
-        if (character.weapons.remove(item.index)) {
+        if (character!!.weapons.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
         }
         //equip if slot available
-        if (character.weapons.size < 2) {
-            character.weapons.add(item.index)
+        if (character!!.weapons.size < 2) {
+            character!!.weapons.add(item.index)
             return 1f
         }
         showItemLimitReached()
@@ -161,12 +163,12 @@ class MeleeScreen : AppCompatActivity() {
             return 0.5f;
         }
         //remove if already equipped
-        if (character.mods.remove(item.index)) {
+        if (character!!.mods.remove(item.index)) {
             Sounds.selectSound()
             return 0.5f
         }
         //equip if not equipped
-        character.mods.add(item.index)
+        character!!.mods.add(item.index)
         return 1f
     }
 

@@ -17,12 +17,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/portrait"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/icon_trooper" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/portrait"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/portrait_fenn" />
+
+            <ImageView
+                android:id="@+id/in_imperial"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:alpha="0.7"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/imperial_icon" />
+
+            <ImageView
+                android:id="@+id/in_party"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:alpha="0.7"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/portrait"
+                app:srcCompat="@drawable/rebel_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -39,8 +39,6 @@ public class MultiplayerSavingController extends SavingController {
         int[] playerIDs = getPlayerIDs();
         Character[] loadedCharacters = LoadingController.Companion.loadCharactersByID(playerIDs,
                 context);
-        System.out.println(getPlayerIDs().length);
-        System.out.println("LOAD " + loadedCharacters.length);
         for(int j = 0; j < playerIDs.length;j++) {
             for (int i = 0; i < loadedCharacters.length; i++) {
                 if (loadedCharacters[i].getId() == playerIDs[j]) {
@@ -55,16 +53,17 @@ public class MultiplayerSavingController extends SavingController {
         int[] playerIDs = new int[4];
         for(int i = 0; i < 4;i++){
             playerIDs[i] = sharedPreferences.getInt(name+i,-1);
-            System.out.println("GET ID " + playerIDs[i]);
         }
         return  playerIDs;
     }
     public void savePlayers(){
-        CharacterHolder.clearParty();
+
         for (int i = 0; i < playerList.length; i++) {
             Player player = playerList[i];
             if(player.isLocal && player.getCharacter()!=null){
-                player.getCharacter().setFile_name(name +(i+1));
+                if(player.getCharacter().getFile_name().equals("autosave")) {
+                    player.getCharacter().setFile_name(name +" "+ (i + 1));
+                }
                 CharacterHolder.addToParty(player.getCharacter());
             }
         }

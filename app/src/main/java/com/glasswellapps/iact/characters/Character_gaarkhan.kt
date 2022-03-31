@@ -71,4 +71,8 @@ class Character_gaarkhan : Character {
             layer2 = null
         }
     }
+
+    override fun loadPortraitImage(context:Context){
+        portraitImage = context.resources.getDrawable(R.drawable.portrait_gaarkhan)
+    }
 }

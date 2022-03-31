@@ -82,6 +82,9 @@ public class PulsatingImageView extends View implements Runnable{
     boolean isRunning = true;
     @Override
     public void run() {
+        if(this.getVisibility() == View.GONE) {
+            isRunning = false;
+        }
         while(isRunning) {
             time+=fixedDeltaTime;
             //System.out.println("tick");
@@ -112,7 +115,6 @@ public class PulsatingImageView extends View implements Runnable{
         }
     }
     public void onStop() throws InterruptedException {
-        recycleBitmap(image);
         image = null;
         isRunning = false;
         thread.join();

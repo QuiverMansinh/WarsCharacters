@@ -61,10 +61,12 @@ class CharacterScreen : AppCompatActivity() {
         when(from){
             "party"->initPartyButton()
         }
+        savingController.quickSave()
     }
     private fun initPartyButton(){
         if(CharacterHolder.getParty() == null) return;
         party_button.setOnClickListener{ onPartyMode() }
+        party_button.visibility = View.VISIBLE
 
         val partyButtons = arrayListOf<ImageView>()
         partyButtons.add(party_button1)

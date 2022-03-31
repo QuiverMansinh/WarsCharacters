@@ -49,7 +49,6 @@ class Options(private var screen: MultiplayerScreen, var isImperial:Boolean) {
         screen.playerToBeAdded = -1
         CharacterHolder.setIsInteractable(player.isLocal)
         CharacterHolder.setActiveCharacter(player.character)
-        CharacterHolder.clearAllImages()
     }
 
 

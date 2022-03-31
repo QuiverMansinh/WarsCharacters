@@ -1948,7 +1948,7 @@
             android:alpha="1"
             android:background="#00FFFFFF"
             android:scaleType="fitStart"
-            android:visibility="visible"
+            android:visibility="gone"
             app:srcCompat="@drawable/button_party_mode" />
 
     </LinearLayout>

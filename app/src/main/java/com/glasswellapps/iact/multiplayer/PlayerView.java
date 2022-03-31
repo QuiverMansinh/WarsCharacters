@@ -64,6 +64,7 @@ public class PlayerView {
         characterImageViews = view.findViewById(R.id.character_images);
 
         backgroundView = view.findViewById(R.id.background_image);
+        camouflageView = view.findViewById(R.id.camouflage2);
 
         woundedView = view.findViewById(R.id.wounded);
         damageAnimView = view.findViewById(R.id.damage_animation);

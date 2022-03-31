@@ -15,7 +15,6 @@ public class CharacterHolder {
         if(activeCharacter == null){
             return;
         }
-        activeCharacter.clearImages();
         activeCharacter = null;
     }
 
@@ -49,22 +48,21 @@ public class CharacterHolder {
         if(party == null){
             return;
         }
-        character.clearImages();
         party.remove(character);
     }
     public static void clearParty(){
         if(party == null){
             return;
         }
-        clearAllImages();
         party.clear();
         party = null;
 
     }
     public static void clearAllImages(){
-        if(activeCharacter!=null) {
-            activeCharacter.clearImages();
-        }
+       clearPartyImages();
+       clearActiveCharacterImages();
+    }
+    static void clearPartyImages(){
         if(party ==null){
             return;
         }
@@ -74,6 +72,12 @@ public class CharacterHolder {
             }
         }
     }
+    static void clearActiveCharacterImages(){
+        if(activeCharacter!=null) {
+            activeCharacter.clearImages();
+        }
+    }
+
     static boolean isInteractable = true;
     public static boolean getIsInteractable(){return isInteractable;}
     public static void setIsInteractable(boolean interactable) {
