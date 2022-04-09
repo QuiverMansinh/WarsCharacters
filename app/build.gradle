@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.glasswellapps.iact"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdk 32
         versionCode 14
         versionName '2.0'
 
@@ -44,7 +44,6 @@ android {
 dependencies {
 
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
-
     implementation 'jp.wasabeef:blurry:4.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'

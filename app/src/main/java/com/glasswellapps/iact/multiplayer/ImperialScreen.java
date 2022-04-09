@@ -1,8 +1,6 @@
 package com.glasswellapps.iact.multiplayer;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Message;
@@ -10,14 +8,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-
 import com.glasswellapps.iact.R;
 import com.glasswellapps.iact.ShortToast;
 import com.glasswellapps.iact.character_screen.controllers.ButtonPressedHandler;
 import com.glasswellapps.iact.effects.Sounds;
 
 import java.util.Observable;
+
 
 public class ImperialScreen extends MultiplayerScreen {
     ImageView advertise;
@@ -47,7 +44,7 @@ public class ImperialScreen extends MultiplayerScreen {
         showStatus.setVisibility(View.VISIBLE);
         bluetoothManager = new BluetoothManager(this, "IATracker", "dd8c0994-aa25-4698-8e30-56f286a98375");
         bluetoothManager.addObserver(this);
-        bluetoothManager.requestPermissions(this);
+        bluetoothManager.isPermitted(this);
         showStatus.setText(IMPERIAL_PROMPT);
         advertise.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,38 +54,46 @@ public class ImperialScreen extends MultiplayerScreen {
         });
     }
     void onBluetoothButton(){
-        if(!isDiscovering) {
-            Sounds.INSTANCE.selectSound();
-            ButtonPressedHandler.onButtonPressed(advertise);
-
-            bluetoothManager.enableDiscovery();
-        }
-        else{
-            Sounds.INSTANCE.negativeSound();
+        if(BluetoothManager.isPermitted(this)) {
+            if (!isDiscovering) {
+                Sounds.INSTANCE.selectSound();
+                ButtonPressedHandler.onButtonPressed(advertise);
+                bluetoothManager.enableDiscovery();
+            } else {
+                ShortToast.show(this, "BLUETOOTH DISCOVERY ALREADY ENABLED");
+                Sounds.INSTANCE.negativeSound();
+            }
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean allPermitted = true;
+        if (requestCode == BluetoothManager.REQUEST_PERMISSIONS) {
+            for(int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == RESULT_CANCELED) {
+                    //ShortToast.show(this, permissions[i] + " DENIED");
+                    allPermitted = false;
+                }
+                else{
+                    //ShortToast.show(this, permissions[i] + " PERMITTED");
+                }
+            }
+            if(!allPermitted) return;
 
+            if(bluetoothManager.isBluetoothEnabled()){
+                //ShortToast.show(this,"BLUETOOTH ENABLED");
+            }
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == BluetoothManager.REQUEST_CONNECT){
-            if(resultCode == RESULT_OK){
-                serverName = bluetoothManager.getBluetoothAdapter().getName();
-                serverName = serverName.substring(0, Math.min(serverName.length(), 10));
-                ShortToast.show(this,"BLUETOOTH ENABLED");
-            }
-            else{
-                ShortToast.show(this,"BLUETOOTH NOT ENABLED");
-                finish();
-            }
-        }
         if(requestCode == BluetoothManager.REQUEST_ENABLE_DISCOVERY) {
             if (resultCode == RESULT_CANCELED) {
-                //Toast.makeText(getApplicationContext(),"Discovery not enabled",Toast.LENGTH_SHORT).show();
+                ShortToast.show(this, "DISCOVERY DENIED");
             }
             else {
-                //Toast.makeText(getApplicationContext(),"Discovery enabled",Toast.LENGTH_SHORT)
-                // .show();
                 bluetoothManager.startServer();
                 discoveryTime = bluetoothManager.DISCOVERY_TIME;
                 isDiscovering = true;
@@ -118,7 +123,6 @@ public class ImperialScreen extends MultiplayerScreen {
         if (requestCode == BluetoothManager.REQUEST_ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_CANCELED) {
                 ShortToast.show(this,"BLUETOOTH NOT ENABLED");
-                finish();
             }
             else {
                 ShortToast.show(this,"BLUETOOTH ENABLED");

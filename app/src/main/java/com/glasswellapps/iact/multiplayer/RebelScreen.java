@@ -1,16 +1,11 @@
 package com.glasswellapps.iact.multiplayer;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glasswellapps.iact.R;
-import com.glasswellapps.iact.ShortToast;
 import com.glasswellapps.iact.character_screen.CharacterScreen;
 import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;
@@ -18,7 +13,6 @@ import com.glasswellapps.iact.inventory.Items;
 import com.glasswellapps.iact.loading.CharacterHolder;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class RebelScreen extends MultiplayerScreen {
     ImageView[] playerNumberButtons = new ImageView[4];

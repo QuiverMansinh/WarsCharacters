@@ -1,6 +1,5 @@
 package com.glasswellapps.iact.multiplayer;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -10,12 +9,15 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.glasswellapps.iact.CardDisplay;
 import com.glasswellapps.iact.R;
-import com.glasswellapps.iact.ShortToast;
-import com.glasswellapps.iact.character_screen.CharacterScreen;
 import com.glasswellapps.iact.character_screen.controllers.ButtonPressedHandler;
-import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;
 import com.glasswellapps.iact.loading.CharacterHolder;
+import com.glasswellapps.iact.multiplayer.CharacterSlot;
+import com.glasswellapps.iact.multiplayer.MultiplayerSavingController;
+import com.glasswellapps.iact.multiplayer.Options;
+import com.glasswellapps.iact.multiplayer.Player;
+import com.glasswellapps.iact.multiplayer.PlayerAdder;
+import com.glasswellapps.iact.multiplayer.SoundBoard;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -66,7 +68,7 @@ public abstract class MultiplayerScreen extends AppCompatActivity implements Obs
                 findViewById(R.id.sound_crate),
                 findViewById(R.id.sound_lightsaber_attack),
                 findViewById(R.id.sound_lightsaber),
-                true);
+                isImperial);
 
         volumeSlider = findViewById(R.id.imperial_volume_slider);
         volumeSlider.setProgress(50);

@@ -69,6 +69,14 @@ class SoundBoard(
             droidDeathSoundIDs,
             droidDeathFrequencies
         )
+    private val droidImperialDeathSoundIDs = intArrayOf(
+        Sounds.droid_dead_imperial)
+    private val droidImperialDeathFrequencies = intArrayOf(1)
+    private val droidImperialDeathSounds: SoundSelector =
+        SoundSelector(
+            droidImperialDeathSoundIDs,
+            droidImperialDeathFrequencies
+        )
 
     private val droidSoundIDs = intArrayOf(
         Sounds.droid,
@@ -78,8 +86,18 @@ class SoundBoard(
     private val droidSounds: SoundSelector =
         SoundSelector(
             droidSoundIDs,
-            droidFrequencies
-        )
+            droidFrequencies)
+
+    private val droidImperialSoundIDs = intArrayOf(
+        Sounds.droid_assassin,
+        Sounds.droid_imperial1,
+        Sounds.droid_imperial2,
+        Sounds.droid_sentry,Sounds.droid_deathstar)
+    private val droidImperialFrequencies = intArrayOf(0,2,2,2,1)
+    private val droidImperialSounds: SoundSelector =
+        SoundSelector(
+            droidImperialSoundIDs,
+            droidImperialFrequencies)
 
     private val trooperSoundIDs = intArrayOf(
         Sounds.stormtrooper_blastem,
@@ -317,12 +335,13 @@ class SoundBoard(
     }
 
     fun onDroid(){
-        droidSounds.playRandom()
+        if(isImperial) {droidImperialSounds.playRandom()}
+        else {droidSounds.playRandom()}
     }
     private fun onDroidDeath() {
-        droidDeathSounds.playRandom()
+        if(isImperial) {droidImperialDeathSounds.playRandom()}
+        else {droidDeathSounds.playRandom()}
     }
-
     fun onHumanoid(){
         Sounds.selectSound()
         humanoidSoundDialog.show()

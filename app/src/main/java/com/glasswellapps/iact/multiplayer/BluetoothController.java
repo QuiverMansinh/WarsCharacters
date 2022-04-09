@@ -1,5 +1,8 @@
 package com.glasswellapps.iact.multiplayer;
+
 import static android.app.Activity.RESULT_CANCELED;
+
+import android.app.Activity;
 import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -13,14 +16,18 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.glasswellapps.iact.R;
 import com.glasswellapps.iact.ShortToast;
 import com.glasswellapps.iact.character_screen.CharacterScreen;
 import com.glasswellapps.iact.character_screen.controllers.ButtonPressedHandler;
 import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -37,7 +44,7 @@ public class BluetoothController implements Observer {
     private ArrayList<BluetoothDevice> devices;
     private DeviceListAdapter deviceListAdapter;
 
-    public BluetoothController(CharacterScreen characterScreen){
+    public BluetoothController(CharacterScreen characterScreen) {
         this.characterScreen = characterScreen;
         character = characterScreen.getCharacter();
         devicesDialog = new Dialog(characterScreen);
@@ -56,53 +63,78 @@ public class BluetoothController implements Observer {
             }
         });
     }
+
     public void onDeviceSelected(DeviceViewHolder viewHolder) {
         devicesDialog.dismiss();
         Sounds.INSTANCE.selectSound();
-        System.out.println("DEVICE SELECTED: "+devices.get(viewHolder.getAdapterPosition()).getName());
         bluetoothManager.startClient(viewHolder.getAdapterPosition());
     }
-    public void onBluetoothButton(){
+
+    public void onBluetoothButton() {
         Sounds.INSTANCE.selectSound();
+
         ButtonPressedHandler.onButtonPressed(findServerButton);
-        if(bluetoothManager == null) {
+        if (bluetoothManager == null) {
             bluetoothManager = new BluetoothManager(characterScreen, "IATracker", uuid);
             bluetoothManager.addObserver(this::update);
+            ShortToast.show(characterScreen, "BLUETOOTH ON");
         }
-        bluetoothManager.requestPermissions(characterScreen);
-        bluetoothManager.discoverDevices();
-        devices = bluetoothManager.getDevices();
-        deviceListAdapter= new DeviceListAdapter(devices, characterScreen,this);
-        devicesList.setAdapter(deviceListAdapter);
-        devicesList.setLayoutManager(new LinearLayoutManager(characterScreen));
-        devicesDialog.show();
-    }
-    public void onResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == BluetoothManager.REQUEST_ENABLE_DISCOVERY) {
-            if (resultCode == RESULT_CANCELED) {
-                //Toast.makeText(characterScreen, "Discovery not enabled", Toast.LENGTH_SHORT)
-                // .show();
-            } else {
-                //Toast.makeText(characterScreen, "Discovery enabled", Toast.LENGTH_SHORT).show();
+        if(BluetoothManager.isPermitted(characterScreen)){
+            ShortToast.show(characterScreen, "BLUETOOTH PERMISSIONS GRANTED");
+            if(bluetoothManager.isBluetoothEnabled()) {
+                initFindDevices();
             }
         }
+
+    }
+
+    public void onResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == BluetoothManager.REQUEST_ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_CANCELED) {
-                ShortToast.show(characterScreen,"BLUETOOTH NOT ENABLED");
-                bluetoothManager = null;
+                ShortToast.show(characterScreen, "BLUETOOTH NOT ENABLED");
             } else {
-                ShortToast.show(characterScreen,"BLUETOOTH ENABLED");
-                bluetoothManager.discoverDevices();
+                ShortToast.show(characterScreen, "BLUETOOTH ENABLED");
+                initFindDevices();
+            }
+        }
+    }
+    public void onResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+        if (requestCode == BluetoothManager.REQUEST_PERMISSIONS) {
+            boolean permissionGranted = true;
+            for(int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == RESULT_CANCELED) {
+                    //ShortToast.show(characterScreen, permissions[i]);
+                    permissionGranted = false;
+                }
+                ShortToast.show(characterScreen, ""+permissions[i]);
+            }
+            ShortToast.show(characterScreen, "PLEASE PRESS AGAIN");
+            if(permissionGranted) {
+                ShortToast.show(characterScreen, "BLUETOOTH PERMISSIONS GRANTED");
+                if(bluetoothManager.isBluetoothEnabled()) {
+                    ShortToast.show(characterScreen, "BLUETOOTH ENABLED");
+                    initFindDevices();
+                }
             }
         }
     }
 
-    public void onConnect(){
-        ShortToast.show(characterScreen,"CONNECTED");
+    void initFindDevices(){
+        bluetoothManager.discoverDevices();
+        devices = bluetoothManager.getDevices();
+        deviceListAdapter = new DeviceListAdapter(devices, characterScreen, this);
+        devicesList.setAdapter(deviceListAdapter);
+        devicesList.setLayoutManager(new LinearLayoutManager(characterScreen));
+        devicesDialog.show();
+
+    }
+    public void onConnect() {
+        ShortToast.show(characterScreen, "CONNECTED");
         sendCharacter(true);
     }
-    public void sendCharacter(boolean updateImages){
-        if(bluetoothManager!=null) {
+
+    public void sendCharacter(boolean updateImages) {
+        if (bluetoothManager != null) {
             bluetoothManager.sendMessageToAll(NetworkProtocol.sendCharacter(bluetoothManager.id, character, updateImages));
         }
     }
@@ -113,7 +145,7 @@ public class BluetoothController implements Observer {
         deviceListAdapter.getItemCount();
         String status = "";
         Message msg = bluetoothManager.getCurrentMessage();
-        if(msg!=null) {
+        if (msg != null) {
             int state = msg.what;
             switch (state) {
                 case BluetoothState.IDLE:
@@ -124,7 +156,7 @@ public class BluetoothController implements Observer {
                     break;
                 case BluetoothState.CONNECTING:
                     status = "Connecting";
-                    ShortToast.show(characterScreen,"CONNECTING...");
+                    ShortToast.show(characterScreen, "CONNECTING...");
                     break;
                 case BluetoothState.CONNECTED:
                     status = "Connected";
@@ -132,7 +164,7 @@ public class BluetoothController implements Observer {
                     break;
                 case BluetoothState.CONNECTION_FAILED:
                     status = "Connection Failed";
-                    ShortToast.show(characterScreen,"CONNECTION FAILED");
+                    ShortToast.show(characterScreen, "CONNECTION FAILED");
                     break;
                 case BluetoothState.MESSAGE_RECEIVED:
                     status = "Message Received";
@@ -145,39 +177,46 @@ public class BluetoothController implements Observer {
         }
 
     }
-    void onMessageReceived(Message msg){
+
+    void onMessageReceived(Message msg) {
         byte[] message = (byte[]) msg.obj;
-        String str = new String(message) +" " + message .length;
+        String str = new String(message) + " " + message.length;
         //ShortToast.show(characterScreen,str);
 
-        int result = NetworkProtocol.onClientReceiveMessage(message,bluetoothManager);
+        int result = NetworkProtocol.onClientReceiveMessage(message, bluetoothManager);
         System.out.println(result);
         //ShortToast.show(characterScreen, "RESULT: "+result);
-        switch (result){
-            case Codes.DISCONNECT: onDisconnected();break;
-            case Codes.GAMEOVER:  characterScreen.onGameOver();break;
+        switch (result) {
+            case Codes.DISCONNECT:
+                onDisconnected();
+                break;
+            case Codes.GAMEOVER:
+                characterScreen.onGameOver();
+                break;
         }
     }
 
     public void onDisconnected() {
-        if(bluetoothManager!=null) {
-            if(bluetoothManager.isConnected()) {
+        if (bluetoothManager != null) {
+            if (bluetoothManager.isConnected()) {
                 NetworkProtocol.disconnect(bluetoothManager);
                 bluetoothManager.stopService(Codes.DISCONNECT);
                 ShortToast.show(characterScreen, "DISCONNECTED");
             }
         }
     }
+
+
 }
 
 class DeviceListAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     ArrayList<BluetoothDevice> list = new ArrayList<>();
 
-    Context context;
+    Activity context;
     BluetoothController controller;
 
-    public DeviceListAdapter(ArrayList<BluetoothDevice> list, Context context,
+    public DeviceListAdapter(ArrayList<BluetoothDevice> list, Activity context,
                              BluetoothController controller) {
         this.list = list;
         this.context = context;
@@ -193,16 +232,17 @@ class DeviceListAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     @Override
     public void onBindViewHolder(DeviceViewHolder viewHolder, int position) {
-        String name = list.get(position).getName();
-        viewHolder.deviceName.setText(name.substring(0,Math.min(name.length(),10)));
-        viewHolder.deviceStatus.setText(getBondedState(list.get(position).getBondState()));
-
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 controller.onDeviceSelected(viewHolder);
             }
         });
+
+            String name = list.get(position).getName();
+            viewHolder.deviceName.setText(name.substring(0, Math.min(name.length(), 10)));
+            viewHolder.deviceStatus.setText(getBondedState(list.get(position).getBondState()));
+
     }
 
     @Override

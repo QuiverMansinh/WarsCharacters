@@ -14,12 +14,19 @@ import java.util.Set;
 public class DeviceFinder {
     BluetoothManager manager;
     Activity activity;
+
     public DeviceFinder(Activity activity, BluetoothManager manager) {
         this.activity = activity;
         this.manager = manager;
     }
+
     public void discoverDevices() {
-        if(!manager.getBluetoothAdapter().isDiscovering()) {
+        if(BluetoothManager.isPermitted(activity)) {
+            discover();
+        }
+    }
+    public void discover(){
+        if (!manager.getBluetoothAdapter().isDiscovering()) {
             manager.clearDevices();
             manager.getBluetoothAdapter().startDiscovery();
             ShortToast.show(activity, "SCANNING FOR DEVICES");
@@ -27,6 +34,7 @@ public class DeviceFinder {
             activity.getApplicationContext().registerReceiver(bluetoothReceiver, scanIntent);
         }
     }
+
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -51,7 +59,7 @@ public class DeviceFinder {
         if( devices.size()>0) {
             for(BluetoothDevice device : devices)
             {
-               manager.addDevice(device);
+                manager.addDevice(device);
             }
         }
         manager.onUpdate();

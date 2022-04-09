@@ -88,6 +88,12 @@ object Sounds {
     val creature_rancor_death = 79
     val emperor_laugh = 80
     val emperor_laugh1 = 81
+    val droid_dead_imperial = 89
+    val droid_assassin = 90
+    val droid_imperial1 = 91
+    val droid_imperial2 = 92
+    val droid_sentry = 93
+    val droid_deathstar = 94
 
     var sPBuilder = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_GAME)
@@ -101,7 +107,7 @@ object Sounds {
 
 
     fun sounEPool(context: Context) {
-        sEPool = IntArray(89)
+        sEPool = IntArray(95)
 
         sEPool!![select] = soundPool.load(context, R.raw.select, 1)
 
@@ -154,10 +160,17 @@ object Sounds {
         sEPool!![droid] =   soundPool.load(context, R.raw.droid, 1)
         sEPool!![droid_move] = soundPool.load(context, R.raw.droid_move, 1)
         sEPool!![droid_talk] = soundPool.load(context, R.raw.droid_talk, 1)
+        sEPool!![droid_assassin] =   soundPool.load(context, R.raw.droid_assassin, 1)
+        sEPool!![droid_imperial1] = soundPool.load(context, R.raw.droid_imperial1, 1)
+        sEPool!![droid_imperial2] = soundPool.load(context, R.raw.droid_imperial2, 1)
+        sEPool!![droid_sentry] = soundPool.load(context, R.raw.droid_sentry, 1)
+        sEPool!![droid_deathstar] = soundPool.load(context, R.raw.droid_deathstar, 1)
 
         sEPool!![droid_hit] = soundPool.load(context,R.raw.droid_hit,1)
         sEPool!![droid_dead] = soundPool.load(context,R.raw.droid_death,1)
         sEPool!![droid_shot] = soundPool.load(context,R.raw.droid_shot,1)
+        sEPool!![droid_dead_imperial] = soundPool.load(context,R.raw.droid_death_imperial,1)
+
 
         sEPool!![melee_slice] = soundPool.load(context, R.raw.melee_slice, 1)
         sEPool!![melee_impact] = soundPool.load(context, R.raw.melee_impact, 1)

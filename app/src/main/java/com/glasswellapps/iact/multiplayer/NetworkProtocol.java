@@ -70,6 +70,7 @@ public class NetworkProtocol {
         return message;
     }
     static void putNetworkID(byte[] message, String networkID){
+        if(networkID == null) return;
         byte[] byteID = networkID.getBytes();
         System.arraycopy(byteID, 0, message, 0, MessageLength.ID);
     }
