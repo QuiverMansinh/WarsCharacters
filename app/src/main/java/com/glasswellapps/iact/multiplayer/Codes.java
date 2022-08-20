@@ -22,4 +22,5 @@ public class Codes {
     public final static int PARTY_FULL = -1;
     public final static int UPDATE = -2;
     public final static int NONE = -3;
+    public final static int PLAYER_ADDED = -4;
 }

@@ -117,11 +117,9 @@ class DamageStrainView (val characterScreen: CharacterScreen){
         add_strain.setImageDrawable(IANumbers.getNumber(resources, character.strain))
         //Sounds.strainSound()
         damageAnimation.playAnim(EffectTypes.REST, character)
-
     }
     fun updateDamageNumber(number:Int){
         add_damage.setImageDrawable(IANumbers.getNumber(resources, number))
-
 
     }
 }

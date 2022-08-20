@@ -92,10 +92,6 @@ public class BluetoothManager extends Observable {
         deviceFinder.discoverDevices();
     }
 
-    public void findBondedDevices() {
-        deviceFinder.findBondedDevices();
-    }
-
     public void clearDevices() {
         deviceNames.clear();
         deviceAddresses.clear();

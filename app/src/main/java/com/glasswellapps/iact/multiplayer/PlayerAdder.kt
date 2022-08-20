@@ -37,7 +37,7 @@ class PlayerAdder(val screen: MultiplayerScreen) {
         intent.putExtra("from","imperial")
         addPlayerDialog.dismiss()
         screen.playerToBeAdded = playerNumber
-        CharacterHolder.setActiveCharacter(null)
+        //CharacterHolder.setActiveCharacter(null)
         screen.startActivity(intent)
     }
     private fun onLoadPlayer(){
@@ -46,7 +46,7 @@ class PlayerAdder(val screen: MultiplayerScreen) {
         intent.putExtra("from","imperial")
         addPlayerDialog.dismiss()
         screen.playerToBeAdded = playerNumber
-        CharacterHolder.setActiveCharacter(null)
+        //CharacterHolder.setActiveCharacter(null)
         screen.startActivity(intent)
     }
 }

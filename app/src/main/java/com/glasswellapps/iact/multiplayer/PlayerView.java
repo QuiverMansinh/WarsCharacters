@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.glasswellapps.iact.BitmapLoader;
 import com.glasswellapps.iact.R;
+import com.glasswellapps.iact.ShortToast;
 import com.glasswellapps.iact.character_screen.controllers.ActionController;
 import com.glasswellapps.iact.character_screen.controllers.CharacterImageController;
 import com.glasswellapps.iact.character_screen.controllers.StatController;
@@ -21,6 +22,7 @@ import com.glasswellapps.iact.character_screen.views.IANumbers;
 import com.glasswellapps.iact.character_screen.views.PulsatingImageView;
 import com.glasswellapps.iact.character_screen.views.StatView;
 import com.glasswellapps.iact.characters.Character;
+import com.glasswellapps.iact.effects.Sounds;
 
 public class PlayerView {
     View view;
@@ -46,7 +48,7 @@ public class PlayerView {
     ImageView[] strengthView, insightView, techView;
 
     Activity context;
-    public boolean isVisible = false;
+
     public PlayerView(View view, Activity context){
         this.view = view;
         this.context = context;
@@ -103,13 +105,20 @@ public class PlayerView {
     }
     public void show() {
         view.setVisibility(View.VISIBLE);
-        view.animate().setDuration(150).alpha(1);
-        isVisible = true;
+        view.setAlpha(1);
+
+        //Sounds.INSTANCE.buttonSound();
+       ShortToast.show(context,"SHOW " + view.getAlpha() + " " + (view.getVisibility()==View.VISIBLE));
     }
     public void hide(){
         //view.animate().alpha(0);
-        view.animate().setDuration(300).alpha(0);
-        isVisible = false;
+        view.setAlpha(0);
+        //Sounds.INSTANCE.buttonSound();
+        //ShortToast.show(context,"HIDE");
+
+    }
+    public boolean getIsVisible(){
+        return view.getVisibility() == View.VISIBLE;
     }
 
     boolean lightSaberTurnOn = true;
@@ -164,7 +173,7 @@ public class PlayerView {
         }
     }
     public void playEffect(int effect, Character character){
-        if(effect>0 && isVisible){
+        if(effect>0){
             damageAnimation.playAnim(effect, character);
         }
     }

@@ -21,7 +21,6 @@ class DamageStrainController (val characterScreen: CharacterScreen){
     private var minusDamage = characterScreen.minus_damage
     private var minusStrain = characterScreen.minus_strain
 
-
     init{
         addDamage.setOnClickListener { onAddDamage() }
         minusDamage.setOnClickListener { onMinusDamage() }
@@ -76,6 +75,7 @@ class DamageStrainController (val characterScreen: CharacterScreen){
             }
             character.strain = 0
         }
+        view.onMinusStrain(character.strain);
         view.onRest()
         characterScreen.updateNetwork(false)
         character.timesRested++
@@ -133,7 +133,6 @@ class DamageStrainController (val characterScreen: CharacterScreen){
             }
 
         }
-
     }
     fun addStrain(){
         if (character.strain < character.endurance) {
@@ -153,10 +152,13 @@ class DamageStrainController (val characterScreen: CharacterScreen){
     private fun minusStrain(){
         if (character.strain > 0) {
             character.strain--
-            view.onMinusStrain(character.strain)
         }
+        view.onMinusStrain(character.strain)
     }
-
+    fun resetStrain(){
+        character.strain = 0
+        view.onMinusStrain(0)
+    }
     fun unwound(){
         character.damage = 0
         character.wounded = 0

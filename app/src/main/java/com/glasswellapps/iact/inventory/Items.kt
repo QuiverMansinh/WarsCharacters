@@ -201,7 +201,7 @@ object Items {
         itemsArray!!.get(7).health = 1
 
         //Tier1 Combat Coat
-        itemsArray!!.get(21).health = 2
+        itemsArray!!.get(18).health = 2
         //Responsive Armor
         itemsArray!!.get(19).health = 2
         //Tier2 Combat Coat

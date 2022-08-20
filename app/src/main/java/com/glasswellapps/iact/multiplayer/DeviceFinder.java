@@ -28,6 +28,7 @@ public class DeviceFinder {
     public void discover(){
         if (!manager.getBluetoothAdapter().isDiscovering()) {
             manager.clearDevices();
+            findBondedDevices();
             manager.getBluetoothAdapter().startDiscovery();
             ShortToast.show(activity, "SCANNING FOR DEVICES");
             IntentFilter scanIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -40,7 +41,9 @@ public class DeviceFinder {
         public void onReceive(Context context, Intent intent)
         {
             String action = intent.getAction();
+            System.out.println("broadcast receiver");
             if(BluetoothDevice.ACTION_FOUND.equals(action)){
+                System.out.println("broadcast found");
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 if(device == null) return;
@@ -62,6 +65,6 @@ public class DeviceFinder {
                 manager.addDevice(device);
             }
         }
-        manager.onUpdate();
+        //manager.onUpdate();
     }
 }

@@ -316,19 +316,18 @@ class ActionController (val characterScreen: CharacterScreen){
     }
     fun actionCompleted() {
         if (character.actionUsageSetting) {
-            if (character.actionsLeft > 0) {
-                character.actionsLeft--
-                if (character.actionsLeft == 1) {
-                    action1.alpha = 0f
-                } else if (character.actionsLeft == 0) {
-                    action2.alpha = 0f
-                }
-                if (character.conditionsActive[ConditionTypes.BLEEDING]) {
-                    characterScreen.onAddStrain()
-                }
-                actionMenu.visibility = View.INVISIBLE
+
+            character.actionsLeft--
+            action1.animate().alpha(0f)
+            action2.animate().alpha(1f)
+            if (character.conditionsActive[ConditionTypes.BLEEDING]) {
+                characterScreen.onAddStrain()
             }
+            actionMenu.visibility = View.INVISIBLE
+
             if (character.actionsLeft <= 0) {
+                action1.animate().alpha(0f)
+                action2.animate().alpha(0f)
                 actionMenu.visibility = View.INVISIBLE
                 if (character.isActivated) {
                     endActivationDialog.show()
@@ -344,17 +343,12 @@ class ActionController (val characterScreen: CharacterScreen){
     private fun onNextMission() {
         Sounds.selectSound()
         nextMissionDialog.dismiss()
-        characterScreen.onUnwound()
-        character.conditionsActive = BooleanArray(5)
         if(character.isActivated) {
             turnOffActionButtons()
             activationAnim(active,inactive,false)
             character.isActivated = false
         }
-        character.actionsLeft = 0
-        characterScreen.updateConditions()
-        characterScreen.updateStats()
-        characterScreen.quickSave()
+        characterScreen.onNextMission()
     }
     private fun onNextMissionNo() {
         Sounds.selectSound()

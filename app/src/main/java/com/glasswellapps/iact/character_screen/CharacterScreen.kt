@@ -53,7 +53,6 @@ class CharacterScreen : AppCompatActivity() {
         width = displayMetrics.widthPixels.toFloat()
         var from: String = intent.getStringExtra("from").toString()
 
-
         initCharacter()
         initControllers()
         updateImages()
@@ -217,11 +216,19 @@ class CharacterScreen : AppCompatActivity() {
     }
     fun onRest() {
         damageStrainController.onRest()
-        savingController.quickSave()
+        //savingController.quickSave()
+        actionCompleted()
         restDialog.dismiss()
-        if (character.actionsLeft > 0 && character.actionUsageSetting) {
-            actionCompleted()
-        }
+    }
+    fun onNextMission(){
+        damageStrainController.unwound()
+        damageStrainController.resetStrain()
+        character.strain = 0
+        character.conditionsActive = BooleanArray(5)
+        Sounds.strainSound()
+        updateConditions()
+        updateStats()
+        quickSave()
     }
     fun onShowUnwoundDialog(){
         unwoundDialog.show()
@@ -267,7 +274,7 @@ class CharacterScreen : AppCompatActivity() {
     // show save dialog
     override fun onBackPressed() {
         savingController.quickSave()
-        //bluetoothController.onDisconnected()
+        bluetoothController.onDisconnected()
         //val intent = Intent(this, MainActivity::class.java)
         //startActivity(intent)
         character_image.onStop()

@@ -2,6 +2,7 @@ package com.glasswellapps.iact.multiplayer;
 import android.app.Activity;
 import android.view.View;
 
+import com.glasswellapps.iact.ShortToast;
 import com.glasswellapps.iact.character_screen.types.EffectTypes;
 import com.glasswellapps.iact.effects.Sounds;
 import com.glasswellapps.iact.character_screen.CharacterBuilder;
@@ -22,7 +23,7 @@ public class Player extends Observable {
         playerView.getActivationButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getIsNotUpdatable() || !playerView.isVisible){return;}
+                if(getIsNotUpdatable() || !playerView.getIsVisible() ){return;}
                 character.setActivated(!character.isActivated());
                 playerView.activated(character.isActivated());
             }
@@ -30,7 +31,7 @@ public class Player extends Observable {
         playerView.getDamageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getIsNotUpdatable() || !playerView.isVisible){return;}
+                if(getIsNotUpdatable() || !playerView.getIsVisible() ){return;}
                 onAddDamage();
             }
         });
@@ -38,21 +39,21 @@ public class Player extends Observable {
         playerView.getMinusDamageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getIsNotUpdatable() || !playerView.isVisible ){return;}
+                if(getIsNotUpdatable() || !playerView.getIsVisible() ){return;}
                 onMinusDamage();
             }
         });
         playerView.getStrainView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getIsNotUpdatable() || !playerView.isVisible){return;}
+                if(getIsNotUpdatable() || !playerView.getIsVisible() ){return;}
                 onAddStrain();
             }
         });
         playerView.getMinusStrainView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getIsNotUpdatable() || !playerView.isVisible){return;}
+                if(getIsNotUpdatable() || !playerView.getIsVisible() ){return;}
                 onMinusStrain();
             }
         });
@@ -65,12 +66,20 @@ public class Player extends Observable {
         this.context = context;
         getID(message);
         int characterIndex = message[Codes.CHARACTER];
+        //ShortToast.show(context,"New Character"+characterIndex);
         character = CharacterBuilder.Companion.create(characterIndex,context);
         character.loadCardImages(context);
         isLocal = false;
         updateBackground(message,true);
-        onNewCharacterAdded();
         updateCharacter(message);
+        onNewCharacterAdded();
+    }
+    void onNewCharacterAdded(){
+        playerView.nameView.setText(character.getName());
+        playerView.setDefenceDice(character);
+        character.setWounded(character.getDamage()>=character.getHealth());
+        character.setWithdrawn(character.getDamage() == character.getHealth()*2);
+        playerView.show();
     }
     public int getCharacterIndex(){
         return character.getIndex();
@@ -81,16 +90,10 @@ public class Player extends Observable {
     public Character getCharacter(){
         return  character;
     }
-    void onNewCharacterAdded(){
-        playerView.nameView.setText(character.getName());
-        playerView.setDefenceDice(character);
-        character.setWounded(character.getDamage()>=character.getHealth());
-        character.setWithdrawn(character.getDamage() == character.getHealth()*2);
 
-    }
 
     public void updateCharacter(byte[] message) {
-        System.out.println("ID "+id);
+        System.out.println("Character ID "+id);
         updateXP(message);
         updateWeapons(message);
         updateArmour(message);
@@ -105,6 +108,8 @@ public class Player extends Observable {
         if(message[Codes.UPDATE_IMAGES]==(byte)1){
             playerView.updateImages(character);
         }
+        playerView.show();
+        ShortToast.show(context,playerView.view.getAlpha() + " " + (playerView.view.getVisibility()==View.VISIBLE));
     }
     void getID(byte[] message){
         byte[] byteID = new byte[MessageLength.ID];
@@ -112,7 +117,6 @@ public class Player extends Observable {
             byteID[i] = message[i];
         }
         id = new String(byteID);
-        System.out.println("RECEIVED ID " + id);
     }
 
     private void updateAccessories(byte[] message) {

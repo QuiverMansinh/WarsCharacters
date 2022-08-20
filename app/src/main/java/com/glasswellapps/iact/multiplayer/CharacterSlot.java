@@ -4,6 +4,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.glasswellapps.iact.R;
+import com.glasswellapps.iact.ShortToast;
 import com.glasswellapps.iact.character_screen.controllers.SavingController;
 import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;
@@ -33,8 +34,7 @@ public class CharacterSlot {
         playerView.findViewById(R.id.mp_options2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    toCharacterScreen();
+                onCharacterClicked();
 
                 //onOptions();
             }
@@ -50,7 +50,7 @@ public class CharacterSlot {
         player.addObserver(screen);
     }
 
-    private void toCharacterScreen(){
+    private void onCharacterClicked(){
 
         if(screen.isImperial) {
             onOptions();
@@ -78,8 +78,9 @@ public class CharacterSlot {
         return  true;
     }
 
-    public void onNewPlayerAdded(){
-        onShowPlayer();
+    public void onNewPlayerAdded() {
+        player.onNewCharacterAdded();
+        Sounds.INSTANCE.buttonSound();
     }
     public void remove() {
         player.remove();
@@ -102,6 +103,7 @@ public class CharacterSlot {
     }
 
     public void show() {
+
         if(player.getCharacter()!=null){
             player.show();
         }

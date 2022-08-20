@@ -70,6 +70,15 @@
             android:textSize="24sp"
             android:textStyle="normal" />
 
+        <ImageView
+            android:id="@+id/player_state4"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:alpha="0.05"
+            android:elevation="100dp"
+            app:srcCompat="@drawable/rebel_icon" />
+
         <FrameLayout
             android:id="@+id/player1"
             android:layout_width="match_parent"
@@ -85,15 +94,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/multiplayer_border_rebel"
             android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/player_state4"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:alpha="0.05"
-            android:elevation="100dp"
-            app:srcCompat="@drawable/rebel_icon" />
 
     </androidx.cardview.widget.CardView>
 
@@ -136,6 +136,15 @@
             android:textSize="24sp"
             android:textStyle="normal" />
 
+        <ImageView
+            android:id="@+id/player_state5"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:alpha="0.05"
+            android:elevation="100dp"
+            app:srcCompat="@drawable/rebel_icon" />
+
         <FrameLayout
             android:id="@+id/player2"
             android:layout_width="match_parent"
@@ -151,15 +160,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/multiplayer_border_rebel"
             android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/player_state5"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:alpha="0.05"
-            android:elevation="100dp"
-            app:srcCompat="@drawable/rebel_icon" />
 
     </androidx.cardview.widget.CardView>
 
@@ -204,6 +204,15 @@
             android:textSize="24sp"
             android:textStyle="normal" />
 
+        <ImageView
+            android:id="@+id/player_state6"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:alpha="0.05"
+            android:elevation="100dp"
+            app:srcCompat="@drawable/rebel_icon" />
+
         <FrameLayout
             android:id="@+id/player0"
             android:layout_width="match_parent"
@@ -219,15 +228,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/multiplayer_border_rebel"
             android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/player_state6"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:alpha="0.05"
-            android:elevation="100dp"
-            app:srcCompat="@drawable/rebel_icon" />
 
     </androidx.cardview.widget.CardView>
 
@@ -270,6 +270,15 @@
             android:textSize="24sp"
             android:textStyle="normal" />
 
+        <ImageView
+            android:id="@+id/player_state7"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:alpha="0.05"
+            android:elevation="100dp"
+            app:srcCompat="@drawable/rebel_icon" />
+
         <FrameLayout
             android:id="@+id/player3"
             android:layout_width="match_parent"
@@ -285,15 +294,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/multiplayer_border_rebel"
             android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/player_state7"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:alpha="0.05"
-            android:elevation="100dp"
-            app:srcCompat="@drawable/rebel_icon" />
 
     </androidx.cardview.widget.CardView>
 

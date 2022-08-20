@@ -1,6 +1,7 @@
 package com.glasswellapps.iact.multiplayer;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Message;
@@ -179,14 +180,13 @@ public class ImperialScreen extends MultiplayerScreen {
         String str = new String(message ) +" " + message .length;
         System.out.println(str);
         int result = NetworkProtocol.onReceiveMessage(message, playerList, this);
-
+        //ShortToast.show(this, "MESSAGE RECIEVED");
         switch (result){
             case Codes.PARTY_FULL: onPartyFull();break;
             case Codes.UPDATE:break;
             case Codes.DISCONNECT: onPlayerRemoved(NetworkProtocol.getIDFromMessage(message)); break;
-            default: characterSlots[result].onNewPlayerAdded();
+            case Codes.PLAYER_ADDED: onBluetoothPlayerAdded();break;
         }
-
     }
 
     @Override
@@ -201,6 +201,11 @@ public class ImperialScreen extends MultiplayerScreen {
         ShortToast.show(this, "PARTY FULL");
     }
 
+    private void onBluetoothPlayerAdded(){
+        ShortToast.show(this, "PLAYER ADDED");
+        Sounds.INSTANCE.buttonSound();
+        bluetoothManager.sendMessageToAll(new byte[]{(byte)Codes.PLAYER_ADDED});
+    }
 
     @Override
     public void onPlayerRemoved(int playerNumber) {
@@ -230,8 +235,6 @@ public class ImperialScreen extends MultiplayerScreen {
         return null;
     }
 
-
-
     public void disconnectPlayer(int playerNumber) {
         Player player = characterSlots[playerNumber].player;
         if(!player.isLocal) {
@@ -239,21 +242,18 @@ public class ImperialScreen extends MultiplayerScreen {
         }
     }
 
-    void stopService(){
-        if(bluetoothManager==null){
-            return;
-        }
-
-        for(int i = 0; i< characterSlots.length;i++){
-            disconnectPlayer(i);
-        }
-        bluetoothManager.stopService(Codes.DISCONNECT);
-
-    }
-
     @Override
     public void onBackPressed() {
         stopService();
         super.onBackPressed();
+    }
+    void stopService(){
+        if(bluetoothManager==null){
+            return;
+        }
+        for(int i = 0; i< characterSlots.length;i++){
+            disconnectPlayer(i);
+        }
+        bluetoothManager.stopService(Codes.DISCONNECT);
     }
 }

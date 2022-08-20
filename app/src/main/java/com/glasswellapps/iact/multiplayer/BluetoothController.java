@@ -26,9 +26,7 @@ import com.glasswellapps.iact.character_screen.CharacterScreen;
 import com.glasswellapps.iact.character_screen.controllers.ButtonPressedHandler;
 import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -71,6 +69,7 @@ public class BluetoothController implements Observer {
     }
 
     public void onBluetoothButton() {
+        onDisconnected();
         Sounds.INSTANCE.selectSound();
 
         ButtonPressedHandler.onButtonPressed(findServerButton);
@@ -91,9 +90,9 @@ public class BluetoothController implements Observer {
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == BluetoothManager.REQUEST_ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_CANCELED) {
-                ShortToast.show(characterScreen, "BLUETOOTH NOT ENABLED");
+                //ShortToast.show(characterScreen, "BLUETOOTH NOT ENABLED");
             } else {
-                ShortToast.show(characterScreen, "BLUETOOTH ENABLED");
+                //ShortToast.show(characterScreen, "BLUETOOTH ENABLED");
                 initFindDevices();
             }
         }
@@ -134,7 +133,9 @@ public class BluetoothController implements Observer {
     }
 
     public void sendCharacter(boolean updateImages) {
+        //ShortToast.show(characterScreen, "MAYBE");
         if (bluetoothManager != null) {
+            //ShortToast.show(characterScreen, "UPDATE");
             bluetoothManager.sendMessageToAll(NetworkProtocol.sendCharacter(bluetoothManager.id, character, updateImages));
         }
     }
@@ -192,6 +193,10 @@ public class BluetoothController implements Observer {
                 break;
             case Codes.GAMEOVER:
                 characterScreen.onGameOver();
+                break;
+            case Codes.PLAYER_ADDED:
+                ShortToast.show(characterScreen, "PLAYER ADDED");
+                sendCharacter(true);
                 break;
         }
     }

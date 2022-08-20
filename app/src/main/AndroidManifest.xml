@@ -38,6 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".multiplayer.ImperialScreen"
+            android:configChanges="keyboard|keyboardHidden|navigation"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".multiplayer.RebelScreen"

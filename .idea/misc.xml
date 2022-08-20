@@ -20,11 +20,11 @@
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-land/screen_xp_select.xml" value="0.264" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_acc_screen.xml" value="0.4" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_armor_screen.xml" value="0.264" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_character_screen.xml" value="0.4" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_character_screen.xml" value="0.3294270833333333" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_characters_list.xml" value="0.25" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_create_screen.xml" value="0.25" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_create_xp_screen.xml" value="0.536" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_imperial_screen.xml" value="0.4" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_imperial_screen.xml" value="0.176" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_load_screen.xml" value="0.264" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_main.xml" value="0.128" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_melee_screen.xml" value="0.2" />
@@ -69,7 +69,7 @@
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/item_fragment.xml" value="0.2391304347826087" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/panel_imperial.xml" value="0.25" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/panel_rebel.xml" value="0.25" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/save_load_item.xml" value="0.4" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/save_load_item.xml" value="0.6" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/screen_new.xml" value="0.136" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/screen_settings.xml" value="0.4" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/screen_stats.xml" value="0.4" />

@@ -29,7 +29,7 @@ public class NetworkProtocol {
         int emptyIndex = Codes.PARTY_FULL;
 
         for (int i = playerList.length - 1; i >=0; i--) {
-            if (playerList[i].id.equals(id) && playerList[i].getCharacterIndex() == characterIndex) {
+            if (playerList[i].id.equals(id)) {
                 sender = playerList[i];
                 sender.updateCharacter(bytes);
                 return Codes.UPDATE;
@@ -38,11 +38,11 @@ public class NetworkProtocol {
                 emptyIndex = i;
             }
         }
-        if(sender == null && emptyIndex!=Codes.PARTY_FULL){
+        if(emptyIndex!=Codes.PARTY_FULL){
             playerList[emptyIndex].newCharacter(bytes,context);
-            return emptyIndex;
+            return Codes.PLAYER_ADDED;
         }
-        return Codes.PARTY_FULL;
+        return Codes.NONE;
     }
 
     public static String getIDFromMessage(byte[] bytes){
