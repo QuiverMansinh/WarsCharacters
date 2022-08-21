@@ -9,6 +9,8 @@ import com.glasswellapps.iact.R
 import com.glasswellapps.iact.character_screen.CharacterScreen
 import com.glasswellapps.iact.effects.Sounds
 import kotlinx.android.synthetic.main.screen_settings.*
+import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlin.math.roundToInt
 
 class SettingsMenuController (val characterScreen: CharacterScreen){
     private var settingsMenu: Dialog = Dialog(characterScreen)
@@ -86,6 +88,27 @@ class SettingsMenuController (val characterScreen: CharacterScreen){
 
         })
         settingsMenu.soundEffectsVolume.progress = (character.soundEffectsSetting*100).toInt()
+
+        settingsMenu.screenSaver_slider.setOnSeekBarChangeListener( object : SeekBar
+        .OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                var minutes = (p1.toFloat()/5+1).roundToInt()
+                settingsMenu.sliderValue_text.text = "" + minutes + " m"
+                if(minutes > 20){
+                    settingsMenu.sliderValue_text.text = "never";
+                }
+                characterScreen.setScreenSaverTime(minutes);
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+
+
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+
+            }
+        });
     }
     private fun setPreviewImage(setting:Int) {
         Sounds.selectSound()
@@ -149,6 +172,8 @@ class SettingsMenuController (val characterScreen: CharacterScreen){
                 settingsMenu.imageSettingButton.text = "TIER 3"
             }
         }
+        settingsMenu.screenSaver_slider.progress = characterScreen.getScreenSaverTime()
+
         settingsMenu.show()
     }
 }

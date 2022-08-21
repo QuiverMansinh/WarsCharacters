@@ -7,14 +7,18 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.*
+import android.view.MotionEvent
+import android.view.View
+import android.view.Window
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.glasswellapps.iact.*
+import com.glasswellapps.iact.CardDisplay
+import com.glasswellapps.iact.MainActivity
+import com.glasswellapps.iact.R
 import com.glasswellapps.iact.character_screen.controllers.*
 import com.glasswellapps.iact.character_screen.views.StatView
-import com.glasswellapps.iact.characters.*
+import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.LightSaberMotionController
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
@@ -22,6 +26,7 @@ import com.glasswellapps.iact.multiplayer.BluetoothController
 import kotlinx.android.synthetic.main.activity_character_screen.*
 import kotlinx.android.synthetic.main.dialog_assist.*
 import kotlinx.android.synthetic.main.dialog_rest.*
+
 
 class CharacterScreen : AppCompatActivity() {
     var character: Character = Character()
@@ -42,7 +47,7 @@ class CharacterScreen : AppCompatActivity() {
     private lateinit var lightSaberSoundController: LightSaberMotionController
     private lateinit var restDialog: Dialog
     private lateinit var unwoundDialog: Dialog
-
+    private lateinit var screenSaverController: ScreenSaverController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_screen)
@@ -60,6 +65,8 @@ class CharacterScreen : AppCompatActivity() {
         when(from){
             "party"->initPartyButton()
         }
+        // View (Sub-Class) where onTouchEvent is implemented
+
         savingController.quickSave()
     }
     private fun initPartyButton(){
@@ -144,6 +151,7 @@ class CharacterScreen : AppCompatActivity() {
         StatView.setDice(character, defence, resources)
 
         lightSaberSoundController = LightSaberMotionController(this)
+        screenSaverController = ScreenSaverController(this)
     }
 
     fun actionCompleted(){ actionController.actionCompleted()}
@@ -339,8 +347,17 @@ class CharacterScreen : AppCompatActivity() {
     }
     private fun updateActionUsage(){
         if (character.actionUsageSetting) {
-            if (character.isActivated && character.actionsLeft >0) {
-                actionController.turnOnActionButtons()
+            if (character.isActivated && character.actionsLeft > 0) {
+                action1.alpha = 0f
+            }
+            else{
+                action1.alpha = 1f
+            }
+            if (character.isActivated && character.actionsLeft > 1) {
+                action2.alpha = 0f
+            }
+            else{
+                action2.alpha = 1f
             }
         } else {
             actionController.turnOffActionButtons()
@@ -421,9 +438,24 @@ class CharacterScreen : AppCompatActivity() {
         animCompanion.interpolator = DecelerateInterpolator()
         animCompanion.duration = (800 * 1.2f).toLong()
         animCompanion.start()
-    } //endregion
+    }
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        System.out.println("Touch")
+        screenSaverController.onTouchEvent()
+        return super.dispatchTouchEvent(ev)
+    }
 
+    fun setScreenSaverTime(minutes: Int) {
+        var time = minutes*60
+        if(minutes>20){
+            time = -1;
+        }
 
+        screenSaverController.setTurnOnTime(time)
+    }
+    fun getScreenSaverTime():Int{
+        return  screenSaverController.getTurnOnTime()/60;
+    }
 }
 
 

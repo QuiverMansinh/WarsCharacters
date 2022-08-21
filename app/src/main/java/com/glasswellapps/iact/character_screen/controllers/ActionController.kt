@@ -262,7 +262,7 @@ class ActionController (val characterScreen: CharacterScreen){
     }
 
     fun turnOnActionButtons() {
-
+        System.out.println("ACTION1 " + action1.alpha)
         action1.animate().alpha(1f)
         action2.animate().alpha(1f)
         actionPanel.animate().setDuration(200).translationX(0f)
@@ -316,19 +316,17 @@ class ActionController (val characterScreen: CharacterScreen){
     }
     fun actionCompleted() {
         if (character.actionUsageSetting) {
-
+            actionMenu.visibility = View.INVISIBLE
             character.actionsLeft--
-            action1.animate().alpha(0f)
-            action2.animate().alpha(1f)
+            action1.alpha = 0f
+            action2.alpha = 1f
             if (character.conditionsActive[ConditionTypes.BLEEDING]) {
                 characterScreen.onAddStrain()
             }
-            actionMenu.visibility = View.INVISIBLE
-
             if (character.actionsLeft <= 0) {
-                action1.animate().alpha(0f)
-                action2.animate().alpha(0f)
-                actionMenu.visibility = View.INVISIBLE
+                action1.alpha = 0f
+                action2.alpha = 0f
+
                 if (character.isActivated) {
                     endActivationDialog.show()
                 }

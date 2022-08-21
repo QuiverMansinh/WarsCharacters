@@ -287,6 +287,7 @@ public class CharacterImageView extends View implements Runnable{
     boolean isRunning = true;
     @Override
     public void run() {
+
         while(isRunning) {
             time+=fixedDeltaTime;
             //System.out.println("tick");
