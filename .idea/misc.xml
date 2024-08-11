@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Documents/AndroidStudioProjects/WarsCharacters/app/src/main/res/layout/credits_to_us.xml" value="0.23641304347826086" />
+        <entry key="..\:/IAandroid/WarsCharacters/app/src/main/res/layout-sw600dp/activity_character_screen.xml" value="0.184765625" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/drawable/button_ripple.xml" value="0.14947916666666666" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-land/activity_acc_screen.xml" value="0.264" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-land/activity_armor_screen.xml" value="0.21510416666666668" />
@@ -18,9 +19,10 @@
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-land/dialog_show_condition_card.xml" value="0.152" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-land/landscape.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-land/screen_xp_select.xml" value="0.264" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout-sw600dp/activity_character_screen.xml" value="0.1265625" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_acc_screen.xml" value="0.4" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_armor_screen.xml" value="0.264" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_character_screen.xml" value="0.3294270833333333" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_character_screen.xml" value="0.10400000000000001" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_characters_list.xml" value="0.25" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_create_screen.xml" value="0.25" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/activity_create_xp_screen.xml" value="0.536" />
@@ -51,12 +53,12 @@
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_next_mission.xml" value="1.2" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_no_savefiles_found.xml" value="0.1546875" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_options.xml" value="0.1546875" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_quick_view.xml" value="0.4" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_quick_view.xml" value="0.10400000000000001" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_quick_view_button.xml" value="0.1546875" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_rest.xml" value="0.2391304347826087" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_save.xml" value="0.4" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_screen_saver.xml" value="0.2" />
-        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_screensaver.xml" value="0.176" />
+        <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_screensaver.xml" value="0.2" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_show_card.xml" value="0.2" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_show_condition_card.xml" value="0.264" />
         <entry key="..\:/Users/manhk/IAandroid/WarsCharacters/app/src/main/res/layout/dialog_sounds_creature.xml" value="0.264" />
@@ -80,7 +82,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

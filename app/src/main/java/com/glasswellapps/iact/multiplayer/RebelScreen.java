@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glasswellapps.iact.R;
+import com.glasswellapps.iact.ReleaseResources;
 import com.glasswellapps.iact.character_screen.CharacterScreen;
 import com.glasswellapps.iact.characters.Character;
 import com.glasswellapps.iact.effects.Sounds;

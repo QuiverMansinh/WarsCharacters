@@ -170,9 +170,9 @@ class LoadScreen : AppCompatActivity() {
     }
     fun onFileNameEdited(editedFileName: String, position: Int) {
         Sounds.selectSound()
-        LoadingController.loadedData[position + page * 5].fileName = editedFileName
+        LoadingController.loadedData[position + page * slotsPerPage].fileName = editedFileName
         val database = AppDatabase.getInstance(this)
-        database!!.getCharacterDAO().update(LoadingController.loadedData[position + page * 5])
+        database!!.getCharacterDAO().update(LoadingController.loadedData[position + page * slotsPerPage])
         hideSoftKeyboard()
     }
     fun hideSoftKeyboard(){

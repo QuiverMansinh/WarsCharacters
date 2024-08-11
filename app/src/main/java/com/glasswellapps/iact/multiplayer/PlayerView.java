@@ -108,7 +108,7 @@ public class PlayerView {
         view.setAlpha(1);
 
         //Sounds.INSTANCE.buttonSound();
-       ShortToast.show(context,"SHOW " + view.getAlpha() + " " + (view.getVisibility()==View.VISIBLE));
+       //ShortToast.show(context,"SHOW " + view.getAlpha() + " " + (view.getVisibility()==View.VISIBLE));
     }
     public void hide(){
         //view.animate().alpha(0);

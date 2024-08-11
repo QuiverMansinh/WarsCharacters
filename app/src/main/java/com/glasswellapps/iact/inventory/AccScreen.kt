@@ -30,6 +30,7 @@ class AccScreen : AppCompatActivity() {
         character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
+            return
         }
 
         accViews.add(this.acc_image0)
@@ -203,4 +204,5 @@ class AccScreen : AppCompatActivity() {
         finish()
         super.onBackPressed()
     }
+
 }

@@ -2,6 +2,7 @@ package com.glasswellapps.iact.character_screen
 import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -32,6 +33,7 @@ class CharacterScreen : AppCompatActivity() {
     var character: Character = Character()
     var height = 0f
     var width = 0f
+    var isTablet = false;
     val REQUEST_COARSE_LOCATION = 3
     val REQUEST_FINE_LOCATION = 4
     lateinit var cardDisplay: CardDisplay
@@ -57,7 +59,7 @@ class CharacterScreen : AppCompatActivity() {
         height = displayMetrics.heightPixels.toFloat()
         width = displayMetrics.widthPixels.toFloat()
         var from: String = intent.getStringExtra("from").toString()
-
+        detectDeviceType(displayMetrics)
         initCharacter()
         initControllers()
         updateImages()
@@ -69,8 +71,24 @@ class CharacterScreen : AppCompatActivity() {
 
         savingController.quickSave()
     }
+    private fun detectDeviceType(displayMetrics:DisplayMetrics){
+        var hi = displayMetrics.heightPixels/displayMetrics.ydpi;
+        var wi = displayMetrics.widthPixels/displayMetrics.xdpi;
+        val diagonal = Math.sqrt((wi*wi + hi*hi).toDouble())
+        if(diagonal > 7) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+            System.out.println("Tablet")
+            isTablet = true;
+        }
+        else {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+            System.out.println("Phone")
+            isTablet = false;
+        }
+
+    }
     private fun initPartyButton(){
-        if(CharacterHolder.getParty() == null) return;
+        if(CharacterHolder.getParty() == null) return
         party_button.setOnClickListener{ onPartyMode() }
         party_button.visibility = View.VISIBLE
 
@@ -88,7 +106,7 @@ class CharacterScreen : AppCompatActivity() {
                 partyButtons[i].visibility = View.VISIBLE
                 //partyCharacter.loadPortraitImage(this)
                 partyButtons[i].setImageDrawable(partyCharacter.portraitImage)
-                partyButtons[i].tag = i;
+                partyButtons[i].tag = i
                 partyButtons[i].setOnClickListener(View.OnClickListener {
                     toCharacter(partyButtons[i].tag as Int)
                 })
@@ -115,6 +133,7 @@ class CharacterScreen : AppCompatActivity() {
     private fun initCharacter() {
         if(CharacterHolder.getActiveCharacter() == null) {
             finish()
+            return
         }
         character = CharacterHolder.getActiveCharacter()
 
@@ -140,7 +159,7 @@ class CharacterScreen : AppCompatActivity() {
         killTrackerController = KillTrackerController(this)
         navigationController = NavigationController(this)
         actionController = ActionController(this)
-        gameOverController = GameOverController(this, actionController);
+        gameOverController = GameOverController(this, actionController)
         damageStrainController = DamageStrainController(this)
         conditionsController = ConditionsController(this)
         quickViewController = QuickViewController(this)
@@ -158,6 +177,7 @@ class CharacterScreen : AppCompatActivity() {
     fun onXPScreen() { navigationController.onXPScreen() }
     fun onReward() { navigationController.onReward() }
     fun onHide(view: View) { view.visibility = View.INVISIBLE }
+
 
     //************************************************************************************************************
     //region Bluetooth
@@ -296,6 +316,7 @@ class CharacterScreen : AppCompatActivity() {
     }
     override fun onStop() {
         savingController.quickSave()
+        screenSaverController.stopTimer()
         println("on stop save")
         lightSaberTurnOn = true
         CharacterImageController.turnOffLightSaber(character_image)
@@ -448,14 +469,15 @@ class CharacterScreen : AppCompatActivity() {
     fun setScreenSaverTime(minutes: Int) {
         var time = minutes*60
         if(minutes>20){
-            time = -1;
+            time = -1
         }
 
-        screenSaverController.setTurnOnTime(time)
+        screenSaverController.turnOnTime = time
     }
     fun getScreenSaverTime():Int{
-        return  screenSaverController.getTurnOnTime()/60;
+        return  screenSaverController.turnOnTime /60
     }
+
 }
 
 

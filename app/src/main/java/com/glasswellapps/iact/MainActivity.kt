@@ -62,4 +62,5 @@ class MainActivity : AppCompatActivity(){
         CharacterHolder.clearActiveCharacter()
         //ShortToast.show(this,"Data Cleared")
     }
+
 }

@@ -190,7 +190,7 @@ class SaveSlotAdapter(
 
     fun toggleDelete(it: View, position: Int){
         Sounds.selectSound()
-        val saveDataIndex = loadScreen.page*5 + position
+        val saveDataIndex = loadScreen.page*loadScreen.slotsPerPage + position
 
         if(loadScreen.selectedFiles.contains(saveDataIndex)){
             loadScreen.selectedFiles.remove(saveDataIndex)

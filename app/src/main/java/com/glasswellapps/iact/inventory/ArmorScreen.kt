@@ -30,6 +30,7 @@ class ArmorScreen : AppCompatActivity() {
         character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
+            return
         }
         to_melee.setBackgroundColor(resources.getColor(R.color.shadow))
         to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
@@ -47,8 +48,8 @@ class ArmorScreen : AppCompatActivity() {
         armorViews.add(this.armor_image7)
         armorViews.add(this.armor_image8)
 
-        for(i in 0..Items.armorArray!!.size-1){
-            var currentItem = Items.armorArray!!.get(i)
+        for(i in 0..Items.armorArray.size-1){
+            var currentItem = Items.armorArray[i]
             val gridItem = armorViews[i]
             if(currentItem.type>=0) {
                 gridItem.alpha = 0.5f
@@ -171,4 +172,6 @@ class ArmorScreen : AppCompatActivity() {
         finish()
         super.onBackPressed()
     }
+
+
 }

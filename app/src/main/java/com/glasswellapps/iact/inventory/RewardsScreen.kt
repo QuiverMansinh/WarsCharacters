@@ -4,13 +4,14 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
-import com.glasswellapps.iact.*
+import androidx.appcompat.app.AppCompatActivity
+import com.glasswellapps.iact.R
+import com.glasswellapps.iact.ReleaseResources
 import com.glasswellapps.iact.characters.Character
 import com.glasswellapps.iact.effects.Sounds
 import com.glasswellapps.iact.loading.CharacterHolder
@@ -27,6 +28,7 @@ class RewardsScreen : AppCompatActivity() {
         character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
+            return
         }
         var rewardsViews = ArrayList<ImageView>()
         rewardsViews.add(this.reward_image0)
@@ -181,6 +183,8 @@ class RewardsScreen : AppCompatActivity() {
         showCardDialog!!.card_image.setImageBitmap(image)
         showCardDialog!!.show()
     }
+
+
 }
 
 

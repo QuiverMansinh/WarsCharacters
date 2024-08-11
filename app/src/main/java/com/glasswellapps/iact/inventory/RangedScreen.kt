@@ -30,6 +30,7 @@ class RangedScreen : AppCompatActivity() {
         character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
+            return
         }
         to_melee.setBackgroundColor(resources.getColor(R.color.shadow))
         to_armor.setBackgroundColor(resources.getColor(R.color.shadow))

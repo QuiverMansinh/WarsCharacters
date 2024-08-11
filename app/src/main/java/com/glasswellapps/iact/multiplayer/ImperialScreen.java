@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glasswellapps.iact.R;
+import com.glasswellapps.iact.ReleaseResources;
 import com.glasswellapps.iact.ShortToast;
 import com.glasswellapps.iact.character_screen.controllers.ButtonPressedHandler;
 import com.glasswellapps.iact.effects.Sounds;
@@ -256,4 +257,5 @@ public class ImperialScreen extends MultiplayerScreen {
         }
         bluetoothManager.stopService(Codes.DISCONNECT);
     }
+
 }

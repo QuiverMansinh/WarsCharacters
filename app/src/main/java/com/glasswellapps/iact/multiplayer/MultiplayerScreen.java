@@ -9,6 +9,7 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.glasswellapps.iact.CardDisplay;
 import com.glasswellapps.iact.R;
+import com.glasswellapps.iact.ReleaseResources;
 import com.glasswellapps.iact.character_screen.controllers.ButtonPressedHandler;
 import com.glasswellapps.iact.effects.Sounds;
 import com.glasswellapps.iact.loading.CharacterHolder;
@@ -219,7 +220,6 @@ public abstract class MultiplayerScreen extends AppCompatActivity implements Obs
         }
         super.onStop();
 
-        //stopService();
     }
 
     boolean isGameOver = false;

@@ -3,13 +3,12 @@ import com.glasswellapps.iact.R
 import com.glasswellapps.iact.effects.Sounds
 
 object Items {
-    var rewardsArray: Array<Item>? = null
-    var accArray: Array<Item>? = null
-    var armorArray: Array<Item>? = null
-   var meleeArray: Array<Item>? = null
-       var rangedArray: Array<Item>? = null
-
-    var itemsArray: Array<Item>? = null
+    var rewardsArray: Array<Item>
+    var accArray: Array<Item>
+    var armorArray: Array<Item>
+    var meleeArray: Array<Item>
+    var rangedArray: Array<Item>
+    var itemsArray: Array<Item>
 
     //types
     const val reward = 0

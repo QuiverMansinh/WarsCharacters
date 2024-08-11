@@ -28,6 +28,7 @@ class MeleeScreen : AppCompatActivity() {
         character = CharacterHolder.getActiveCharacter()
         if(character == null){
             finish()
+            return
         }
 
         to_ranged.setBackgroundColor(resources.getColor(R.color.shadow))
@@ -227,4 +228,6 @@ class MeleeScreen : AppCompatActivity() {
         finish()
         super.onBackPressed()
     }
+
+
 }

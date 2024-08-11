@@ -54,10 +54,9 @@
                     android:textStyle="bold" />
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     app:cardBackgroundColor="#00000000"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="3dp">
@@ -86,10 +85,9 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     app:cardBackgroundColor="#00000000"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="3dp">
@@ -139,7 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="1.1"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -181,6 +179,26 @@
                         android:padding="3dp"
                         android:visibility="visible"
                         app:srcCompat="@drawable/item_armour" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardBackgroundColor="#00000000"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp">
+
+                    <ImageView
+                        android:id="@+id/quick_view_power"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/empty_item_slot"
+                        android:foreground="@drawable/empty_item_slot_border"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/empty_item_slot_border" />
+
                 </androidx.cardview.widget.CardView>
 
                 <ImageView

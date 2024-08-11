@@ -4,7 +4,6 @@ package com.glasswellapps.iact.character_screen.controllers;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,11 +30,12 @@ public class ScreenSaverController {
     private boolean isOn;
     ImageView activationOn, damage, strain, portrait, wounded;
     TextView name;
+    Timer timer;
 
     public ScreenSaverController(CharacterScreen characterScreen){
         this.characterScreen = characterScreen;
-        initScreenSaverDialog(characterScreen);
-        start();
+
+        startTimer();
     }
 
     private void initScreenSaverDialog(CharacterScreen characterScreen) {
@@ -59,8 +59,8 @@ public class ScreenSaverController {
         wounded = view.findViewById(R.id.wounded_image);
         name = view.findViewById(R.id.name_text);
     }
-    public void start() {
-        Timer timer = new Timer();
+    public void startTimer() {
+        timer = new Timer();
 
         timer.schedule(new TimerTask() {
             @Override
@@ -84,13 +84,15 @@ public class ScreenSaverController {
     }
     public void setTurnOnTime(int turnOnTime){
         this.turnOnTime = turnOnTime;
+
     }
     private void turnOnScreenSaver() {
+        initScreenSaverDialog(characterScreen);
         isOn = true;
         secondsSinceInactivity = 0;
         setState();
         originalBrightness = getScreenBrightness();
-        setScreenBrightness(0);
+        //setScreenBrightness(0);
         screenSaverDialog.show();
         hideUI();
     }
@@ -157,5 +159,10 @@ public class ScreenSaverController {
 
     public int getTurnOnTime() {
         return turnOnTime;
+    }
+
+    public void stopTimer() {
+        timer.cancel();
+        timer.purge();
     }
 }

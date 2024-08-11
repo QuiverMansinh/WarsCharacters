@@ -109,7 +109,7 @@ public class Player extends Observable {
             playerView.updateImages(character);
         }
         playerView.show();
-        ShortToast.show(context,playerView.view.getAlpha() + " " + (playerView.view.getVisibility()==View.VISIBLE));
+        //ShortToast.show(context,playerView.view.getAlpha() + " " + (playerView.view.getVisibility()==View.VISIBLE));
     }
     void getID(byte[] message){
         byte[] byteID = new byte[MessageLength.ID];
